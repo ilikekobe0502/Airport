@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_bg"
+    android:clickable="true">
+
+    <EditText
+        android:id="@+id/editText_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_search"
+        android:layout_marginLeft="@dimen/dp_pixel_16"
+        android:layout_marginRight="@dimen/dp_pixel_16"
+        android:background="@drawable/input" />
+
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="@dimen/dp_pixel_80"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dp_pixel_30"
+        android:layout_marginTop="@dimen/dp_pixel_30"
+        android:background="@drawable/but_bg">
+
+        <ImageView
+            android:id="@+id/imageView_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/magnifier" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_pixel_18"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView_search"
+            android:text="@string/flights_search_search"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_search"
+        android:layout_marginLeft="@dimen/dp_pixel_16"
+        android:layout_marginRight="@dimen/dp_pixel_16"
+        android:text="@string/flights_search_footer_hint"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_15" />
+</RelativeLayout>

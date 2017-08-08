@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_pixel_20">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_188"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp_pixel_30">
+
+        <ImageView
+            android:id="@+id/imageView_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:alpha="0.7"
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/textView_floor"
+                android:layout_width="@dimen/dp_pixel_35"
+                android:layout_height="@dimen/dp_pixel_35"
+                android:layout_margin="@dimen/sp_pixel_15"
+                android:background="@drawable/frame_dialog_button"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_21"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_pixel_15"
+                android:layout_toRightOf="@+id/textView_floor"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_15" />
+
+            <TextView
+                android:id="@+id/textView_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_title"
+                android:layout_toRightOf="@+id/textView_floor"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_13" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

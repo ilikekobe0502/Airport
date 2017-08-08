@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="colorMarquee">#3e4e7f</color>
+    <color name="colorMoreFrame">#333b4e</color>
+    <color name="colorTextStore">#333b50</color>
+    <color name="colorIndicatorDefault">#3e4e7f</color>
+    <color name="colorSubTitle">#3f4f8a</color>
+    <color name="colorHomeWeather">#48a6e3</color>
+    <color name="colorText">#313a43</color>
+    <color name="colorTextSecond">#0164a8</color>
+    <color name="colorLine">#9c9b9b</color>
+    <color name="colorFragmentLine">#1a3d63</color>
+    <color name="colorDialogLine">#e5e5e5</color>
+    <color name="colorHomeParkingInfoLine">#4a7945</color>
+    <color name="colorTextSpecial">#ff0100</color>
+    <color name="colorTextHomeParkingInfoFull">#f10201</color>
+    <color name="colorTextDialogContent">#323a4d</color>
+    <color name="colorTextStoreInfoTitle">#ffff00</color>
+    <color name="colorTextHomeParkingInfoName">#fffb01</color>
+    <color name="colorTextUserNewsDate">#ffff01</color>
+    <color name="colorBackgroundHomeDeparture">#96a0d7</color>
+    <color name="colorBackgroundHomeArrive">#72aad7</color>
+    <color name="colorBackgroundHomeParkingInfo">#64b63a</color>
+    <color name="colorTextParkingMuch">#49b600</color>
+    <color name="colorTextParkingEnough">#0096da</color>
+    <color name="colorTextParkingFull">#d40a00</color>
+    <color name="black0.25">#3f000000</color>
+</resources>

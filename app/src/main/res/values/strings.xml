@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">TaoyuanAirport</string>
+
+    <!-- Comment -->
+    <string name="press_again_left">再點一次離開app</string>
+    <string name="server_error">伺服器錯誤</string>
+    <string name="data_error">資料錯誤</string>
+
+
+    <!-- Home -->
+    <string name="home_weather_title">天氣資訊</string>
+    <string name="home_more">更多</string>
+    <string name="home_more_flights">更多班機</string>
+    <string name="home_flights_info_title">航班資訊</string>
+    <string name="home_terminal_info_title">航廈資訊</string>
+    <string name="home_airport_traffic_title">機場交通</string>
+    <string name="home_practical_info_title">實用資訊</string>
+    <string name="home_store_offers_title">商店優惠</string>
+    <string name="home_communication_service_title">通訊服務</string>
+    <string name="home_language_setting_title">語言設定</string>
+    <string name="home_airport_secretary_title">機場秘書</string>
+    <string name="home_indoor_map_title">室內地圖導航</string>
+    <string name="home_airport_achievement_title">機場成就</string>
+    <string name="home_more_wea_title">天氣</string>
+
+    <!-- Flights info -->
+    <string name="flights_info_search_flights">搜尋航班</string>
+    <string name="flights_info_my_flights">我的航班</string>
+    <string name="flights_info_flights_notify">航班提醒</string>
+    <string name="flights_info_flights_delete">刪除</string>
+
+    <!-- Flights search -->
+    <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司貨城市關鍵字</string>
+    <string name="flights_search_search">搜尋</string>
+
+    <!-- Flights search result -->
+    <string name="flights_search_result_terminal_text">航</string>
+    <string name="flights_search_result_title">搜尋結果</string>
+    <string name="flights_search_result_departure_subtitle">%s出發航班</string>
+    <string name="flights_search_result_arrive_subtitle">%s抵達航班</string>
+
+    <!-- My dialog -->
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_join">加入</string>
+    <string name="dialog_detail_title">詳細資訊</string>
+    <string name="dialog_airline_name">航空公司</string>
+    <string name="dialog_flight_code">班機號碼</string>
+    <string name="dialog_target_location">目的地</string>
+    <string name="dialog_expected_arrive_time">預計抵達時間</string>
+    <string name="dialog_actual_arrive_time">實際抵達時間</string>
+    <string name="dialog_terminal">航廈</string>
+    <string name="dialog_carousel">行李轉盤</string>
+    <string name="dialog_gate">登機門</string>
+
+    <!-- Terminal info -->
+    <string name="terminal_info_store">餐廳商店</string>
+    <string name="terminal_info_airport_facilities">機場設施</string>
+    <string name="terminal_info_toilet">公共廁所</string>
+
+    <!-- Restaurant & Store search -->
+    <string name="restaurant_store_search_subtitle">餐廳查詢</string>
+    <string name="restaurant_store_search_select_terminal">選擇航廈</string>
+    <string name="restaurant_store_search_non_select_terminal">不分航廈</string>
+    <string name="restaurant_store_search_select_terminal_title">請選擇航廈</string>
+    <string name="restaurant_store_search_select_area">選擇區域</string>
+    <string name="restaurant_store_search_non_select_area">不分區域</string>
+    <string name="restaurant_store_search_select_area_title">請選擇區域</string>
+    <string name="restaurant_store_search_select_floor">選擇樓層</string>
+    <string name="restaurant_store_search_non_select_floor">不分樓層</string>
+    <string name="restaurant_store_search_select_floor_title">請選擇樓層</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant">選擇餐廳總類</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐廳總類</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">請選擇餐廳總類</string>
+
+    <!-- Restaurant & Store search result-->
+    <string name="restaurant_store_search_result_subtitle">商店訊息</string>
+
+    <!-- Restaurant & Store search info-->
+    <string name="restaurant_store_search_info_location">地址：%1$s-%2$s</string>
+    <string name="restaurant_store_search_info_time">營業時間：%1$s~%2$s</string>
+    <string name="restaurant_store_search_info_phone">電話：%s</string>
+    <string name="restaurant_store_search_info_first_terminal">第一航廈</string>
+    <string name="restaurant_store_search_info_second_terminal">第二航廈</string>
+
+    <!-- Airport traffic -->
+    <string name="airport_traffic_parking_info">"停車資訊"</string>
+    <string name="airport_traffic_parking_airport_bus">"機場巴士"</string>
+    <string name="airport_traffic_parking_roadside_assistance">"道路救援服務"</string>
+    <string name="airport_traffic_parking_taxi">"計程車"</string>
+    <string name="airport_traffic_parking_tour_bus">"巡迴巴士"</string>
+    <string name="airport_traffic_parking_mrt">"機場捷運/高鐵"</string>
+    <string name="airport_traffic_parking_sky_train">"電車"</string>
+
+    <!-- Parking info -->
+    <string name="parking_info_parking_space_much">"車位充足"</string>
+    <string name="parking_info_parking_space_enough">"尚有車位"</string>
+    <string name="parking_info_parking_space_full">"車位已滿"</string>
+    <string name="parking_info_parking_space_number_of">"尚有%s"</string>
+    <string name="parking_info_parking_space_full_state">"已滿"</string>
+    <string name="parking_info_parking_space_P1">"P1"</string>
+    <string name="parking_info_parking_space_P2">"P2"</string>
+    <string name="parking_info_parking_space_P4">"P4"</string>
+    <string name="parking_info_parking_space_1F">"(1F)"</string>
+    <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+
+    <!-- Airport secretary -->
+    <string name="airport_secretary_news">"最新消息"</string>
+    <string name="airport_secretary_emergency">"緊急事件"</string>
+    <string name="airport_secretary_notify">"貼心提醒"</string>
+
+    <!-- My flights notify -->
+    <string name="my_flights_notify">"%1$d小時%2$d分鐘"</string>
+    <string name="my_flights_notify_message">"航班提醒已到%s"</string>
+    <string name="my_flights_notify_on">"On"</string>
+    <string name="my_flights_notify_off">"Off"</string>
+
+</resources>

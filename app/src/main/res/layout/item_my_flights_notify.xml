@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_pixel_80"
+    android:background="@color/black0.25">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/dp_pixel_10"
+        android:paddingRight="@dimen/dp_pixel_10">
+
+        <ImageView
+            android:id="@+id/imageView_icon"
+            android:layout_width="@dimen/dp_pixel_50"
+            android:layout_height="@dimen/dp_pixel_50"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:background="@drawable/my_flights_notify_02_03_clock"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_pixel_50"
+            android:layout_toLeftOf="@+id/switch_open"
+            android:layout_toRightOf="@+id/imageView_icon"
+            android:gravity="center_vertical"
+            android:text="123456789asdasd"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_pixel_21" />
+
+        <Switch
+            android:id="@+id/switch_open"
+            android:layout_width="@dimen/dp_pixel_100"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/switch_background"
+            android:gravity="center"
+            android:text="ON"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_pixel_16" />
+    </RelativeLayout>
+</RelativeLayout>
