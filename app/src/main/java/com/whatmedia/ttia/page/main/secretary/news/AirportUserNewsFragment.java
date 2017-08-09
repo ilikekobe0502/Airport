@@ -3,7 +3,6 @@ package com.whatmedia.ttia.page.main.secretary.news;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.enums.AirportSecretary;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailContract;
 import com.whatmedia.ttia.response.data.UserNewsData;
 
 import java.util.List;
@@ -136,7 +135,15 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_frame:
-//                mMainActivity.addFragment(Page);
+                if (v.getTag() != null && v.getTag() instanceof UserNewsData) {
+                    UserNewsData userNewsData = (UserNewsData) v.getTag();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(NewsDetailContract.TAG_DATA, userNewsData);
+                    mMainActivity.addFragment(Page.TAG_AIRPORT_NEWS_DETAIL, bundle, true);
+                } else {
+                    Log.e(TAG, "v.getTag() is error");
+                    showMessage(getString(R.string.data_error));
+                }
                 break;
         }
     }

@@ -14,7 +14,6 @@ import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.enums.FlightInfo;
 import com.whatmedia.ttia.enums.HomeFeature;
-import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
@@ -27,6 +26,9 @@ import com.whatmedia.ttia.page.main.home.HomeFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsFragment;
 import com.whatmedia.ttia.page.main.home.weather.more.MoreWeatherFragment;
 import com.whatmedia.ttia.page.main.secretary.AirportSecretaryFragment;
+import com.whatmedia.ttia.page.main.secretary.detail.emergency.EmergencyDetailFragment;
+import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailFragment;
+import com.whatmedia.ttia.page.main.secretary.detail.sweet.SweetNotifyDetailFragment;
 import com.whatmedia.ttia.page.main.secretary.emergency.AirportEmergencyFragment;
 import com.whatmedia.ttia.page.main.secretary.news.AirportUserNewsFragment;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyFragment;
@@ -499,6 +501,51 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof MoreFlightsFragment) {//更多航班
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.home_more_flights))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof NewsDetailFragment) {//最新訊息(詳細資料)
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.airport_secretary_news))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof EmergencyDetailFragment) {//緊急通知(詳細資料)
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.airport_secretary_emergency))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof SweetNotifyDetailFragment) {//貼心提醒(詳細資料)
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.airport_secretary_notify))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {

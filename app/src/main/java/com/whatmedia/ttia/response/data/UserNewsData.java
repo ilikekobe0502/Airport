@@ -2,11 +2,13 @@ package com.whatmedia.ttia.response.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by neo_mac on 2017/8/7.
  */
 
-public class UserNewsData {
+public class UserNewsData implements Serializable {
     @SerializedName("UserID")
     private String userId;
     @SerializedName("Devicetoken")

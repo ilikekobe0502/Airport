@@ -19,6 +19,9 @@ import com.whatmedia.ttia.page.main.home.parking.HomeParkingInfoFragment;
 import com.whatmedia.ttia.page.main.home.weather.HomeWeatherInfoFragment;
 import com.whatmedia.ttia.page.main.home.weather.more.MoreWeatherFragment;
 import com.whatmedia.ttia.page.main.secretary.AirportSecretaryFragment;
+import com.whatmedia.ttia.page.main.secretary.detail.emergency.EmergencyDetailFragment;
+import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailFragment;
+import com.whatmedia.ttia.page.main.secretary.detail.sweet.SweetNotifyDetailFragment;
 import com.whatmedia.ttia.page.main.secretary.emergency.AirportEmergencyFragment;
 import com.whatmedia.ttia.page.main.secretary.news.AirportUserNewsFragment;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyFragment;
@@ -77,6 +80,9 @@ public class Page {
     public static final int TAG_AIRPORT_USER_NEWS = 1402;
     public static final int TAG_AIRPORT_EMERGENCY = 1403;
     public static final int TAG_AIRPORT_SWEET_NOTIFY = 1404;
+    public static final int TAG_AIRPORT_NEWS_DETAIL = 1405;
+    public static final int TAG_AIRPORT_EMERGENCY_DETAIL = 1406;
+    public static final int TAG_AIRPORT_SWEET_DEATIL = 1407;
 
     /**
      * Switch AirportEmergencyFragment
@@ -193,6 +199,12 @@ public class Page {
                 return new AirportSweetNotifyFragment().newInstance();
             case TAG_MY_FIGHTS_NOTIFY:
                 return new MyFlightsNotifyFragment().newInstance();
+            case TAG_AIRPORT_NEWS_DETAIL:
+                return new NewsDetailFragment().newInstance();
+            case TAG_AIRPORT_EMERGENCY_DETAIL:
+                return new EmergencyDetailFragment().newInstance();
+            case TAG_AIRPORT_SWEET_DEATIL:
+                return new SweetNotifyDetailFragment().newInstance();
         }
 
         return null;

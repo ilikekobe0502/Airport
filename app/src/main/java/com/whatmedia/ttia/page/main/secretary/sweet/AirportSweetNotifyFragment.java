@@ -14,6 +14,8 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailContract;
 import com.whatmedia.ttia.response.data.UserNewsData;
 
 import java.util.List;
@@ -133,7 +135,15 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_frame:
-//                mMainActivity.addFragment(Page);
+                if (v.getTag() != null && v.getTag() instanceof UserNewsData) {
+                    UserNewsData userNewsData = (UserNewsData) v.getTag();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(NewsDetailContract.TAG_DATA, userNewsData);
+                    mMainActivity.addFragment(Page.TAG_AIRPORT_SWEET_DEATIL, bundle, true);
+                } else {
+                    Log.e(TAG, "v.getTag() is error");
+                    showMessage(getString(R.string.data_error));
+                }
                 break;
         }
     }
