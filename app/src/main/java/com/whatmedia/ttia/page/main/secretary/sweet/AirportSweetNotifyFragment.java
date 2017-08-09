@@ -139,7 +139,7 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
                     UserNewsData userNewsData = (UserNewsData) v.getTag();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(NewsDetailContract.TAG_DATA, userNewsData);
-                    mMainActivity.addFragment(Page.TAG_AIRPORT_SWEET_DEATIL, bundle, true);
+                    mMainActivity.addFragment(Page.TAG_AIRPORT_SWEET_DETAIL, bundle, true);
                 } else {
                     Log.e(TAG, "v.getTag() is error");
                     showMessage(getString(R.string.data_error));

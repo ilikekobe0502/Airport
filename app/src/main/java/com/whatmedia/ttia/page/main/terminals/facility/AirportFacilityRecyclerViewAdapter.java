@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by neo_mac on 2017/8/5.
@@ -32,6 +34,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
     private List<AirportFacilityData> mSecondItems;
     private Context mContext;
     private boolean mIsFirst;//判斷是否為第一航廈
+    private IOnItemClickListener mListener;
 
     public AirportFacilityRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -70,6 +73,8 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             Picasso.with(mContext).load(imageUrl).into(holder.mImageViewPicture);
         } else
             holder.mImageViewPicture.setVisibility(View.INVISIBLE);
+
+        holder.mImageViewPicture.setTag(item);
     }
 
     @Override
@@ -99,6 +104,10 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         return outSideTitle;
     }
 
+    public void setOnclickListener(IOnItemClickListener listener) {
+        mListener = listener;
+    }
+
     /**
      * Set different terminal Data
      *
@@ -124,6 +133,12 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.imageView_picture)
+        public void onViewClicked(View view) {
+            if (mListener != null)
+                mListener.onClick(view);
         }
     }
 }

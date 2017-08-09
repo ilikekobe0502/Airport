@@ -37,21 +37,16 @@
             android:background="@drawable/right_off" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <WebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/imageView_zoom"
         android:layout_below="@+id/layout_subtitle" />
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/imageView_zoom"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_pixel_40"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/dp_pixel_10"
-        android:layout_marginRight="@dimen/dp_pixel_16"
-        android:background="@drawable/public_toilet_03_02_up" />
+    <WebView
+        android:id="@+id/webView_terminal_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_subtitle"
+        android:visibility="gone" />
 </RelativeLayout>

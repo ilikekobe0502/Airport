@@ -2,11 +2,13 @@ package com.whatmedia.ttia.response.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by neo_mac on 2017/8/5.
  */
 
-public class AirportFacilityData {
+public class AirportFacilityData implements Serializable {
     public final static String TAG_TERMINAL_FIRST = "1";//第一航廈ID
     public final static String TAG_TERMINAL_SECOND = "2";//第二航廈ID
 

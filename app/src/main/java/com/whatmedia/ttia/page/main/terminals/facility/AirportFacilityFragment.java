@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.main.terminals.toilet.PublicToiletRecyclerViewAdapter;
+import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.terminals.facility.detail.FacilityDetailContract;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
 
 import java.util.List;
@@ -25,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AirportFacilityFragment extends BaseFragment implements AirportFacilityContract.View {
+public class AirportFacilityFragment extends BaseFragment implements AirportFacilityContract.View, IOnItemClickListener {
     private static final String TAG = AirportFacilityFragment.class.getSimpleName();
     @BindView(R.id.textView_subtitle)
     TextView mTextViewSubtitle;
@@ -79,6 +81,7 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
         mAdapter = new AirportFacilityRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnclickListener(this);
 
         return view;
     }
@@ -144,6 +147,17 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
                 mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
                 mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
                 mTextViewSubtitle.setText(mAdapter.setTerminal(false));
+                break;
+            case R.id.imageView_picture:
+                if (view.getTag() != null && view.getTag() instanceof AirportFacilityData) {
+                    AirportFacilityData facilityData = (AirportFacilityData) view.getTag();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(FacilityDetailContract.TAG_DATA, facilityData);
+                    mMainActivity.addFragment(Page.TAG_AIRPORT_FACILITY_DETAIL, bundle, true);
+                } else {
+                    Log.e(TAG, "View.getTag() is error");
+                    showMessage(getString(R.string.data_error));
+                }
                 break;
         }
     }

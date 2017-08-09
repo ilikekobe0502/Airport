@@ -2,10 +2,17 @@ package com.whatmedia.ttia.utility;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TimePicker;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +27,8 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
  */
 
 public class Util {
+    private final static String TAG = Util.class.getSimpleName();
+
     public final static String TAG_FORMAT_YMD = "yyyy/MM/dd";
     public final static String TAG_FORMAT_MD = "MM/dd";
     public final static String TAG_FORMAT_HM = "HH:mm";
@@ -115,7 +124,7 @@ public class Util {
      * @return
      */
     public static int getNowTime() {
-        return (int) (System.currentTimeMillis()/1000);
+        return (int) (System.currentTimeMillis() / 1000);
     }
 
     /**

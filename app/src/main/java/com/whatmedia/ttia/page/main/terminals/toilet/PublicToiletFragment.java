@@ -4,12 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,18 +32,18 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     ImageView mImageViewLeft;
     @BindView(R.id.imageView_right)
     ImageView mImageViewRight;
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.imageView_zoom)
-    ImageView mImageViewZoom;
+    @BindView(R.id.webView)
+    WebView mWebView;
+    @BindView(R.id.webView_terminal_two)
+    WebView mWebViewTerminalTwo;
 
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private PublicToiletContract.Presenter mPresenter;
 
-    private PublicToiletRecyclerViewAdapter mAdapter;
-    private boolean mIsZoomIn = false;
+    private AirportFacilityData mTerminalOne;
+    private AirportFacilityData mTerminalTwo;
 
     public PublicToiletFragment() {
         // Required empty public constructor
@@ -77,10 +77,10 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
         mLoadingView.showLoadingView();
         mPresenter.getPublicToiletAPI();
 
-        mAdapter = new PublicToiletRecyclerViewAdapter(getContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
-
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setDisplayZoomControls(false);
+        mWebViewTerminalTwo.getSettings().setBuiltInZoomControls(true);
+        mWebViewTerminalTwo.getSettings().setDisplayZoomControls(false);
         return view;
     }
 
@@ -120,17 +120,39 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     @Override
     public void getPublicToiletSucceed(final List<AirportFacilityData> response) {
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mTextViewSubtitle.setText(mAdapter.setData(response));
-            }
-        });
+        if (response != null) {
+            mTerminalOne = response.size() > 0 ? response.get(0) : new AirportFacilityData();
+            mTerminalTwo = response.size() >= 1 ? response.get(1) : new AirportFacilityData();
+
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (!TextUtils.isEmpty(mTerminalOne.getContent())) {
+                        mWebView.loadData(mTerminalOne.getContent(), "text/html; charset=utf-8", "UTF-8");
+                    } else {
+                        Log.e(TAG, "mTerminalTwo.getContent() is error");
+                        showMessage(getString(R.string.data_error));
+                    }
+
+                    if (!TextUtils.isEmpty(mTerminalTwo.getContent())) {
+                        mWebViewTerminalTwo.loadData(mTerminalTwo.getContent(), "text/html; charset=utf-8", "UTF-8");
+                    } else {
+                        Log.e(TAG, "mTerminalTwo.getContent() is error");
+                        showMessage(getString(R.string.data_error));
+                    }
+                    setLeftView();
+                }
+            });
+        } else {
+            Log.e(TAG, "GetPublicToilet response is error");
+            showMessage(getString(R.string.data_error));
+        }
     }
 
     @Override
     public void getPublicFailed(final String message) {
-        Log.e(TAG, "message");
+        Log.e(TAG, "message: " + message);
         mLoadingView.showLoadingView();
         mMainActivity.runOnUI(new Runnable() {
             @Override
@@ -140,30 +162,39 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
         });
     }
 
-    @OnClick({R.id.imageView_left, R.id.imageView_right, R.id.imageView_zoom})
+    @OnClick({R.id.imageView_left, R.id.imageView_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_left:
                 mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_on));
                 mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_off));
-                mTextViewSubtitle.setText(mAdapter.setTerminal(true));
+
+                setLeftView();
                 break;
             case R.id.imageView_right:
                 mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
                 mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
-                mTextViewSubtitle.setText(mAdapter.setTerminal(false));
-                break;
-            case R.id.imageView_zoom:
-                // TODO: 2017/8/5 click zoom picture
-                //是否在Zoom in狀態
-                if (!mIsZoomIn) { //Zoom out to Zoom in
-                    mIsZoomIn = true;
-                    mImageViewZoom.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.public_toilet_03_02_dow));
-                } else {//Zoom in to Zoom out
-                    mImageViewZoom.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.public_toilet_03_02_up));
-                    mIsZoomIn = false;
-                }
+
+                setRightView();
                 break;
         }
+    }
+
+    /**
+     * Set left view
+     */
+    private void setLeftView() {
+        mWebViewTerminalTwo.setVisibility(View.GONE);
+        mWebView.setVisibility(View.VISIBLE);
+        mTextViewSubtitle.setText(!TextUtils.isEmpty(mTerminalOne.getTerminalsName()) ? mTerminalOne.getTerminalsName() : "");
+    }
+
+    /**
+     * Set right view
+     */
+    private void setRightView() {
+        mWebViewTerminalTwo.setVisibility(View.VISIBLE);
+        mWebView.setVisibility(View.GONE);
+        mTextViewSubtitle.setText(!TextUtils.isEmpty(mTerminalTwo.getTerminalsName()) ? mTerminalTwo.getTerminalsName() : "");
     }
 }
