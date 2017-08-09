@@ -129,13 +129,23 @@ public class Page {
             fragmentTransaction.addToBackStack(fragmentName);
         fragmentTransaction.commit();
     }
-
-    public static void clearBackStack() {
-
-    }
-
+    /**
+     * Set back Stack change listener
+     *
+     * @param activity
+     * @param listener
+     */
     public static void setBackStackChangedListener(AppCompatActivity activity, FragmentManager.OnBackStackChangedListener listener) {
         activity.getSupportFragmentManager().addOnBackStackChangedListener(listener);
+    }
+
+    /**
+     * clear back stack
+     *
+     * @param activity
+     */
+    public static void clearBackStack(AppCompatActivity activity) {
+        activity.getSupportFragmentManager().popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     private static android.support.v4.app.Fragment getFragment(int page) {

@@ -73,6 +73,14 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         Page.setBackStackChangedListener(this, this);
         addFragment(Page.TAG_HOME, null, false);
+
+        mImageViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Page.clearBackStack(MainActivity.this);
+                addFragment(Page.TAG_HOME, null, false);
+            }
+        });
     }
 
     @Override
@@ -140,7 +148,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             Log.i(TAG, "getBackStackEntryCount = " + getSupportFragmentManager().getBackStackEntryCount());
             //除了Home 以外頁面的跑馬燈
             mMyMarquee.clearState().
-                    setMessage(getString(R.string.marquee_default_message, "")).setIconVisibility(View.GONE);
+                    setMessage(getString(R.string.marquee_default_message, ""))
+                    .setIconVisibility(View.GONE);
             mImageViewHome.setVisibility(View.VISIBLE);
             if (fragment instanceof HomeFragment) {//Home
                 mImageViewHome.setVisibility(View.GONE);
@@ -560,6 +569,6 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             }
         } else
-            Log.e(TAG, "AirportEmergencyFragment is null");
+            Log.e(TAG, "Fragment is null : ");
     }
 }
