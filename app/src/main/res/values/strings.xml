@@ -5,6 +5,7 @@
     <string name="press_again_left">再點一次離開app</string>
     <string name="server_error">伺服器錯誤</string>
     <string name="data_error">資料錯誤</string>
+    <string name="data_not_found">找不到資料</string>
     <string name="ok">確定</string>
     <string name="note">提醒</string>
 
@@ -54,7 +55,8 @@
     <string name="dialog_detail_title">詳細資訊</string>
     <string name="dialog_airline_name">航空公司</string>
     <string name="dialog_flight_code">班機號碼</string>
-    <string name="dialog_target_location">目的地</string>
+    <string name="dialog_target_arrive_location">抵達地</string>
+    <string name="dialog_target_departure_location">出發地</string>
     <string name="dialog_expected_arrive_time">預計抵達時間</string>
     <string name="dialog_actual_arrive_time">實際抵達時間</string>
     <string name="dialog_terminal">航廈</string>

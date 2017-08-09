@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
+import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
@@ -52,13 +53,12 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
         if (item == null)
             return;
 
-        String url = "http://125.227.250.187:8866/Images/AirportFacilities/img/t1_1f.png";
         holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorId()) ? item.getFloorId() : "");
         holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
         holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
         String pictureUrl;
         if (!TextUtils.isEmpty(item.getImgPath())) {
-            pictureUrl = item.getImgPath();
+            pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
             // TODO: 2017/8/6 corner mot work
             Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(100, 0)).into(holder.mImageViewPicture);
         } else

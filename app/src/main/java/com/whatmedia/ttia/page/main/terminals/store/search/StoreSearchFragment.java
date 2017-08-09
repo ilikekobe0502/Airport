@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.terminals.store.search;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -175,10 +176,20 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
 
     @Override
     public void getRestaurantInfoSucceed(String response) {
-        mLoadingView.goneLoadingView();
-        Bundle bundle = new Bundle();
-        bundle.putString(StoreSearchResultContract.TAG_RESULT, response);
-        mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+        if (!TextUtils.isEmpty(response)) {
+            mLoadingView.goneLoadingView();
+            Bundle bundle = new Bundle();
+            bundle.putString(StoreSearchResultContract.TAG_RESULT, response);
+            mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+        } else {
+            Log.e(TAG, "getRestaurantInfoSucceed response is null");
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(getString(R.string.data_not_found));
+                }
+            });
+        }
     }
 
     @Override
