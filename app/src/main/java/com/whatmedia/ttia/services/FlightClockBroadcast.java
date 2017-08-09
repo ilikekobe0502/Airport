@@ -1,18 +1,11 @@
 package com.whatmedia.ttia.services;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.util.Calendar;
-import android.icu.util.GregorianCalendar;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.page.main.MainActivity;
+import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 
 /**
  * Created by neo_mac on 2017/8/8.
@@ -24,11 +17,13 @@ public class FlightClockBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive");
-        createNotification(context, "您的航班將要起飛");
+        createNotification(context, intent);
     }
 
-    private void createNotification(Context context, String message) {
+    private void createNotification(Context context, Intent intent) {
         Intent i = new Intent(context, FlightClockIntentService.class);
+        i.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING, intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING));
+        i.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_ID, intent.getExtras().getInt(MyFlightsNotifyContract.TAG_NOTIFY_ID));
         context.startService(i);
     }
 }

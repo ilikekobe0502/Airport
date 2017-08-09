@@ -6,13 +6,12 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -38,12 +37,11 @@ import butterknife.OnClick;
  * Created by neo_mac on 2017/8/4.
  */
 
-public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyFlightsNotifyRecyclerViewAdapter.ViewHolder> {
+public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyFlightsNotifyRecyclerViewAdapter.ViewHolder> implements CompoundButton.OnCheckedChangeListener {
     private final static String TAG = MyFlightsNotifyRecyclerViewAdapter.class.getSimpleName();
     private List<ClockData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
-    private java.util.GregorianCalendar mCalendar = new java.util.GregorianCalendar();
 
     public MyFlightsNotifyRecyclerViewAdapter(Context context, List<ClockData> data) {
         mContext = context;
@@ -66,7 +64,7 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mItems == null)
             return;
-        ClockData item = mItems.get(position);
+        final ClockData item = mItems.get(position);
         if (item == null)
             return;
 
@@ -78,6 +76,7 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
             holder.mSwitchOpen.setText(R.string.my_flights_notify_off);
 
         holder.mTextViewTime.setTag(item);
+        holder.mSwitchOpen.setOnCheckedChangeListener(this);
         holder.mSwitchOpen.setTag(item);
     }
 
@@ -88,12 +87,26 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
 
     public void setData(List<ClockData> data) {
         mItems = data;
-        setBroadcast(data.get(data.size() - 1));
+        Util.setAlertClock(mContext, data.get(data.size() - 1));
         notifyDataSetChanged();
     }
 
     public void setClickListener(IOnItemClickListener listener) {
         mListener = listener;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView.getTag() != null && buttonView.getTag() instanceof ClockData) {
+            ClockData item = (ClockData) buttonView.getTag();
+            if (isChecked) {
+                Util.setAlertClock(mContext, item);
+            } else {
+                Util.cancelAlertClock(mContext, item.getId());
+            }
+        } else {
+            Log.d("TAG", "view.getTag error");
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -102,7 +115,7 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
         @BindView(R.id.textView_time)
         TextView mTextViewTime;
         @BindView(R.id.switch_open)
-        Switch mSwitchOpen;
+        android.support.v7.widget.SwitchCompat mSwitchOpen;
 
         ViewHolder(View view) {
             super(view);
@@ -129,9 +142,8 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
 
                                 Gson gson = new Gson();
 
-//                                List<ClockData> clockDataList = mItems;
                                 for (ClockData data : mItems) {
-                                    if (TextUtils.equals(data.getId(), recyclerViewItem.getId())) {
+                                    if (data.getId() == recyclerViewItem.getId()) {
                                         data.setTime(clockTimeData);
                                         data.setTimeString(mTextViewTime.getText().toString());
                                         data.setNotify(mSwitchOpen.isChecked());
@@ -145,15 +157,11 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
                         });
                         break;
                     case R.id.switch_open:
-//                        List<ClockData> clockDataList = mItems;
                         for (ClockData data : mItems) {
-                            if (TextUtils.equals(data.getId(), recyclerViewItem.getId())) {
+                            if (data.getId() == recyclerViewItem.getId()) {
                                 data.setNotify(mSwitchOpen.isChecked());
-                                if (mSwitchOpen.isChecked())
-                                    setBroadcast(data);
                             }
                         }
-
                         Gson gson = new Gson();
                         String json = gson.toJson(mItems);
 
@@ -166,27 +174,5 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
                 Log.e(TAG, "View.getTag() is null");
             }
         }
-    }
-
-    /**
-     * Set broadcast notification
-     *
-     * @param data
-     */
-    private void setBroadcast(ClockData data) {
-        int sec = (int) data.getTime().getSec();
-        Integer id = Integer.parseInt(data.getId());
-        Calendar cal1 = Calendar.getInstance();
-        cal1.add(Calendar.SECOND, sec);
-        Log.d(TAG, "配置鬧終於" + sec + "秒後: " + cal1);
-
-        Intent intent = new Intent(mContext, FlightClockBroadcast.class);
-        intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_KEY, data.getTimeString());
-
-
-        PendingIntent pi1 = PendingIntent.getBroadcast(mContext, 1, intent, 0);
-
-        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, cal1.getTimeInMillis(), pi1);
     }
 }

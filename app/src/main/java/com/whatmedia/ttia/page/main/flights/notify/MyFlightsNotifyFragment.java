@@ -26,6 +26,8 @@ import com.whatmedia.ttia.utility.Util;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -140,27 +142,29 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
         Util.showTimePicker(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Gson gson = new Gson();
-                HashMap<String, Long> diffTime = Util.getCountTime(hourOfDay + ":" + minute);
-                ClockTimeData clockTimeData = new ClockTimeData();
-                clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
-                clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
-                clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
-                String timeString = view.getContext().getString(R.string.my_flights_notify, clockTimeData.getHour(), clockTimeData.getMin());
+                if (view.isShown()) {
+                    Gson gson = new Gson();
+                    HashMap<String, Long> diffTime = Util.getCountTime(hourOfDay + ":" + minute);
+                    ClockTimeData clockTimeData = new ClockTimeData();
+                    clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
+                    clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
+                    clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
+                    String timeString = view.getContext().getString(R.string.my_flights_notify, clockTimeData.getHour(), clockTimeData.getMin());
 
-                List<ClockData> datas = ClockDataList.newInstance(Preferences.getClockData(getContext()));
+                    List<ClockData> datas = ClockDataList.newInstance(Preferences.getClockData(getContext()));
 
-                ClockData clockData = new ClockData();
-                clockData.setId(String.valueOf(Util.getNowTime()));
-                clockData.setTime(clockTimeData);
-                clockData.setTimeString(timeString);
-                clockData.setNotify(true);
-                datas.add(clockData);
+                    ClockData clockData = new ClockData();
+                    clockData.setId(new Random().nextInt(800 - 100) + 65);
+                    clockData.setTime(clockTimeData);
+                    clockData.setTimeString(timeString);
+                    clockData.setNotify(true);
+                    datas.add(clockData);
 
-                String json = gson.toJson(datas);
+                    String json = gson.toJson(datas);
 
-                Preferences.saveClockData(view.getContext(), json);
-                mAdapter.setData(datas);
+                    Preferences.saveClockData(view.getContext(), json);
+                    mAdapter.setData(datas);
+                }
             }
         });
     }
