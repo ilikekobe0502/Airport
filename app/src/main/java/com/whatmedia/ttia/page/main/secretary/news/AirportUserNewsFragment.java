@@ -69,7 +69,7 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
         mLoadingView.showLoadingView();
         mPresenter.getUserNewsAPI();
 
-        mAdapter = new AirportUserNewsRecyclerViewAdapter();
+        mAdapter = new AirportUserNewsRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnclick(this);

@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:paddingBottom="@dimen/dp_pixel_2"
+    android:paddingTop="@dimen/dp_pixel_2">
 
     <ImageView
         android:id="@+id/imageView_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/dp_pixel_4"
         android:background="@drawable/my_flight_02_02_no" />
 
     <RelativeLayout
+        android:layout_toRightOf="@+id/imageView_check"
         android:id="@+id/layout_frame"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_60"
-        android:background="@drawable/flight_bg"
-        android:paddingBottom="@dimen/dp_pixel_2"
-        android:paddingTop="@dimen/dp_pixel_2">
+        android:layout_marginLeft="@dimen/dp_pixel_7"
+        android:layout_marginRight="@dimen/dp_pixel_7"
+        android:background="@drawable/flight_background">
 
         <TextView
             android:id="@+id/textView_time"
@@ -36,19 +39,26 @@
             android:layout_toRightOf="@+id/textView_time"
             android:background="@color/colorLine" />
 
-        <ImageView
-            android:id="@+id/imageView_logo"
+        <RelativeLayout
+            android:id="@+id/layout_logo"
             android:layout_width="@dimen/dp_pixel_50"
             android:layout_height="@dimen/dp_pixel_50"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/line1"
-            android:scaleType="centerCrop" />
+            android:layout_toRightOf="@+id/line1">
+
+            <ImageView
+                android:id="@+id/imageView_logo"
+                android:layout_width="@dimen/dp_pixel_20"
+                android:layout_height="@dimen/dp_pixel_20"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop" />
+        </RelativeLayout>
 
         <View
             android:id="@+id/line2"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/imageView_logo"
+            android:layout_toRightOf="@+id/layout_logo"
             android:background="@color/colorLine" />
 
 
@@ -111,9 +121,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingRight="@dimen/dp_pixel_10"
             android:textColor="@color/colorText"
             android:textSize="@dimen/sp_pixel_13" />
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

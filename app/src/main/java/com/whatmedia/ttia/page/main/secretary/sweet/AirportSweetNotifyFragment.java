@@ -66,7 +66,7 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
         mLoadingView.showLoadingView();
         mPresenter.getSweetNotifyAPI();
 
-        mAdapter = new AirportSweetNotifyRecyclerViewAdapter();
+        mAdapter = new AirportSweetNotifyRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnclick(this);

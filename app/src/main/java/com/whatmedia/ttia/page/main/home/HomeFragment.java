@@ -72,12 +72,20 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mViewPagerInfo.addOnPageChangeListener(this);
         //Init toolbar
         setDepartureToolbar();
+        //Init Marquee
+        setMarquee();
 
         mViewPagerFeature.setAdapter(mFeatureAdapter);
         mFeatureAdapter.setClickListener(this);
         mTabIndicator.setupWithViewPager(mViewPagerFeature, true);
 
         return view;
+    }
+
+    private void setMarquee() {
+        mMainActivity.getMyMarquee().clearState()
+                .setMessage(getString(R.string.marquee_default_message, ""))
+                .setIcon(R.drawable.marquee_new);
     }
 
     @Override
@@ -170,7 +178,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         .setBackground(ContextCompat.getColor(getContext(), R.color.colorBackgroundHomeParkingInfo))
                         .setLeftText(getString(R.string.airport_traffic_parking_info))
                         .setRightText(getString(R.string.home_more))
-                        .setRightIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more));
+                        .setRightIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
+                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mViewPagerInfo.setCurrentItem(0);
+                                mMainActivity.addFragment(Page.TAG_PARK_INFO, null, true);
+                            }
+                        });
                 break;
             case 3://天氣資訊
                 mMainActivity.getMyToolbar().clearState()

@@ -1,4 +1,4 @@
-package com.whatmedia.ttia.component;
+package com.whatmedia.ttia.component.dialog;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -62,6 +63,7 @@ public class MyStoreDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_store_my_dialog, container);
         ButterKnife.bind(this, view);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return view;
     }
 

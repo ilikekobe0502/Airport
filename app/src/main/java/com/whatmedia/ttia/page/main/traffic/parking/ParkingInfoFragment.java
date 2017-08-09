@@ -241,20 +241,9 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
         if (mMap == null)
             mMap = googleMap;
         mMap.clear();
-        // TODO: 2017/8/6 api location mark
-        // TODO: 2017/8/6 mark title picture
         //init camera location
         LatLng initLocation = new LatLng(25.082382, 121.236331);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(initLocation, 15));
-
-        //mark parking lot
-        MarkerOptions marker = new MarkerOptions().position(initLocation).title("桃園機場");
-//        marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_info_04_01_01));
-        marker.icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(R.drawable.parking_info_04_01_01
-                , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
-                , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50))));
-//        mMap.addMarker(marker);
-
 
     }
 
@@ -299,10 +288,10 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
                 textViewName.setText(getString(R.string.parking_info_parking_space_P2));
             else if (TextUtils.equals(data.getId(), HomeParkingInfoData.TAG_ID_P3)) {
                 textViewName.setText(getString(R.string.parking_info_parking_space_P4));
-                textViewSubName.setText(getString(R.string.parking_info_parking_space_1F));
+                textViewSubName.setText(getString(R.string.parking_info_parking_space_B1_B2));
             } else {
                 textViewName.setText(getString(R.string.parking_info_parking_space_P4));
-                textViewSubName.setText(getString(R.string.parking_info_parking_space_B1_B2));
+                textViewSubName.setText(getString(R.string.parking_info_parking_space_1F));
             }
 
             textViewCount.setText(!TextUtils.isEmpty(data.getAvailableCar()) ? data.getAvailableCar() : "0");

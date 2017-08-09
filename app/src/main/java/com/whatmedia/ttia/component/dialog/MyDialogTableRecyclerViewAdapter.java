@@ -1,4 +1,4 @@
-package com.whatmedia.ttia.component;
+package com.whatmedia.ttia.component.dialog;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;

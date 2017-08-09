@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_120"
         android:layout_alignParentBottom="true"
-        android:alpha="0.6"
-        android:background="@android:color/black">
+        android:background="@color/black0.6"
+        android:clickable="true">
 
         <LinearLayout
             android:id="@+id/layout_enough"

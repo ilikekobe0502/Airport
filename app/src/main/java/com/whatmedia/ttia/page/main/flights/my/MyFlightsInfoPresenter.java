@@ -7,7 +7,7 @@ import android.util.Log;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.response.GetMyFlightsResponse;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.response.data.MyFlightsInfoData;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,7 +49,7 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     Log.d(TAG, result);
-                    List<MyFlightsInfoData> list = GetMyFlightsResponse.newInstance(result);
+                    List<FlightsInfoData> list = GetMyFlightsResponse.newInstance(result);
                     mView.getMyFlightsInfoSucceed(list);
                 } else {
                     mView.getMyFlightsInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");

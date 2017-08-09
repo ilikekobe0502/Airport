@@ -13,9 +13,15 @@ public interface MoreFlightsContract {
         void getFlightSucceed(List<FlightsInfoData> list);
 
         void getFlightFailed(String message);
+
+        void saveMyFlightSucceed(String message);
+
+        void saveMyFlightFailed(String message);
     }
 
     interface Presenter {
         void getFlightAPI(FlightSearchData searchData);
+
+        void saveMyFlightsAPI(FlightsInfoData data);
     }
 }

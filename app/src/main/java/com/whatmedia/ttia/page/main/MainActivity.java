@@ -7,15 +7,19 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.enums.FlightInfo;
 import com.whatmedia.ttia.enums.HomeFeature;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
+import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultFragment;
 import com.whatmedia.ttia.page.main.flights.search.FlightsSearchFragment;
@@ -53,6 +57,10 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     MyToolbar mMyToolbar;
     @BindView(R.id.loadingView)
     FrameLayout mLoadingView;
+    @BindView(R.id.myMarquee)
+    MyMarquee mMyMarquee;
+    @BindView(R.id.imageView_home)
+    ImageView mImageViewHome;
 
 
     @Override
@@ -61,8 +69,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        replaceFragment(Page.TAG_HOME, null, false);
         Page.setBackStackChangedListener(this, this);
+        addFragment(Page.TAG_HOME, null, false);
     }
 
     @Override
@@ -101,6 +109,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     }
 
     @Override
+    public MyMarquee getMyMarquee() {
+        return mMyMarquee;
+    }
+
+    @Override
     public void backPress() {
         onBackPressed();
     }
@@ -122,7 +135,16 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_container);
         if (fragment != null) {
             Log.i(TAG, "Current fragment = " + fragment);
+            Log.i(TAG, "getBackStackEntryCount = " + getSupportFragmentManager().getBackStackEntryCount());
+            //除了Home 以外頁面的跑馬燈
+            mMyMarquee.clearState().
+                    setMessage(getString(R.string.marquee_default_message, "")).setIconVisibility(View.GONE);
+            mImageViewHome.setVisibility(View.VISIBLE);
             if (fragment instanceof HomeFragment) {//Home
+                mImageViewHome.setVisibility(View.GONE);
+                mMyMarquee.clearState()
+                        .setMessage(getString(R.string.marquee_default_message, ""))
+                        .setIcon(R.drawable.marquee_new);
                 mMyToolbar.clearState()
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorBackgroundHomeDeparture))
                         .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
@@ -459,6 +481,36 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                  *
                  *
                  ****************************************/
+            } else if (fragment instanceof MyFlightsInfoFragment) {//我的航班
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.flights_info_my_flights))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof MoreFlightsFragment) {//更多航班
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.home_more_flights))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
             }
         } else
             Log.e(TAG, "AirportEmergencyFragment is null");

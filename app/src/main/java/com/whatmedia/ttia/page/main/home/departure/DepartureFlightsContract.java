@@ -12,9 +12,15 @@ public interface DepartureFlightsContract {
         void getDepartureFlightSucceed(List<FlightsInfoData> list);
 
         void getDepartureFlightFailed(String message);
+
+        void saveMyFlightSucceed(String message);
+
+        void saveMyFlightFailed(String message);
     }
 
     interface Presenter {
         void getDepartureFlightAPI(FlightSearchData searchData);
+
+        void saveMyFlightsAPI(FlightsInfoData data);
     }
 }

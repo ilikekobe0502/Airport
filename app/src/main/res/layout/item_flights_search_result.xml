@@ -3,9 +3,15 @@
     android:id="@+id/layout_frame"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_pixel_60"
-    android:background="@drawable/flight_bg"
     android:paddingBottom="@dimen/dp_pixel_2"
     android:paddingTop="@dimen/dp_pixel_2">
+
+    <ImageView
+        android:layout_marginLeft="@dimen/dp_pixel_15"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/flight_background" />
 
     <TextView
         android:id="@+id/textView_time"
@@ -23,19 +29,26 @@
         android:layout_toRightOf="@+id/textView_time"
         android:background="@color/colorLine" />
 
-    <ImageView
-        android:id="@+id/imageView_logo"
+    <RelativeLayout
+        android:id="@+id/layout_logo"
         android:layout_width="@dimen/dp_pixel_50"
         android:layout_height="@dimen/dp_pixel_50"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/line1"
-        android:scaleType="centerCrop" />
+        android:layout_toRightOf="@+id/line1">
+
+        <ImageView
+            android:id="@+id/imageView_logo"
+            android:layout_width="@dimen/dp_pixel_20"
+            android:layout_height="@dimen/dp_pixel_20"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
 
     <View
         android:id="@+id/line2"
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/imageView_logo"
+        android:layout_toRightOf="@+id/layout_logo"
         android:background="@color/colorLine" />
 
 
@@ -98,7 +111,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:paddingRight="@dimen/dp_pixel_10"
         android:textColor="@color/colorText"
         android:textSize="@dimen/sp_pixel_13" />

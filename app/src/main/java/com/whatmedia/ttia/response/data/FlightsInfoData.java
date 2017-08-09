@@ -15,10 +15,37 @@ public class FlightsInfoData {
     public final static String TAG_ARRIVED = "已到";
     public final static String TAG_CANCELLED = "取消";
     public final static String TAG_SCHEDULE_CHANGE = "時間更改";
+    public final static String TAG_DEPARTED = "出發";
+
+    public final static String TAG_ON_TIME_SHOW_TEXT = "準時";
+    public final static String TAG_DELAY_SHOW_TEXT = "延遲\nDelay";
+    public final static String TAG_ARRIVED_SHOW_TEXT = "已到\nArrive";
+    public final static String TAG_CANCELLED_SHOW_TEXT = "取消\nCancelled";
+    public final static String TAG_SCHEDULE_CHANGE_SHOW_TEXT = "時間更改\nSchedule change";
+    public final static String TAG_DEPARTED_SHOW_TEXT = "出發\nDeparture";
 
     public final static String TAG_TYPE_INSERT = "0";//新增
     public final static String TAG_TYPE_DELETE = "1";//刪除
-
+    @SerializedName("UserID")
+    private String userId;
+    @SerializedName("Devicetoken")
+    private String deviceToken;
+    @SerializedName("DeviceType")
+    private String deviceType;
+    @SerializedName("OtherWaypoint")
+    private String otherWavpoint;
+    @SerializedName("CExpressTime")
+    private String CExpressTime;
+    @SerializedName("CExpectedTime")
+    private String CExpectedTime;
+    @SerializedName("CTName")
+    private String CTName;
+    @SerializedName("CSName")
+    private String CSName;
+    @SerializedName("JName")
+    private String JName;
+    @SerializedName("EName")
+    private String EName;
     @SerializedName("ID")
     private String id;
     @SerializedName("Terminals")
@@ -51,8 +78,6 @@ public class FlightsInfoData {
     private String flightStatus;
     @SerializedName("PlaneModel")
     private String plabeModel;
-    @SerializedName("OtherWaypoint")
-    private String otherWaypoint;
     @SerializedName("OtherWaypointEng")
     private String otherWaypointEng;
     @SerializedName("OtherWaypointChinese")
@@ -64,6 +89,7 @@ public class FlightsInfoData {
     @SerializedName("FlightCode")
     private String flightCode;
     private String type;
+    private boolean isCheck;
 
     public String getId() {
         return id;
@@ -193,14 +219,6 @@ public class FlightsInfoData {
         this.plabeModel = plabeModel;
     }
 
-    public String getOtherWaypoint() {
-        return otherWaypoint;
-    }
-
-    public void setOtherWaypoint(String otherWaypoint) {
-        this.otherWaypoint = otherWaypoint;
-    }
-
     public String getOtherWaypointEng() {
         return otherWaypointEng;
     }
@@ -247,5 +265,93 @@ public class FlightsInfoData {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getOtherWavpoint() {
+        return otherWavpoint;
+    }
+
+    public void setOtherWavpoint(String otherWavpoint) {
+        this.otherWavpoint = otherWavpoint;
+    }
+
+    public String getCExpressTime() {
+        return CExpressTime;
+    }
+
+    public void setCExpressTime(String CExpressTime) {
+        this.CExpressTime = CExpressTime;
+    }
+
+    public String getCExpectedTime() {
+        return CExpectedTime;
+    }
+
+    public void setCExpectedTime(String CExpectedTime) {
+        this.CExpectedTime = CExpectedTime;
+    }
+
+    public String getCTName() {
+        return CTName;
+    }
+
+    public void setCTName(String CTName) {
+        this.CTName = CTName;
+    }
+
+    public String getCSName() {
+        return CSName;
+    }
+
+    public void setCSName(String CSName) {
+        this.CSName = CSName;
+    }
+
+    public String getJName() {
+        return JName;
+    }
+
+    public void setJName(String JName) {
+        this.JName = JName;
+    }
+
+    public String getEName() {
+        return EName;
+    }
+
+    public void setEName(String EName) {
+        this.EName = EName;
+    }
+
+    public boolean getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(boolean check) {
+        isCheck = check;
     }
 }

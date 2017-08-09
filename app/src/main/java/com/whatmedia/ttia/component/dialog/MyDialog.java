@@ -1,4 +1,4 @@
-package com.whatmedia.ttia.component;
+package com.whatmedia.ttia.component.dialog;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class MyDialog extends DialogFragment {
 
     private List<DialogContentData> mTableList;
     private String mTitle;
+    private String mRightText;
     private int mButtonType;
     private int mRecyclerViewType;
     private MyDialogTableRecyclerViewAdapter mTableAdapter;
@@ -60,6 +62,8 @@ public class MyDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_dialog, container);
         ButterKnife.bind(this, view);
+
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return view;
     }
 
@@ -94,7 +98,7 @@ public class MyDialog extends DialogFragment {
             mTableAdapter = new MyDialogTableRecyclerViewAdapter(mTableList);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(mTableAdapter);
-
+            mButtonOk.setText(!TextUtils.isEmpty(mRightText) ? mRightText : getString(R.string.dialog_join));
         }
     }
 
@@ -117,5 +121,20 @@ public class MyDialog extends DialogFragment {
     public MyDialog setTitle(String title) {
         mTitle = title;
         return this;
+    }
+
+    public MyDialog setRightText(String text) {
+        mRightText = text;
+        return this;
+    }
+
+    @Override
+    public void onDestroyView() {
+        mRightText = "";
+        mRightListener = null;
+        mLeftListener = null;
+        mTableList.clear();
+        mTitle = "";
+        super.onDestroyView();
     }
 }

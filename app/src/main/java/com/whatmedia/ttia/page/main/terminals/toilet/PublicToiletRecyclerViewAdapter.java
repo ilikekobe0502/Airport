@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -64,13 +65,6 @@ public class PublicToiletRecyclerViewAdapter extends RecyclerView.Adapter<Public
             holder.mWebView.loadData(item.getContent(), "text/html; charset=utf-8", "UTF-8");
         else
             holder.mWebView.setVisibility(View.INVISIBLE);
-//        if (!TextUtils.isEmpty(item.getMainImgPath())) {
-//            holder.mImageViewPicture.setVisibility(View.VISIBLE);
-//            String imageUrl = ApiConnect.TAG_IMAGE_HOST + item.getMainImgPath();
-//            Log.d(TAG, imageUrl);
-//            Picasso.with(mContext).load(imageUrl).into(holder.mImageViewPicture);
-//        } else
-//            holder.mImageViewPicture.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -125,6 +119,9 @@ public class PublicToiletRecyclerViewAdapter extends RecyclerView.Adapter<Public
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+
+            mWebView.getSettings().setBuiltInZoomControls(true);
+            mWebView.getSettings().setDisplayZoomControls(false);
         }
     }
 }

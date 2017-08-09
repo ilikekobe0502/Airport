@@ -40,11 +40,12 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/imageView_zoom"
         android:layout_below="@+id/layout_subtitle" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/imageView_zoom"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_pixel_40"

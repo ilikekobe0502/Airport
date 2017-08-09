@@ -87,11 +87,11 @@ public class Page {
      * @param backStack
      */
     public static void switchFragment(AppCompatActivity activity, int page, Bundle bundle, boolean backStack) {
-        String fragmentName = getFragment(page).getClass().getSimpleName();
+        android.support.v4.app.Fragment fragment = getFragment(page);
+        String fragmentName = fragment.getClass().getSimpleName();
+
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        android.support.v4.app.Fragment fragment = getFragment(page);
         if (bundle != null)
             fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.layout_container, fragment, fragmentName);
@@ -109,17 +109,21 @@ public class Page {
      * @param backStack
      */
     public static void addFragment(AppCompatActivity activity, int page, Bundle bundle, boolean backStack) {
-        String fragmentName = getFragment(page).getClass().getSimpleName();
+        android.support.v4.app.Fragment fragment = getFragment(page);
+        String fragmentName = fragment.getClass().getSimpleName();
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        android.support.v4.app.Fragment fragment = getFragment(page);
         if (bundle != null)
             fragment.setArguments(bundle);
         fragmentTransaction.add(R.id.layout_container, fragment, fragmentName);
         if (backStack)
             fragmentTransaction.addToBackStack(fragmentName);
         fragmentTransaction.commit();
+    }
+
+    public static void clearBackStack() {
+
     }
 
     public static void setBackStackChangedListener(AppCompatActivity activity, FragmentManager.OnBackStackChangedListener listener) {

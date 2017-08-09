@@ -1,13 +1,13 @@
 package com.whatmedia.ttia.page.main.flights.my;
 
 import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.response.data.MyFlightsInfoData;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.util.List;
 
 public interface MyFlightsInfoContract {
     interface View {
-        void getMyFlightsInfoSucceed(List<MyFlightsInfoData> response);
+        void getMyFlightsInfoSucceed(List<FlightsInfoData> response);
 
         void getMyFlightsInfoFailed(String message);
 

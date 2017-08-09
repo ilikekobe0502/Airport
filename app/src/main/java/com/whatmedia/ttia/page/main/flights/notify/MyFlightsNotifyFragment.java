@@ -67,7 +67,7 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_flights_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_flights_notify, container, false);
         ButterKnife.bind(this, view);
 
         mPresenter = MyFlightsNotifyPresenter.getInstance(getContext(), this);

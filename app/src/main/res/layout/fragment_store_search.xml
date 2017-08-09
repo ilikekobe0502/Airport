@@ -29,71 +29,133 @@
         android:layout_marginBottom="@dimen/dp_pixel_20"
         android:background="@color/colorFragmentLine" />
 
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView_terminal"
-        android:layout_width="@dimen/dp_pixel_250"
-        android:layout_height="@dimen/dp_pixel_60"
+    <RelativeLayout
+        android:id="@+id/layout_terminal"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_pixel_50"
         android:layout_below="@+id/line"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_pixel_15"
-        android:background="@drawable/input"
-        android:drawableRight="@drawable/input_01"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp_pixel_8"
-        android:text="@string/restaurant_store_search_select_terminal"
-        android:textColor="@color/colorTextStore"
-        android:textSize="@dimen/sp_pixel_15" />
+        android:layout_marginLeft="@dimen/dp_pixel_20">
 
-    <TextView
-        android:id="@+id/textView_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_terminal"
+        <TextView
+            android:id="@+id/textView_terminal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_5"
+            android:background="@drawable/input_background"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_pixel_8"
+            android:text="@string/restaurant_store_search_select_terminal"
+            android:textColor="@color/colorTextStore"
+            android:textSize="@dimen/sp_pixel_15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/input_01" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_area"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_below="@+id/layout_terminal"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_pixel_15"
-        android:background="@drawable/input"
-        android:drawableRight="@drawable/input_01"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp_pixel_8"
-        android:text="@string/restaurant_store_search_select_area"
-        android:textColor="@color/colorTextStore"
-        android:textSize="@dimen/sp_pixel_15" />
+        android:layout_marginLeft="@dimen/dp_pixel_20">
 
-    <TextView
-        android:id="@+id/textView_floor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_area"
+        <TextView
+            android:id="@+id/textView_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_5"
+            android:background="@drawable/input_background"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_pixel_8"
+            android:text="@string/restaurant_store_search_select_area"
+            android:textColor="@color/colorTextStore"
+            android:textSize="@dimen/sp_pixel_15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/input_01" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_floor"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_below="@+id/layout_area"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_pixel_15"
-        android:background="@drawable/input"
-        android:drawableRight="@drawable/input_01"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp_pixel_8"
-        android:text="@string/restaurant_store_search_select_floor"
-        android:textColor="@color/colorTextStore"
-        android:textSize="@dimen/sp_pixel_15" />
+        android:layout_marginLeft="@dimen/dp_pixel_20">
 
-    <TextView
-        android:id="@+id/textView_restaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_floor"
+        <TextView
+            android:id="@+id/textView_floor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_5"
+            android:background="@drawable/input_background"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_pixel_8"
+            android:text="@string/restaurant_store_search_select_floor"
+            android:textColor="@color/colorTextStore"
+            android:textSize="@dimen/sp_pixel_15" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/input_01" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_below="@+id/layout_floor"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_pixel_15"
-        android:background="@drawable/input"
-        android:drawableRight="@drawable/input_01"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp_pixel_8"
-        android:text="@string/restaurant_store_search_select_kind_of_restaurant"
-        android:textColor="@color/colorTextStore"
-        android:textSize="@dimen/sp_pixel_15" />
+        android:layout_marginLeft="@dimen/dp_pixel_20">
 
+        <TextView
+            android:id="@+id/textView_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_5"
+            android:background="@drawable/input_background"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_pixel_8"
+            android:text="@string/restaurant_store_search_select_kind_of_restaurant"
+            android:textColor="@color/colorTextStore"
+            android:textSize="@dimen/sp_pixel_15" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/input_01" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/layout_search"
         android:layout_width="@dimen/dp_pixel_80"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_restaurant"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_below="@+id/layout_restaurant"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/but_bg">
+        android:layout_marginBottom="@dimen/dp_pixel_30"
+        android:layout_marginTop="@dimen/dp_pixel_30"
+        android:background="@drawable/but_bg_mdpi">
 
         <ImageView
             android:id="@+id/imageView_search"
@@ -103,6 +165,7 @@
             android:background="@drawable/magnifier" />
 
         <TextView
+            android:id="@+id/textView_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.dialog.MyDialog;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultRecyclerViewAdapter;
+import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
@@ -23,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DepartureFlightsFragment extends BaseFragment implements DepartureFlightsContract.View {
+public class DepartureFlightsFragment extends BaseFragment implements DepartureFlightsContract.View, IOnItemClickListener {
     private static final String TAG = DepartureFlightsFragment.class.getSimpleName();
 
     @BindView(R.id.recyclerView)
@@ -71,6 +76,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
         return view;
     }
 
@@ -94,7 +100,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-//            mLoadingView = (IActivityTools.ILoadingView) context;
+            mLoadingView = (IActivityTools.ILoadingView) context;
             mMainActivity = (IActivityTools.IMainActivity) context;
         } catch (ClassCastException castException) {
             Log.e(TAG, castException.toString());
@@ -127,5 +133,79 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                 showMessage(getString(R.string.server_error));
             }
         });
+    }
+
+    @Override
+    public void saveMyFlightSucceed(final String message) {
+
+        mLoadingView.goneLoadingView();
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                showMessage(!TextUtils.isEmpty(message) ? message : "");
+                mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, null, true);
+            }
+        });
+    }
+
+    @Override
+    public void saveMyFlightFailed(final String message) {
+
+        mLoadingView.goneLoadingView();
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                Log.e(TAG, message);
+                showMessage(message);
+            }
+        });
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.layout_frame:
+                if (view.getTag() instanceof FlightsInfoData) {
+                    final FlightsInfoData tag = (FlightsInfoData) view.getTag();
+
+                    final MyDialog myDialog = MyDialog.newInstance()
+                            .setTitle(getString(R.string.dialog_detail_title))
+                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setRightClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (tag != null) {
+//                                        FlightsInfoData data = new FlightsInfoData();
+                                        if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
+                                            mLoadingView.showLoadingView();
+                                            tag.setAirlineCode(tag.getAirlineCode());
+                                            if (tag.getShift().length() == 2) {
+                                                tag.setShift("  " + tag.getShift());
+                                            } else if (tag.getShift().length() == 3) {
+                                                tag.setShift(" " + tag.getShift());
+                                            }
+                                            tag.setShift(tag.getShift());
+                                            tag.setExpressDate(tag.getExpressDate());
+                                            tag.setExpressTime(tag.getExpressTime());
+                                            tag.setType("0");
+                                            mPresenter.saveMyFlightsAPI(tag);
+                                        } else {
+                                            Log.e(TAG, "view.getTag() content is error");
+                                            showMessage(getString(R.string.data_error));
+                                        }
+                                    } else {
+                                        Log.e(TAG, "view.getTag() is null");
+                                        showMessage(getString(R.string.data_error));
+                                    }
+                                }
+                            });
+                    myDialog.show(getActivity().getFragmentManager(), "dialog");
+                } else {
+                    Log.e(TAG, "recycler view.getTag is error");
+                    showMessage(getString(R.string.data_error));
+                }
+        }
+
     }
 }

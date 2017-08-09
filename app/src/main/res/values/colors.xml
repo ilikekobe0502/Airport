@@ -18,6 +18,7 @@
     <color name="colorDialogLine">#e5e5e5</color>
     <color name="colorHomeParkingInfoLine">#4a7945</color>
     <color name="colorTextSpecial">#ff0100</color>
+    <color name="colorTextResultHint">#242a36</color>
     <color name="colorTextHomeParkingInfoFull">#f10201</color>
     <color name="colorTextDialogContent">#323a4d</color>
     <color name="colorTextStoreInfoTitle">#ffff00</color>
@@ -30,4 +31,5 @@
     <color name="colorTextParkingEnough">#0096da</color>
     <color name="colorTextParkingFull">#d40a00</color>
     <color name="black0.25">#3f000000</color>
+    <color name="black0.6">#99000000</color>
 </resources>

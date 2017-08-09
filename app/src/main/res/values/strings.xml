@@ -5,7 +5,12 @@
     <string name="press_again_left">再點一次離開app</string>
     <string name="server_error">伺服器錯誤</string>
     <string name="data_error">資料錯誤</string>
+    <string name="ok">確定</string>
+    <string name="note">提醒</string>
 
+    <!-- Marquee -->
+    <string name="marquee_default_message">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！%s</string>
+    <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
 
     <!-- Home -->
     <string name="home_weather_title">天氣資訊</string>
@@ -32,12 +37,16 @@
     <!-- Flights search -->
     <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司貨城市關鍵字</string>
     <string name="flights_search_search">搜尋</string>
+    <string name="flights_search_edit_text_hint">請輸入關鍵字</string>
 
     <!-- Flights search result -->
     <string name="flights_search_result_terminal_text">航</string>
     <string name="flights_search_result_title">搜尋結果</string>
     <string name="flights_search_result_departure_subtitle">%s出發航班</string>
     <string name="flights_search_result_arrive_subtitle">%s抵達航班</string>
+
+    <!-- My Flights -->
+    <string name="my_flights_delete_message">確定刪除航班嗎？</string>
 
     <!-- My dialog -->
     <string name="dialog_cancel">取消</string>

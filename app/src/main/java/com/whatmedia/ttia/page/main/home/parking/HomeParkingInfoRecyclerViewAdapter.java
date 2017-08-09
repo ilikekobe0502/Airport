@@ -56,11 +56,11 @@ public class HomeParkingInfoRecyclerViewAdapter extends RecyclerView.Adapter<Hom
             holder.mTextViewSubName.setVisibility(View.GONE);
         } else if (position == 2) {
             name = mContext.getString(R.string.parking_info_parking_space_P4);
-            subName = mContext.getString(R.string.parking_info_parking_space_1F);
+            subName = mContext.getString(R.string.parking_info_parking_space_B1_B2);
             holder.mTextViewSubName.setVisibility(View.VISIBLE);
         } else if (position == 3) {
             name = mContext.getString(R.string.parking_info_parking_space_P4);
-            subName = mContext.getString(R.string.parking_info_parking_space_B1_B2);
+            subName = mContext.getString(R.string.parking_info_parking_space_1F);
             holder.mTextViewSubName.setVisibility(View.VISIBLE);
         }
         holder.mTextViewName.setText(name);

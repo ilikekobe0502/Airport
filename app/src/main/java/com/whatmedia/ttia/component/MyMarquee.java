@@ -4,14 +4,17 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by neo on 2017/8/7.
@@ -55,7 +58,17 @@ public class MyMarquee extends RelativeLayout {
     }
 
     public MyMarquee setIcon(int resource) {
-        mImageViewIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), resource));
+        if (resource != 0) {
+            mImageViewIcon.setVisibility(VISIBLE);
+            mImageViewIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), resource));
+        } else {
+            mImageViewIcon.setVisibility(GONE);
+        }
+        return this;
+    }
+
+    public MyMarquee clearState() {
+        mImageViewIcon.setVisibility(VISIBLE);
         return this;
     }
 }

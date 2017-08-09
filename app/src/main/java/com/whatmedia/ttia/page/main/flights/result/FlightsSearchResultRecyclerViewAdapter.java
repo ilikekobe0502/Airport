@@ -71,13 +71,14 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorText));
             else
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextSpecial));
-            holder.mTextViewState.setText(item.getFlightStatus());
+            holder.mTextViewState.setText(checkFlightShowText(item.getFlightStatus()));
         } else
             holder.mTextViewState.setText("");
 
         if (!TextUtils.isEmpty(item.getAirlineCode())) {
             int id = Util.getDrawableByString(mContext, "airline_" + item.getAirlineCode().toLowerCase());
-            Picasso.with(mContext).load(id).into(holder.mImageViewLogo);
+            if (id != 0)
+                Picasso.with(mContext).load(id).into(holder.mImageViewLogo);
             holder.mImageViewLogo.setVisibility(View.VISIBLE);
         } else {
             holder.mImageViewLogo.setVisibility(View.INVISIBLE);
@@ -152,5 +153,28 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         if (data.contains(FlightsInfoData.TAG_ON_TIME))
             return true;
         return false;
+    }
+
+    /**
+     * check flights show text
+     *
+     * @param data
+     * @return
+     */
+    private String checkFlightShowText(String data) {
+        String text = FlightsInfoData.TAG_ON_TIME_SHOW_TEXT;
+        if (data.contains(FlightsInfoData.TAG_ON_TIME))
+            text = FlightsInfoData.TAG_ON_TIME_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_DELAY))
+            text = FlightsInfoData.TAG_DELAY_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_ARRIVED))
+            text = FlightsInfoData.TAG_ARRIVED_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_CANCELLED))
+            text = FlightsInfoData.TAG_CANCELLED_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_SCHEDULE_CHANGE))
+            text = FlightsInfoData.TAG_SCHEDULE_CHANGE_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_DEPARTED))
+            text = FlightsInfoData.TAG_DEPARTED_SHOW_TEXT;
+        return text;
     }
 }

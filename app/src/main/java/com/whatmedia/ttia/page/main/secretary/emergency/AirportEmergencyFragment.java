@@ -66,7 +66,7 @@ public class AirportEmergencyFragment extends BaseFragment implements AirportEme
         mLoadingView.showLoadingView();
         mPresenter.getEmergencyAPI();
 
-        mAdapter = new AirportEmergencyRecyclerViewAdapter();
+        mAdapter = new AirportEmergencyRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnclick(this);

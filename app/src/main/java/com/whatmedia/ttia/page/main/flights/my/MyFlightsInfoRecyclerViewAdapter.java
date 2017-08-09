@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.response.data.MyFlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.HashMap;
@@ -34,11 +33,16 @@ import butterknife.OnClick;
 public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFlightsInfoRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = MyFlightsInfoRecyclerViewAdapter.class.getSimpleName();
 
-    private List<MyFlightsInfoData> mItems;
+    private List<FlightsInfoData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
-    //    private List<MyFlightsInfoData> mSelectItems = new ArrayList<>();
-    private Map<String, MyFlightsInfoData> mSelectItems = new HashMap<>();
+    //    private List<FlightsInfoData> mSelectItems = new ArrayList<>();
+    private Map<String, FlightsInfoData> mSelectItems = new HashMap<>();
+
+    public MyFlightsInfoRecyclerViewAdapter(Context context, List<FlightsInfoData> list) {
+        mContext = context;
+        mItems = list;
+    }
 
     public MyFlightsInfoRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -54,7 +58,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mItems == null)
             return;
-        MyFlightsInfoData item = mItems.get(position);
+        FlightsInfoData item = mItems.get(position);
         if (item == null)
             return;
 
@@ -74,19 +78,21 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorText));
             else
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextSpecial));
-            holder.mTextViewState.setText(item.getFlightStatus());
+            holder.mTextViewState.setText(checkFlightShowText(item.getFlightStatus()));
         } else
             holder.mTextViewState.setText("");
 
         if (!TextUtils.isEmpty(item.getAirlineCode())) {
-            int id = Util.getDrawableByString(mContext, "airline_" + item.getAirlineCode().toLowerCase());
-            Picasso.with(mContext).load(id).into(holder.mImageViewLogo);
+            int sourceId = Util.getDrawableByString(mContext, "airline_" + item.getAirlineCode().toLowerCase());
+            if (sourceId != 0)
+                Picasso.with(mContext).load(sourceId).into(holder.mImageViewLogo);
             holder.mImageViewLogo.setVisibility(View.VISIBLE);
         } else {
             holder.mImageViewLogo.setVisibility(View.INVISIBLE);
         }
 
         holder.mImageViewCheck.setTag(item);
+        holder.mLayoutFrame.setTag(item);
     }
 
     @Override
@@ -94,7 +100,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         return mItems != null ? mItems.size() : 0;
     }
 
-    public void setData(List<MyFlightsInfoData> data) {
+    public void setData(List<FlightsInfoData> data) {
         mItems = data;
         mSelectItems.clear();
         notifyDataSetChanged();
@@ -109,9 +115,9 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
      *
      * @return
      */
-    public Map<String, MyFlightsInfoData> getSelectData() {
+    public Map<String, FlightsInfoData> getSelectData() {
         if (mItems != null) {
-            for (MyFlightsInfoData item : mItems) {
+            for (FlightsInfoData item : mItems) {
                 if (item.getIsCheck())
                     mSelectItems.put(item.getId(), item);
             }
@@ -146,19 +152,27 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
             ButterKnife.bind(this, view);
         }
 
-        @OnClick(R.id.imageView_check)
+        @OnClick({R.id.imageView_check, R.id.layout_frame})
         public void onClick(View view) {
-            if (view.getTag() != null) {
-                MyFlightsInfoData selectData = (MyFlightsInfoData) view.getTag();
-                if (selectData.getIsCheck()) {//yes to no
-                    selectData.setIsCheck(false);
-                    mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
-                } else {// no to yes
-                    mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
-                    selectData.setIsCheck(true);
-                }
-            } else {
-                Log.e(TAG, "view.getTag() is null");
+            switch (view.getId()) {
+                case R.id.imageView_check:
+                    if (view.getTag() != null) {
+                        FlightsInfoData selectData = (FlightsInfoData) view.getTag();
+                        if (selectData.getIsCheck()) {//yes to no
+                            selectData.setIsCheck(false);
+                            mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+                        } else {// no to yes
+                            mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+                            selectData.setIsCheck(true);
+                        }
+                    } else {
+                        Log.e(TAG, "view.getTag() is null");
+                    }
+                    break;
+                case R.id.layout_frame:
+                    if (mListener != null)
+                        mListener.onClick(view);
+                    break;
             }
         }
 
@@ -179,8 +193,32 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
      * @return
      */
     private boolean checkFlightState(String data) {
-        if (data.contains(FlightsInfoData.TAG_ON_TIME))
+        if (data.contains(FlightsInfoData.TAG_ON_TIME)) {
             return true;
+        }
         return false;
+    }
+
+    /**
+     * check flights show text
+     *
+     * @param data
+     * @return
+     */
+    private String checkFlightShowText(String data) {
+        String text = FlightsInfoData.TAG_ON_TIME_SHOW_TEXT;
+        if (data.contains(FlightsInfoData.TAG_ON_TIME))
+            text = FlightsInfoData.TAG_ON_TIME_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_DELAY))
+            text = FlightsInfoData.TAG_DELAY_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_ARRIVED))
+            text = FlightsInfoData.TAG_ARRIVED_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_CANCELLED))
+            text = FlightsInfoData.TAG_CANCELLED_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_SCHEDULE_CHANGE))
+            text = FlightsInfoData.TAG_SCHEDULE_CHANGE_SHOW_TEXT;
+        else if (data.contains(FlightsInfoData.TAG_DEPARTED))
+            text = FlightsInfoData.TAG_DEPARTED_SHOW_TEXT;
+        return text;
     }
 }

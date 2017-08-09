@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.page.main.secretary.sweet;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,8 +30,10 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
     private List<UserNewsData> mItems;
     private IOnItemClickListener mListener;
+    private Context mContext;
 
-    public AirportSweetNotifyRecyclerViewAdapter() {
+    public AirportSweetNotifyRecyclerViewAdapter(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -52,6 +56,12 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
         holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? item.getaTime() : "");
         holder.mTextViewMessage.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
+
+        if ((position + 1) % 2 != 0) {
+            holder.mLayoutFrame.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black0_25));
+        } else {
+            holder.mLayoutFrame.setBackgroundColor(0x00000000);
+        }
 
         holder.mLayoutFrame.setTag(item);
     }

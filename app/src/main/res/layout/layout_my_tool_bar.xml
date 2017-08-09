@@ -48,31 +48,38 @@
 
     <RelativeLayout
         android:id="@+id/layout_more"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_pixel_100"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@color/colorMoreFrame"
-        android:padding="@dimen/dp_pixel_4"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/imageView_more"
-            android:layout_width="@dimen/dp_pixel_12"
-            android:layout_height="@dimen/dp_pixel_12"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_pixel_8"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/textView_more"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/imageView_more"
-            android:text="@string/home_more"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_pixel_13" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/colorMoreFrame"
+            android:padding="@dimen/dp_pixel_4">
+
+            <ImageView
+                android:id="@+id/imageView_more"
+                android:layout_width="@dimen/dp_pixel_12"
+                android:layout_height="@dimen/dp_pixel_12"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_pixel_8"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/textView_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/imageView_more"
+                android:text="@string/home_more"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_13" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <ImageView

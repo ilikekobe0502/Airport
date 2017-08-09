@@ -157,6 +157,7 @@ public class MyToolbar extends RelativeLayout {
         mImageViewMore.setVisibility(GONE);
         mLayoutMore.setVisibility(GONE);
         mImageViewBack.setVisibility(GONE);
+        mImageViewRightSingle.setVisibility(GONE);
         mLeftListener = null;
         mRightListener = null;
 //        mLayoutFrame.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));

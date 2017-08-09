@@ -56,4 +56,26 @@ public class MoreFlightsPresenter implements MoreFlightsContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void saveMyFlightsAPI(FlightsInfoData data) {
+
+        mApiConnect.doMyFlights(data, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                mView.saveMyFlightFailed(e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    String result = response.body().string();
+                    Log.d(TAG, result);
+                    mView.saveMyFlightSucceed(result);
+                } else {
+                    mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                }
+            }
+        });
+    }
 }

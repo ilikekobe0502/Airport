@@ -56,11 +56,13 @@ public class DialogContentData {
         list.add(item);
         item = new DialogContentData();
         item.setTitle(context.getString(R.string.dialog_expected_arrive_time));
-        item.setContent(!TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : "");
+        item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
+                , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
         list.add(item);
         item = new DialogContentData();
         item.setTitle(context.getString(R.string.dialog_actual_arrive_time));
-        item.setContent(!TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : "");
+        item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
+                , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
         list.add(item);
         item = new DialogContentData();
         item.setTitle(context.getString(R.string.dialog_terminal));

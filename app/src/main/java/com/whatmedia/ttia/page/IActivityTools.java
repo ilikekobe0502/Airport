@@ -2,6 +2,7 @@ package com.whatmedia.ttia.page;
 
 import android.view.ViewStub;
 
+import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 
 /**
@@ -23,6 +24,8 @@ public interface IActivityTools {
     interface IMainActivity extends IPageTool {
         //        void setMenuClickListener(MainActivity.setMenuListener listener);
         MyToolbar getMyToolbar();
+
+        MyMarquee getMyMarquee();
 
         void backPress();
 
