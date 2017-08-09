@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 
         mPresenter = HomePresenter.getInstance(getContext());
 
-        mInfoAdapter = new InfoViewPagerAdapter(getActivity().getSupportFragmentManager());
+        mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
         mViewPagerInfo.setAdapter(mInfoAdapter);
         mTabInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
         mViewPagerInfo.addOnPageChangeListener(this);
