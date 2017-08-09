@@ -22,7 +22,9 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,8 +40,9 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private MyFlightsInfoContract.Presenter mPresenter;
-    int mSelectSize = 0;
-    int mDeleteCount = 0;
+    private int mSelectSize = 0;
+    private int mDeletePosition = 0;
+    private Map<String, FlightsInfoData> mSelectList;
 
 
     private MyFlightsInfoRecyclerViewAdapter mAdapter;
@@ -138,9 +141,11 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     @Override
     public void deleteMyFlightsInfoSucceed(final String response) {
-        if (mSelectSize == mDeleteCount) {//代表佇列中的資料已刪完
+
+        mDeletePosition++;
+        if (mSelectSize == mDeletePosition) {//代表佇列中的資料已刪完
             mSelectSize = 0;
-            mDeleteCount = 0;
+            mDeletePosition = 0;
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
@@ -148,6 +153,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                     mPresenter.getMyFlightsInfoAPI();
                 }
             });
+        } else {
+            deleteData();
         }
 
     }
@@ -161,54 +168,23 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     @OnClick(R.id.button_delete)
     public void onClick() {
-        if (mAdapter.getSelectData() != null) {
 
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.note)
-                    .setMessage(R.string.my_flights_delete_message)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO: 2017/8/9 Delete API 
-//                            Map<String, FlightsInfoData> list = mAdapter.getSelectData();
-//                            mSelectSize = list.size();
-//                            List<String> keyList = new ArrayList<>();
-//                            //save key
-//                            for (String key : list.keySet()) {
-//                                keyList.add(key);
-//                            }
-//                            // TODO: 2017/8/8 不應該同時call
-//                            //判斷資料是否正確即組成上傳資料
-//                            for (int i = 0; i < list.size(); i++) {
-//                                FlightsInfoData item = list.get(keyList.get(i));
-//                                if (item.getIsCheck()) {
-//                                    mLoadingView.showLoadingView();
-//                                    mDeleteCount++;
-//                                    FlightsInfoData data = new FlightsInfoData();
-//                                    data.setAirlineCode(item.getAirlineCode());
-//                                    if (item.getShift().length() == 2) {
-//                                        item.setShift("  " + item.getShift());
-//                                    } else if (item.getShift().length() == 3) {
-//                                        item.setShift(" " + item.getShift());
-//                                    }
-//                                    data.setShift(item.getShift());
-//                                    data.setExpressDate(item.getExpressDate());
-//                                    data.setExpressTime(item.getExpressTime());
-//                                    data.setType("1");
-//                                    mPresenter.deleteMyFlightsInfoAPI(data);
-//                                }
-//                            }
-                        }
-                    })
-                    .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .show();
-        } else {
-            Log.d(TAG, "SelectData is null");
-        }
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.note)
+                .setMessage(R.string.my_flights_delete_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSelectList = mAdapter.getSelectData();
+                        deleteData();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -257,6 +233,35 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));
                 }
+        }
+    }
+
+    /**
+     * Delete data
+     */
+    private void deleteData() {
+        mSelectSize = mSelectList.size();
+        List<String> keyList = new ArrayList<>();
+        //save key
+        for (String key : mSelectList.keySet()) {
+            keyList.add(key);
+        }
+
+        FlightsInfoData item = mSelectList.get(keyList.get(mDeletePosition));
+        if (item.getIsCheck()) {
+            mLoadingView.showLoadingView();
+            FlightsInfoData data = new FlightsInfoData();
+            data.setAirlineCode(item.getAirlineCode());
+            if (item.getShift().length() == 2) {
+                item.setShift("  " + item.getShift());
+            } else if (item.getShift().length() == 3) {
+                item.setShift(" " + item.getShift());
+            }
+            data.setShift(item.getShift());
+            data.setExpressDate(item.getExpressDate());
+            data.setExpressTime(item.getExpressTime());
+            data.setType("1");
+            mPresenter.deleteMyFlightsInfoAPI(data);
         }
     }
 }

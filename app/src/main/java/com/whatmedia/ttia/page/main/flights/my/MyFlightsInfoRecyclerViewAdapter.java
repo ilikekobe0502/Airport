@@ -91,6 +91,12 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
             holder.mImageViewLogo.setVisibility(View.INVISIBLE);
         }
 
+        if (item.getIsCheck()) {
+            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+        } else {
+            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+        }
+
         holder.mImageViewCheck.setTag(item);
         holder.mLayoutFrame.setTag(item);
     }
@@ -122,7 +128,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                     mSelectItems.put(item.getId(), item);
             }
         }
-        return mSelectItems;
+        return mSelectItems != null ? mSelectItems : new HashMap<String, FlightsInfoData>();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
