@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.UserNewsData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class AirportEmergencyRecyclerViewAdapter extends RecyclerView.Adapter<Ai
             return;
         }
 
-        holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? item.getaTime() : "");
+        holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? Util.justShowDate(item.getaTime()) : "");
         holder.mTextViewMessage.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
 
         if ((position + 1) % 2 != 0) {
