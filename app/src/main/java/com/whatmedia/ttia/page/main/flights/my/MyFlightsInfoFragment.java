@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
@@ -21,6 +22,8 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,14 +125,29 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     @Override
     public void getMyFlightsInfoSucceed(final List<FlightsInfoData> response) {
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setData(response);
-                if (response == null)
-                    Log.e(TAG, "getMyFlightsInfoSucceed response is null");
-            }
-        });
+        if (response == null) {
+            Log.e(TAG, "getMyFlightsInfoSucceed response is null");
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(getString(R.string.data_not_found));
+                }
+            });
+        } else {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setData(response);
+                }
+            });
+
+            Gson gson = new Gson();
+            String json = gson.toJson(response);
+            Preferences.saveMyFlightsData(getContext(), json);
+
+            mMainActivity.setMarqueeMessage(Util.getMarqueeSubMessage(getContext()));
+        }
+
     }
 
     @Override

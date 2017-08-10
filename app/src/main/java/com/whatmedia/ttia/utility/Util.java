@@ -5,12 +5,16 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
+import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.response.data.ClockData;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.services.FlightClockBroadcast;
 
 import java.text.DateFormat;
@@ -19,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
@@ -215,5 +220,38 @@ public class Util {
         am.cancel(pendingIntent);
 
         Log.d(TAG, "cancel alert clock");
+    }
+
+    /**
+     * Get Marquee Sub Message
+     *
+     * @param context
+     * @return
+     */
+    public static String getMarqueeSubMessage(Context context) {
+        List<FlightsInfoData> datas = GetFlightsInfoResponse.newInstance(Preferences.getMyFlightsDat(context));
+
+        StringBuilder marqueeSubMessage = new StringBuilder();
+
+        if (datas != null) {
+            for (FlightsInfoData item : datas) {
+                if (marqueeSubMessage.length() > 0) {
+                    marqueeSubMessage.append(",");
+                }
+                marqueeSubMessage.append(!TextUtils.isEmpty(item.getCExpectedTime()) ? item.getCExpectedTime() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getCTName()) ? item.getCTName() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getGate()) ? item.getGate() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus() : "");
+            }
+        }
+        if (marqueeSubMessage.length() == 0) {
+            marqueeSubMessage.append(context.getString(R.string.marquee_default_end_message));
+        }
+        return marqueeSubMessage.toString();
     }
 }

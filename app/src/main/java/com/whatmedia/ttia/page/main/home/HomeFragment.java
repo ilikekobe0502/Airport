@@ -72,20 +72,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mViewPagerInfo.addOnPageChangeListener(this);
         //Init toolbar
         setDepartureToolbar();
-        //Init Marquee
-        setMarquee();
 
         mViewPagerFeature.setAdapter(mFeatureAdapter);
         mFeatureAdapter.setClickListener(this);
         mTabIndicator.setupWithViewPager(mViewPagerFeature, true);
 
         return view;
-    }
-
-    private void setMarquee() {
-        mMainActivity.getMyMarquee().clearState()
-                .setMessage(getString(R.string.marquee_default_message, ""))
-                .setIcon(R.drawable.marquee_new);
     }
 
     @Override

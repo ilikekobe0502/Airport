@@ -2,10 +2,12 @@ package com.whatmedia.ttia.response.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by neo on 2017/8/4.
  */
-public class FlightsInfoData {
+public class FlightsInfoData implements Serializable{
     public final static String TAG_KIND_ARRIVE = "A";
     public final static String TAG_KIND_DEPARTURE = "D";
     public final static String TAG_KIND_TOP4_ARRIVE = "TOP4A";
