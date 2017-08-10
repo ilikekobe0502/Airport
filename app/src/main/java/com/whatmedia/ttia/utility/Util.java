@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -173,5 +174,17 @@ public class Util {
         java.util.GregorianCalendar calendar = new java.util.GregorianCalendar();
         TimePickerDialog timePicker = new TimePickerDialog(context, listener, calendar.get(calendar.HOUR_OF_DAY), calendar.get(calendar.MINUTE), false);
         timePicker.show();
+    }
+
+    /**
+     * time's format yyyy-MM-ddTtt:tt:tt
+     *
+     * use this methods will return yyyy-MM-dd
+     *
+     * @param time
+     */
+    public static String justShowDate(String time){
+        String[] result = time.split("T");
+        return !TextUtils.isEmpty(result[0])&&result!=null&&result.length>0?result[0]:time;
     }
 }
