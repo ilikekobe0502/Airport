@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -40,6 +41,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private StoreSearchInfoContract.Presenter mPresenter;
+    private int mRadius;
 
     public StoreSearchInfoFragment() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
         ButterKnife.bind(this, view);
 
         mPresenter = StoreSearchInfoPresenter.getInstance(getContext(), this);
+        mRadius = getContext().getResources().getDimensionPixelSize(R.dimen.dp_pixel_7);
         RestaurantInfoData data;
         if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_RESULT) != null) {
             data = (RestaurantInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_RESULT);
@@ -89,7 +92,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             Picasso.with(getContext())
                     .load(image)
                     .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
-                    .centerCrop()
+                    .transform(new CornorTransform(mRadius, 0) )
                     .into(mImageViewPicture);
         }
 

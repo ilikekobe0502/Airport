@@ -34,9 +34,11 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
     private List<RestaurantInfoData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
+    private int mRadius;
 
     public StoreSearchResultRecyclerViewAdapter(Context context) {
         mContext = context;
+        mRadius = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_6);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
         if (!TextUtils.isEmpty(item.getImgPath())) {
             pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
             // TODO: 2017/8/6 corner mot work
-            Picasso.with(mContext).load(pictureUrl).into(holder.mImageViewPicture);
+            Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
         } else
             pictureUrl = "";
 
@@ -93,6 +95,8 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
         TextView mTextViewContent;
         @BindView(R.id.layout_frame)
         RelativeLayout mLayoutFrame;
+        @BindView(R.id.layout_view)
+        RelativeLayout mLatoutView;
 
         ViewHolder(View view) {
             super(view);
