@@ -126,4 +126,12 @@
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
 
+    <!-- Store Offers -->
+    <string name="store_offers_souvenir">"紀念品專區"</string>
+    <string name="store_offers_info">"商店資訊"</string>
+
+    <!-- Communication service -->
+    <string name="communication_service_international_call">"國際電話"</string>
+    <string name="communication_service_emergency_call">"緊急電話"</string>
+    <string name="communication_service_romain_service">"漫遊服務"</string>
 </resources>
