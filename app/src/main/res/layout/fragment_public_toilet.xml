@@ -22,16 +22,16 @@
 
         <ImageView
             android:id="@+id/imageView_left"
-            android:layout_width="@dimen/dp_pixel_40"
-            android:layout_height="@dimen/dp_pixel_40"
+            android:layout_width="@dimen/dp_pixel_30"
+            android:layout_height="@dimen/dp_pixel_30"
             android:layout_marginRight="@dimen/dp_pixel_16"
             android:layout_toLeftOf="@+id/imageView_right"
             android:background="@drawable/left_on" />
 
         <ImageView
             android:id="@+id/imageView_right"
-            android:layout_width="@dimen/dp_pixel_40"
-            android:layout_height="@dimen/dp_pixel_40"
+            android:layout_width="@dimen/dp_pixel_30"
+            android:layout_height="@dimen/dp_pixel_30"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_pixel_10"
             android:background="@drawable/right_off" />

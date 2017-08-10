@@ -114,6 +114,7 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
                 @Override
                 public void run() {
                     mWebView.loadData(response.get(0).getShuttlesHtml(), "text/html; charset=utf-8", "UTF-8");
+                    mWebView.setBackgroundColor(0);
                 }
             });
         } else {

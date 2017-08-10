@@ -1,25 +1,31 @@
 package com.whatmedia.ttia.utility;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TimePicker;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
+import com.whatmedia.ttia.response.GetFlightsInfoResponse;
+import com.whatmedia.ttia.response.data.ClockData;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.services.FlightClockBroadcast;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
@@ -115,7 +121,7 @@ public class Util {
         HashMap<String, Long> diffTime = new HashMap<>();
         diffTime.put(TAG_HOUR, hours);
         diffTime.put(TAG_MIN, minutes);
-        diffTime.put(TAG_SEC, diff);
+        diffTime.put(TAG_SEC, diff / 1000);
         return diffTime;
     }
 
@@ -124,8 +130,8 @@ public class Util {
      *
      * @return
      */
-    public static int getNowTime() {
-        return (int) (System.currentTimeMillis() / 1000);
+    public static float getNowTime() {
+        return System.currentTimeMillis();
     }
 
     /**
@@ -186,5 +192,80 @@ public class Util {
     public static String justShowDate(String time){
         String[] result = time.split("T");
         return !TextUtils.isEmpty(result[0])&&result!=null&&result.length>0?result[0]:time;
+    }
+  
+    /**
+     * Set Alert clock
+     *
+     * @param context
+     * @param data
+     */
+    public static void setAlertClock(Context context, ClockData data) {
+        if (data != null) {
+            int sec = (int) data.getTime().getSec();
+            Integer id = data.getId();
+            Calendar cal1 = Calendar.getInstance();
+            cal1.add(Calendar.SECOND, sec);
+            Log.d(TAG, "配置鬧終於" + sec + "秒後: " + cal1);
+
+            Intent intent = new Intent(context, FlightClockBroadcast.class);
+            intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING, data.getTimeString());
+            intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_ID, data.getId());
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
+
+            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            am.set(AlarmManager.RTC_WAKEUP, cal1.getTimeInMillis(), pendingIntent);
+        } else {
+            Log.d(TAG, "ClockData is error");
+        }
+    }
+
+    /**
+     * Cancel alert clock
+     *
+     * @param context
+     * @param id
+     */
+    public static void cancelAlertClock(Context context, int id) {
+        Intent intent = new Intent(context, FlightClockBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(pendingIntent);
+
+        Log.d(TAG, "cancel alert clock");
+    }
+
+    /**
+     * Get Marquee Sub Message
+     *
+     * @param context
+     * @return
+     */
+    public static String getMarqueeSubMessage(Context context) {
+        List<FlightsInfoData> datas = GetFlightsInfoResponse.newInstance(Preferences.getMyFlightsDat(context));
+
+        StringBuilder marqueeSubMessage = new StringBuilder();
+
+        if (datas != null) {
+            for (FlightsInfoData item : datas) {
+                if (marqueeSubMessage.length() > 0) {
+                    marqueeSubMessage.append(",");
+                }
+                marqueeSubMessage.append(!TextUtils.isEmpty(item.getCExpectedTime()) ? item.getCExpectedTime() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getCTName()) ? item.getCTName() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getGate()) ? item.getGate() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus() : "");
+            }
+        }
+        if (marqueeSubMessage.length() == 0) {
+            marqueeSubMessage.append(context.getString(R.string.marquee_default_end_message));
+        }
+        return marqueeSubMessage.toString();
     }
 }

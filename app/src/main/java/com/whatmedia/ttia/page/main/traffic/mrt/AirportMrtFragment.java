@@ -120,6 +120,7 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
                 @Override
                 public void run() {
                     mWebView.loadData(response.get(0).getHighTrailHtle(), "text/html; charset=utf-8", "UTF-8");
+                    mWebView.setBackgroundColor(0);
                 }
             });
         } else {

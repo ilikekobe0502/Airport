@@ -114,6 +114,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
                 @Override
                 public void run() {
                     mWebView.loadData(response.get(0).getBusesHtml(), "text/html; charset=utf-8", "UTF-8");
+                    mWebView.setBackgroundColor(0);
                 }
             });
         } else {

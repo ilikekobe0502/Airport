@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_pixel_80"
+    android:layout_marginBottom="@dimen/dp_pixel_7"
+    android:layout_marginTop="@dimen/dp_pixel_7"
     android:background="@color/black0.25">
 
     <RelativeLayout
@@ -26,11 +28,10 @@
             android:layout_toLeftOf="@+id/switch_open"
             android:layout_toRightOf="@+id/imageView_icon"
             android:gravity="center_vertical"
-            android:text="123456789asdasd"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_pixel_21" />
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch_open"
             android:layout_width="@dimen/dp_pixel_100"
             android:layout_height="wrap_content"

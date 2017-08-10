@@ -23,6 +23,7 @@ import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultFragment;
 import com.whatmedia.ttia.page.main.flights.search.FlightsSearchFragment;
 import com.whatmedia.ttia.page.main.home.HomeFragment;
+import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsFragment;
 import com.whatmedia.ttia.page.main.home.weather.more.MoreWeatherFragment;
 import com.whatmedia.ttia.page.main.secretary.AirportSecretaryFragment;
@@ -45,6 +46,7 @@ import com.whatmedia.ttia.page.main.traffic.roadside.RoadsideAssistanceFragment;
 import com.whatmedia.ttia.page.main.traffic.skytrain.SkyTrainFragment;
 import com.whatmedia.ttia.page.main.traffic.taxi.TaxiFragment;
 import com.whatmedia.ttia.page.main.traffic.tourbus.TourBusFragment;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -64,6 +66,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @BindView(R.id.imageView_home)
     ImageView mImageViewHome;
 
+    private String mMarqueeMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +75,18 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setMarqueeHomeState();
+
         Page.setBackStackChangedListener(this, this);
         addFragment(Page.TAG_HOME, null, false);
+
+        mImageViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Page.clearBackStack(MainActivity.this);
+                addFragment(Page.TAG_HOME, null, false);
+            }
+        });
     }
 
     @Override
@@ -116,13 +130,18 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     }
 
     @Override
+    public void setMarqueeMessage(String subMessage) {
+        mMarqueeMessage = getString(R.string.marquee_default_message, subMessage);
+    }
+
+    @Override
     public void backPress() {
         onBackPressed();
     }
 
     @Override
     public boolean getUserVisibility() {
-
+        // TODO: 2017/8/10
         return false;
     }
 
@@ -138,21 +157,25 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         if (fragment != null) {
             Log.i(TAG, "Current fragment = " + fragment);
             Log.i(TAG, "getBackStackEntryCount = " + getSupportFragmentManager().getBackStackEntryCount());
+
             //除了Home 以外頁面的跑馬燈
-            mMyMarquee.clearState().
-                    setMessage(getString(R.string.marquee_default_message, "")).setIconVisibility(View.GONE);
-            mImageViewHome.setVisibility(View.VISIBLE);
+            setMarqueeSubState();
             if (fragment instanceof HomeFragment) {//Home
-                mImageViewHome.setVisibility(View.GONE);
-                mMyMarquee.clearState()
-                        .setMessage(getString(R.string.marquee_default_message, ""))
-                        .setIcon(R.drawable.marquee_new);
+                setMarqueeHomeState();
                 mMyToolbar.clearState()
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorBackgroundHomeDeparture))
                         .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setLeftIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.up))
                         .setRightText(getString(R.string.home_more_flights))
-                        .setRightIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more));
+                        .setRightIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more))
+                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(MoreFlightsContract.TAG_KIND, FlightsInfoData.TAG_KIND_DEPARTURE);
+                                addFragment(Page.TAG_HOME_MORE_FLIGHTS, bundle, true);
+                            }
+                        });
             } else if (fragment instanceof FlightsInfoFragment) {//航班資訊
                 mMyToolbar.clearState()
                         .setTitleText(getString(HomeFeature.TAG_FLIGHTS_INFO.getTitle()))
@@ -560,6 +583,35 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             }
         } else
-            Log.e(TAG, "AirportEmergencyFragment is null");
+            Log.e(TAG, "Fragment is null : ");
+    }
+
+    /**
+     * 設置除了Home以外的跑馬燈
+     */
+    private void setMarqueeSubState() {
+        getMarqueeString();
+        mMyMarquee.clearState()
+                .setMessage(mMarqueeMessage)
+                .setIconVisibility(View.GONE);
+        mImageViewHome.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 設置除了Home page跑馬燈
+     */
+    private void setMarqueeHomeState() {
+        getMarqueeString();
+        mMyMarquee.clearState()
+                .setMessage(mMarqueeMessage)
+                .setIcon(R.drawable.marquee_new);
+        mImageViewHome.setVisibility(View.GONE);
+    }
+
+    /**
+     * Get Marquee String
+     */
+    private void getMarqueeString(){
+        mMarqueeMessage = getString(R.string.marquee_default_message, Util.getMarqueeSubMessage(getApplicationContext()));
     }
 }
