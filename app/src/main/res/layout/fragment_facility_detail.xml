@@ -22,8 +22,8 @@
             android:textSize="@dimen/sp_pixel_21" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/imageView_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

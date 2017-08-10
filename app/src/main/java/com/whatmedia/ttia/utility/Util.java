@@ -7,6 +7,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -267,5 +269,41 @@ public class Util {
             marqueeSubMessage.append(context.getString(R.string.marquee_default_end_message));
         }
         return marqueeSubMessage.toString();
+    }
+
+    /**
+     * 合成Bitmap
+     *
+     * @param bitmapList
+     * @return
+     */
+    public static Bitmap combineBitmap(Bitmap[] bitmapList) {
+        if (bitmapList == null || bitmapList.length <= 0) {
+            return null;
+        }
+        int width = bitmapList[0].getWidth();
+        int height = 0;
+        for (int i = 0; i < bitmapList.length; i++) {
+            height += bitmapList[i].getHeight();
+        }
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawBitmap(bitmapList[0], 0, 0, null);
+        int tempHeight = bitmapList[0].getHeight();
+        for (int i = 1; i < bitmapList.length; i++) {
+            canvas.drawBitmap(bitmapList[i], 0, tempHeight, null);
+            tempHeight += bitmapList[i].getHeight();
+        }
+        return bitmap;
+    }
+
+    /**
+     * Bitmap放大的方法
+     */
+    public static Bitmap setBitmapScale(Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(1f, 1.5f); //長寬比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizeBmp;
     }
 }
