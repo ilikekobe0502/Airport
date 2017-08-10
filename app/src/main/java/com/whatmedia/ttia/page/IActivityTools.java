@@ -27,6 +27,8 @@ public interface IActivityTools {
 
         MyMarquee getMyMarquee();
 
+        void setMarqueeMessage(String subMessage);
+
         void backPress();
 
         boolean getUserVisibility();

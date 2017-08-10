@@ -38,7 +38,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feature, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_feature_icon, parent, false);
         return new ViewHolder(view);
     }
 

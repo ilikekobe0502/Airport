@@ -60,7 +60,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
         if (!TextUtils.isEmpty(item.getImgPath())) {
             pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
             // TODO: 2017/8/6 corner mot work
-            Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(100, 0)).into(holder.mImageViewPicture);
+            Picasso.with(mContext).load(pictureUrl).into(holder.mImageViewPicture);
         } else
             pictureUrl = "";
 

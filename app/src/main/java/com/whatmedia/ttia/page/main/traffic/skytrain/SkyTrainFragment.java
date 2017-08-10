@@ -114,6 +114,7 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
                 @Override
                 public void run() {
                     mWebView.loadData(response.get(0).getSkytrainHtml(), "text/html; charset=utf-8", "UTF-8");
+                    mWebView.setBackgroundColor(0);
                 }
             });
         } else {
