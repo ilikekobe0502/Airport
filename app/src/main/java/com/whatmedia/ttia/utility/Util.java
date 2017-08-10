@@ -178,7 +178,7 @@ public class Util {
      */
     public static void showTimePicker(Context context, TimePickerDialog.OnTimeSetListener listener) {
         java.util.GregorianCalendar calendar = new java.util.GregorianCalendar();
-        TimePickerDialog timePicker = new TimePickerDialog(context, listener, calendar.get(calendar.HOUR_OF_DAY), calendar.get(calendar.MINUTE), false);
+        TimePickerDialog timePicker = new TimePickerDialog(context, listener, calendar.get(calendar.HOUR_OF_DAY), calendar.get(calendar.MINUTE), true);
         timePicker.show();
     }
 

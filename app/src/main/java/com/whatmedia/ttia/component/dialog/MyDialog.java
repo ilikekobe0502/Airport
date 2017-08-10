@@ -46,6 +46,7 @@ public class MyDialog extends DialogFragment {
     private List<DialogContentData> mTableList;
     private String mTitle;
     private String mRightText;
+    private int mRigtVisibility;
     private int mButtonType;
     private int mRecyclerViewType;
     private MyDialogTableRecyclerViewAdapter mTableAdapter;
@@ -95,6 +96,7 @@ public class MyDialog extends DialogFragment {
         mTextViewTitle.setText(!TextUtils.isEmpty(mTitle) ? mTitle : "");
 
         if (mTableList != null) {
+            mButtonCancel.setVisibility(mRigtVisibility);
             mTableAdapter = new MyDialogTableRecyclerViewAdapter(mTableList);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(mTableAdapter);
@@ -125,6 +127,11 @@ public class MyDialog extends DialogFragment {
 
     public MyDialog setRightText(String text) {
         mRightText = text;
+        return this;
+    }
+
+    public MyDialog setLeftVisibility(int visibility) {
+        mRigtVisibility = visibility;
         return this;
     }
 

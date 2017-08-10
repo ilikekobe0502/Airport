@@ -7,12 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
@@ -37,8 +36,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     private static final String TAG = MyFlightsInfoFragment.class.getSimpleName();
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.button_delete)
-    Button mButtonDelete;
+    @BindView(R.id.layout_delete)
+    RelativeLayout mLayoutDelete;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -127,13 +126,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         mLoadingView.goneLoadingView();
         if (response == null) {
             Log.e(TAG, "getMyFlightsInfoSucceed response is null");
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(getString(R.string.data_not_found));
-                    mAdapter.setData(null);
-                }
-            });
+            showNoDataDialog();
         } else {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
@@ -155,7 +148,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     public void getMyFlightsInfoFailed(String message) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, message);
-        showMessage(message);
+        showNoDataDialog();
     }
 
     @Override
@@ -185,7 +178,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         showMessage(message);
     }
 
-    @OnClick(R.id.button_delete)
+    @OnClick(R.id.layout_delete)
     public void onClick() {
 
         new AlertDialog.Builder(getContext())
@@ -217,33 +210,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                                 .setTitle(getString(R.string.dialog_detail_title))
                                 .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
                                 .setRightText(getString(R.string.ok))
-                                .setRightClickListener(new IOnItemClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if (tag != null) {
-//                                        FlightsInfoData data = new FlightsInfoData();
-                                            if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
-                                                mLoadingView.showLoadingView();
-                                                tag.setAirlineCode(tag.getAirlineCode());
-                                                if (tag.getShift().length() == 2) {
-                                                    tag.setShift("  " + tag.getShift());
-                                                } else if (tag.getShift().length() == 3) {
-                                                    tag.setShift(" " + tag.getShift());
-                                                }
-                                                tag.setShift(tag.getShift());
-                                                tag.setExpressDate(tag.getExpressDate());
-                                                tag.setExpressTime(tag.getExpressTime());
-                                                tag.setType("0");
-                                            } else {
-                                                Log.e(TAG, "view.getTag() content is error");
-                                                showMessage(getString(R.string.data_error));
-                                            }
-                                        } else {
-                                            Log.e(TAG, "view.getTag() is null");
-                                            showMessage(getString(R.string.data_error));
-                                        }
-                                    }
-                                });
+                                .setLeftVisibility(View.GONE);
                         myDialog.show(getActivity().getFragmentManager(), "dialog");
                     } else {
                         Log.d(TAG, "recycler view.getTag() = null");
@@ -282,5 +249,22 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
             data.setType("1");
             mPresenter.deleteMyFlightsInfoAPI(data);
         }
+    }
+
+    /**
+     * Show no Data dialog
+     */
+    private void showNoDataDialog() {
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.note)
+                        .setMessage(R.string.data_not_found)
+                        .setPositiveButton(R.string.ok, null)
+                        .show();
+                mAdapter.setData(null);
+            }
+        });
     }
 }

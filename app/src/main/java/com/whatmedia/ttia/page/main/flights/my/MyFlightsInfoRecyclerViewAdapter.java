@@ -116,21 +116,6 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         mListener = listener;
     }
 
-    /**
-     * Get Select Data
-     *
-     * @return
-     */
-    public Map<String, FlightsInfoData> getSelectData() {
-        if (mItems != null) {
-            for (FlightsInfoData item : mItems) {
-                if (item.getIsCheck())
-                    mSelectItems.put(item.getId(), item);
-            }
-        }
-        return mSelectItems != null ? mSelectItems : new HashMap<String, FlightsInfoData>();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.layout_frame)
         RelativeLayout mLayoutFrame;
@@ -183,14 +168,6 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         }
 
     }
-//    private SpannableStringBuilder checkFlightState(String data) {
-//        SpannableStringBuilder builder = new SpannableStringBuilder(data);
-//        ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(mContext,))
-//        if (data.contains(FlightsInfoData.TAG_CANCELLED)) {
-//        }
-//
-//        return builder;
-//    }
 
     /**
      * Check flight is "on time"
@@ -226,5 +203,20 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         else if (data.contains(FlightsInfoData.TAG_DEPARTED))
             text = FlightsInfoData.TAG_DEPARTED_SHOW_TEXT;
         return text;
+    }
+
+    /**
+     * Get Select Data
+     *
+     * @return
+     */
+    public Map<String, FlightsInfoData> getSelectData() {
+        if (mItems != null) {
+            for (FlightsInfoData item : mItems) {
+                if (item.getIsCheck())
+                    mSelectItems.put(item.getId(), item);
+            }
+        }
+        return mSelectItems != null ? mSelectItems : new HashMap<String, FlightsInfoData>();
     }
 }

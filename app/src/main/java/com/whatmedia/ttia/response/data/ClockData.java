@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.response.data;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * Created by neo_mac on 2017/8/8.
@@ -12,6 +11,7 @@ public class ClockData implements Serializable{
     private ClockTimeData time;
     private String timeString;
     private boolean notify;
+    private boolean isCheck;
 
     public int getId() {
         return id;
@@ -43,5 +43,13 @@ public class ClockData implements Serializable{
 
     public void setTimeString(String timeString) {
         this.timeString = timeString;
+    }
+
+    public boolean getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(boolean isCheck) {
+        this.isCheck = isCheck;
     }
 }

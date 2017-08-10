@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.terminals.store.search;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -183,12 +184,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
         } else {
             Log.e(TAG, "getRestaurantInfoSucceed response is null");
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(getString(R.string.data_not_found));
-                }
-            });
+            showNoDataDialog();
         }
     }
 
@@ -196,12 +192,8 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     public void getRestaurantInfoFailed(final String message) {
         mLoadingView.goneLoadingView();
         if (isAdded()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(message);
-                }
-            });
+            Log.e(TAG, "getRestaurantInfoFailed() :" + message);
+            showNoDataDialog();
         }
     }
 
@@ -308,5 +300,21 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 dialog.show(getActivity().getFragmentManager(), "dialog");
                 break;
         }
+    }
+
+    /**
+     * Show no Data dialog
+     */
+    private void showNoDataDialog() {
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.note)
+                        .setMessage(R.string.data_not_found)
+                        .setPositiveButton(R.string.ok, null)
+                        .show();
+            }
+        });
     }
 }

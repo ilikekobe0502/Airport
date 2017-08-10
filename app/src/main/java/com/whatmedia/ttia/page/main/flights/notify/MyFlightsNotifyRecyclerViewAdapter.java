@@ -1,10 +1,8 @@
 package com.whatmedia.ttia.page.main.flights.notify;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +17,11 @@ import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.ClockData;
-import com.whatmedia.ttia.response.data.ClockDataList;
 import com.whatmedia.ttia.response.data.ClockTimeData;
-import com.whatmedia.ttia.services.FlightClockBroadcast;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +37,7 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
     private final static String TAG = MyFlightsNotifyRecyclerViewAdapter.class.getSimpleName();
     private List<ClockData> mItems;
     private Context mContext;
+    private List<ClockData> mSelectItems = new ArrayList<>();
     private IOnItemClickListener mListener;
 
     public MyFlightsNotifyRecyclerViewAdapter(Context context, List<ClockData> data) {
@@ -50,8 +47,6 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
 
     public MyFlightsNotifyRecyclerViewAdapter(Context context) {
         mContext = context;
-        mItems = ClockDataList.newInstance(Preferences.getClockData(context));
-
     }
 
     @Override
@@ -75,6 +70,13 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
         else
             holder.mSwitchOpen.setText(R.string.my_flights_notify_off);
 
+        if (item.getIsCheck()) {
+            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+        } else {
+            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+        }
+
+        holder.mImageViewCheck.setTag(item);
         holder.mTextViewTime.setTag(item);
         holder.mSwitchOpen.setOnCheckedChangeListener(this);
         holder.mSwitchOpen.setTag(item);
@@ -87,8 +89,26 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
 
     public void setData(List<ClockData> data) {
         mItems = data;
-        Util.setAlertClock(mContext, data.get(data.size() - 1));
+        mSelectItems.clear();
+        if (data != null) {
+            Util.setAlertClock(mContext, data.get(data.size() - 1));
+        }
         notifyDataSetChanged();
+    }
+
+    /**
+     * Get Select Data
+     *
+     * @return
+     */
+    public List<ClockData> getSelectData() {
+        if (mItems != null) {
+            for (ClockData item : mItems) {
+                if (item.getIsCheck())
+                    mSelectItems.add(item);
+            }
+        }
+        return mSelectItems != null ? mSelectItems : new ArrayList<ClockData>();
     }
 
     public void setClickListener(IOnItemClickListener listener) {
@@ -110,8 +130,8 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.imageView_icon)
-        ImageView mImageViewIcon;
+        @BindView(R.id.imageView_check)
+        ImageView mImageViewCheck;
         @BindView(R.id.textView_time)
         TextView mTextViewTime;
         @BindView(R.id.switch_open)
@@ -122,7 +142,7 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
             ButterKnife.bind(this, view);
         }
 
-        @OnClick({R.id.textView_time, R.id.switch_open})
+        @OnClick({R.id.textView_time, R.id.switch_open, R.id.imageView_check})
         public void onClick(View view) {
             if (view.getTag() != null) {
                 final ClockData recyclerViewItem = (ClockData) view.getTag();
@@ -167,6 +187,20 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
 
                         Preferences.saveClockData(view.getContext(), json);
                         notifyDataSetChanged();
+                        break;
+                    case R.id.imageView_check:
+                        if (view.getTag() != null) {
+                            ClockData selectData = (ClockData) view.getTag();
+                            if (selectData.getIsCheck()) {//yes to no
+                                selectData.setIsCheck(false);
+                                mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+                            } else {// no to yes
+                                mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+                                selectData.setIsCheck(true);
+                            }
+                        } else {
+                            Log.e(TAG, "view.getTag() is null");
+                        }
                         break;
 
                 }
