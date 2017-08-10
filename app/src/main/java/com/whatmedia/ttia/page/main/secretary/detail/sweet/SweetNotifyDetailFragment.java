@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -39,6 +40,8 @@ public class SweetNotifyDetailFragment extends BaseFragment implements SweetNoti
     private SweetNotifyDetailContract.Presenter mPresenter;
 
     private AirportSweetNotifyRecyclerViewAdapter mAdapter;
+
+    private int mRadius;
 
     public SweetNotifyDetailFragment() {
         // Required empty public constructor
@@ -69,6 +72,7 @@ public class SweetNotifyDetailFragment extends BaseFragment implements SweetNoti
         ButterKnife.bind(this, view);
 
         mPresenter = SweetNotifyDetailPresenter.getInstance(getContext(), this);
+        mRadius = getContext().getResources().getDimensionPixelSize(R.dimen.dp_pixel_7);
 
         if (getArguments() != null && getArguments().getSerializable(SweetNotifyDetailContract.TAG_DATA) != null) {
             UserNewsData item = (UserNewsData) getArguments().getSerializable(SweetNotifyDetailContract.TAG_DATA);
@@ -80,7 +84,7 @@ public class SweetNotifyDetailFragment extends BaseFragment implements SweetNoti
                 mImageViewPicture.setVisibility(View.VISIBLE);
                 Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + item.getImageUrl())
                         .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_152))
-                        .centerCrop()
+                        .transform(new CornorTransform(mRadius, 0))
                         .into(mImageViewPicture);
             } else
                 mImageViewPicture.setVisibility(View.GONE);
