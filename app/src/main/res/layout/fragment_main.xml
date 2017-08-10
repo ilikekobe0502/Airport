@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="10"
     android:background="@drawable/home_bg"
     android:clickable="true"
     android:orientation="vertical">
@@ -10,36 +11,46 @@
     <RelativeLayout
         android:id="@+id/layout_info"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_pixel_282">
+        android:layout_height="0dp"
+        android:layout_weight="6">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_info_indicator"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/dp_pixel_152"
             app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorHeight="0dp" />
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager_feature"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_info" />
+        android:layout_height="0dp"
+        android:layout_below="@+id/layout_info"
+        android:layout_weight="4"
+        android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabIndicatorHeight="0dp" />
-</RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager_feature"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp_pixel_10" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabIndicatorHeight="0dp" />
+    </RelativeLayout>
+</LinearLayout>

@@ -114,6 +114,7 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
                 @Override
                 public void run() {
                     mWebView.loadData(response.get(0).getTaxiHtml(), "text/html; charset=utf-8", "UTF-8");
+                    mWebView.setBackgroundColor(0);
                 }
             });
         } else {

@@ -131,6 +131,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 @Override
                 public void run() {
                     showMessage(getString(R.string.data_not_found));
+                    mAdapter.setData(null);
                 }
             });
         } else {

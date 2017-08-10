@@ -23,6 +23,7 @@ import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultFragment;
 import com.whatmedia.ttia.page.main.flights.search.FlightsSearchFragment;
 import com.whatmedia.ttia.page.main.home.HomeFragment;
+import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsFragment;
 import com.whatmedia.ttia.page.main.home.weather.more.MoreWeatherFragment;
 import com.whatmedia.ttia.page.main.secretary.AirportSecretaryFragment;
@@ -45,6 +46,7 @@ import com.whatmedia.ttia.page.main.traffic.roadside.RoadsideAssistanceFragment;
 import com.whatmedia.ttia.page.main.traffic.skytrain.SkyTrainFragment;
 import com.whatmedia.ttia.page.main.traffic.taxi.TaxiFragment;
 import com.whatmedia.ttia.page.main.traffic.tourbus.TourBusFragment;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -165,7 +167,15 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setLeftIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.up))
                         .setRightText(getString(R.string.home_more_flights))
-                        .setRightIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more));
+                        .setRightIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more))
+                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(MoreFlightsContract.TAG_KIND, FlightsInfoData.TAG_KIND_DEPARTURE);
+                                addFragment(Page.TAG_HOME_MORE_FLIGHTS, bundle, true);
+                            }
+                        });
             } else if (fragment instanceof FlightsInfoFragment) {//航班資訊
                 mMyToolbar.clearState()
                         .setTitleText(getString(HomeFeature.TAG_FLIGHTS_INFO.getTitle()))

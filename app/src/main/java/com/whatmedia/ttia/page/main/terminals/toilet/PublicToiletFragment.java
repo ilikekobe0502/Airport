@@ -79,8 +79,10 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
 
         mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.getSettings().setDisplayZoomControls(false);
+        mWebView.setBackgroundColor(0);
         mWebViewTerminalTwo.getSettings().setBuiltInZoomControls(true);
         mWebViewTerminalTwo.getSettings().setDisplayZoomControls(false);
+        mWebViewTerminalTwo.setBackgroundColor(0);
         return view;
     }
 
