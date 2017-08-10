@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -180,6 +182,18 @@ public class Util {
         timePicker.show();
     }
 
+    /**
+     * time's format yyyy-MM-ddTtt:tt:tt
+     *
+     * use this methods will return yyyy-MM-dd
+     *
+     * @param time
+     */
+    public static String justShowDate(String time){
+        String[] result = time.split("T");
+        return !TextUtils.isEmpty(result[0])&&result!=null&&result.length>0?result[0]:time;
+    }
+  
     /**
      * Set Alert clock
      *

@@ -18,6 +18,7 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyRecyclerViewAdapter;
 import com.whatmedia.ttia.response.data.UserNewsData;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +73,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         if (getArguments() != null && getArguments().getSerializable(NewsDetailContract.TAG_DATA) != null) {
             UserNewsData item = (UserNewsData) getArguments().getSerializable(NewsDetailContract.TAG_DATA);
 
-            mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? item.getaTime() : "");
+            mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? Util.justShowDate(item.getaTime()) : "");
             mTextViewTitle.setText(!TextUtils.isEmpty(item.getTitle()) ? item.getTitle() : "");
             mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
             if (!TextUtils.isEmpty(item.getImageUrl())) {

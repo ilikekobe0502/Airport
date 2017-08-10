@@ -52,9 +52,9 @@ public class DialogContentData {
         list.add(item);
         item = new DialogContentData();
         if (!TextUtils.equals(data.getKinds(), FlightsInfoData.TAG_KIND_DEPARTURE))
-            item.setTitle(context.getString(R.string.dialog_target_arrive_location));
-        else
             item.setTitle(context.getString(R.string.dialog_target_departure_location));
+        else
+            item.setTitle(context.getString(R.string.dialog_target_arrive_location));
         item.setContent(!TextUtils.isEmpty(data.getContactsLocationChinese()) ? data.getContactsLocationChinese().trim() : "");
         list.add(item);
         item = new DialogContentData();
