@@ -265,12 +265,7 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
 
         @Override
         public View getInfoWindow(Marker marker) {
-            Log.d(TAG, marker.toString());
-            return null;
-        }
 
-        @Override
-        public View getInfoContents(Marker marker) {
             View view = View.inflate(getContext(), R.layout.layout_map_title, null);
 
             HomeParkingInfoData data = (HomeParkingInfoData) marker.getTag();
@@ -316,6 +311,11 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
                 line.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingMuch));
             }
             return view;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            return null;
         }
     }
 

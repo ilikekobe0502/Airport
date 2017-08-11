@@ -1,45 +1,49 @@
 package com.whatmedia.ttia.page.main.terminals.facility.detail;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityRecyclerViewAdapter;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FacilityDetailFragment extends BaseFragment implements FacilityDetailContract.View {
     private static final String TAG = FacilityDetailFragment.class.getSimpleName();
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
     @BindView(R.id.textView_subtitle)
     TextView mTextViewSubTitle;
+    @BindView(R.id.imageView_picture)
+    com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView mImagePicture;
 
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private FacilityDetailContract.Presenter mPresenter;
 
-    private FacilityDetailRecyclerViewAdapter mAdapter;
+    private Bitmap[] mBitmaps = new Bitmap[3];
 
     public FacilityDetailFragment() {
         // Required empty public constructor
@@ -78,9 +82,30 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
             imageList.add(facilityData.getMainImgPath());
             imageList.add(facilityData.getLegendImgPath());
             imageList.add(facilityData.getClassImgPath());
-            mAdapter = new FacilityDetailRecyclerViewAdapter(getContext(), imageList);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            mRecyclerView.setAdapter(mAdapter);
+
+            for (int i = 0; i < imageList.size(); i++) {
+                final int finalI = i;
+                Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i)).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        mBitmaps[finalI] = bitmap;
+                        if (mBitmaps[0] != null && mBitmaps[1] != null && mBitmaps[2] != null) {
+                            mImagePicture.setImage(ImageSource.bitmap(Util.setBitmapScale(Util.combineBitmap(mBitmaps))));
+                        }
+                        Log.d("TAG", "onBitmapLoaded" + finalI);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Log.d("TAG", "onBitmapFailed" + finalI);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d("TAG", "onPrepareLoad" + finalI);
+                    }
+                });
+            }
         } else {
             Log.e(TAG, "getArguments() is error");
             showMessage(getString(R.string.data_error));
@@ -96,6 +121,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
     @Override
     public void onDestroy() {
         mMainActivity.getMyToolbar().setOnBackClickListener(null);
+        mBitmaps = null;
         super.onDestroy();
     }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
 import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
@@ -25,6 +26,7 @@ import com.whatmedia.ttia.page.main.secretary.detail.sweet.SweetNotifyDetailFrag
 import com.whatmedia.ttia.page.main.secretary.emergency.AirportEmergencyFragment;
 import com.whatmedia.ttia.page.main.secretary.news.AirportUserNewsFragment;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyFragment;
+import com.whatmedia.ttia.page.main.store.StoreOffersFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.detail.FacilityDetailFragment;
 import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoFragment;
@@ -88,6 +90,10 @@ public class Page {
     public static final int TAG_AIRPORT_EMERGENCY_DETAIL = 1406;
     public static final int TAG_AIRPORT_SWEET_DETAIL = 1407;
 
+    public static final int TAG_STORE_OFFERS = 1501;
+
+    public static final int TAG_COMMUNICATION_SERVICE = 1601;
+
     public static final int TAG_USERFUL_INFO = 2000;
     public static final int TAG_USERFUL_LOST = 2001;
 
@@ -134,6 +140,7 @@ public class Page {
             fragmentTransaction.addToBackStack(fragmentName);
         fragmentTransaction.commit();
     }
+
     /**
      * Set back Stack change listener
      *
@@ -228,6 +235,10 @@ public class Page {
                 return new UsefulInfoFragment().newInstance();
             case TAG_USERFUL_LOST:
                 return new LostAndFoundFragment().newInstance();
+            case TAG_STORE_OFFERS:
+                return new StoreOffersFragment().newInstance();
+            case TAG_COMMUNICATION_SERVICE:
+                return new CommunicationFragment().newInstance();
         }
 
         return null;

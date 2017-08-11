@@ -1,8 +1,10 @@
 package com.whatmedia.ttia.page.main.flights.search;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -120,8 +122,9 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     @Override
     public void getFlightsArriveFailed(String message) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, message);
-        showMessage(message);
+        Log.e(TAG, "getFlightsArriveFailed : " + message);
+        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_DEPARTURE);
+        mPresenter.getFlightsInfoAPI(mSearchData);
     }
 
     @Override
@@ -132,25 +135,46 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         } else {
             Log.e(TAG, "departure response is null");
         }
-        mMainActivity.addFragment(Page.TAG_FIGHTS_SEARCH_RESULT, mBundle, true);
+        checkToNextPage();
     }
 
     @Override
     public void getFlightsDepartureFailed(String message) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, message);
-        showMessage(message);
+        Log.e(TAG, "getFlightsDepartureFailed: " + message);
+        checkToNextPage();
     }
 
     @OnClick(R.id.layout_search)
     public void onViewClicked() {
         String keyword = mEditTextSearch.getText().toString();
         if (!TextUtils.isEmpty(keyword)) {
+            mBundle.clear();
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
             mSearchData.setKeyWord(keyword);
             mSearchData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_ARRIVE);
             mPresenter.getFlightsInfoAPI(mSearchData);
+        }
+    }
+
+    /**
+     * 檢查資料進下一頁
+     */
+    private void checkToNextPage() {
+        if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS)) && TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.note)
+                            .setMessage(R.string.flights_search_not_found_flights_message)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                }
+            });
+        } else {
+            mMainActivity.addFragment(Page.TAG_FIGHTS_SEARCH_RESULT, mBundle, true);
         }
     }
 }

@@ -120,8 +120,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     mMainActivity.addFragment(Page.TAG_USERFUL_INFO, null, true);
                     break;
                 case TAG_STORE_OFFERS://商店優惠
+                    mMainActivity.addFragment(Page.TAG_STORE_OFFERS, null, true);
                     break;
                 case TAG_COMMUNICATION_SERVICE://通訊服務
+                    mMainActivity.addFragment(Page.TAG_COMMUNICATION_SERVICE, null, true);
                     break;
                 case TAG_LANGUAGE_SETTING://語言設定
                     break;

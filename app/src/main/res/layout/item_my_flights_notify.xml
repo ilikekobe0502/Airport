@@ -14,19 +14,21 @@
         android:paddingRight="@dimen/dp_pixel_10">
 
         <ImageView
-            android:id="@+id/imageView_icon"
-            android:layout_width="@dimen/dp_pixel_50"
-            android:layout_height="@dimen/dp_pixel_50"
-            android:layout_marginRight="@dimen/dp_pixel_10"
-            android:background="@drawable/my_flights_notify_02_03_clock"
-            android:scaleType="centerCrop" />
+            android:id="@+id/imageView_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_pixel_4"
+            android:layout_marginRight="@dimen/dp_pixel_4"
+            android:background="@drawable/my_flight_02_02_no" />
 
         <TextView
             android:id="@+id/textView_time"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_pixel_50"
             android:layout_toLeftOf="@+id/switch_open"
-            android:layout_toRightOf="@+id/imageView_icon"
+            android:layout_toRightOf="@+id/imageView_check"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_pixel_21" />

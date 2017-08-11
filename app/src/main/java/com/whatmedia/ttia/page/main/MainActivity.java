@@ -17,6 +17,7 @@ import com.whatmedia.ttia.enums.HomeFeature;
 import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
 import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
@@ -33,6 +34,7 @@ import com.whatmedia.ttia.page.main.secretary.detail.sweet.SweetNotifyDetailFrag
 import com.whatmedia.ttia.page.main.secretary.emergency.AirportEmergencyFragment;
 import com.whatmedia.ttia.page.main.secretary.news.AirportUserNewsFragment;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyFragment;
+import com.whatmedia.ttia.page.main.store.StoreOffersFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityFragment;
 import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoFragment;
 import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultFragment;
@@ -598,9 +600,39 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                                 }
                             }
                         });
+            } else if (fragment instanceof StoreOffersFragment) {//商店優惠
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.home_store_offers_title))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
             } else if (fragment instanceof LostAndFoundFragment) {//失物協尋
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.useful_info_lost))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof CommunicationFragment) {//通訊服務
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.home_communication_service_title))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -644,7 +676,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     /**
      * Get Marquee String
      */
-    private void getMarqueeString(){
+    private void getMarqueeString() {
         mMarqueeMessage = getString(R.string.marquee_default_message, Util.getMarqueeSubMessage(getApplicationContext()));
     }
 }

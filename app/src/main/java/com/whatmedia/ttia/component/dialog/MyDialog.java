@@ -1,6 +1,8 @@
 package com.whatmedia.ttia.component.dialog;
 
 import android.app.DialogFragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +48,7 @@ public class MyDialog extends DialogFragment {
     private List<DialogContentData> mTableList;
     private String mTitle;
     private String mRightText;
+    private int mRightVisibility;
     private int mButtonType;
     private int mRecyclerViewType;
     private MyDialogTableRecyclerViewAdapter mTableAdapter;
@@ -64,6 +67,7 @@ public class MyDialog extends DialogFragment {
         ButterKnife.bind(this, view);
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return view;
     }
 
@@ -95,6 +99,7 @@ public class MyDialog extends DialogFragment {
         mTextViewTitle.setText(!TextUtils.isEmpty(mTitle) ? mTitle : "");
 
         if (mTableList != null) {
+            mButtonCancel.setVisibility(mRightVisibility);
             mTableAdapter = new MyDialogTableRecyclerViewAdapter(mTableList);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(mTableAdapter);
@@ -128,6 +133,11 @@ public class MyDialog extends DialogFragment {
         return this;
     }
 
+    public MyDialog setLeftVisibility(int visibility) {
+        mRightVisibility = visibility;
+        return this;
+    }
+
     @Override
     public void onDestroyView() {
         mRightText = "";
@@ -135,6 +145,7 @@ public class MyDialog extends DialogFragment {
         mLeftListener = null;
         mTableList.clear();
         mTitle = "";
+        mRightVisibility = View.VISIBLE;
         super.onDestroyView();
     }
 }

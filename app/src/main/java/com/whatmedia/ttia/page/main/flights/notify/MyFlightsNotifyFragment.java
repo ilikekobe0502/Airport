@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 
 import com.google.gson.Gson;
@@ -27,20 +28,22 @@ import com.whatmedia.ttia.utility.Util;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNotifyContract.View {
     private static final String TAG = MyFlightsNotifyFragment.class.getSimpleName();
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.layout_delete)
+    RelativeLayout mLayoutDelete;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private MyFlightsNotifyContract.Presenter mPresenter;
-
+    private List<ClockData> mDataList;
 
     private MyFlightsNotifyRecyclerViewAdapter mAdapter;
 
@@ -74,7 +77,8 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
 
         mPresenter = MyFlightsNotifyPresenter.getInstance(getContext(), this);
 
-        mAdapter = new MyFlightsNotifyRecyclerViewAdapter(getContext());
+        mDataList = ClockDataList.newInstance(Preferences.getClockData(getContext()));
+        mAdapter = new MyFlightsNotifyRecyclerViewAdapter(getContext(),mDataList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
@@ -151,21 +155,46 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
                     clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
                     String timeString = view.getContext().getString(R.string.my_flights_notify, clockTimeData.getHour(), clockTimeData.getMin());
 
-                    List<ClockData> datas = ClockDataList.newInstance(Preferences.getClockData(getContext()));
+                    mDataList = ClockDataList.newInstance(Preferences.getClockData(getContext()));
 
                     ClockData clockData = new ClockData();
                     clockData.setId(new Random().nextInt(800 - 100) + 65);
                     clockData.setTime(clockTimeData);
                     clockData.setTimeString(timeString);
                     clockData.setNotify(true);
-                    datas.add(clockData);
+                    mDataList.add(clockData);
 
-                    String json = gson.toJson(datas);
+                    String json = gson.toJson(mDataList);
 
                     Preferences.saveClockData(view.getContext(), json);
-                    mAdapter.setData(datas);
+                    mAdapter.setData(mDataList);
                 }
             }
         });
+    }
+
+    /**
+     * Delete data
+     */
+    private void deleteData() {
+        for (ClockData item : mAdapter.getSelectData()) {
+            for (ClockData subItem : mDataList) {
+                if (item.getId() == subItem.getId()) {
+                    mDataList.remove(subItem);
+                    Util.cancelAlertClock(getContext(),subItem.getId());
+                    break;
+                }
+            }
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(mDataList);
+        Preferences.saveClockData(getContext(), json);
+
+        mAdapter.setData(mDataList);
+    }
+
+    @OnClick(R.id.layout_delete)
+    public void onClick() {
+        deleteData();
     }
 }
