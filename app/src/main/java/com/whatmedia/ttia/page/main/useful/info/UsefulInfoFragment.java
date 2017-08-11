@@ -111,7 +111,7 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
             int page = -1;
             switch (info) {
                 case TAG_LANGUAGE://旅行外文
-                    page = Page.TAG_STORE_SEARCH;
+                    page = Page.TAG_USERFUL_LANGUAGE;
                     break;
                 case TAG_CURRENCY://匯率換算
                     page = Page.TAG_USERFUL_CURRENCY_CONVERSION;
@@ -120,7 +120,7 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
                     page = Page.TAG_HOME_MORE_WEATHER;
                     break;
                 case TAG_TIMEZONE://時區查詢
-                    page = Page.TAG_PUBLIC_TOILET;
+                    page = Page.TAG_USERFUL_TIMEZONE;
                     break;
                 case TAG_LOST://失物協尋
                     page = Page.TAG_USERFUL_LOST;

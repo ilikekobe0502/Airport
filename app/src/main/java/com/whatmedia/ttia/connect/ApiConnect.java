@@ -480,4 +480,17 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
+    /**
+     * 取得旅行外文
+     *
+     * @param callback
+     */
+    public static void getLanguages(String id,Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_travel_language")
+                .newBuilder()
+                .addQueryParameter("type", id)
+                .build();
+        getApi(url, callback);
+    }
 }
