@@ -40,6 +40,8 @@ import com.whatmedia.ttia.page.main.traffic.roadside.RoadsideAssistanceFragment;
 import com.whatmedia.ttia.page.main.traffic.skytrain.SkyTrainFragment;
 import com.whatmedia.ttia.page.main.traffic.taxi.TaxiFragment;
 import com.whatmedia.ttia.page.main.traffic.tourbus.TourBusFragment;
+import com.whatmedia.ttia.page.main.useful.info.UsefulInfoFragment;
+import com.whatmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 
 /**
  * Created by neo_mac on 2017/6/20.
@@ -85,6 +87,9 @@ public class Page {
     public static final int TAG_AIRPORT_NEWS_DETAIL = 1405;
     public static final int TAG_AIRPORT_EMERGENCY_DETAIL = 1406;
     public static final int TAG_AIRPORT_SWEET_DETAIL = 1407;
+
+    public static final int TAG_USERFUL_INFO = 2000;
+    public static final int TAG_USERFUL_LOST = 2001;
 
     /**
      * Switch AirportEmergencyFragment
@@ -219,6 +224,10 @@ public class Page {
                 return new SweetNotifyDetailFragment().newInstance();
             case TAG_AIRPORT_FACILITY_DETAIL:
                 return new FacilityDetailFragment().newInstance();
+            case TAG_USERFUL_INFO:
+                return new UsefulInfoFragment().newInstance();
+            case TAG_USERFUL_LOST:
+                return new LostAndFoundFragment().newInstance();
         }
 
         return null;

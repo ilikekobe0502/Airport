@@ -46,6 +46,8 @@ import com.whatmedia.ttia.page.main.traffic.roadside.RoadsideAssistanceFragment;
 import com.whatmedia.ttia.page.main.traffic.skytrain.SkyTrainFragment;
 import com.whatmedia.ttia.page.main.traffic.taxi.TaxiFragment;
 import com.whatmedia.ttia.page.main.traffic.tourbus.TourBusFragment;
+import com.whatmedia.ttia.page.main.useful.info.UsefulInfoFragment;
+import com.whatmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
@@ -581,7 +583,38 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                                 }
                             }
                         });
+            } else if (fragment instanceof UsefulInfoFragment) {//實用資訊(目錄)
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.home_practical_info_title))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof LostAndFoundFragment) {//失物協尋
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.useful_info_lost))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
             }
+
         } else
             Log.e(TAG, "Fragment is null : ");
     }
