@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_menu_array">
+        <item>最新ニュース</item><!--<item>メニュー</item>-->
+        <item>フライト情報</item>
+        <item>近所の情報</item>
+        <item>交通アクセス</item>
+        <item>お役立ち情報</item>
+        <item>ショッピング</item>
+        <item>通信サービス</item>
+        <item>設定</item>
+    </string-array>
+
+    <string-array name="flight_menu_array">
+        <item>ホーム</item>
+        <item>フライト検索</item>
+        <item>マイフライト</item>
+        <item>リマインド</item>
+    </string-array>
+
+    <string-array name="nearby_menu_array">
+        <item>ホーム</item>
+        <item>レストラン</item>
+        <item>空港施設</item>
+        <!--<item>観光スポット</item>-->
+        <!--<item>ホステル</item>-->
+        <!--<item>ガソリンスタンド</item>-->
+        <!--<item>駐車場</item>-->
+        <item>トイレ</item>
+    </string-array>
+
+    <string-array name="nearby_menu_array_jaen">
+        <item>ホーム</item>
+        <item>レストラン</item>
+        <item>空港施設</item>
+        <!--<item>観光スポット</item>-->
+        <!--<item>ホステル</item>-->
+        <!--<item>ガソリンスタンド</item>-->
+        <!--<item>駐車場</item>-->
+    </string-array>
+
+    <string-array name="traffic_menu_array">
+        <item>ホーム</item>
+        <item>パーキング</item>
+        <item>ロードサービス</item>
+        <item>連絡バス</item>
+        <item>電車</item>
+        <item>バス</item>
+        <item>タクシー</item>
+        <item>MRT/HSR</item>
+    </string-array>
+
+    <string-array name="traffic_menu_array_ja">
+        <item>ホーム</item>
+        <item>パーキング</item>
+        <item>連絡バス</item>
+        <item>電車</item>
+        <item>バス</item>
+        <item>タクシー</item>
+        <item>MRT/HSR</item>
+    </string-array>
+
+    <string-array name="utility_menu_array">
+        <item>ホーム</item>
+        <item>旅行外語</item>
+        <item>為替情報</item>
+        <item>天気情報</item>
+        <item>タイムゾーン</item>
+        <item>遺失物窓口</item>
+        <item>アンケート</item>
+    </string-array>
+
+    <string-array name="utility_menu_array_enja">
+        <item>ホーム</item>
+        <item>旅行外語</item>
+        <item>為替情報</item>
+        <item>天気情報</item>
+        <item>タイムゾーン</item>
+        <item>遺失物窓口</item>
+    </string-array>
+
+    <string-array name="shopping_menu_array">
+        <item>ホーム</item>
+        <item>記念品</item>
+        <item>店舗情報</item>
+    </string-array>
+
+    <string-array name="communication_menu_array">
+        <item>ホーム</item>
+        <item>国際電話</item>
+        <item>緊急電話</item>
+        <item>ローミング</item>
+    </string-array>
+
+    <string-array name="option_menu_array">
+        <item>ホーム</item>
+    </string-array>
+</resources>

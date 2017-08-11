@@ -157,8 +157,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         .setLeftText(getString(R.string.flights_search_result_arrive_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setRightText(getString(R.string.home_more_flights))
                         .setLeftIcon(ContextCompat.getDrawable(getContext(), R.drawable.dow))
-                        .setRightIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
-                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                        .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
+                        .setOnMoreClickListener(new MyToolbar.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 mViewPagerInfo.setCurrentItem(0);
@@ -173,8 +173,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         .setBackground(ContextCompat.getColor(getContext(), R.color.colorBackgroundHomeParkingInfo))
                         .setLeftText(getString(R.string.airport_traffic_parking_info))
                         .setRightText(getString(R.string.home_more))
-                        .setRightIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
-                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                        .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
+                        .setOnMoreClickListener(new MyToolbar.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 mViewPagerInfo.setCurrentItem(0);
@@ -187,8 +187,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         .setBackground(ContextCompat.getColor(getContext(), R.color.colorHomeWeather))
                         .setLeftText(getString(R.string.home_weather_title))
                         .setRightText(getString(R.string.home_more))
-                        .setRightIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
-                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                        .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
+                        .setOnMoreClickListener(new MyToolbar.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 mViewPagerInfo.setCurrentItem(0);
@@ -213,8 +213,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
                 .setLeftIcon(ContextCompat.getDrawable(getContext(), R.drawable.up))
                 .setRightText(getString(R.string.home_more_flights))
-                .setRightIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
-                .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
+                .setOnMoreClickListener(new MyToolbar.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPagerInfo.setCurrentItem(0);

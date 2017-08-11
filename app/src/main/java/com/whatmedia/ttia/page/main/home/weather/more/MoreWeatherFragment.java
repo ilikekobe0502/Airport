@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.home.weather.more;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.component.dialog.MyWeatherDialog;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 
@@ -26,10 +30,15 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @BindView(R.id.webView)
     WebView mWebView;
 
-    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=ASI|TW|TW018|TAOYUAN&lang=tw";
+    // TODO: 2017/8/12 語言設置！
+    private static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=%s&lang=tw";
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private MoreWeatherContract.Presenter mPresenter;
+
+    private int mRegin = 0;
+    private int mContury = 1;
+    private String[] mCodeArray;
 
     public MoreWeatherFragment() {
         // Required empty public constructor
@@ -62,32 +71,10 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         mPresenter = MoreWeatherPresenter.getInstance(getContext(), this);
 
         mLoadingView.showLoadingView();
+        settingWebView();
+        regin();
 
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setSupportMultipleWindows(true);
-        mWebView.loadUrl(mWeatherUrl);
-
-        mWebView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return super.shouldOverrideUrlLoading(view, request);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                mLoadingView.goneLoadingView();
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                mLoadingView.goneLoadingView();
-            }
-        });
+        tool();
         return view;
     }
 
@@ -123,5 +110,105 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void tool() {
+        mMainActivity.getMyToolbar().clearState()
+                .setTitleText(getString(R.string.home_weather_title))
+                .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
+                .setMoreLayoutVisibility(View.GONE)
+                .setRightText(getString(R.string.currency_conversion_other_area))
+                .setOnAreaClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyWeatherDialog dialog = new MyWeatherDialog().setItemClickListener(new IOnItemClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (view.getTag() != null && view.getTag() instanceof Integer) {
+                                    mRegin = (int) view.getTag();
+                                    MyWeatherDialog dialog = MyWeatherDialog.newInstance().setRegion((Integer) view.getTag()).setItemClickListener(new IOnItemClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (view.getTag() != null && view.getTag() instanceof Integer) {
+                                                mContury = (int) view.getTag();
+                                                regin();
+                                            }
+                                        }
+                                    });
+                                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                                } else {
+                                    // TODO: 2017/8/12 error handler
+                                }
+                            }
+                        });
+                        dialog.show(getActivity().getFragmentManager(), "dialog");
+                    }
+                })
+                .setAreaLayoutVisibility(View.VISIBLE)
+                .setBackVisibility(View.VISIBLE)
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.imageView_back:
+                                mMainActivity.backPress();
+                                break;
+                        }
+                    }
+                });
+    }
+
+    private void regin() {
+        switch (mRegin) {
+            case 0:
+                mCodeArray = getResources().getStringArray(R.array.weather_taiwan_code_array);
+                break;
+            case 1:
+                mCodeArray = getResources().getStringArray(R.array.weather_asia_oceania_code_array);
+                break;
+            case 2:
+                mCodeArray = getResources().getStringArray(R.array.weather_america_code_array);
+                break;
+            case 3:
+                mCodeArray = getResources().getStringArray(R.array.weather_eurpo_code_array);
+                break;
+            case 4:
+                mCodeArray = getResources().getStringArray(R.array.weather_china_code_array);
+                break;
+        }
+
+
+        showWebView();
+    }
+
+    private void settingWebView() {
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setSupportMultipleWindows(true);
+
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mLoadingView.goneLoadingView();
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                mLoadingView.goneLoadingView();
+            }
+        });
+    }
+
+    private void showWebView() {
+        mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mContury]));
     }
 }

@@ -165,4 +165,5 @@
     <string name="currency_conversion_vnd">"VND"</string>
     <string name="currency_conversion_zar">"ZAR"</string>
     <string name="currency_conversion_translate">"換算"</string>
+    <string name="currency_conversion_other_area">"其他地區"</string>
 </resources>
