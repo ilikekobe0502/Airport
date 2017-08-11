@@ -54,19 +54,26 @@ public class FlightClockIntentService extends IntentService {
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
             managerCompat.notify(id, notificationCompat);
 
-            List<ClockData> datas = ClockDataList.newInstance(Preferences.getClockData(getApplicationContext()));
-            for (ClockData item : datas) {
-                if (item.getId() == id) {
-                    datas.remove(item);
-                    break;
-                }
-            }
-            if (mGson == null)
-                mGson = new Gson();
-            String json = mGson.toJson(datas);
-            Preferences.saveClockData(getApplicationContext(), json);
+//            deleteReceiveNotification(id);
         } else {
             Log.e(TAG, "Service bundle is error");
         }
+    }
+
+    /**
+     * 收到推播之後把推播刪除
+     */
+    private void deleteReceiveNotification(int receiveId) {
+        List<ClockData> datas = ClockDataList.newInstance(Preferences.getClockData(getApplicationContext()));
+        for (ClockData item : datas) {
+            if (item.getId() == receiveId) {
+                datas.remove(item);
+                break;
+            }
+        }
+        if (mGson == null)
+            mGson = new Gson();
+        String json = mGson.toJson(datas);
+        Preferences.saveClockData(getApplicationContext(), json);
     }
 }

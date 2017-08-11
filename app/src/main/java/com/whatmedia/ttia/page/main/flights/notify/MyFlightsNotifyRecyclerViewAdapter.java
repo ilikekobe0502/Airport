@@ -90,7 +90,7 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
     public void setData(List<ClockData> data) {
         mItems = data;
         mSelectItems.clear();
-        if (data != null) {
+        if (data != null && data.size() > 0) {
             Util.setAlertClock(mContext, data.get(data.size() - 1));
         }
         notifyDataSetChanged();

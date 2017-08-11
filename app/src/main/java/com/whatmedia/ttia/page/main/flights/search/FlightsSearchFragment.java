@@ -142,7 +142,6 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     public void getFlightsDepartureFailed(String message) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getFlightsDepartureFailed: " + message);
-        showMessage(message);
         checkToNextPage();
     }
 
@@ -150,6 +149,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     public void onViewClicked() {
         String keyword = mEditTextSearch.getText().toString();
         if (!TextUtils.isEmpty(keyword)) {
+            mBundle.clear();
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
             mSearchData.setKeyWord(keyword);

@@ -181,6 +181,7 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
             for (ClockData subItem : mDataList) {
                 if (item.getId() == subItem.getId()) {
                     mDataList.remove(subItem);
+                    Util.cancelAlertClock(getContext(),subItem.getId());
                     break;
                 }
             }
