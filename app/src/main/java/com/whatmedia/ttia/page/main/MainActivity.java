@@ -174,8 +174,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setLeftIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.up))
                         .setRightText(getString(R.string.home_more_flights))
-                        .setRightIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more))
-                        .setOnRightClickListener(new MyToolbar.OnClickListener() {
+                        .setMoreIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more))
+                        .setOnMoreClickListener(new MyToolbar.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Bundle bundle = new Bundle();
@@ -446,20 +446,23 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                             }
                         });
             } else if (fragment instanceof MoreWeatherFragment) {//一週天氣
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.home_weather_title))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.home_weather_title))
+//                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+//                        .setMoreLayoutVisibility(View.GONE)
+//                        .setRightText(getString(R.string.currency_conversion_other_area))
+//                        .setAreaLayoutVisibility(View.VISIBLE)
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
             } else if (fragment instanceof AirportUserNewsFragment) {//使用者最新消息
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_news))

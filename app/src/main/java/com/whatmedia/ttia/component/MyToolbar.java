@@ -2,6 +2,7 @@ package com.whatmedia.ttia.component;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -38,9 +39,14 @@ public class MyToolbar extends RelativeLayout {
     RelativeLayout mLayoutMore;
     @BindView(R.id.imageView_right_single)
     ImageView mImageViewRightSingle;
+    @BindView(R.id.layout_right)
+    RelativeLayout mLayoutRight;
+    @BindView(R.id.layout_area)
+    RelativeLayout mLayoutArea;
 
     private OnClickListener mLeftListener;
-    private OnClickListener mRightListener;
+    private OnClickListener mMoreListener;
+    private OnClickListener mAreaListener;
 
     public interface OnClickListener {
         void onClick(View v);
@@ -100,7 +106,7 @@ public class MyToolbar extends RelativeLayout {
         return this;
     }
 
-    public MyToolbar setRightIcon(Drawable drawable) {
+    public MyToolbar setMoreIcon(Drawable drawable) {
         if (drawable != null) {
             mLayoutMore.setVisibility(VISIBLE);
             mImageViewMore.setVisibility(VISIBLE);
@@ -119,19 +125,59 @@ public class MyToolbar extends RelativeLayout {
         return this;
     }
 
+    public MyToolbar setMoreLayoutVisibility(int visibility) {
+        mLayoutRight.setVisibility(visibility);
+        return this;
+    }
+
+    //    public MyToolbar setRightIcon(Drawable drawable) {
+//        if (drawable != null) {
+//            mImageViewRight.setVisibility(VISIBLE);
+//            mImageViewRight.setBackground(drawable);
+//        } else
+//            mImageViewRight.setVisibility(GONE);
+//        return this;
+//    }
+//
+//    public MyToolbar setRightBackground(int color) {
+//        if (color != 0) {
+//            mLayoutRight.setBackgroundColor(color);
+//        } else {
+//            mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
+//        }
+//        return this;
+//    }
+//
+//    public MyToolbar setRightBackground(Drawable drawable) {
+//        if (drawable != null) {
+//            mLayoutRight.setBackground(drawable);
+//        } else {
+//            mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
+//        }
+//        return this;
+//    }
+    public MyToolbar setOnAreaClickListener(OnClickListener listener) {
+        mAreaListener = listener;
+        return this;
+    }
+
+    public MyToolbar setAreaLayoutVisibility(int visibility) {
+        mLayoutArea.setVisibility(visibility);
+        return this;
+    }
+
     public MyToolbar setBackVisibility(int visibility) {
         mImageViewBack.setVisibility(visibility);
         return this;
     }
 
-    public MyToolbar setOnRightClickListener(OnClickListener listener) {
-        mRightListener = listener;
+    public MyToolbar setOnMoreClickListener(OnClickListener listener) {
+        mMoreListener = listener;
         return this;
     }
 
-
     public MyToolbar setOnRightSingleClickListener(OnClickListener listener) {
-        mRightListener = listener;
+        mMoreListener = listener;
         return this;
     }
 
@@ -158,19 +204,27 @@ public class MyToolbar extends RelativeLayout {
         mLayoutMore.setVisibility(GONE);
         mImageViewBack.setVisibility(GONE);
         mImageViewRightSingle.setVisibility(GONE);
+        mLayoutArea.setVisibility(GONE);
+        mLayoutRight.setVisibility(VISIBLE);
         mLeftListener = null;
-        mRightListener = null;
+        mMoreListener = null;
+        mAreaListener = null;
+        mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
 //        mLayoutFrame.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         return this;
     }
 
-    @OnClick({R.id.layout_more, R.id.imageView_back, R.id.imageView_right_single})
+    @OnClick({R.id.layout_more, R.id.imageView_back, R.id.imageView_right_single, R.id.layout_area})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layout_area:
+                if (mAreaListener != null)
+                    mAreaListener.onClick(v);
+                break;
             case R.id.layout_more:
             case R.id.imageView_right_single:
-                if (mRightListener != null) {
-                    mRightListener.onClick(v);
+                if (mMoreListener != null) {
+                    mMoreListener.onClick(v);
                 }
                 break;
             case R.id.imageView_back:

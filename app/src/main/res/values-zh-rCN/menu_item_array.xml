@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_menu_array">
+        <item>最新消息</item><!--<item>主选单</item>-->
+        <item>航班资讯</item>
+        <item>航厦资讯</item>
+        <item>机场交通</item>
+        <item>实用资讯</item>
+        <item>商店优惠</item>
+        <item>通讯服务</item>
+        <item>设定</item>
+    </string-array>
+
+    <string-array name="flight_menu_array">
+        <item>首页</item>
+        <item>搜寻航班</item>
+        <item>我的航班</item>
+        <item>航班提醒</item>
+    </string-array>
+
+    <string-array name="nearby_menu_array">
+        <item>首页</item>
+        <item>餐厅商店</item>
+        <item>机场设施</item>
+        <!--<item>观光景点</item>-->
+        <!--<item>饭店餐厅</item>-->
+        <!--<item>加油站</item>-->
+        <!--<item>停车场</item>-->
+        <item>公共厕所</item>
+    </string-array>
+
+    <string-array name="nearby_menu_array_jaen">
+        <item>首页</item>
+        <item>餐厅商店</item>
+        <item>机场设施</item>
+        <!--<item>观光景点</item>-->
+        <!--<item>饭店餐厅</item>-->
+        <!--<item>加油站</item>-->
+        <!--<item>停车场</item>-->
+    </string-array>
+
+    <string-array name="traffic_menu_array">
+        <item>首页</item>
+        <item>停车资讯</item>
+        <item>道路救援服务</item>
+        <item>巡回巴士</item>
+        <item>电车</item>
+        <item>机场巴士</item>
+        <item>计程车</item>
+        <item>机场捷运/高铁</item>
+        <item>即时路况</item>
+    </string-array>
+
+    <string-array name="traffic_menu_array_ja">
+        <item>首页</item>
+        <item>停车资讯</item>
+        <item>巡回巴士</item>
+        <item>电车</item>
+        <item>机场巴士</item>
+        <item>计程车</item>
+        <item>机场捷运/高铁</item>
+    </string-array>
+
+    <string-array name="utility_menu_array">
+        <item>首页</item>
+        <item>旅行外文</item>
+        <item>汇率换算</item>
+        <item>天气</item>
+        <item>时区查询</item>
+        <item>失物协寻</item>
+        <item>问卷调查</item>
+    </string-array>
+
+    <string-array name="utility_menu_array_enja">
+        <item>首页</item>
+        <item>旅行外文</item>
+        <item>汇率换算</item>
+        <item>天气</item>
+        <item>时区查询</item>
+        <item>失物协寻</item>
+    </string-array>
+
+    <string-array name="shopping_menu_array">
+        <item>首页</item>
+        <item>纪念品专区</item>
+        <item>商店讯息</item>
+    </string-array>
+
+    <string-array name="communication_menu_array">
+        <item>首页</item>
+        <item>国际电话</item>
+        <item>紧急电话</item>
+        <item>漫游服务</item>
+    </string-array>
+
+    <string-array name="option_menu_array">
+        <item>首页</item>
+    </string-array>
+</resources>
