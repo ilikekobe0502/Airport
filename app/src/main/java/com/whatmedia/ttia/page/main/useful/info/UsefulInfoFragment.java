@@ -126,7 +126,7 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
                     page = Page.TAG_USERFUL_LOST;
                     break;
                 case TAG_QUESTIONNAIRE://問卷調查
-                    page = Page.TAG_PUBLIC_TOILET;
+                    page = Page.TAG_USERFUL_QUEST;
                     break;
             }
 

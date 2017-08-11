@@ -15,8 +15,6 @@ import android.webkit.WebViewClient;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.main.traffic.bus.AirportBusContract;
-import com.whatmedia.ttia.page.main.traffic.bus.AirportBusFragment;
 import com.whatmedia.ttia.response.data.LostAndFoundData;
 
 import java.util.List;

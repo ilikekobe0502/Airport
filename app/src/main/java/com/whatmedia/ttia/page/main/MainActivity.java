@@ -51,6 +51,7 @@ import com.whatmedia.ttia.page.main.traffic.tourbus.TourBusFragment;
 import com.whatmedia.ttia.page.main.useful.currency.CurrencyConversionFragment;
 import com.whatmedia.ttia.page.main.useful.info.UsefulInfoFragment;
 import com.whatmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
+import com.whatmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
@@ -649,6 +650,21 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof CurrencyConversionFragment) {//匯率換算
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.useful_info_currency))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof QuestionnaireFragment) {//問卷調查
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.useful_info_questionnaire))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {

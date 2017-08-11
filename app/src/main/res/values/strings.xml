@@ -165,4 +165,11 @@
     <string name="currency_conversion_vnd">"VND"</string>
     <string name="currency_conversion_zar">"ZAR"</string>
     <string name="currency_conversion_translate">"換算"</string>
+
+    <!-- Useful questionnaire -->
+    <string name="useful_quest_title">填寫問卷</string>
+    <string name="useful_quest_des">說明:非常不滿意1分、不滿意2分、普通3分、\n滿意4分、非常滿意5分。</string>
+    <string name="useful_quest_number">問題</string>
+    <string name="useful_quest_send">送出</string>
+
 </resources>

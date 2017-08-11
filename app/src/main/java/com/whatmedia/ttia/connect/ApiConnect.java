@@ -452,4 +452,32 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+    /**
+     * 問卷調查題目
+     *
+     * @param callback
+     */
+    public static void getQuestionnaire(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Questions")
+                .newBuilder()
+                .addQueryParameter("lan", "tw")
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 送出問卷調查結果
+     *
+     * @param callback
+     */
+    public static void sendQuestionnaireResult(String answer,Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Answers")
+                .newBuilder()
+                .addQueryParameter("UserID", "A123456789")
+                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("answer", answer)
+                .build();
+        getApi(url, callback);
+    }
 }
