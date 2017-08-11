@@ -422,4 +422,17 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
+    /**
+     * 失物協尋資訊
+     *
+     * @param callback
+     */
+    public static void getLostAndFound(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Lost")
+                .newBuilder()
+                .addQueryParameter("lan", "tw")
+                .build();
+        getApi(url, callback);
+    }
 }

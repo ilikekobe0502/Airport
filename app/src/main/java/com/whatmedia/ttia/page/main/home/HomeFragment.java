@@ -68,6 +68,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 
         mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
         mViewPagerInfo.setAdapter(mInfoAdapter);
+
         mTabInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
         mViewPagerInfo.addOnPageChangeListener(this);
         //Init toolbar
@@ -76,7 +77,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mViewPagerFeature.setAdapter(mFeatureAdapter);
         mFeatureAdapter.setClickListener(this);
         mTabIndicator.setupWithViewPager(mViewPagerFeature, true);
-
         return view;
     }
 
@@ -117,6 +117,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     mMainActivity.addFragment(Page.TAG_AIRPORT_TRAFFIC, null, true);
                     break;
                 case TAG_PRACTICAL_INFO://實用資訊
+                    mMainActivity.addFragment(Page.TAG_USERFUL_INFO, null, true);
                     break;
                 case TAG_STORE_OFFERS://商店優惠
                     mMainActivity.addFragment(Page.TAG_STORE_OFFERS, null, true);

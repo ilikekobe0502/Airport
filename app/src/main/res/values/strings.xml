@@ -126,6 +126,14 @@
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
 
+    <!-- Useful info -->
+    <string name="useful_info_language">旅行外文</string>
+    <string name="useful_info_currency">匯率換算</string>
+    <string name="useful_info_weather">天氣</string>
+    <string name="useful_info_timezone">時區查詢</string>
+    <string name="useful_info_lost">失物協尋</string>
+    <string name="useful_info_questionnaire">問卷調查</string>
+
     <!-- Store Offers -->
     <string name="store_offers_souvenir">"紀念品專區"</string>
     <string name="store_offers_info">"商店資訊"</string>
