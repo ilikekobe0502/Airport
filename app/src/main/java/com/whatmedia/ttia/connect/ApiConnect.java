@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.whatmedia.ttia.enums.FlightInfo;
+import com.whatmedia.ttia.response.data.ExchangeRateData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 
@@ -432,6 +433,22 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Lost")
                 .newBuilder()
                 .addQueryParameter("lan", "tw")
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 稅率換算
+     *
+     * @param data
+     * @param callback
+     */
+    public void getExchangeRate(ExchangeRateData data, Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_exchange_rate")
+                .newBuilder()
+                .addQueryParameter("source", !TextUtils.isEmpty(data.getSource()) ? data.getSource() : "")
+                .addQueryParameter("target", !TextUtils.isEmpty(data.getTarget()) ? data.getTarget() : "")
+                .addQueryParameter("amount", !TextUtils.isEmpty(data.getAmount()) ? data.getAmount() : "")
                 .build();
         getApi(url, callback);
     }

@@ -142,4 +142,27 @@
     <string name="communication_service_international_call">"國際電話"</string>
     <string name="communication_service_emergency_call">"緊急電話"</string>
     <string name="communication_service_romain_service">"漫遊服務"</string>
+
+    <!-- Currency conversion -->
+    <string name="currency_conversion_aud">"AUD"</string>
+    <string name="currency_conversion_cad">"CAD"</string>
+    <string name="currency_conversion_chf">"CHF"</string>
+    <string name="currency_conversion_cny">"CNY"</string>
+    <string name="currency_conversion_eur">"EUR"</string>
+    <string name="currency_conversion_gbp">"GBP"</string>
+    <string name="currency_conversion_hkd">"HKD"</string>
+    <string name="currency_conversion_idr">"IDR"</string>
+    <string name="currency_conversion_jpy">"JPY"</string>
+    <string name="currency_conversion_krw">"KRW"</string>
+    <string name="currency_conversion_myr">"MYR"</string>
+    <string name="currency_conversion_nzd">"NZD"</string>
+    <string name="currency_conversion_php">"PHP"</string>
+    <string name="currency_conversion_sek">"SEK"</string>
+    <string name="currency_conversion_sgd">"SGD"</string>
+    <string name="currency_conversion_thb">"THB"</string>
+    <string name="currency_conversion_twd">"TWD"</string>
+    <string name="currency_conversion_usd">"USD"</string>
+    <string name="currency_conversion_vnd">"VND"</string>
+    <string name="currency_conversion_zar">"ZAR"</string>
+    <string name="currency_conversion_translate">"換算"</string>
 </resources>

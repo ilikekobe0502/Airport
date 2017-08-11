@@ -42,6 +42,7 @@ import com.whatmedia.ttia.page.main.traffic.roadside.RoadsideAssistanceFragment;
 import com.whatmedia.ttia.page.main.traffic.skytrain.SkyTrainFragment;
 import com.whatmedia.ttia.page.main.traffic.taxi.TaxiFragment;
 import com.whatmedia.ttia.page.main.traffic.tourbus.TourBusFragment;
+import com.whatmedia.ttia.page.main.useful.currency.CurrencyConversionFragment;
 import com.whatmedia.ttia.page.main.useful.info.UsefulInfoFragment;
 import com.whatmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 
@@ -96,6 +97,7 @@ public class Page {
 
     public static final int TAG_USERFUL_INFO = 2000;
     public static final int TAG_USERFUL_LOST = 2001;
+    public static final int TAG_USERFUL_CURRENCY_CONVERSION = 2002;
 
     /**
      * Switch AirportEmergencyFragment
@@ -239,6 +241,8 @@ public class Page {
                 return new StoreOffersFragment().newInstance();
             case TAG_COMMUNICATION_SERVICE:
                 return new CommunicationFragment().newInstance();
+            case TAG_USERFUL_CURRENCY_CONVERSION:
+                return new CurrencyConversionFragment().newInstance();
         }
 
         return null;

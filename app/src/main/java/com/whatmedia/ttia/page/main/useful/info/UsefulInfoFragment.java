@@ -114,7 +114,7 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
                     page = Page.TAG_STORE_SEARCH;
                     break;
                 case TAG_CURRENCY://匯率換算
-                    page = Page.TAG_AIRPORT_FACILITY;
+                    page = Page.TAG_USERFUL_CURRENCY_CONVERSION;
                     break;
                 case TAG_WEATHER://天氣
                     page = Page.TAG_HOME_MORE_WEATHER;
