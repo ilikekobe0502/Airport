@@ -102,8 +102,8 @@
 
     <string-array name="weather_taiwan_city_array">
         <item>台北</item>
-        <item>ユンリン</item>
         <item>桃園</item>
+        <item>ユンリン</item>
         <item>台東</item>
         <item>台南</item>
         <item>台中</item>
@@ -202,8 +202,8 @@
 
     <string-array name="weather_china_code_array">
         <item>ASI|CN|CH004|CANGZHOU</item>
-        <item>ASI|CN|CH004|FUZHOU</item>
         <item>ASI|HK|HK---|HONG KONG</item>
+        <item>ASI|CN|CH004|FUZHOU</item>
         <item>ASI|CN|CH030|KUNMING</item>
         <item>ASI|CN|CH003|CHONGQING</item>
         <item>ASI|CN|CH013|WUHAN</item>
@@ -222,13 +222,13 @@
 
     <string-array name="weather_taiwan_code_array">
         <item>ASI|TW|TW018|TAIPEI</item>
+        <item>ASI|TW|TW018|TAOYUAN</item>
         <item>ASI|TW|TW018|YUNLIN</item>
-        <item>ASI|TW|TW018|CHUNG-LI</item>
         <item>ASI|TW|TW018|TAITUNG</item>
         <item>ASI|TW|TW018|TAINAN</item>
         <item>ASI|TW|TW018|TAICHUNG</item>
         <item>ASI|TW|TW099|PINGTUNG</item>
-        <item>ASI|TW|TW018|PENGHU</item>
+        <item>ASI|TW|TW018|Magong</item>
         <item>ASI|TW|TW098|NANTOU</item>
         <item>ASI|TW|TW018|MIAOLI</item>
         <item>ASI|TW|TW017|MA-TSU</item>
@@ -243,6 +243,7 @@
     </string-array>
 
     <string-array name="weather_taiwan_time_stamp_array">
+        <item>+8</item>
         <item>+8</item>
         <item>+8</item>
         <item>+8</item>
@@ -292,6 +293,7 @@
         <item>-8</item>
         <item>-8</item>
         <item>-8</item>
+        <item>-8</item>
         <item>-5</item>
         <item>-5</item>
         <item>-6</item>
@@ -300,6 +302,7 @@
         <item>-8</item>
         <item>-5</item>
         <item>-6</item>
+        <item>-3</item>
         <item>-8</item>
         <item>-8</item>
         <item>-3</item>

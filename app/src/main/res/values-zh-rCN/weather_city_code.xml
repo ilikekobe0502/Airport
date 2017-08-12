@@ -101,8 +101,8 @@
 
     <string-array name="weather_taiwan_city_array">
         <item>台北</item>
-        <item>云林</item>
         <item>桃园</item>
+        <item>云林</item>
         <item>台东</item>
         <item>台南</item>
         <item>台中</item>
@@ -135,12 +135,12 @@
         <item>ASI|TH|TH017|BANGKOK</item>
         <item>ASI|ID|ID009|JAKARTA</item>
         <item>ASI|MY|MY015|KUALA LUMPUR</item>
-        <item>ASI|PH|RP073|MANILA</item>
         <item>ASI|SG|SN---|SINGAPORE</item>
+        <item>ASI|PH|RP073|MANILA</item>
         <item>ASI|NP|NP000|KATHMANDU</item>
         <item>ASI|VN|VM060|HO CHI MINH CITY</item>
-        <item>ASI|IN|IN010|NEW DELHI</item>
         <item>ASI|VN|VM017|HANOI</item>
+        <item>ASI|IN|IN010|NEW DELHI</item>
         <item>MEA|TR|TU040|ISTANBUL</item>
         <item>ASI|RU|RS052|MOSKVA</item>
         <item>ASI|RU|RS063|VLADIVOSTOK</item>
@@ -203,8 +203,8 @@
 
     <string-array name="weather_china_code_array">
         <item>ASI|CN|CH004|CANGZHOU</item>
-        <item>ASI|CN|CH004|FUZHOU</item>
         <item>ASI|HK|HK---|HONG KONG</item>
+        <item>ASI|CN|CH004|FUZHOU</item>
         <item>ASI|CN|CH030|KUNMING</item>
         <item>ASI|CN|CH003|CHONGQING</item>
         <item>ASI|CN|CH013|WUHAN</item>
@@ -223,13 +223,13 @@
 
     <string-array name="weather_taiwan_code_array">
         <item>ASI|TW|TW018|TAIPEI</item>
+        <item>ASI|TW|TW018|TAOYUAN</item>
         <item>ASI|TW|TW018|YUNLIN</item>
-        <item>ASI|TW|TW018|CHUNG-LI</item>
         <item>ASI|TW|TW018|TAITUNG</item>
         <item>ASI|TW|TW018|TAINAN</item>
         <item>ASI|TW|TW018|TAICHUNG</item>
         <item>ASI|TW|TW099|PINGTUNG</item>
-        <item>ASI|TW|TW018|PENGHU</item>
+        <item>ASI|TW|TW018|Magong</item>
         <item>ASI|TW|TW098|NANTOU</item>
         <item>ASI|TW|TW018|MIAOLI</item>
         <item>ASI|TW|TW017|MA-TSU</item>
@@ -244,6 +244,7 @@
     </string-array>
 
     <string-array name="weather_taiwan_time_stamp_array">
+        <item>+8</item>
         <item>+8</item>
         <item>+8</item>
         <item>+8</item>
@@ -293,6 +294,7 @@
         <item>-8</item>
         <item>-8</item>
         <item>-8</item>
+        <item>-8</item>
         <item>-5</item>
         <item>-5</item>
         <item>-6</item>
@@ -301,6 +303,7 @@
         <item>-8</item>
         <item>-5</item>
         <item>-6</item>
+        <item>-3</item>
         <item>-8</item>
         <item>-8</item>
         <item>-3</item>

@@ -2,8 +2,6 @@ package com.whatmedia.ttia.page.main.useful.timezone;
 
 
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,15 +22,12 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQueryContract.View{
+public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQueryContract.View {
 
     private static final String TAG = TimeZoneQueryFragment.class.getSimpleName();
 
@@ -52,8 +47,8 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     private IActivityTools.IMainActivity mMainActivity;
     private TimeZoneQueryContract.Presenter mPresenter;
 
-    private int mRegin = 0;
-    private int mContury = 1;
+    private int mRegion = 0;
+    private int mCountry = 1;
     private String[] mCodeArray;
     private String[] mItems;
     private String mTimeStamp = "+8";
@@ -91,34 +86,34 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         mPresenter = TimeZoneQueryPresenter.getInstance(getContext(), this);
 
         Calendar c = Calendar.getInstance();
-        c.setTimeZone(java.util.TimeZone.getTimeZone("GMT"+mTimeStamp));
+        c.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + mTimeStamp));
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH)+1;
+        int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         String monthtext = "";
         String dattext = "";
-        if(month<10){
-            monthtext = "0"+month;
-        }else{
+        if (month < 10) {
+            monthtext = "0" + month;
+        } else {
             monthtext = String.valueOf(month);
         }
-        if(day<10){
-            dattext = "0"+day;
-        }else{
+        if (day < 10) {
+            dattext = "0" + day;
+        } else {
             dattext = String.valueOf(day);
         }
 
-        mTextDate.setText(year+"/"+monthtext+"/"+dattext);
+        mTextDate.setText(year + "/" + monthtext + "/" + dattext);
 
         long sysTime = System.currentTimeMillis();
 
         CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
         mTextTime.setText(sysTimeStr);
-        mClockView.setHour(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
-        mClockView.setMinute(Integer.valueOf(sysTimeStr.subSequence(3,5).toString()));
+        mClockView.setHour(Integer.valueOf(sysTimeStr.subSequence(0, 2).toString()));
+        mClockView.setMinute(Integer.valueOf(sysTimeStr.subSequence(3, 5).toString()));
         sysTimeStr = DateFormat.format("ss:hh:mm:", sysTime);
-        mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
+        mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0, 2).toString()));
         tool();
         return view;
     }
@@ -154,7 +149,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 
     private Handler mHandler = new Handler() {
         @Override
-        public void handleMessage (Message msg) {
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case RUNNING:
@@ -167,7 +162,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 //                    mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
 
                     Calendar c = Calendar.getInstance();
-                    c.setTimeZone(java.util.TimeZone.getTimeZone("GMT"+mTimeStamp));
+                    c.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + mTimeStamp));
 //                    long sysTime = c.getTimeInMillis();
 //                    CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
 //                    mTextTime.setText(sysTimeStr);
@@ -176,25 +171,25 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 //                    sysTimeStr = DateFormat.format("ss:hh:mm:", sysTime);
 //                    mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
 
-                    String hour,min,sec;
+                    String hour, min, sec;
 
-                    if(c.get(Calendar.HOUR_OF_DAY)<10){
-                        hour = "0"+c.get(Calendar.HOUR_OF_DAY);
-                    }else{
-                        hour = c.get(Calendar.HOUR_OF_DAY)+"";
+                    if (c.get(Calendar.HOUR_OF_DAY) < 10) {
+                        hour = "0" + c.get(Calendar.HOUR_OF_DAY);
+                    } else {
+                        hour = c.get(Calendar.HOUR_OF_DAY) + "";
                     }
-                    if(c.get(Calendar.MINUTE)<10){
-                        min = "0"+c.get(Calendar.MINUTE);
-                    }else{
-                        min = c.get(Calendar.MINUTE)+"";
+                    if (c.get(Calendar.MINUTE) < 10) {
+                        min = "0" + c.get(Calendar.MINUTE);
+                    } else {
+                        min = c.get(Calendar.MINUTE) + "";
                     }
-                    if(c.get(Calendar.SECOND)<10){
-                        sec = "0"+c.get(Calendar.SECOND);
-                    }else{
-                        sec = c.get(Calendar.SECOND)+"";
+                    if (c.get(Calendar.SECOND) < 10) {
+                        sec = "0" + c.get(Calendar.SECOND);
+                    } else {
+                        sec = c.get(Calendar.SECOND) + "";
                     }
 
-                    mTextTime.setText(hour+":"+min+":"+sec);
+                    mTextTime.setText(hour + ":" + min + ":" + sec);
                     mClockView.setHour(c.get(Calendar.HOUR_OF_DAY));
                     mClockView.setMinute(c.get(Calendar.MINUTE));
                     mClockView.setSecond(c.get(Calendar.SECOND));
@@ -209,18 +204,17 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 
     public class TimeThread extends Thread {
         @Override
-        public void run () {
+        public void run() {
             do {
                 try {
                     Thread.sleep(1000);
                     Message msg = new Message();
                     msg.what = RUNNING;
                     mHandler.sendMessage(msg);
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } while(true);
+            } while (true);
         }
     }
 
@@ -229,30 +223,38 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                 .setTitleText(getString(R.string.useful_info_timezone))
                 .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
                 .setMoreLayoutVisibility(View.GONE)
-                .setRightText(getString(R.string.currency_conversion_other_area))
+                .setRightText(getString(R.string.timezone_other_area))
                 .setOnAreaClickListener(new MyToolbar.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyWeatherDialog dialog = new MyWeatherDialog().setItemClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (view.getTag() != null && view.getTag() instanceof Integer) {
-                                    mRegin = (int) view.getTag();
-                                    MyWeatherDialog dialog = MyWeatherDialog.newInstance().setRegion((Integer) view.getTag()).setItemClickListener(new IOnItemClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if (view.getTag() != null && view.getTag() instanceof Integer) {
-                                                mContury = (int) view.getTag();
-                                                regin();
-                                            }
+                        MyWeatherDialog dialog = new MyWeatherDialog()
+                                .setTitle(getString(R.string.timezone_other_area_dialog_title))
+                                .setItemClickListener(new IOnItemClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (view.getTag() != null && view.getTag() instanceof Integer) {
+                                            mRegion = (int) view.getTag();
+                                            MyWeatherDialog dialog = MyWeatherDialog.newInstance()
+                                                    .setTitle(getString(R.string.timezone_other_area_dialog_title))
+                                                    .setRegion((Integer) view.getTag()).setItemClickListener(new IOnItemClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (view.getTag() != null && view.getTag() instanceof Integer) {
+                                                                mCountry = (int) view.getTag();
+                                                                switchRegion();
+                                                            } else {
+                                                                Log.e(TAG, "view.getTag() is error");
+                                                                showMessage(getString(R.string.data_error));
+                                                            }
+                                                        }
+                                                    });
+                                            dialog.show(getActivity().getFragmentManager(), "dialog");
+                                        } else {
+                                            Log.e(TAG, "view.getTag() is error");
+                                            showMessage(getString(R.string.data_error));
                                         }
-                                    });
-                                    dialog.show(getActivity().getFragmentManager(), "dialog");
-                                } else {
-                                    // TODO: 2017/8/12 error handler
-                                }
-                            }
-                        });
+                                    }
+                                });
                         dialog.show(getActivity().getFragmentManager(), "dialog");
                     }
                 })
@@ -270,8 +272,10 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                 });
     }
 
-    private void regin() {
-        switch (mRegin) {
+    boolean a = false;
+
+    private void switchRegion() {
+        switch (mRegion) {
             case 0:
                 mCodeArray = getResources().getStringArray(R.array.weather_taiwan_time_stamp_array);
                 mItems = getResources().getStringArray(R.array.weather_taiwan_city_array);
@@ -294,28 +298,35 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                 break;
         }
 
-        Log.e(TAG,"regin():"+mCodeArray[mContury]+mItems[mContury]);
-
-        mTextCity.setText(mItems[mContury]);
-        mTimeStamp = mCodeArray[mContury];
+        if (mCodeArray.length > mCountry && mItems.length > mCountry) {
+            Log.d(TAG, "switchRegion():" + mCodeArray[mCountry] + mItems[mCountry]);
+        } else {
+            Log.e(TAG, "switchRegion():mCodeArray.length < mCountry + mItems.length < mCountry");
+            mRegion = 0;
+            mCountry = 1;
+            switchRegion();
+            return;
+        }
+        mTextCity.setText(mItems[mCountry]);
+        mTimeStamp = mCodeArray[mCountry];
 
         Calendar c = Calendar.getInstance();
-        c.setTimeZone(java.util.TimeZone.getTimeZone("GMT"+mTimeStamp));
+        c.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + mTimeStamp));
         int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH)+1;
+        int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
         String monthtext = "";
         String dattext = "";
-        if(month<10){
-            monthtext = "0"+month;
-        }else{
+        if (month < 10) {
+            monthtext = "0" + month;
+        } else {
             monthtext = String.valueOf(month);
         }
-        if(day<10){
-            dattext = "0"+day;
-        }else{
+        if (day < 10) {
+            dattext = "0" + day;
+        } else {
             dattext = String.valueOf(day);
         }
-        mTextDate.setText(year+"/"+monthtext+"/"+dattext);
+        mTextDate.setText(year + "/" + monthtext + "/" + dattext);
     }
 }

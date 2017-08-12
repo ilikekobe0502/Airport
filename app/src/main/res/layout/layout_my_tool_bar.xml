@@ -62,8 +62,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@color/colorMoreFrame"
-            android:visibility="gone"
-            android:padding="@dimen/dp_pixel_4">
+            android:padding="@dimen/dp_pixel_4"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageView_more"
@@ -86,30 +86,31 @@
 
         <RelativeLayout
             android:id="@+id/layout_area"
-            android:layout_width="@dimen/dp_pixel_100"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/layout_sub_area"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/useful_info_05_04_01">
+                android:background="@drawable/frame_other_area_background"
+                android:padding="@dimen/dp_pixel_5">
 
 
                 <TextView
                     android:id="@+id/textView_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="@string/currency_conversion_other_area"
+                    android:text="@string/timezone_other_area"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp_pixel_13" />
+                    android:textSize="@dimen/sp_pixel_14" />
 
                 <ImageView
                     android:id="@+id/imageView_area"
