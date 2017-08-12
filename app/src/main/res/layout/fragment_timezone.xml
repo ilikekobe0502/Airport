@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_bg">
+
+    <TextView
+        android:id="@+id/text_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_24"
+        android:layout_marginTop="@dimen/dp_pixel_70"
+        android:gravity="center|bottom"
+        android:text="台北"/>
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_24"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_pixel_20"
+        android:text="2017/06/26"/>
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="@dimen/dp_pixel_20"
+        android:textSize="@dimen/sp_pixel_48"
+        android:gravity="center"
+        android:text="18:29:18"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/clock_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/dp_pixel_50"
+            android:src="@drawable/clock_bg"/>
+
+        <com.whatmedia.ttia.component.ClockView
+            android:id="@+id/clockview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignLeft="@+id/clock_bg"
+            android:layout_alignRight="@+id/clock_bg"
+            android:layout_alignBottom="@+id/clock_bg"
+            android:layout_alignTop="@+id/clock_bg"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

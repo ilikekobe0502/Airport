@@ -53,6 +53,7 @@ import com.whatmedia.ttia.page.main.useful.info.UsefulInfoFragment;
 import com.whatmedia.ttia.page.main.useful.language.TravelLanguageFragment;
 import com.whatmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 import com.whatmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
+import com.whatmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
@@ -696,6 +697,21 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                                 }
                             }
                         });
+            } else if (fragment instanceof TimeZoneQueryFragment) {//時區查詢
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.useful_info_timezone))
+//                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
             }
 
         } else
