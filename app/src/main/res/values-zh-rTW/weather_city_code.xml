@@ -32,6 +32,27 @@
         <item>彰化</item>
     </string-array>
 
+    <string-array name="weather_taiwan_time_stamp_array">
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+
     <!--<item>高雄</item>-->
 
     <string-array name="weather_taiwan_code_array">
@@ -109,6 +130,32 @@
         <item>OCN|AU|QLD|BRISBANE</item>
     </string-array>
 
+    <string-array name="weather_asia_time_stamp_array">
+        <item>+9</item>
+        <item>+9</item>
+        <item>+9</item>
+        <item>+10</item>
+        <item>+7</item>
+        <item>+7</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+5.75</item>
+        <item>+7</item>
+        <item>+7</item>
+        <item>+5.5</item>
+        <item>+2</item>
+        <item>+3</item>
+        <item>+3</item>
+        <item>+3</item>
+        <item>+12</item>
+        <item>+12</item>
+        <item>+10</item>
+        <item>+10</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+
     <!-- America -->
 
     <string-array name="weather_america_city_array">
@@ -147,6 +194,24 @@
         <item>SAM|CL|CI011|SANTIAGO</item>
         <item>SAM|PE|PE015|LIMA</item>
         <item>SAM|AR|AR007|BUENOS AIRES</item>
+    </string-array>
+
+    <string-array name="weather_america_time_stamp_array">
+        <item>-10</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-8</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-3</item>
     </string-array>
 
     <!-- Europe -->
@@ -201,26 +266,71 @@
         <item>EUR|PT|PO012|LISBON</item>
     </string-array>
 
+    <string-array name="weather_eurpo_time_stamp_array">
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+0</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+0</item>
+    </string-array>
+
     <!-- China -->
 
     <string-array name="weather_china_city_array">
-        <item>廣州</item>
-        <item>香港</item>
-        <item>福州</item>
-        <item>昆明</item>
-        <item>重慶</item>
-        <item>武漢</item>
-        <item>南昌</item>
-        <item>杭州</item>
-        <item>上海</item>
-        <item>南京</item>
-        <item>青島</item>
-        <item>北京</item>
-        <item>開封</item>
-        <item>西安</item>
-        <item>瀋陽</item>
-        <item>蘭州</item>
-        <item>海口</item>
+    <item>廣州</item>
+    <item>香港</item>
+    <item>福州</item>
+    <item>昆明</item>
+    <item>重慶</item>
+    <item>武漢</item>
+    <item>南昌</item>
+    <item>杭州</item>
+    <item>上海</item>
+    <item>南京</item>
+    <item>青島</item>
+    <item>北京</item>
+    <item>開封</item>
+    <item>西安</item>
+    <item>瀋陽</item>
+    <item>蘭州</item>
+    <item>海口</item>
+    </string-array>
+
+    <string-array name="weather_china_time_stamp_array">
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
     </string-array>
 
     <string-array name="weather_china_code_array">

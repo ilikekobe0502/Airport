@@ -242,4 +242,110 @@
         <item>ASI|TW|TW018|CHANGHUA</item>
     </string-array>
 
+    <string-array name="weather_taiwan_time_stamp_array">
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+    <string-array name="weather_asia_time_stamp_array">
+        <item>+9</item>
+        <item>+9</item>
+        <item>+9</item>
+        <item>+10</item>
+        <item>+7</item>
+        <item>+7</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+5.75</item>
+        <item>+7</item>
+        <item>+7</item>
+        <item>+5.5</item>
+        <item>+2</item>
+        <item>+3</item>
+        <item>+3</item>
+        <item>+3</item>
+        <item>+12</item>
+        <item>+12</item>
+        <item>+10</item>
+        <item>+10</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+    <string-array name="weather_america_time_stamp_array">
+        <item>-10</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-8</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-3</item>
+    </string-array>
+    <string-array name="weather_eurpo_time_stamp_array">
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+0</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+0</item>
+    </string-array>
+    <string-array name="weather_china_time_stamp_array">
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+
 </resources>

@@ -698,20 +698,20 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                             }
                         });
             } else if (fragment instanceof TimeZoneQueryFragment) {//時區查詢
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.useful_info_timezone))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.useful_info_timezone))
+//                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
             }
 
         } else
