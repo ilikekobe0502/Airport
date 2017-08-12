@@ -75,7 +75,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 
         mPresenter = FacilityDetailPresenter.getInstance(getContext(), this);
 
-        final float space = getResources().getDimension(R.dimen.dp_pixel_10);
+        final float space = getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
 
         if (getArguments() != null && getArguments().getSerializable(FacilityDetailContract.TAG_DATA) != null) {
             AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
