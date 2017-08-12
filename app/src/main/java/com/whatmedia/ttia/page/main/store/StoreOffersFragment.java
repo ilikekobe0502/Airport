@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.FlightInfo;
+import com.whatmedia.ttia.enums.StoreOffers;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.terminals.store.search.StoreSearchContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,23 +106,22 @@ public class StoreOffersFragment extends BaseFragment implements StoreOffersCont
 
     @Override
     public void onClick(View view) {
-        if (view.getTag() instanceof FlightInfo) {
-            FlightInfo info = (FlightInfo) view.getTag();
+        if (view.getTag() instanceof StoreOffers) {
+            StoreOffers info = (StoreOffers) view.getTag();
             int page = -1;
+            Bundle bundle = new Bundle();
+            bundle.clear();
             switch (info) {
-                case TAG_SEARCH_FLIGHTS://搜尋航班
-                    page = Page.TAG_FIGHTS_SEARCH;
+                case TAG_SOUVENIR://紀念品專區
                     break;
-                case TAG_MY_FLIGHTS://我的航班
-                    page = Page.TAG_MY_FIGHTS_INFO;
-                    break;
-                case TAG_FLIGHTS_NOTIFY://航班提醒
-                    page = Page.TAG_MY_FIGHTS_NOTIFY;
+                case TAG_STORE_INFO://商店資訊
+                    bundle.putInt(StoreSearchContract.TAG_FROM_PAGE, Page.TAG_STORE_OFFERS);
+                    page = Page.TAG_STORE_SEARCH;
                     break;
             }
 
             if (page != -1)
-                mMainActivity.addFragment(page, null, true);
+                mMainActivity.addFragment(page, bundle, true);
         } else {
             Log.e(TAG, "View.getTag() is not instance of FlightInfo");
         }

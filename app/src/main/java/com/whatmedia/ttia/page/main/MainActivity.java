@@ -38,6 +38,7 @@ import com.whatmedia.ttia.page.main.store.StoreOffersFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityFragment;
 import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoFragment;
 import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultFragment;
+import com.whatmedia.ttia.page.main.terminals.store.search.StoreSearchContract;
 import com.whatmedia.ttia.page.main.terminals.store.search.StoreSearchFragment;
 import com.whatmedia.ttia.page.main.terminals.toilet.PublicToiletFragment;
 import com.whatmedia.ttia.page.main.traffic.AirportTrafficFragment;
@@ -274,9 +275,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                                 }
                             }
                         });
-            } else if (fragment instanceof StoreSearchFragment) {//餐廳與商店搜尋
+            } else if (fragment instanceof StoreSearchFragment) {//餐廳與商店搜尋. StoreSearchContract.TAG_FROM_PAGE =  Page.TAG_STORE_OFFERS => 商店資訊
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.terminal_info_store))
+                        .setTitleText((fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) != 0 &&
+                                fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) == Page.TAG_STORE_OFFERS) ?
+                                getString(R.string.store_offers_info) : getString(R.string.terminal_info_store))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {

@@ -8,6 +8,8 @@ import com.whatmedia.ttia.response.data.TerminalCodeData;
 import java.util.List;
 
 public interface StoreSearchContract {
+    String TAG_FROM_PAGE = "com.whatmedia.ttia.page.main.terminals.store.search.from_page";
+
     interface View {
         void getTerminalSucceed(List<TerminalCodeData> response);
 
