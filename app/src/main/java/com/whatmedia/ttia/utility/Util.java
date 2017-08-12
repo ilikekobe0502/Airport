@@ -274,25 +274,29 @@ public class Util {
     /**
      * 合成Bitmap
      *
+     * @Param space --每張圖之間的間隔
      * @param bitmapList
      * @return
      */
-    public static Bitmap combineBitmap(Bitmap[] bitmapList) {
+    public static Bitmap combineBitmap(Bitmap[] bitmapList,int space) {
         if (bitmapList == null || bitmapList.length <= 0) {
             return null;
         }
+
         int width = bitmapList[0].getWidth();
         int height = 0;
         for (int i = 0; i < bitmapList.length; i++) {
             height += bitmapList[i].getHeight();
+            height += space;
         }
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(bitmapList[0], 0, 0, null);
-        int tempHeight = bitmapList[0].getHeight();
+        int tempHeight = bitmapList[0].getHeight()+space;
         for (int i = 1; i < bitmapList.length; i++) {
             canvas.drawBitmap(bitmapList[i], 0, tempHeight, null);
             tempHeight += bitmapList[i].getHeight();
+            tempHeight += space;
         }
         return bitmap;
     }

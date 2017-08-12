@@ -75,6 +75,8 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 
         mPresenter = FacilityDetailPresenter.getInstance(getContext(), this);
 
+        final float space = getResources().getDimension(R.dimen.dp_pixel_10);
+
         if (getArguments() != null && getArguments().getSerializable(FacilityDetailContract.TAG_DATA) != null) {
             AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
             mTextViewSubTitle.setText(facilityData.getFloorName());
@@ -90,7 +92,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                         mBitmaps[finalI] = bitmap;
                         if (mBitmaps[0] != null && mBitmaps[1] != null && mBitmaps[2] != null) {
-                            mImagePicture.setImage(ImageSource.bitmap(Util.setBitmapScale(Util.combineBitmap(mBitmaps))));
+                            mImagePicture.setImage(ImageSource.bitmap(Util.setBitmapScale(Util.combineBitmap(mBitmaps,(int)space))));
                         }
                         Log.d("TAG", "onBitmapLoaded" + finalI);
                     }
