@@ -19,6 +19,7 @@ import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsFragment;
 import com.whatmedia.ttia.page.main.home.parking.HomeParkingInfoFragment;
 import com.whatmedia.ttia.page.main.home.weather.HomeWeatherInfoFragment;
 import com.whatmedia.ttia.page.main.home.weather.more.MoreWeatherFragment;
+import com.whatmedia.ttia.page.main.language.LanguageSettingFragment;
 import com.whatmedia.ttia.page.main.secretary.AirportSecretaryFragment;
 import com.whatmedia.ttia.page.main.secretary.detail.emergency.EmergencyDetailFragment;
 import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailFragment;
@@ -98,6 +99,8 @@ public class Page {
     public static final int TAG_STORE_OFFERS = 1501;
 
     public static final int TAG_COMMUNICATION_SERVICE = 1601;
+
+    public static final int TAG_LANGUAGE_SETTING = 1701;
 
     public static final int TAG_USERFUL_INFO = 2000;
     public static final int TAG_USERFUL_LOST = 2001;
@@ -259,6 +262,8 @@ public class Page {
                 return new TravelLanguageFragment().newInstance();
             case TAG_USERFUL_LANGUAGE_RESULT:
                 return new TravelLanguageResultFragment().newInstance();
+            case TAG_LANGUAGE_SETTING:
+                return new LanguageSettingFragment().newInstance();
         }
 
         return null;

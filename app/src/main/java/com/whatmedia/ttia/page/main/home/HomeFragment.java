@@ -126,6 +126,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     mMainActivity.addFragment(Page.TAG_COMMUNICATION_SERVICE, null, true);
                     break;
                 case TAG_LANGUAGE_SETTING://語言設定
+                    mMainActivity.addFragment(Page.TAG_LANGUAGE_SETTING, null, true);
                     break;
                 case TAG_AIRPORT_SECRETARY://機場秘書
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
