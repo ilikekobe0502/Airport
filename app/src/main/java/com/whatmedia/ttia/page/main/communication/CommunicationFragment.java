@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.enums.CommunicationService;
 import com.whatmedia.ttia.enums.FlightInfo;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -104,18 +105,18 @@ public class CommunicationFragment extends BaseFragment implements Communication
 
     @Override
     public void onClick(View view) {
-        if (view.getTag() instanceof FlightInfo) {
-            FlightInfo info = (FlightInfo) view.getTag();
+        if (view.getTag() instanceof CommunicationService) {
+            CommunicationService info = (CommunicationService) view.getTag();
             int page = -1;
             switch (info) {
-                case TAG_SEARCH_FLIGHTS://搜尋航班
-                    page = Page.TAG_FIGHTS_SEARCH;
+                case TAG_INTERNATIONAL_CALL://國際電話
+                    page = Page.TAG_COMMUNICATION_INTERNATIONAL_CALL;
                     break;
-                case TAG_MY_FLIGHTS://我的航班
-                    page = Page.TAG_MY_FIGHTS_INFO;
+                case TAG_EMERGENCY_CALL://緊急電話
+                    page = Page.TAG_COMMUNICATION_EMERGENCY_CALL;
                     break;
-                case TAG_FLIGHTS_NOTIFY://航班提醒
-                    page = Page.TAG_MY_FIGHTS_NOTIFY;
+                case TAG_ROAMING_SERVICE://漫遊服務
+                    page = Page.TAG_COMMUNICATION_ROAMING_SERVICE;
                     break;
             }
 

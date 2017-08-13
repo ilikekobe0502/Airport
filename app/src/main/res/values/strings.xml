@@ -143,6 +143,12 @@
     <string name="communication_service_emergency_call">"緊急電話"</string>
     <string name="communication_service_romain_service">"漫遊服務"</string>
 
+    <!-- communication -->
+    <string name="internation_title">國際電話撥打方式</string>
+    <string name="roaming_service_title">漫遊行動上網</string>
+    <string name="roaming_service_des">請參考各家漫遊服務，選擇最適合您的資費方案：</string>
+    <string name="roaming_detail_query">漫遊方案查詢</string>
+
     <!-- Currency conversion -->
     <string name="currency_conversion_aud">"AUD"</string>
     <string name="currency_conversion_cad">"CAD"</string>
