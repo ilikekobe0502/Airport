@@ -170,7 +170,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                     final FlightsInfoData tag = (FlightsInfoData) view.getTag();
 
                     final MyDialog myDialog = MyDialog.newInstance()
-                            .setTitle(getString(R.string.dialog_detail_title))
+                            .setTitle(getString(R.string.flight_dialog_title))
                             .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
                             .setRightClickListener(new IOnItemClickListener() {
                                 @Override

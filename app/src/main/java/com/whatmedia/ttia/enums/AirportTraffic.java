@@ -10,13 +10,13 @@ import java.util.List;
  */
 
 public enum AirportTraffic {
-    TAG_PARKING_INFO(R.string.airport_traffic_parking_info, R.drawable.airport_traffic_04_01),
-    TAG_AIRPORT_BUS(R.string.airport_traffic_parking_airport_bus, R.drawable.airport_traffic_04_02),
-    TAG_ROADSIDE_ASSISTANCE(R.string.airport_traffic_parking_roadside_assistance, R.drawable.airport_traffic_04_03),
-    TAG_TAXI(R.string.airport_traffic_parking_taxi, R.drawable.airport_traffic_04_04),
-    TAG_TOUR_BUS(R.string.airport_traffic_parking_tour_bus, R.drawable.airport_traffic_04_05),
-    TAG_AIRPORT_MRT(R.string.airport_traffic_parking_mrt, R.drawable.airport_traffic_04_06),
-    TAG_SKY_TRAIN(R.string.airport_traffic_parking_sky_train, R.drawable.airport_traffic_04_07);
+    TAG_PARKING_INFO(R.string.title_parking_infomation, R.drawable.airport_traffic_04_01),
+    TAG_AIRPORT_BUS(R.string.title_airport_bus, R.drawable.airport_traffic_04_02),
+    TAG_ROADSIDE_ASSISTANCE(R.string.title_road_rescue, R.drawable.airport_traffic_04_03),
+    TAG_TAXI(R.string.title_taxi, R.drawable.airport_traffic_04_04),
+    TAG_TOUR_BUS(R.string.title_tourist_bus, R.drawable.airport_traffic_04_05),
+    TAG_AIRPORT_MRT(R.string.title_mrt_hsr, R.drawable.airport_traffic_04_06),
+    TAG_SKY_TRAIN(R.string.title_tram_car, R.drawable.airport_traffic_04_07);
 
     private int title;
     private int icon;

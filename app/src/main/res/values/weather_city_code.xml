@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="weather_region_array">
+        <item>台灣</item>
+        <item>亞洲、大洋洲</item>
+        <item>美洲</item>
+        <item>歐洲、非洲</item>
+        <item>中國</item>
+    </string-array>
+
+    <!-- Taiwan -->
+
+    <string-array name="weather_taiwan_city_array">
+        <item>台北</item>
+        <item>桃園</item>
+        <item>雲林</item>
+        <item>台東</item>
+        <item>台南</item>
+        <item>台中</item>
+        <item>屏東</item>
+        <item>澎湖</item>
+        <item>南投</item>
+        <item>苗栗</item>
+        <item>馬祖</item>
+        <item>金門</item>
+        <item>基隆</item>
+        <item>高雄</item>
+        <item>宜蘭</item>
+        <item>花蓮</item>
+        <item>新竹</item>
+        <item>嘉義</item>
+        <item>彰化</item>
+    </string-array>
+
+    <string-array name="weather_taiwan_time_stamp_array">
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+
+    <!--<item>高雄</item>-->
+
+    <string-array name="weather_taiwan_code_array">
+        <item>ASI|TW|TW018|TAIPEI</item>
+        <item>ASI|TW|TW018|TAOYUAN</item>
+        <item>ASI|TW|TW018|YUNLIN</item>
+        <item>ASI|TW|TW018|TAITUNG</item>
+        <item>ASI|TW|TW018|TAINAN</item>
+        <item>ASI|TW|TW018|TAICHUNG</item>
+        <item>ASI|TW|TW099|PINGTUNG</item>
+        <item>ASI|TW|TW018|Magong</item>
+        <item>ASI|TW|TW098|NANTOU</item>
+        <item>ASI|TW|TW018|MIAOLI</item>
+        <item>ASI|TW|TW017|MA-TSU</item>
+        <item>ASI|TW|TW017|KINMEN</item>
+        <item>ASI|TW|TW018|KEELUNG</item>
+        <item>ASI|TW|TW006|KAO-HSIUNG</item>
+        <item>ASI|TW|TW018|I-LAN</item>
+        <item>ASI|TW|TW018|HUALIEN</item>
+        <item>ASI|TW|TW018|HSINCHU</item>
+        <item>ASI|TW|TW018|CHIAYI</item>
+        <item>ASI|TW|TW018|CHANGHUA</item>
+    </string-array>
+
+    <!-- Asia -->
+
+    <string-array name="weather_asia_oceania_city_array">
+        <item>東京</item>
+        <item>大阪</item>
+        <item>首爾</item>
+        <item>關島</item>
+        <item>曼谷</item>
+        <item>雅加達</item>
+        <item>吉隆坡</item>
+        <item>新加坡</item>
+        <item>馬尼拉</item>
+        <item>加德滿都(尼泊爾)</item>
+        <item>胡志明市</item>
+        <item>河內</item>
+        <item>新德里</item>
+        <item>伊斯坦堡</item>
+        <item>莫斯科</item>
+        <item>海參威</item>
+        <item>俄羅斯</item>
+        <item>威靈頓</item>
+        <item>奧克蘭</item>
+        <item>墨爾本</item>
+        <item>雪梨</item>
+        <item>伯斯</item>
+        <item>布里斯本</item>
+    </string-array>
+
+    <string-array name="weather_asia_oceania_code_array">
+        <item>ASI|JP|JA041|TOKYO</item>
+        <item>ASI|JP|JA009|OSAKA</item>
+        <item>ASI|KR|KS013|SEOUL</item>
+        <item>OCN|GU|GU000|AGANA</item>
+        <item>ASI|TH|TH017|BANGKOK</item>
+        <item>ASI|ID|ID009|JAKARTA</item>
+        <item>ASI|MY|MY015|KUALA LUMPUR</item>
+        <item>ASI|SG|SN---|SINGAPORE</item>
+        <item>ASI|PH|RP073|MANILA</item>
+        <item>ASI|NP|NP000|KATHMANDU</item>
+        <item>ASI|VN|VM060|HO CHI MINH CITY</item>
+        <item>ASI|VN|VM017|HANOI</item>
+        <item>ASI|IN|IN010|NEW DELHI</item>
+        <item>MEA|TR|TU040|ISTANBUL</item>
+        <item>ASI|RU|RS052|MOSKVA</item>
+        <item>ASI|RU|RS063|VLADIVOSTOK</item>
+        <item>ASI|RU|RS032|KHABAROVSK</item>
+        <item>OCN|NZ|NZ000|WELLINGTON</item>
+        <item>NAM|US|CA|OAKLAND</item>
+        <item>OCN|AU|VIC|MELBOURNE</item>
+        <item>OCN|AU|NSW|SYDNEY</item>
+        <item>OCN|AU|WA|PERTH</item>
+        <item>OCN|AU|QLD|BRISBANE</item>
+    </string-array>
+
+    <string-array name="weather_asia_time_stamp_array">
+        <item>+9</item>
+        <item>+9</item>
+        <item>+9</item>
+        <item>+10</item>
+        <item>+7</item>
+        <item>+7</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+5.75</item>
+        <item>+7</item>
+        <item>+7</item>
+        <item>+5.5</item>
+        <item>+2</item>
+        <item>+3</item>
+        <item>+3</item>
+        <item>+3</item>
+        <item>+12</item>
+        <item>+12</item>
+        <item>+10</item>
+        <item>+10</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+
+    <!-- America -->
+
+    <string-array name="weather_america_city_array">
+        <item>檀香山</item>
+        <item>洛杉磯</item>
+        <item>拉斯維加斯</item>
+        <item>舊金山</item>
+        <item>西雅圖</item>
+        <item>紐約</item>
+        <item>華盛頓特區</item>
+        <item>芝加哥</item>
+        <item>邁阿密</item>
+        <item>多倫多</item>
+        <item>溫哥華</item>
+        <item>蒙特婁</item>
+        <item>墨西哥城</item>
+        <item>里約</item>
+        <item>聖地牙哥(智利)</item>
+        <item>利瑪</item>
+        <item>布宜諾斯艾利斯</item>
+    </string-array>
+
+    <string-array name="weather_america_code_array">
+        <item>NAM|US|HI|HONOLULU</item>
+        <item>NAM|US|CA|LOS ANGELES</item>
+        <item>NAM|US|NV|NORTH LAS VEGAS</item>
+        <item>NAM|US|CA|SAN FRANCISCO</item>
+        <item>NAM|US|WA|SEATTLE</item>
+        <item>NAM|US|NY|NEW YORK</item>
+        <item>NAM|US|DC|WASHINGTON</item>
+        <item>NAM|US|IL|CHICAGO</item>
+        <item>NAM|US|FL|MIAMI</item>
+        <item>NAM|CA|ON|TORONTO</item>
+        <item>NAM|US|WA|VANCOUVER</item>
+        <item>NAM|CA|QC|MONTREAL</item>
+        <item>NAM|MX|MX009|MEXICO CITY</item>
+        <item>SAM|BR|BR001|RIO BRANCO</item>
+        <item>SAM|CL|CI011|SANTIAGO</item>
+        <item>SAM|PE|PE015|LIMA</item>
+        <item>SAM|AR|AR007|BUENOS AIRES</item>
+    </string-array>
+
+    <string-array name="weather_america_time_stamp_array">
+        <item>-10</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-8</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-3</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-3</item>
+    </string-array>
+
+    <!-- Europe -->
+
+    <string-array name="weather_eurpo_city_array">
+        <item>奧斯陸</item>
+        <item>馬德里</item>
+        <item>哥本哈根</item>
+        <item>赫爾辛基</item>
+        <item>法蘭克福</item>
+        <item>柏林</item>
+        <item>日內瓦</item>
+        <item>布魯塞爾</item>
+        <item>倫敦</item>
+        <item>巴黎</item>
+        <item>維也納</item>
+        <item>羅馬</item>
+        <item>威尼斯</item>
+        <item>布達佩斯</item>
+        <item>雅典</item>
+        <item>華沙</item>
+        <item>布拉格</item>
+        <item>開羅</item>
+        <item>阿姆斯特丹</item>
+        <item>約翰尼斯堡</item>
+        <item>斯德哥爾摩</item>
+        <item>里斯本</item>
+    </string-array>
+
+    <string-array name="weather_eurpo_code_array">
+        <item>EUR|NO|NO011|OSLO</item>
+        <item>EUR|ES|SP013|MADRID</item>
+        <item>EUR|DK|DA012|COPENHAGEN</item>
+        <item>EUR|FI|FI002|HELSINKI</item>
+        <item>EUR|DE|GM007|FRANKFURT</item>
+        <item>EUR|DE|GM003|BERLIN</item>
+        <item>EUR|CH|SZ008|GENEVE</item>
+        <item>EUR|BE|BE003|BRUXELLES</item>
+        <item>EUR|UK|UK001|LONDON</item>
+        <item>EUR|FR|FR012|PARIS</item>
+        <item>EUR|AT|AU009|WIEN</item>
+        <item>EUR|IT|IT007|ROMA</item>
+        <item>EUR|IT|IT020|VENEZIA</item>
+        <item>EUR|HU|HU006|BUDAPEST</item>
+        <item>EUR|GR|GR007|ATHINAI</item>
+        <item>EUR|PL|PL007|WARSZAWA</item>
+        <item>EUR|CZ|EZ001|PRAHA</item>
+        <item>AFR|EG|EG011|CAIRO</item>
+        <item>EUR|NL|NL008|AMSTERDAM</item>
+        <item>AFR|ZA|SF004|JOHANNESBURG</item>
+        <item>EUR|SE|SW015|STOCKHOLM</item>
+        <item>EUR|PT|PO012|LISBON</item>
+    </string-array>
+
+    <string-array name="weather_eurpo_time_stamp_array">
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+0</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+2</item>
+        <item>+1</item>
+        <item>+0</item>
+    </string-array>
+
+    <!-- China -->
+
+    <string-array name="weather_china_city_array">
+        <item>廣州</item>
+        <item>香港</item>
+        <item>福州</item>
+        <item>昆明</item>
+        <item>重慶</item>
+        <item>武漢</item>
+        <item>南昌</item>
+        <item>杭州</item>
+        <item>上海</item>
+        <item>南京</item>
+        <item>青島</item>
+        <item>北京</item>
+        <item>開封</item>
+        <item>西安</item>
+        <item>瀋陽</item>
+        <item>蘭州</item>
+        <item>海口</item>
+    </string-array>
+
+    <string-array name="weather_china_time_stamp_array">
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+        <item>+8</item>
+    </string-array>
+
+    <string-array name="weather_china_code_array">
+        <item>ASI|CN|CH004|CANGZHOU</item>
+        <item>ASI|HK|HK---|HONG KONG</item>
+        <item>ASI|CN|CH004|FUZHOU</item>
+        <item>ASI|CN|CH030|KUNMING</item>
+        <item>ASI|CN|CH003|CHONGQING</item>
+        <item>ASI|CN|CH013|WUHAN</item>
+        <item>ASI|CN|CH016|NANCHANG</item>
+        <item>ASI|CN|CH031|HANGZHOU</item>
+        <item>ASI|CN|CH024|SHANGHAI</item>
+        <item>ASI|CN|CH016|NANJING</item>
+        <item>ASI|CN|CH023|QINGDAO</item>
+        <item>ASI|CN|CH002|BEIJING</item>
+        <item>ASI|CN|CH012|KAIFENG</item>
+        <item>ASI|CN|CH010|XIAN</item>
+        <item>ASI|CN|CH018|SHENYANG</item>
+        <item>ASI|CN|CH005|LANZHOU</item>
+        <item>ASI|CN|CH009|HAIKOU</item>
+    </string-array>
+
+</resources>

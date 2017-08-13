@@ -82,9 +82,9 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
 
         String terminal = "";
         if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST)) {
-            terminal = getString(R.string.restaurant_store_search_info_first_terminal);
+            terminal = getString(R.string.terminal_1);
         } else if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_SECOND))
-            terminal = getString(R.string.restaurant_store_search_info_second_terminal);
+            terminal = getString(R.string.terminal_2);
 
         if (!TextUtils.isEmpty(data.getImgPath())) {
             String image = ApiConnect.TAG_IMAGE_HOST + data.getImgPath();

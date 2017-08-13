@@ -10,12 +10,12 @@ import java.util.List;
  */
 
 public enum HomeFeature {
-    TAG_FLIGHTS_INFO(R.string.home_flights_info_title, R.drawable.home_02),
+    TAG_FLIGHTS_INFO(R.string.title_flight, R.drawable.home_02),
     TAG_TERMINAL_INFO(R.string.home_terminal_info_title, R.drawable.home_03),
-    TAG_AIRPORT_TRAFFIC(R.string.home_airport_traffic_title, R.drawable.home_04),
-    TAG_PRACTICAL_INFO(R.string.home_practical_info_title, R.drawable.home_05),
+    TAG_AIRPORT_TRAFFIC(R.string.title_traffic, R.drawable.home_04),
+    TAG_PRACTICAL_INFO(R.string.title_utility, R.drawable.home_05),
     TAG_STORE_OFFERS(R.string.home_store_offers_title, R.drawable.home_06),
-    TAG_COMMUNICATION_SERVICE(R.string.home_communication_service_title, R.drawable.home_07),
+    TAG_COMMUNICATION_SERVICE(R.string.title_communication, R.drawable.home_07),
     TAG_LANGUAGE_SETTING(R.string.home_language_setting_title, R.drawable.home_08),
     TAG_AIRPORT_SECRETARY(R.string.home_airport_secretary_title, R.drawable.home_09),
     TAG_INDOOR_MAP(R.string.home_indoor_map_title, R.drawable.home_10),

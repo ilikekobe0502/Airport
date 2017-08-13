@@ -46,7 +46,7 @@ public class FlightClockIntentService extends IntentService {
             String timeString = !TextUtils.isEmpty(intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING)) ? intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING) : "";
 
             Notification.Builder builder = new Notification.Builder(this);
-            builder.setContentTitle(getString(R.string.flights_info_flights_notify))
+            builder.setContentTitle(getString(R.string.title_flight_notify))
                     .setContentText(getString(R.string.my_flights_notify_message, timeString))
                     .setSmallIcon(R.drawable.home_02);
 

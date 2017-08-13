@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public enum StoreOffers {
-    TAG_SOUVENIR(R.string.store_offers_souvenir, R.drawable.store_offers_06_01),
+    TAG_SOUVENIR(R.string.title_souvenirs, R.drawable.store_offers_06_01),
     TAG_STORE_INFO(R.string.store_offers_info, R.drawable.store_offers_06_02);
 
     private int title;

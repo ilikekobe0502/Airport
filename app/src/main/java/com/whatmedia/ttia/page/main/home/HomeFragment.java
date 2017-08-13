@@ -155,7 +155,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             case 1://抵達航班
                 mMainActivity.getMyToolbar().clearState()
                         .setBackground(ContextCompat.getColor(getContext(), R.color.colorBackgroundHomeArrive))
-                        .setLeftText(getString(R.string.flights_search_result_arrive_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
+                        .setLeftText(getString(R.string.tableview_header_arrival, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setRightText(getString(R.string.home_more_flights))
                         .setLeftIcon(ContextCompat.getDrawable(getContext(), R.drawable.dow))
                         .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
@@ -172,7 +172,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             case 2://停車場資訊
                 mMainActivity.getMyToolbar().clearState()
                         .setBackground(ContextCompat.getColor(getContext(), R.color.colorBackgroundHomeParkingInfo))
-                        .setLeftText(getString(R.string.airport_traffic_parking_info))
+                        .setLeftText(getString(R.string.title_parking_infomation))
                         .setRightText(getString(R.string.home_more))
                         .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))
                         .setOnMoreClickListener(new MyToolbar.OnClickListener() {
@@ -211,7 +211,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     private void setDepartureToolbar() {
         mMainActivity.getMyToolbar().clearState()
                 .setBackground(ContextCompat.getColor(getContext(), R.color.colorBackgroundHomeDeparture))
-                .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
+                .setLeftText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
                 .setLeftIcon(ContextCompat.getDrawable(getContext(), R.drawable.up))
                 .setRightText(getString(R.string.home_more_flights))
                 .setMoreIcon(ContextCompat.getDrawable(getContext(), R.drawable.home_more))

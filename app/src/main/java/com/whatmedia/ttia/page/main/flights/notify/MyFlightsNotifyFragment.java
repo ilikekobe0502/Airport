@@ -83,7 +83,7 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
         mRecyclerView.setAdapter(mAdapter);
 
         mMainActivity.getMyToolbar().clearState()
-                .setTitleText(getString(R.string.flights_info_flights_notify))
+                .setTitleText(getString(R.string.title_flight_notify))
                 .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
                 .setBackVisibility(View.VISIBLE)
                 .setOnBackClickListener(new MyToolbar.OnClickListener() {

@@ -43,10 +43,10 @@ public class MyDialogTableRecyclerViewAdapter extends RecyclerView.Adapter<MyDia
             return;
 
         if (!TextUtils.isEmpty(item.getTitle())) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(item.getTitle()).append("：");
+//            StringBuilder builder = new StringBuilder();
+//            builder.append(item.getTitle()).append("：");
 
-            holder.mTextViewTitle.setText(builder);
+            holder.mTextViewTitle.setText(item.getTitle());
         } else
             holder.mTextViewTitle.setText("");
 

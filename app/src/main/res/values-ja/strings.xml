@@ -12,8 +12,8 @@
 
     <string name="navi_btn_back">返し</string>
     <string name="navi_title_menu">メニュー</string>
-    <string name="tableview_header_takeoff">離陸</string>
-    <string name="tableview_header_arrival">到着</string>
+    <string name="tableview_header_takeoff">%s離陸</string>
+    <string name="tableview_header_arrival">%s到着</string>
 
     <string name="cell_terminal">T.</string>
     <string name="cell_time">定刻</string>
@@ -568,5 +568,127 @@
         <item>50</item> <item>51</item> <item>52</item> <item>53</item> <item>54</item>
         <item>55</item> <item>56</item> <item>57</item> <item>58</item> <item>59</item>
     </string-array>
+
+    <!-- communication -->
+    <string name="internation_title">国際電話は道を呼び出します</string>
+    <string name="roaming_service_title">モバイルインターネットのローミング</string>
+    <string name="roaming_service_des">あなたの計画のために最も適したを選択し、様々なローミングサービスをご参照ください：</string>
+    <string name="roaming_detail_query">ローミングソリューションクエリ</string>
+
+    <!-- Store Offers -->
+    <string name="store_offers_info">"店舗情報"</string>
+
+    <!-- Airport secretary -->
+    <string name="airport_secretary_news">"最新ニュース"</string>
+    <string name="airport_secretary_emergency">"緊急"</string>
+    <string name="airport_secretary_notify">"親密なリマインダー"</string>
+
+    <!-- Restaurant & Store search result-->
+    <string name="restaurant_store_search_result_subtitle">メッセージストア</string>
+
+    <!-- Useful questionnaire -->
+    <string name="useful_quest_title">アンケートに記入</string>
+    <string name="useful_quest_des">説明：非常に不満1分、非常に満足2点、3点、通常、\ nは4点に満足し、5点に満足していません。</string>
+    <string name="useful_quest_number">問題</string>
+    <string name="useful_quest_send">アウト</string>
+
+    <!-- Timezone -->
+    <string name="timezone_other_area">"その他の地域"</string>
+    <string name="timezone_other_area_dialog_title">"地域を選択してください"</string>
+
+    <!-- Restaurant & Store search -->
+    <string name="restaurant_store_search_subtitle">レストランのお問い合わせ</string>
+    <string name="restaurant_store_search_select_terminal">ターミナルを選択</string>
+    <string name="restaurant_store_search_non_select_terminal">かかわらず、ターミナル</string>
+    <string name="restaurant_store_search_select_terminal_title">ターミナルを選択してください</string>
+    <string name="restaurant_store_search_select_area">エリアを選択</string>
+    <string name="restaurant_store_search_non_select_area">地域にかかわらず</string>
+    <string name="restaurant_store_search_select_area_title">地域を選択してください</string>
+    <string name="restaurant_store_search_select_floor">選択階</string>
+    <string name="restaurant_store_search_non_select_floor">かかわらず、床の</string>
+    <string name="restaurant_store_search_select_floor_title">選択階</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant">レストランの種類を選択</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">かかわらず、レストランのタイプの</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">レストランの種類を選択してください</string>
+
+    <!-- My Flights -->
+    <string name="my_flights_delete_message">飛行を削除OK？</string>
+
+    <!-- Flights search -->
+    <string name="flights_search_footer_hint">お問い合わせは、コード便、航空貨物の都市キーワードを入力してください</string>
+    <string name="flights_search_search">検索</string>
+    <string name="flights_search_edit_text_hint">キーワードを入力してください。</string>
+    <string name="flights_search_not_found_flights_message">いいえ飛行ん</string>
+
+    <!-- Comment -->
+    <string name="press_again_left">もう一度アプリを残してポイント</string>
+    <string name="server_error">サーバーエラー</string>
+    <string name="data_error">データエラー</string>
+    <string name="data_not_found">情報を探します</string>
+    <string name="ok">定めます</string>
+    <string name="note">思い出させます</string>
+
+    <!-- Marquee -->
+    <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
+
+    <!-- Home -->
+    <string name="home_weather_title">天気情報</string>
+    <string name="home_more">もっと</string>
+    <string name="home_more_flights">その他の便</string>
+    <string name="home_terminal_info_title">ターミナル情報</string>
+    <string name="home_store_offers_title">店舗申し出</string>
+    <string name="home_language_setting_title">言語設定</string>
+    <string name="home_airport_secretary_title">空港秘書</string>
+    <string name="home_indoor_map_title">インドアマップのナビ</string>
+    <string name="home_airport_achievement_title">空港達成</string>
+
+    <!-- Parking info -->
+    <string name="parking_info_parking_space_much">"十分な駐車スペース"</string>
+    <string name="parking_info_parking_space_enough">"駐車スペースがあります。"</string>
+    <string name="parking_info_parking_space_full">"駐車場がいっぱいです"</string>
+    <string name="parking_info_parking_space_number_of">"そこ%s"</string>
+    <string name="parking_info_parking_space_full_state">"いっぱい"</string>
+    <string name="parking_info_parking_space_P1">"P1"</string>
+    <string name="parking_info_parking_space_P2">"P2"</string>
+    <string name="parking_info_parking_space_P4">"P4"</string>
+    <string name="parking_info_parking_space_1F">"(1F)"</string>
+    <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+
+    <!-- Flights search result -->
+    <string name="flights_search_result_terminal_text">ボート</string>
+
+    <!-- Restaurant & Store search info-->
+    <string name="restaurant_store_search_info_location">アドレス：%1$s-%2$s</string>
+    <string name="restaurant_store_search_info_time">営業時間：%1$s~%2$s</string>
+    <string name="restaurant_store_search_info_phone">電話：%s</string>
+
+    <!-- My flights notify -->
+    <string name="my_flights_notify">"%1$d時間%2$d分"</string>
+    <string name="my_flights_notify_message">"%s 航空券のリマインダー"</string>
+    <string name="my_flights_notify_on">"On"</string>
+    <string name="my_flights_notify_off">"Off"</string>
+
+    <!-- Currency conversion -->
+    <string name="currency_conversion_aud">"AUD"</string>
+    <string name="currency_conversion_cad">"CAD"</string>
+    <string name="currency_conversion_chf">"CHF"</string>
+    <string name="currency_conversion_cny">"CNY"</string>
+    <string name="currency_conversion_eur">"EUR"</string>
+    <string name="currency_conversion_gbp">"GBP"</string>
+    <string name="currency_conversion_hkd">"HKD"</string>
+    <string name="currency_conversion_idr">"IDR"</string>
+    <string name="currency_conversion_jpy">"JPY"</string>
+    <string name="currency_conversion_krw">"KRW"</string>
+    <string name="currency_conversion_myr">"MYR"</string>
+    <string name="currency_conversion_nzd">"NZD"</string>
+    <string name="currency_conversion_php">"PHP"</string>
+    <string name="currency_conversion_sek">"SEK"</string>
+    <string name="currency_conversion_sgd">"SGD"</string>
+    <string name="currency_conversion_thb">"THB"</string>
+    <string name="currency_conversion_twd">"TWD"</string>
+    <string name="currency_conversion_usd">"USD"</string>
+    <string name="currency_conversion_vnd">"VND"</string>
+    <string name="currency_conversion_zar">"ZAR"</string>
+    <string name="currency_conversion_translate">"変換"</string>
 
 </resources>
