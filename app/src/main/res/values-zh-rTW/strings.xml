@@ -12,8 +12,8 @@
 
     <string name="navi_btn_back">返回</string>
     <string name="navi_title_menu">主選單</string>
-    <string name="tableview_header_takeoff">出發航班</string>
-    <string name="tableview_header_arrival">抵達航班</string>
+    <string name="tableview_header_takeoff">%s出發航班</string>
+    <string name="tableview_header_arrival">%s抵達航班</string>
 
     <string name="cell_terminal">航廈</string>
     <string name="cell_time">時間</string>
@@ -568,5 +568,127 @@
         <item>50</item> <item>51</item> <item>52</item> <item>53</item> <item>54</item>
         <item>55</item> <item>56</item> <item>57</item> <item>58</item> <item>59</item>
     </string-array>
+
+    <!-- communication -->
+    <string name="internation_title">國際電話撥打方式</string>
+    <string name="roaming_service_title">漫遊行動上網</string>
+    <string name="roaming_service_des">請參考各家漫遊服務，選擇最適合您的資費方案：</string>
+    <string name="roaming_detail_query">漫遊方案查詢</string>
+
+    <!-- Store Offers -->
+    <string name="store_offers_info">"商店資訊"</string>
+
+    <!-- Airport secretary -->
+    <string name="airport_secretary_news">"最新消息"</string>
+    <string name="airport_secretary_emergency">"緊急事件"</string>
+    <string name="airport_secretary_notify">"貼心提醒"</string>
+
+    <!-- Restaurant & Store search result-->
+    <string name="restaurant_store_search_result_subtitle">商店訊息</string>
+
+    <!-- Useful questionnaire -->
+    <string name="useful_quest_title">填寫問卷</string>
+    <string name="useful_quest_des">說明:非常不滿意1分、不滿意2分、普通3分、\n滿意4分、非常滿意5分。</string>
+    <string name="useful_quest_number">問題</string>
+    <string name="useful_quest_send">送出</string>
+
+    <!-- Timezone -->
+    <string name="timezone_other_area">"其他地區"</string>
+    <string name="timezone_other_area_dialog_title">"請選擇地區"</string>
+
+    <!-- Restaurant & Store search -->
+    <string name="restaurant_store_search_subtitle">餐廳查詢</string>
+    <string name="restaurant_store_search_select_terminal">選擇航廈</string>
+    <string name="restaurant_store_search_non_select_terminal">不分航廈</string>
+    <string name="restaurant_store_search_select_terminal_title">請選擇航廈</string>
+    <string name="restaurant_store_search_select_area">選擇區域</string>
+    <string name="restaurant_store_search_non_select_area">不分區域</string>
+    <string name="restaurant_store_search_select_area_title">請選擇區域</string>
+    <string name="restaurant_store_search_select_floor">選擇樓層</string>
+    <string name="restaurant_store_search_non_select_floor">不分樓層</string>
+    <string name="restaurant_store_search_select_floor_title">請選擇樓層</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant">選擇餐廳總類</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐廳總類</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">請選擇餐廳總類</string>
+
+    <!-- My Flights -->
+    <string name="my_flights_delete_message">確定刪除航班嗎？</string>
+
+    <!-- Flights search -->
+    <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司貨城市關鍵字</string>
+    <string name="flights_search_search">搜尋</string>
+    <string name="flights_search_edit_text_hint">請輸入關鍵字</string>
+    <string name="flights_search_not_found_flights_message">找不到航班</string>
+
+    <!-- Comment -->
+    <string name="press_again_left">再點一次離開app</string>
+    <string name="server_error">伺服器錯誤</string>
+    <string name="data_error">資料錯誤</string>
+    <string name="data_not_found">找不到資料</string>
+    <string name="ok">確定</string>
+    <string name="note">提醒</string>
+
+    <!-- Marquee -->
+    <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
+
+    <!-- Home -->
+    <string name="home_weather_title">天氣資訊</string>
+    <string name="home_more">更多</string>
+    <string name="home_more_flights">更多班機</string>
+    <string name="home_terminal_info_title">航廈資訊</string>
+    <string name="home_store_offers_title">商店優惠</string>
+    <string name="home_language_setting_title">語言設定</string>
+    <string name="home_airport_secretary_title">機場秘書</string>
+    <string name="home_indoor_map_title">室內地圖導航</string>
+    <string name="home_airport_achievement_title">機場成就</string>
+
+    <!-- Parking info -->
+    <string name="parking_info_parking_space_much">"車位充足"</string>
+    <string name="parking_info_parking_space_enough">"尚有車位"</string>
+    <string name="parking_info_parking_space_full">"車位已滿"</string>
+    <string name="parking_info_parking_space_number_of">"尚有%s"</string>
+    <string name="parking_info_parking_space_full_state">"已滿"</string>
+    <string name="parking_info_parking_space_P1">"P1"</string>
+    <string name="parking_info_parking_space_P2">"P2"</string>
+    <string name="parking_info_parking_space_P4">"P4"</string>
+    <string name="parking_info_parking_space_1F">"(1F)"</string>
+    <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+
+    <!-- Flights search result -->
+    <string name="flights_search_result_terminal_text">航</string>
+
+    <!-- Restaurant & Store search info-->
+    <string name="restaurant_store_search_info_location">地址：%1$s-%2$s</string>
+    <string name="restaurant_store_search_info_time">營業時間：%1$s~%2$s</string>
+    <string name="restaurant_store_search_info_phone">電話：%s</string>
+
+    <!-- My flights notify -->
+    <string name="my_flights_notify">"%1$d小時%2$d分鐘"</string>
+    <string name="my_flights_notify_message">"%s 航班提醒已到"</string>
+    <string name="my_flights_notify_on">"On"</string>
+    <string name="my_flights_notify_off">"Off"</string>
+
+    <!-- Currency conversion -->
+    <string name="currency_conversion_aud">"AUD"</string>
+    <string name="currency_conversion_cad">"CAD"</string>
+    <string name="currency_conversion_chf">"CHF"</string>
+    <string name="currency_conversion_cny">"CNY"</string>
+    <string name="currency_conversion_eur">"EUR"</string>
+    <string name="currency_conversion_gbp">"GBP"</string>
+    <string name="currency_conversion_hkd">"HKD"</string>
+    <string name="currency_conversion_idr">"IDR"</string>
+    <string name="currency_conversion_jpy">"JPY"</string>
+    <string name="currency_conversion_krw">"KRW"</string>
+    <string name="currency_conversion_myr">"MYR"</string>
+    <string name="currency_conversion_nzd">"NZD"</string>
+    <string name="currency_conversion_php">"PHP"</string>
+    <string name="currency_conversion_sek">"SEK"</string>
+    <string name="currency_conversion_sgd">"SGD"</string>
+    <string name="currency_conversion_thb">"THB"</string>
+    <string name="currency_conversion_twd">"TWD"</string>
+    <string name="currency_conversion_usd">"USD"</string>
+    <string name="currency_conversion_vnd">"VND"</string>
+    <string name="currency_conversion_zar">"ZAR"</string>
+    <string name="currency_conversion_translate">"換算"</string>
 
 </resources>

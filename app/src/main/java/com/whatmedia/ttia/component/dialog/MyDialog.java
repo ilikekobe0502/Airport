@@ -103,7 +103,7 @@ public class MyDialog extends DialogFragment {
             mTableAdapter = new MyDialogTableRecyclerViewAdapter(mTableList);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(mTableAdapter);
-            mButtonOk.setText(!TextUtils.isEmpty(mRightText) ? mRightText : getString(R.string.dialog_join));
+            mButtonOk.setText(!TextUtils.isEmpty(mRightText) ? mRightText : getString(R.string.alert_btn_add));
         }
     }
 

@@ -10,9 +10,9 @@ import java.util.List;
  */
 
 public enum CommunicationService {
-    TAG_INTERNATIONAL_CALL(R.string.communication_service_international_call, R.drawable.commnunication_service_07_01),
-    TAG_EMERGENCY_CALL(R.string.communication_service_emergency_call, R.drawable.commnunication_service_07_02),
-    TAG_ROAMING_SERVICE(R.string.communication_service_romain_service, R.drawable.commnunication_service_07_03);
+    TAG_INTERNATIONAL_CALL(R.string.title_international_call, R.drawable.commnunication_service_07_01),
+    TAG_EMERGENCY_CALL(R.string.title_emergency_phone, R.drawable.commnunication_service_07_02),
+    TAG_ROAMING_SERVICE(R.string.title_roaming_service, R.drawable.commnunication_service_07_03);
 
     private int title;
     private int icon;

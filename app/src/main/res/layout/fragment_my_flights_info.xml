@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/flights_info_flights_delete"
+                android:text="@string/cell_btn_delete"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_15" />
         </RelativeLayout>

@@ -43,40 +43,40 @@ public class DialogContentData {
         List<DialogContentData> list = new ArrayList<>();
         DialogContentData item = new DialogContentData();
 
-        item.setTitle(context.getString(R.string.dialog_airline_name));
+        item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_airname));
         item.setContent(!TextUtils.isEmpty(data.getAirLineCName()) ? data.getAirLineCName().trim() : "");
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.dialog_flight_code));
+        item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_airnumber));
         item.setContent(!TextUtils.isEmpty(data.getFlightCode()) ? data.getFlightCode().trim() : "");
         list.add(item);
         item = new DialogContentData();
         if (!TextUtils.equals(data.getKinds(), FlightsInfoData.TAG_KIND_DEPARTURE))
-            item.setTitle(context.getString(R.string.dialog_target_departure_location));
+            item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_arrivelocation));
         else
-            item.setTitle(context.getString(R.string.dialog_target_arrive_location));
+            item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_arrivelocation));
         item.setContent(!TextUtils.isEmpty(data.getContactsLocationChinese()) ? data.getContactsLocationChinese().trim() : "");
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.dialog_expected_arrive_time));
+        item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_exceptime));
         item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
                 , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.dialog_actual_arrive_time));
+        item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_actualtime));
         item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
                 , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.dialog_terminal));
+        item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_terminal));
         item.setContent(!TextUtils.isEmpty(data.getTerminals()) ? data.getTerminals().trim() : "");
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.dialog_carousel));
+        item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_package));
         item.setContent(!TextUtils.isEmpty(data.getLuggageCarousel()) ? data.getLuggageCarousel().trim() : "");
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.dialog_gate));
+        item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_gate));
         item.setContent(!TextUtils.isEmpty(data.getGate()) ? data.getGate().trim() : "");
         list.add(item);
         return list;
