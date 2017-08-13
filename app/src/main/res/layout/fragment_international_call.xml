@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/internation_title"
+        android:textSize="@dimen/sp_pixel_21"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_pixel_20"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/text_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="從國外撥回台灣"
+            android:textSize="@dimen/sp_pixel_16"
+            android:textColor="@android:color/white"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/dp_pixel_20"
+            android:layout_marginBottom="@dimen/dp_pixel_10"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/international_text_background"
+            android:padding="@dimen/dp_pixel_5"/>
+
+        <WebView
+            android:id="@+id/webView1"
+            android:layout_below="@id/text_title1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+        </WebView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/text_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="從台灣播往國外"
+            android:textSize="@dimen/sp_pixel_16"
+            android:textColor="@android:color/white"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/dp_pixel_20"
+            android:layout_marginBottom="@dimen/dp_pixel_10"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/international_text_background"
+            android:padding="@dimen/dp_pixel_5"/>
+
+        <WebView
+            android:id="@+id/webView2"
+            android:layout_below="@id/text_title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+        </WebView>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

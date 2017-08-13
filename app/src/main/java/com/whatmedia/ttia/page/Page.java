@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
+import com.whatmedia.ttia.page.main.communication.emergency.EmergencyCallFragment;
+import com.whatmedia.ttia.page.main.communication.international.InternationalCallFragment;
+import com.whatmedia.ttia.page.main.communication.roaming.RoamingServiceFragment;
+import com.whatmedia.ttia.page.main.communication.roaming.detail.RoamingDetailFragment;
 import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
@@ -109,6 +113,11 @@ public class Page {
     public static final int TAG_USERFUL_TIMEZONE = 2004;
     public static final int TAG_USERFUL_LANGUAGE = 2005;
     public static final int TAG_USERFUL_LANGUAGE_RESULT = 2006;
+
+    public static final int TAG_COMMUNICATION_INTERNATIONAL_CALL = 3001;
+    public static final int TAG_COMMUNICATION_EMERGENCY_CALL = 3002;
+    public static final int TAG_COMMUNICATION_ROAMING_SERVICE =3003;
+    public static final int TAG_COMMUNICATION_ROAMING_DETAIL =3004;
 
     /**
      * Switch AirportEmergencyFragment
@@ -262,6 +271,14 @@ public class Page {
                 return new TravelLanguageFragment().newInstance();
             case TAG_USERFUL_LANGUAGE_RESULT:
                 return new TravelLanguageResultFragment().newInstance();
+            case TAG_COMMUNICATION_INTERNATIONAL_CALL:
+                return new InternationalCallFragment().newInstance();
+            case TAG_COMMUNICATION_EMERGENCY_CALL:
+                return new EmergencyCallFragment().newInstance();
+            case TAG_COMMUNICATION_ROAMING_SERVICE:
+                return new RoamingServiceFragment().newInstance();
+            case TAG_COMMUNICATION_ROAMING_DETAIL:
+                return new RoamingDetailFragment().newInstance();
             case TAG_LANGUAGE_SETTING:
                 return new LanguageSettingFragment().newInstance();
         }
