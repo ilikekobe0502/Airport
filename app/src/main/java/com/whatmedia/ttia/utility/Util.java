@@ -41,6 +41,7 @@ public class Util {
     public final static String TAG_FORMAT_YMD = "yyyy/MM/dd";
     public final static String TAG_FORMAT_MD = "MM/dd";
     public final static String TAG_FORMAT_HM = "HH:mm";
+    public final static String TAG_FORMAT_HMS = "HH:mm:ss";
     public final static String TAG_DAY = "day";
     public final static String TAG_HOUR = "hour";
     public final static String TAG_MIN = "min";
@@ -127,6 +128,18 @@ public class Util {
         return diffTime;
     }
 
+    public static String getTransformTimeFormat(String formatTarget, String time) {
+        DateFormat df = new SimpleDateFormat(formatTarget);
+        Date date = null;
+        try {
+             date = df.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String result = df.format(date.getTime());
+        return result;
+    }
+
     /**
      * Get Now time
      *
@@ -186,16 +199,16 @@ public class Util {
 
     /**
      * time's format yyyy-MM-ddTtt:tt:tt
-     *
+     * <p>
      * use this methods will return yyyy-MM-dd
      *
      * @param time
      */
-    public static String justShowDate(String time){
+    public static String justShowDate(String time) {
         String[] result = time.split("T");
-        return !TextUtils.isEmpty(result[0])&&result!=null&&result.length>0?result[0]:time;
+        return !TextUtils.isEmpty(result[0]) && result != null && result.length > 0 ? result[0] : time;
     }
-  
+
     /**
      * Set Alert clock
      *
@@ -274,11 +287,11 @@ public class Util {
     /**
      * 合成Bitmap
      *
-     * @Param space --每張圖之間的間隔
      * @param bitmapList
      * @return
+     * @Param space --每張圖之間的間隔
      */
-    public static Bitmap combineBitmap(Bitmap[] bitmapList,int space) {
+    public static Bitmap combineBitmap(Bitmap[] bitmapList, int space) {
         if (bitmapList == null || bitmapList.length <= 0) {
             return null;
         }
@@ -292,7 +305,7 @@ public class Util {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(bitmapList[0], 0, 0, null);
-        int tempHeight = bitmapList[0].getHeight()+space;
+        int tempHeight = bitmapList[0].getHeight() + space;
         for (int i = 1; i < bitmapList.length; i++) {
             canvas.drawBitmap(bitmapList[i], 0, tempHeight, null);
             tempHeight += bitmapList[i].getHeight();

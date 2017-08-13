@@ -655,7 +655,7 @@
     <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
 
     <!-- Flights search result -->
-    <string name="flights_search_result_terminal_text">ボート</string>
+    <string name="flights_search_result_terminal_text">ターミナル</string>
 
     <!-- Restaurant & Store search info-->
     <string name="restaurant_store_search_info_location">アドレス：%1$s-%2$s</string>
