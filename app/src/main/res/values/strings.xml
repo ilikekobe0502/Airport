@@ -175,4 +175,8 @@
     <!-- Timezone -->
     <string name="timezone_other_area">"其他地區"</string>
     <string name="timezone_other_area_dialog_title">"請選擇地區"</string>
+
+    <!-- Language setting -->
+    <string name="language_setting_select_dialog">"確定要切換成%s嗎?"</string>
+    <string name="language_setting_select_confirm_dialog">"已經語言設定為%s"</string>
 </resources>
