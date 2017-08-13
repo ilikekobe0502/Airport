@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -309,5 +310,15 @@ public class Util {
         matrix.postScale(1f, 1.5f); //長寬比例
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizeBmp;
+    }
+
+    /**
+     * 取得 deviceId
+     * @param context
+     * @return
+     */
+    public static String getDeviceId(Context context){
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getDeviceId();
     }
 }
