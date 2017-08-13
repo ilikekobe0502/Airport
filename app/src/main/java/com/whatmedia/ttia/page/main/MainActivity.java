@@ -18,6 +18,9 @@ import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
+import com.whatmedia.ttia.page.main.communication.emergency.EmergencyCallFragment;
+import com.whatmedia.ttia.page.main.communication.international.InternationalCallFragment;
+import com.whatmedia.ttia.page.main.communication.roaming.RoamingServiceFragment;
 import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
@@ -712,6 +715,51 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 //                                }
 //                            }
 //                        });
+            } else if (fragment instanceof InternationalCallFragment) {//國際電話
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.communication_service_international_call))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof EmergencyCallFragment) {//緊急電話
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.communication_service_emergency_call))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof RoamingServiceFragment) {//漫遊服務
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.communication_service_romain_service))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
             }
 
         } else

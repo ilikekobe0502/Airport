@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_24"
+        android:text="@string/roaming_service_title"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_pixel_10"
+        android:layout_marginTop="@dimen/dp_pixel_25"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/roaming_service_des"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_pixel_10"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_14"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/layout_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

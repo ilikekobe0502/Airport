@@ -493,4 +493,53 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
+    /**
+     * 取得國際電話html
+     * @param callback
+     */
+    public  static void getInternationCall(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalCall")
+                .newBuilder()
+                .addQueryParameter("lan", "tw")
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 取得緊急電話html
+     * @param callback
+     */
+    public static void getEmergencyCall(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyCall")
+                .newBuilder()
+                .addQueryParameter("lan", "tw")
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 取得電信業者清單
+     * @param callback
+     */
+    public static void getRoamingService(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_TelecommunicationsIndustryCode")
+                .newBuilder()
+                .addQueryParameter("lan", "tw")
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 取得漫遊上網HTML
+     * @param callback
+     */
+    public static void getRoamingDetail(String id,Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalRoaming")
+                .newBuilder()
+                .addQueryParameter("lan", "tw")
+                .addQueryParameter("TIID",id)
+                .build();
+        getApi(url, callback);
+    }
 }
