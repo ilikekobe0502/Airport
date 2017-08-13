@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.page.main;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,7 @@ import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.enums.FlightInfo;
 import com.whatmedia.ttia.enums.HomeFeature;
+import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
@@ -30,6 +33,7 @@ import com.whatmedia.ttia.page.main.home.HomeFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsFragment;
 import com.whatmedia.ttia.page.main.home.weather.more.MoreWeatherFragment;
+import com.whatmedia.ttia.page.main.language.LanguageSettingFragment;
 import com.whatmedia.ttia.page.main.secretary.AirportSecretaryFragment;
 import com.whatmedia.ttia.page.main.secretary.detail.emergency.EmergencyDetailFragment;
 import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailFragment;
@@ -60,6 +64,8 @@ import com.whatmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -143,7 +149,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
     @Override
     public void setMarqueeMessage(String subMessage) {
-        mMarqueeMessage = getString(R.string.marquee_default_message, subMessage);
+        mMarqueeMessage = getString(R.string.marquee_parking_info, subMessage);
     }
 
     @Override
@@ -176,7 +182,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 setMarqueeHomeState();
                 mMyToolbar.clearState()
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorBackgroundHomeDeparture))
-                        .setLeftText(getString(R.string.flights_search_result_departure_subtitle, Util.getNowDate(Util.TAG_FORMAT_MD)))
+                        .setLeftText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setLeftIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.up))
                         .setRightText(getString(R.string.home_more_flights))
                         .setMoreIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more))
@@ -220,7 +226,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof FlightsSearchResultFragment) {//航班搜尋結果
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.flights_search_result_title))
+                        .setTitleText(getString(R.string.navi_title_flight_search_result))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -250,7 +256,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof PublicToiletFragment) {//公共廁所
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.terminal_info_toilet))
+                        .setTitleText(getString(R.string.title_restroom))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -265,7 +271,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof AirportFacilityFragment) {//機場設施
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.terminal_info_airport_facilities))
+                        .setTitleText(getString(R.string.title_airport_facility))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -282,7 +288,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 mMyToolbar.clearState()
                         .setTitleText((fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) != 0 &&
                                 fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) == Page.TAG_STORE_OFFERS) ?
-                                getString(R.string.store_offers_info) : getString(R.string.terminal_info_store))
+                                getString(R.string.store_offers_info) : getString(R.string.title_restaurant))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -314,7 +320,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof AirportTrafficFragment) {//機場交通
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.home_airport_traffic_title))
+                        .setTitleText(getString(R.string.title_traffic))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -330,7 +336,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof AirportBusFragment) {//機場巴士
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_airport_bus))
+                        .setTitleText(getString(R.string.title_airport_bus))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -346,7 +352,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof RoadsideAssistanceFragment) {//道路救援服務
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_roadside_assistance))
+                        .setTitleText(getString(R.string.title_road_rescue))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -362,7 +368,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof TaxiFragment) {//計程車
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_taxi))
+                        .setTitleText(getString(R.string.title_taxi))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -378,7 +384,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof TourBusFragment) {//巡迴巴士
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_tour_bus))
+                        .setTitleText(getString(R.string.title_tourist_bus))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -394,7 +400,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof AirportMrtFragment) {//機場高鐵/捷運
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_mrt))
+                        .setTitleText(getString(R.string.title_mrt_hsr))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -409,7 +415,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof SkyTrainFragment) {//電車
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_sky_train))
+                        .setTitleText(getString(R.string.title_tram_car))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -424,7 +430,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof ParkingInfoFragment) {//停車資訊
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_traffic_parking_info))
+                        .setTitleText(getString(R.string.title_parking_infomation))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -525,7 +531,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                  ****************************************/
             } else if (fragment instanceof MyFlightsInfoFragment) {//我的航班
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.flights_info_my_flights))
+                        .setTitleText(getString(R.string.title_my_flight))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -600,7 +606,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof UsefulInfoFragment) {//實用資訊(目錄)
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.home_practical_info_title))
+                        .setTitleText(getString(R.string.title_utility))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -630,7 +636,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof LostAndFoundFragment) {//失物協尋
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.useful_info_lost))
+                        .setTitleText(getString(R.string.title_lost_found))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -645,7 +651,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof CommunicationFragment) {//通訊服務
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.home_communication_service_title))
+                        .setTitleText(getString(R.string.title_communication))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -660,7 +666,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof CurrencyConversionFragment) {//匯率換算
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.useful_info_currency))
+                        .setTitleText(getString(R.string.title_currency))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -675,7 +681,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof QuestionnaireFragment) {//問卷調查
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.useful_info_questionnaire))
+                        .setTitleText(getString(R.string.title_feedback))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -690,7 +696,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof TravelLanguageFragment) {//旅行外文
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.useful_info_language))
+                        .setTitleText(getString(R.string.title_conversation))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -720,7 +726,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 //                        });
             } else if (fragment instanceof InternationalCallFragment) {//國際電話
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.communication_service_international_call))
+                        .setTitleText(getString(R.string.title_international_call))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -735,7 +741,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof EmergencyCallFragment) {//緊急電話
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.communication_service_emergency_call))
+                        .setTitleText(getString(R.string.title_emergency_phone))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -750,7 +756,22 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof RoamingServiceFragment) {//漫遊服務
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.communication_service_romain_service))
+                        .setTitleText(getString(R.string.title_roaming_service))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof LanguageSettingFragment) {//語言
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.home_language_setting_title))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -795,6 +816,6 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
      * Get Marquee String
      */
     private void getMarqueeString() {
-        mMarqueeMessage = getString(R.string.marquee_default_message, Util.getMarqueeSubMessage(getApplicationContext()));
+        mMarqueeMessage = getString(R.string.marquee_parking_info, Util.getMarqueeSubMessage(getApplicationContext()));
     }
 }

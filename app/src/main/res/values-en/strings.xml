@@ -12,8 +12,8 @@
 
     <string name="navi_btn_back">Back</string>
     <string name="navi_title_menu">Menu</string>
-    <string name="tableview_header_takeoff">Departure</string>
-    <string name="tableview_header_arrival">Arrival</string>
+    <string name="tableview_header_takeoff">%sDeparture</string>
+    <string name="tableview_header_arrival">%sArrival</string>
 
     <string name="cell_terminal">T.</string>
     <string name="cell_time">Time</string>
@@ -569,4 +569,129 @@
         <item>55</item> <item>56</item> <item>57</item> <item>58</item> <item>59</item>
     </string-array>
 
+    <!-- communication -->
+    <string name="internation_title">International telephone call mode</string>
+    <string name="roaming_service_title">Roaming action online</string>
+    <string name="roaming_service_des">Please refer to the various roaming services, select the most suitable for your tariff program:</string>
+    <string name="roaming_detail_query">Roaming program inquiries</string>
+
+    <!-- Store Offers -->
+    <string name="store_offers_info">"Store information"</string>
+
+    <!-- Airport secretary -->
+    <string name="airport_secretary_news">"latest news"</string>
+    <string name="airport_secretary_emergency">"Emergency"</string>
+    <string name="airport_secretary_notify">"Intimate reminder"</string>
+
+    <!-- Restaurant & Store search result-->
+    <string name="restaurant_store_search_result_subtitle">Store message</string>
+
+    <!-- Useful questionnaire -->
+    <string name="useful_quest_title">Fill in the questionnaire</string>
+    <string name="useful_quest_des">Description: very dissatisfied with 1 point, not satisfied with 2 points, ordinary 3 points, \ n satisfaction 4 points, very satisfied with 5 points.</string>
+    <string name="useful_quest_number">problem</string>
+    <string name="useful_quest_send">Sent out</string>
+
+    <!-- Timezone -->
+    <string name="timezone_other_area">"other areas"</string>
+    <string name="timezone_other_area_dialog_title">"please select the region"</string>
+
+    <!-- Restaurant & Store search -->
+    <string name="restaurant_store_search_subtitle">Restaurant inquiries</string>
+    <string name="restaurant_store_search_select_terminal">Choose the terminal</string>
+    <string name="restaurant_store_search_non_select_terminal">Regardless of the terminal</string>
+    <string name="restaurant_store_search_select_terminal_title">Please choose the terminal</string>
+    <string name="restaurant_store_search_select_area">Select area</string>
+    <string name="restaurant_store_search_non_select_area">Regardless of area</string>
+    <string name="restaurant_store_search_select_area_title">Please select area</string>
+    <string name="restaurant_store_search_select_floor">Choose floor</string>
+    <string name="restaurant_store_search_non_select_floor">Regardless of floor</string>
+    <string name="restaurant_store_search_select_floor_title">Please choose floor</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant">Choose the type of restaurant</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">Regardless of restaurant type</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">Please choose the type of restaurant</string>
+
+    <!-- My Flights -->
+    <string name="my_flights_delete_message">Are you sure to delete the flight?</string>
+
+    <!-- Flights search -->
+    <string name="flights_search_footer_hint">Please enter the airline code for the airline code, airline keyword</string>
+    <string name="flights_search_search">search</string>
+    <string name="flights_search_edit_text_hint">Please enter key words</string>
+    <string name="flights_search_not_found_flights_message">Can not find flight</string>
+
+    <!-- Comment -->
+    <string name="press_again_left">And then leave the app again</string>
+    <string name="server_error">Server error</string>
+    <string name="data_error">Data wrong</string>
+    <string name="data_not_found">No information found</string>
+    <string name="ok">determine</string>
+    <string name="note">remind</string>
+
+    <!-- Marquee -->
+    <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
+
+    <!-- Home -->
+    <string name="home_weather_title">Weather information</string>
+    <string name="home_more">More</string>
+    <string name="home_more_flights">More flights</string>
+    <string name="home_terminal_info_title">Terminal Information</string>
+    <string name="home_store_offers_title">Store offers</string>
+    <string name="home_language_setting_title">Language setting</string>
+    <string name="home_airport_secretary_title">Airport secretary</string>
+    <string name="home_indoor_map_title">Indoor map navigation</string>
+    <string name="home_airport_achievement_title">Airport achievements</string>
+
+    <!-- Parking info -->
+    <string name="parking_info_parking_space_much">"Plenty of parking spaces"</string>
+    <string name="parking_info_parking_space_enough">"There are parking spaces"</string>
+    <string name="parking_info_parking_space_full">"The parking spaces are full"</string>
+    <string name="parking_info_parking_space_number_of">"There are still%s"</string>
+    <string name="parking_info_parking_space_full_state">"Is full"</string>
+    <string name="parking_info_parking_space_P1">"P1"</string>
+    <string name="parking_info_parking_space_P2">"P2"</string>
+    <string name="parking_info_parking_space_P4">"P4"</string>
+    <string name="parking_info_parking_space_1F">"(1F)"</string>
+    <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+
+    <!-- Flights search result -->
+    <string name="flights_search_result_terminal_text">Flight</string>
+
+    <!-- Restaurant & Store search info-->
+    <string name="restaurant_store_search_info_location">address：%1$s-%2$s</string>
+    <string name="restaurant_store_search_info_time">Business hours：%1$s~%2$s</string>
+    <string name="restaurant_store_search_info_phone">phone：%s</string>
+
+    <!-- My flights notify -->
+    <string name="my_flights_notify">"%1$dhour%2$dminute"</string>
+    <string name="my_flights_notify_message">"%s Flight reminder has arrived"</string>
+    <string name="my_flights_notify_on">"On"</string>
+    <string name="my_flights_notify_off">"Off"</string>
+
+    <!-- Currency conversion -->
+    <string name="currency_conversion_aud">"AUD"</string>
+    <string name="currency_conversion_cad">"CAD"</string>
+    <string name="currency_conversion_chf">"CHF"</string>
+    <string name="currency_conversion_cny">"CNY"</string>
+    <string name="currency_conversion_eur">"EUR"</string>
+    <string name="currency_conversion_gbp">"GBP"</string>
+    <string name="currency_conversion_hkd">"HKD"</string>
+    <string name="currency_conversion_idr">"IDR"</string>
+    <string name="currency_conversion_jpy">"JPY"</string>
+    <string name="currency_conversion_krw">"KRW"</string>
+    <string name="currency_conversion_myr">"MYR"</string>
+    <string name="currency_conversion_nzd">"NZD"</string>
+    <string name="currency_conversion_php">"PHP"</string>
+    <string name="currency_conversion_sek">"SEK"</string>
+    <string name="currency_conversion_sgd">"SGD"</string>
+    <string name="currency_conversion_thb">"THB"</string>
+    <string name="currency_conversion_twd">"TWD"</string>
+    <string name="currency_conversion_usd">"USD"</string>
+    <string name="currency_conversion_vnd">"VND"</string>
+    <string name="currency_conversion_zar">"ZAR"</string>
+    <string name="currency_conversion_translate">"Conversion"</string>
+
+    <!-- Language setting -->
+    <string name="language_setting_select_dialog">"Are you sure you want to switch to %s?"</string>
+    <string name="language_setting_select_confirm_dialog">"Has been set to %s language"</string>
 </resources>

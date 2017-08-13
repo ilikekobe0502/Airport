@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.whatmedia.ttia.component.dialog.MyWeatherDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,8 +32,9 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @BindView(R.id.webView)
     WebView mWebView;
 
-    // TODO: 2017/8/12 語言設置！
-    private static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=%s&lang=tw";
+    private static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=%1$s&lang=%2$s";
+    private static String mLocale;
+
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private MoreWeatherContract.Presenter mPresenter;
@@ -71,6 +74,10 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         mPresenter = MoreWeatherPresenter.getInstance(getContext(), this);
 
         mLoadingView.showLoadingView();
+
+        if (TextUtils.isEmpty(mLocale))
+            mLocale = Preferences.getLocaleSetting(getContext());
+
         settingWebView();
         switchRegion();
 
@@ -228,7 +235,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
      */
     private void showWebView() {
         if (mCodeArray.length > mCountry)
-            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry]));
+            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], mLocale));
         else {
             Log.e(TAG, "mCodeArray.length <= mCountry");
             showMessage(getString(R.string.data_error));

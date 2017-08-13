@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.home.weather;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.webkit.WebViewClient;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +27,8 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @BindView(R.id.webView)
     WebView mWebView;
 
-    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=tw";
+    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
+    private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -61,12 +64,14 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 
         mPresenter = HomeWeatherInfoPresenter.getInstance(getContext(), this);
 //        mLoadingView.showLoadingView();
+        if (TextUtils.isEmpty(mLocale))
+            mLocale = Preferences.getLocaleSetting(getContext());
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
-        mWebView.loadUrl(mWeatherUrl);
+        mWebView.loadUrl(String.format(mWeatherUrl, mLocale));
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

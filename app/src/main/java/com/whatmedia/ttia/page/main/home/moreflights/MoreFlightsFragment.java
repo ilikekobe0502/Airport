@@ -250,7 +250,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                     final FlightsInfoData tag = (FlightsInfoData) view.getTag();
 
                     final MyDialog myDialog = MyDialog.newInstance()
-                            .setTitle(getString(R.string.dialog_detail_title))
+                            .setTitle(getString(R.string.flight_dialog_title))
                             .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
                             .setRightClickListener(new IOnItemClickListener() {
                                 @Override
@@ -290,9 +290,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
 
     private void getFlight() {
         if (TextUtils.equals(mQueryType, FlightsInfoData.TAG_KIND_DEPARTURE))
-            mMainActivity.getMyToolbar().setTitleText(getString(R.string.flights_search_result_departure_subtitle, mShowDate));
+            mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_takeoff, mShowDate));
         else
-            mMainActivity.getMyToolbar().setTitleText(getString(R.string.flights_search_result_arrive_subtitle, mShowDate));
+            mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_arrival, mShowDate));
 
         FlightSearchData data = new FlightSearchData();
         data.setQueryType(mQueryType);

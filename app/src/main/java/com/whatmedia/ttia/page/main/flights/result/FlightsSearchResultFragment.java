@@ -19,7 +19,6 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
-import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoRecyclerViewAdapter;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
@@ -147,7 +146,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                     final FlightsInfoData tag = (FlightsInfoData) view.getTag();
 
                     final MyDialog myDialog = MyDialog.newInstance()
-                            .setTitle(getString(R.string.dialog_detail_title))
+                            .setTitle(getString(R.string.flight_dialog_title))
                             .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
                             .setRightClickListener(new IOnItemClickListener() {
                                 @Override

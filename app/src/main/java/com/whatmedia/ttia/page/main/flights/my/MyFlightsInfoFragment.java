@@ -191,7 +191,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                         deleteData();
                     }
                 })
-                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -207,7 +207,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                     final FlightsInfoData tag = (FlightsInfoData) view.getTag();
                     if (tag != null) {
                         final MyDialog myDialog = MyDialog.newInstance()
-                                .setTitle(getString(R.string.dialog_detail_title))
+                                .setTitle(getString(R.string.flight_dialog_title))
                                 .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
                                 .setRightText(getString(R.string.ok))
                                 .setLeftVisibility(View.GONE);

@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp_pixel_40"
                 android:background="@drawable/frame_dialog_button"
-                android:text="@string/dialog_cancel"
+                android:text="@string/alert_btn_cancel"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_15" />
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/button_cancel"
                 android:background="@drawable/frame_dialog_button"
-                android:text="@string/dialog_join"
+                android:text="@string/alert_btn_add"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_15" />
         </RelativeLayout>

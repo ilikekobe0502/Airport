@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public enum LanguageSetting {
     TAG_TRADITIONAL_CHINESE(R.string.zhtw, Locale.TRADITIONAL_CHINESE),
-    TAG_TRADITIONAL_SIMPLIFIED(R.string.zhcn, Locale.SIMPLIFIED_CHINESE),
+    TAG_SIMPLIFIED_CHINESE(R.string.zhcn, Locale.SIMPLIFIED_CHINESE),
     TAG_ENGLISH(R.string.en, Locale.ENGLISH),
     TAG_JAPANESE(R.string.ja, Locale.JAPANESE);
     private int title;

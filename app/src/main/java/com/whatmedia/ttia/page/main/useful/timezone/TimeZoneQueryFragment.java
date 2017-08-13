@@ -220,7 +220,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 
     private void tool() {
         mMainActivity.getMyToolbar().clearState()
-                .setTitleText(getString(R.string.useful_info_timezone))
+                .setTitleText(getString(R.string.title_timezone))
                 .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
                 .setMoreLayoutVisibility(View.GONE)
                 .setRightText(getString(R.string.timezone_other_area))
