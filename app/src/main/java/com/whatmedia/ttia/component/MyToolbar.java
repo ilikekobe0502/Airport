@@ -130,32 +130,6 @@ public class MyToolbar extends RelativeLayout {
         return this;
     }
 
-    //    public MyToolbar setRightIcon(Drawable drawable) {
-//        if (drawable != null) {
-//            mImageViewRight.setVisibility(VISIBLE);
-//            mImageViewRight.setBackground(drawable);
-//        } else
-//            mImageViewRight.setVisibility(GONE);
-//        return this;
-//    }
-//
-//    public MyToolbar setRightBackground(int color) {
-//        if (color != 0) {
-//            mLayoutRight.setBackgroundColor(color);
-//        } else {
-//            mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
-//        }
-//        return this;
-//    }
-//
-//    public MyToolbar setRightBackground(Drawable drawable) {
-//        if (drawable != null) {
-//            mLayoutRight.setBackground(drawable);
-//        } else {
-//            mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
-//        }
-//        return this;
-//    }
     public MyToolbar setOnAreaClickListener(OnClickListener listener) {
         mAreaListener = listener;
         return this;

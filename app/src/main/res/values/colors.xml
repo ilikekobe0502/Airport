@@ -33,4 +33,5 @@
     <color name="black0.25">#3f000000</color>
     <color name="black0.6">#99000000</color>
     <color name="white0.1">#1affffff</color>
+    <color name="colorPurpleToolbarRightBackground">#6657dd</color>
 </resources>

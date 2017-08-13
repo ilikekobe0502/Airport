@@ -36,8 +36,8 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     private IActivityTools.IMainActivity mMainActivity;
     private MoreWeatherContract.Presenter mPresenter;
 
-    private int mRegin = 0;
-    private int mContury = 1;
+    private int mRegion = 0;
+    private int mCountry = 1;
     private String[] mCodeArray;
 
     public MoreWeatherFragment() {
@@ -72,7 +72,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 
         mLoadingView.showLoadingView();
         settingWebView();
-        regin();
+        switchRegion();
 
         tool();
         return view;
@@ -117,30 +117,39 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
                 .setTitleText(getString(R.string.home_weather_title))
                 .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
                 .setMoreLayoutVisibility(View.GONE)
-                .setRightText(getString(R.string.currency_conversion_other_area))
+                .setRightText(getString(R.string.timezone_other_area))
                 .setOnAreaClickListener(new MyToolbar.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyWeatherDialog dialog = new MyWeatherDialog().setItemClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (view.getTag() != null && view.getTag() instanceof Integer) {
-                                    mRegin = (int) view.getTag();
-                                    MyWeatherDialog dialog = MyWeatherDialog.newInstance().setRegion((Integer) view.getTag()).setItemClickListener(new IOnItemClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if (view.getTag() != null && view.getTag() instanceof Integer) {
-                                                mContury = (int) view.getTag();
-                                                regin();
-                                            }
+                        MyWeatherDialog dialog = new MyWeatherDialog()
+                                .setTitle(getString(R.string.timezone_other_area_dialog_title))
+                                .setItemClickListener(new IOnItemClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (view.getTag() != null && view.getTag() instanceof Integer) {
+                                            mRegion = (int) view.getTag();
+                                            MyWeatherDialog subDialog = MyWeatherDialog.newInstance()
+                                                    .setTitle(getString(R.string.timezone_other_area_dialog_title))
+                                                    .setRegion((Integer) view.getTag())
+                                                    .setItemClickListener(new IOnItemClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (view.getTag() != null && view.getTag() instanceof Integer) {
+                                                                mCountry = (int) view.getTag();
+                                                                switchRegion();
+                                                            } else {
+                                                                Log.e(TAG, "view.getTag() is error");
+                                                                showMessage(getString(R.string.data_error));
+                                                            }
+                                                        }
+                                                    });
+                                            subDialog.show(getActivity().getFragmentManager(), "dialog");
+                                        } else {
+                                            Log.e(TAG, "view.getTag() is error");
+                                            showMessage(getString(R.string.data_error));
                                         }
-                                    });
-                                    dialog.show(getActivity().getFragmentManager(), "dialog");
-                                } else {
-                                    // TODO: 2017/8/12 error handler
-                                }
-                            }
-                        });
+                                    }
+                                });
                         dialog.show(getActivity().getFragmentManager(), "dialog");
                     }
                 })
@@ -158,8 +167,11 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
                 });
     }
 
-    private void regin() {
-        switch (mRegin) {
+    /**
+     * Switch region
+     */
+    private void switchRegion() {
+        switch (mRegion) {
             case 0:
                 mCodeArray = getResources().getStringArray(R.array.weather_taiwan_code_array);
                 break;
@@ -181,6 +193,9 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         showWebView();
     }
 
+    /**
+     * Webview Setting;
+     */
     private void settingWebView() {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -208,7 +223,15 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         });
     }
 
+    /**
+     * Show select webView
+     */
     private void showWebView() {
-        mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mContury]));
+        if (mCodeArray.length > mCountry)
+            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry]));
+        else {
+            Log.e(TAG, "mCodeArray.length <= mCountry");
+            showMessage(getString(R.string.data_error));
+        }
     }
 }

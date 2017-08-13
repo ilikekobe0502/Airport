@@ -24,7 +24,7 @@
         <item>馬祖</item>
         <item>金門</item>
         <item>基隆</item>
-
+        <item>高雄</item>
         <item>宜蘭</item>
         <item>花蓮</item>
         <item>新竹</item>
@@ -33,6 +33,7 @@
     </string-array>
 
     <string-array name="weather_taiwan_time_stamp_array">
+        <item>+8</item>
         <item>+8</item>
         <item>+8</item>
         <item>+8</item>
@@ -69,6 +70,7 @@
         <item>ASI|TW|TW017|MA-TSU</item>
         <item>ASI|TW|TW017|KINMEN</item>
         <item>ASI|TW|TW018|KEELUNG</item>
+        <item>ASI|TW|TW006|KAO-HSIUNG</item>
         <item>ASI|TW|TW018|I-LAN</item>
         <item>ASI|TW|TW018|HUALIEN</item>
         <item>ASI|TW|TW018|HSINCHU</item>
@@ -163,6 +165,7 @@
         <item>洛杉磯</item>
         <item>拉斯維加斯</item>
         <item>舊金山</item>
+        <item>西雅圖</item>
         <item>紐約</item>
         <item>華盛頓特區</item>
         <item>芝加哥</item>
@@ -171,18 +174,18 @@
         <item>溫哥華</item>
         <item>蒙特婁</item>
         <item>墨西哥城</item>
+        <item>里約</item>
         <item>聖地牙哥(智利)</item>
         <item>利瑪</item>
         <item>布宜諾斯艾利斯</item>
     </string-array>
-
-    <!--<item>西雅圖</item><item>里約</item>-->
 
     <string-array name="weather_america_code_array">
         <item>NAM|US|HI|HONOLULU</item>
         <item>NAM|US|CA|LOS ANGELES</item>
         <item>NAM|US|NV|NORTH LAS VEGAS</item>
         <item>NAM|US|CA|SAN FRANCISCO</item>
+        <item>NAM|US|WA|SEATTLE</item>
         <item>NAM|US|NY|NEW YORK</item>
         <item>NAM|US|DC|WASHINGTON</item>
         <item>NAM|US|IL|CHICAGO</item>
@@ -191,6 +194,7 @@
         <item>NAM|US|WA|VANCOUVER</item>
         <item>NAM|CA|QC|MONTREAL</item>
         <item>NAM|MX|MX009|MEXICO CITY</item>
+        <item>SAM|BR|BR001|RIO BRANCO</item>
         <item>SAM|CL|CI011|SANTIAGO</item>
         <item>SAM|PE|PE015|LIMA</item>
         <item>SAM|AR|AR007|BUENOS AIRES</item>
@@ -201,6 +205,7 @@
         <item>-8</item>
         <item>-8</item>
         <item>-8</item>
+        <item>-8</item>
         <item>-5</item>
         <item>-5</item>
         <item>-6</item>
@@ -209,6 +214,7 @@
         <item>-8</item>
         <item>-5</item>
         <item>-6</item>
+        <item>-3</item>
         <item>-8</item>
         <item>-8</item>
         <item>-3</item>
