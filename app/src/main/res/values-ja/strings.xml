@@ -615,7 +615,7 @@
     <string name="my_flights_delete_message">飛行を削除OK？</string>
 
     <!-- Flights search -->
-    <string name="flights_search_footer_hint">お問い合わせは、コード便、航空貨物の都市キーワードを入力してください</string>
+    <string name="flights_search_footer_hint">街を知るには、コード便、航空会社やキーワードを入力してください</string>
     <string name="flights_search_search">検索</string>
     <string name="flights_search_edit_text_hint">キーワードを入力してください。</string>
     <string name="flights_search_not_found_flights_message">いいえ飛行ん</string>

@@ -615,7 +615,7 @@
     <string name="my_flights_delete_message">Are you sure to delete the flight?</string>
 
     <!-- Flights search -->
-    <string name="flights_search_footer_hint">Please enter the airline code for the airline code, airline keyword</string>
+    <string name="flights_search_footer_hint">Please enter the flight code, airline or city keyword you want to inquire about</string>
     <string name="flights_search_search">search</string>
     <string name="flights_search_edit_text_hint">Please enter key words</string>
     <string name="flights_search_not_found_flights_message">Can not find flight</string>
