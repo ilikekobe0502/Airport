@@ -664,7 +664,7 @@
 
     <!-- My flights notify -->
     <string name="my_flights_notify">"%1$d小时%2$d分钟"</string>
-    <string name="my_flights_notify_message">"%s 航班提醒已到"</string>
+    <string name="my_flights_notify_message">"%1$s,%2$s班机于%3$s飞往%4$s"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
 

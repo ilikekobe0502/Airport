@@ -19,6 +19,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
@@ -193,7 +194,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
             @Override
             public void run() {
                 showMessage(!TextUtils.isEmpty(message) ? message : "");
-                mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, null, true);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
+                mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
             }
         });
     }

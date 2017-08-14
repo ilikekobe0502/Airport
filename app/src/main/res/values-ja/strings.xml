@@ -664,7 +664,7 @@
 
     <!-- My flights notify -->
     <string name="my_flights_notify">"%1$d時間%2$d分"</string>
-    <string name="my_flights_notify_message">"%s 航空券のリマインダー"</string>
+    <string name="my_flights_notify_message">"％1$sを,％2$sの％4$sに％3$sの飛行中"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
 

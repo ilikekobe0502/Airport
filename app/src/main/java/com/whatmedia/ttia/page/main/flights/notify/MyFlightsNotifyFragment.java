@@ -17,17 +17,17 @@ import android.widget.TimePicker;
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.ClockData;
-import com.whatmedia.ttia.response.data.ClockDataList;
+import com.whatmedia.ttia.response.GetClockDataResponse;
 import com.whatmedia.ttia.response.data.ClockTimeData;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,10 +77,29 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
 
         mPresenter = MyFlightsNotifyPresenter.getInstance(getContext(), this);
 
-        mDataList = ClockDataList.newInstance(Preferences.getClockData(getContext()));
-        mAdapter = new MyFlightsNotifyRecyclerViewAdapter(getContext(),mDataList);
+        mDataList = GetClockDataResponse.newInstance(Preferences.getClockData(getContext()));
+        mAdapter = new MyFlightsNotifyRecyclerViewAdapter(getContext(), mDataList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(new IOnItemClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ClockData recyclerViewItem = (ClockData) view.getTag();
+                Util.showTimePicker(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        HashMap<String, Long> diffTime = Util.getDifferentTimeWithNowTime(hourOfDay + ":" + minute);
+                        ClockTimeData clockTimeData = new ClockTimeData();
+                        clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
+                        clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
+                        clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
+
+                        mDataList = Util.modifyNotification(getContext(), hourOfDay, minute, recyclerViewItem.getId(), mDataList);
+                        mAdapter.setData(mDataList);
+                    }
+                });
+            }
+        });
 
         mMainActivity.getMyToolbar().clearState()
                 .setTitleText(getString(R.string.title_flight_notify))
@@ -147,54 +166,23 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 if (view.isShown()) {
-                    Gson gson = new Gson();
-                    HashMap<String, Long> diffTime = Util.getCountTime(hourOfDay + ":" + minute);
-                    ClockTimeData clockTimeData = new ClockTimeData();
-                    clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
-                    clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
-                    clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
-                    String timeString = view.getContext().getString(R.string.my_flights_notify, clockTimeData.getHour(), clockTimeData.getMin());
-
-                    mDataList = ClockDataList.newInstance(Preferences.getClockData(getContext()));
-
-                    ClockData clockData = new ClockData();
-                    clockData.setId(new Random().nextInt(800 - 100) + 65);
-                    clockData.setTime(clockTimeData);
-                    clockData.setTimeString(timeString);
-                    clockData.setNotify(true);
-                    mDataList.add(clockData);
-
-                    String json = gson.toJson(mDataList);
-
-                    Preferences.saveClockData(view.getContext(), json);
+                    mDataList = Util.addNotification(getContext(), hourOfDay, minute);
                     mAdapter.setData(mDataList);
                 }
             }
         });
     }
 
-    /**
-     * Delete data
-     */
-    private void deleteData() {
-        for (ClockData item : mAdapter.getSelectData()) {
-            for (ClockData subItem : mDataList) {
-                if (item.getId() == subItem.getId()) {
-                    mDataList.remove(subItem);
-                    Util.cancelAlertClock(getContext(),subItem.getId());
-                    break;
-                }
-            }
-        }
-        Gson gson = new Gson();
-        String json = gson.toJson(mDataList);
-        Preferences.saveClockData(getContext(), json);
-
-        mAdapter.setData(mDataList);
-    }
-
     @OnClick(R.id.layout_delete)
-    public void onClick() {
-        deleteData();
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_delete:
+                if (mDataList.size() > 0) {
+                    mDataList = Util.deleteNotification(getContext(), mDataList);
+                    mAdapter.setData(mDataList);
+                }
+                break;
+        }
     }
 }
+

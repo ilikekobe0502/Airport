@@ -6,6 +6,8 @@ import com.whatmedia.ttia.response.data.FlightsInfoData;
 import java.util.List;
 
 public interface MyFlightsInfoContract {
+    String TAG_INSERT = "com.whatmedia.ttia.page.main.flights.my.insert";
+
     interface View {
         void getMyFlightsInfoSucceed(List<FlightsInfoData> response);
 
