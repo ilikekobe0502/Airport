@@ -378,11 +378,10 @@ public class Util {
 
     /**
      * 取得 deviceId
-     *
      * @param context
      * @return
      */
-    public static String getDeviceId(Context context) {
+    public static String getDeviceId(Context context){
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
     }

@@ -204,8 +204,8 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
                 mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
-                        mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mFloorCodeData != null ? mFloorCodeData.getFloorId() : ""
-                        , mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : "");
+                        mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : ""
+                        , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
                 break;
             case R.id.textView_terminal:
                 dialog = MyStoreDialog.newInstance()

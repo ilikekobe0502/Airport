@@ -2,6 +2,7 @@ package com.whatmedia.ttia.connect;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.utility.Util;
 import com.whatmedia.ttia.utility.Preferences;
 
 import java.io.IOException;
@@ -33,11 +35,17 @@ public class ApiConnect extends StateCode {
 
     public final static String TAG_IMAGE_HOST = "http://125.227.250.187:8866/";
 
+    public final static String TAG_DEVICE_TYPE = "1";
+
+    public static String TAG_DEVICE_ID ="A123456789";
+
     private static String mLocale;
 
     private static OkHttpClient mClient;
     private static ApiConnect mApiConnect;
     private static Context mContext;
+
+
 
     public ApiConnect() {
     }
@@ -56,7 +64,13 @@ public class ApiConnect extends StateCode {
             mContext = context;
             mApiConnect = new ApiConnect();
         }
+
+//        if(TAG_DEVICE_ID == null){
+//            TAG_DEVICE_ID = Util.getDeviceId(mContext);
+//        }
+
         switchLocale();
+
         return mApiConnect;
     }
 
@@ -168,6 +182,8 @@ public class ApiConnect extends StateCode {
                 .newBuilder()
                 .addQueryParameter("UserID", "123")
                 .addQueryParameter("Devicetoken", "123")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("lan", "tw")
                 .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -185,7 +201,7 @@ public class ApiConnect extends StateCode {
                 .newBuilder()
                 .addQueryParameter("UserID", "123")
                 .addQueryParameter("Devicetoken", "123")
-                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("AirlineCode", data.getAirlineCode())
                 .addQueryParameter("Shifts", data.getShift())//需要補滿四位數
                 .addQueryParameter("ExpressDate", data.getExpressDate())
@@ -404,8 +420,10 @@ public class ApiConnect extends StateCode {
     public static void getUserNews(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_NewsUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("lan", "tw")
                 .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -420,8 +438,10 @@ public class ApiConnect extends StateCode {
     public static void getUserEmergency(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("lan", "tw")
                 .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -436,8 +456,10 @@ public class ApiConnect extends StateCode {
     public static void getUserSweetNotify(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_IntimateReminderUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("lan", "tw")
                 .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -494,9 +516,9 @@ public class ApiConnect extends StateCode {
     public static void sendQuestionnaireResult(String answer, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Answers")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", "B123456789")
-                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("answer", answer)
                 .build();
         getApi(url, callback);

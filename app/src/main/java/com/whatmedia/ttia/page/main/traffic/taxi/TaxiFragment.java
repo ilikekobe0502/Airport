@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -113,6 +114,9 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
+
+                    WebSettings webSettings = mWebView.getSettings();
+                    webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
                     mWebView.loadData(response.get(0).getTaxiHtml(), "text/html; charset=utf-8", "UTF-8");
                     mWebView.setBackgroundColor(0);
                 }

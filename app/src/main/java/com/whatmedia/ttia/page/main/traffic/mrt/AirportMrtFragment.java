@@ -69,6 +69,8 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
         mLoadingView.showLoadingView();
         mPresenter.getAirportMrtAPI();
 
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
