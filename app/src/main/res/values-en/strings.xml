@@ -694,4 +694,7 @@
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"Are you sure you want to switch to %s?"</string>
     <string name="language_setting_select_confirm_dialog">"Has been set to %s language"</string>
+
+    <string name="store_terminal_1">T1</string>
+    <string name="store_terminal_2">T2</string>
 </resources>
