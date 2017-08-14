@@ -208,6 +208,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         mWebView.setWebViewClient(new WebViewClient() {
 

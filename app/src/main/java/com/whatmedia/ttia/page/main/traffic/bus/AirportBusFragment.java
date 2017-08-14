@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -63,6 +64,8 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
         mLoadingView.showLoadingView();
         mPresenter.getAirportBusAPI();
 
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {

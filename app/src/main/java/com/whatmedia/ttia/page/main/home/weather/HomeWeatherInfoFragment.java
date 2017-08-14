@@ -71,6 +71,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.loadUrl(String.format(mWeatherUrl, mLocale));
         mWebView.setWebViewClient(new WebViewClient() {
 
