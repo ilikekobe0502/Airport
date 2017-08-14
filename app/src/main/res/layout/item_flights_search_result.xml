@@ -21,6 +21,7 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="@color/colorText"
+        android:textStyle="bold"
         android:textSize="@dimen/sp_pixel_13" />
 
     <View
@@ -96,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/line3"
+            android:textStyle="bold"
             android:gravity="center" />
 
         <TextView
@@ -103,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/line3"
+            android:textStyle="bold"
             android:gravity="center" />
     </RelativeLayout>
 
@@ -115,5 +118,6 @@
         android:gravity="center"
         android:paddingRight="@dimen/dp_pixel_10"
         android:textColor="@color/colorText"
+        android:textStyle="bold"
         android:textSize="@dimen/sp_pixel_13" />
 </RelativeLayout>

@@ -144,7 +144,7 @@
     <string name="flight_state_on_time">準時</string>
     <string name="flight_state_departed">已飛</string>
 
-    <string name="marquee_parking_info">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！</string>
+    <string name="marquee_parking_info">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！%s</string>
     <string name="marquee_my_flight_emprt">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。          </string>
     <string name="marquee_my_flight_arrival">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          飛自     預計時間：        狀態：     實際時間：        航廈：     行李轉盤：  </string>
     <string name="marquee_my_flight_takeoff">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          飛往     預計時間：        狀態：     實際時間：        航廈：     登機門：     報到櫃檯：  </string>
@@ -759,4 +759,14 @@
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"確定要切換成%s嗎?"</string>
     <string name="language_setting_select_confirm_dialog">"已經語言設定為%s"</string>
+
+    <string name="marquee_arrive">飛自</string>
+    <string name="marquee_dexxxxx">飛往</string>
+    <string name="marquee_ecpected_time">預計時間：</string>
+    <string name="marquee_status">狀態：</string>
+    <string name="marquee_ecpress_time">實際時間：</string>
+    <string name="marquee_terminal">航廈：</string>
+    <string name="marquee_gate">登機門：</string>
+    <string name="marquee_gt">報告櫃檯：</string>
+    <string name="marquee_luggage">行李轉盤：</string>
 </resources>

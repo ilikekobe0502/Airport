@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
         mPresenter = RoamingDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getRoamingDetailAPI(getArguments().get("key").toString());
+
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         return view;
     }
