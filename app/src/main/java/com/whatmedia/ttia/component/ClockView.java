@@ -38,7 +38,7 @@ public class ClockView extends View {
         super.onDraw(canvas);
         int center_w = (getMeasuredWidth() / 2);
         int center_h = (getMeasuredHeight() / 2);
-        int len = (getMeasuredWidth() / 2) - 3;
+        int len = (getMeasuredHeight() / 2) - 3;
         p = new Paint(Paint.ANTI_ALIAS_FLAG);
 //        p.setStyle(Paint.Style.FILL);
 //        p.setColor(c);
