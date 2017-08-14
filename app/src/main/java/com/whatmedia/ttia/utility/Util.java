@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -15,20 +14,26 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
+import com.whatmedia.ttia.response.GetMyFlightsResponse;
 import com.whatmedia.ttia.response.data.ClockData;
+import com.whatmedia.ttia.response.GetClockDataResponse;
+import com.whatmedia.ttia.response.data.ClockTimeData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.services.FlightClockBroadcast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
@@ -43,6 +48,8 @@ public class Util {
     public final static String TAG_FORMAT_MD = "MM/dd";
     public final static String TAG_FORMAT_HM = "HH:mm";
     public final static String TAG_FORMAT_HMS = "HH:mm:ss";
+    public final static String TAG_FORMAT_HH = "HH";
+    public final static String TAG_FORMAT_mm = "mm";
     public final static String TAG_DAY = "day";
     public final static String TAG_HOUR = "hour";
     public final static String TAG_MIN = "min";
@@ -101,12 +108,12 @@ public class Util {
     }
 
     /**
-     * Get different time with not time
+     * Get different time with now time
      *
      * @param time
      * @return
      */
-    public static HashMap<String, Long> getCountTime(String time) {
+    public static HashMap<String, Long> getDifferentTimeWithNowTime(String time) {
         DateFormat df = new SimpleDateFormat(TAG_FORMAT_HM);
         long hours = 0;
         long minutes = 0;
@@ -129,11 +136,44 @@ public class Util {
         return diffTime;
     }
 
+    /**
+     * Get different time
+     *
+     * @param timeSource
+     * @param timeTarget
+     * @return
+     */
+    public static String getDifferentTime(String timeSource, String timeTarget) {
+        DateFormat df = new SimpleDateFormat(TAG_FORMAT_HM);
+        DateFormat dfSource = new SimpleDateFormat(TAG_FORMAT_HH);
+
+        Date targetDate = null;
+        Date sourceDate = null;
+        try {
+            targetDate = df.parse(timeTarget);
+            sourceDate = df.parse(timeSource);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String hourSource = dfSource.format(sourceDate);
+        dfSource = new SimpleDateFormat(TAG_FORMAT_mm);
+        String minSource = dfSource.format(sourceDate);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(targetDate);
+        calendar.add(Calendar.HOUR, -Integer.parseInt(hourSource));
+        calendar.add(Calendar.MINUTE, -Integer.parseInt(minSource));
+        Date resultD = calendar.getTime();
+        String resultT = df.format(resultD);
+        Log.d("TAG", resultT);
+        return resultT;
+    }
+
     public static String getTransformTimeFormat(String formatTarget, String time) {
         DateFormat df = new SimpleDateFormat(formatTarget);
         Date date = null;
         try {
-             date = df.parse(time);
+            date = df.parse(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -217,23 +257,31 @@ public class Util {
      * @param data
      */
     public static void setAlertClock(Context context, ClockData data) {
-        if (data != null) {
-            int sec = (int) data.getTime().getSec();
-            Integer id = data.getId();
-            Calendar cal1 = Calendar.getInstance();
-            cal1.add(Calendar.SECOND, sec);
-            Log.d(TAG, "配置鬧終於" + sec + "秒後: " + cal1);
+        if (data != null && data.getFlightsData() != null) {
+            for (FlightsInfoData item : data.getFlightsData()) {
+                if (item.getNotificationTime() != null && item.getNotificationId() != 0) {
+                    int sec = (int) item.getNotificationTime().getSec();
+                    Integer id = item.getNotificationId();
+                    Calendar cal1 = Calendar.getInstance();
+                    cal1.add(Calendar.SECOND, sec);
+                    Log.d(TAG, "ID : " + id + " 配置鬧終於" + sec + "秒後: " + cal1);
+                    Gson gson = new Gson();
+                    String flightData = gson.toJson(item, FlightsInfoData.class);
 
-            Intent intent = new Intent(context, FlightClockBroadcast.class);
-            intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING, data.getTimeString());
-            intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_ID, data.getId());
+                    Intent intent = new Intent(context, FlightClockBroadcast.class);
+                    intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA, flightData);
+                    intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_ID, id);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
 
-            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            am.set(AlarmManager.RTC_WAKEUP, cal1.getTimeInMillis(), pendingIntent);
+                    AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                    am.set(AlarmManager.RTC_WAKEUP, cal1.getTimeInMillis(), pendingIntent);
+                } else {
+                    Log.e(TAG, "FlightsInfoData notification info in error");
+                }
+            }
         } else {
-            Log.d(TAG, "ClockData is error");
+            Log.d(TAG, "ClockData is error or data.getFlightsData() is error");
         }
     }
 
@@ -241,15 +289,18 @@ public class Util {
      * Cancel alert clock
      *
      * @param context
-     * @param id
+     * @param flightsInfoDataList
      */
-    public static void cancelAlertClock(Context context, int id) {
+    public static void cancelAlertClock(Context context, List<FlightsInfoData> flightsInfoDataList) {
         Intent intent = new Intent(context, FlightClockBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.cancel(pendingIntent);
+        for (FlightsInfoData item : flightsInfoDataList) {
+            int id = item.getNotificationId();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
+            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            am.cancel(pendingIntent);
 
-        Log.d(TAG, "cancel alert clock");
+            Log.d(TAG, "cancel alert clock : " + id);
+        }
     }
 
     /**
@@ -259,7 +310,7 @@ public class Util {
      * @return
      */
     public static String getMarqueeSubMessage(Context context) {
-        List<FlightsInfoData> datas = GetFlightsInfoResponse.newInstance(Preferences.getMyFlightsDat(context));
+        List<FlightsInfoData> datas = GetFlightsInfoResponse.newInstance(Preferences.getMyFlightsData(context));
 
         StringBuilder marqueeSubMessage = new StringBuilder();
 
@@ -380,5 +431,147 @@ public class Util {
     public static String getDeviceId(Context context){
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
+    }
+
+    /**
+     * Add Notification
+     *
+     * @param context
+     * @param hourOfDay
+     * @param minute
+     * @return
+     */
+    public static List<ClockData> addNotification(Context context, int hourOfDay, int minute) {
+        String sourceTime = hourOfDay + ":" + minute;
+        List<ClockData> clockDataList = GetClockDataResponse.newInstance(Preferences.getClockData(context));
+        Gson gson = new Gson();
+        List<FlightsInfoData> myFlightDataList = GetMyFlightsResponse.newInstance(Preferences.getMyFlightsData(context));
+        ClockData clockData = new ClockData();
+
+        if (myFlightDataList != null) {
+
+            for (FlightsInfoData item : myFlightDataList) {
+                if (item.getNotificationId() == 0) {
+                    ClockTimeData clockTimeData = new ClockTimeData();
+                    HashMap<String, Long> diffTime = Util.getDifferentTimeWithNowTime(Util.getDifferentTime(sourceTime, item.getExpectedTime()));
+                    clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
+                    clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
+                    clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
+                    if (clockTimeData.getSec() > 0) {
+
+                        item.setNotificationId(new Random().nextInt(9000) + 65);
+                        item.setNotificationTime(clockTimeData);
+                    }
+                }
+            }
+            clockData.setFlightsData(myFlightDataList);
+
+        } else {
+            Log.e(TAG, "myFlightDataList = null");
+        }
+
+        clockData.setNotify(true);
+        String timeString = context.getString(R.string.my_flights_notify, hourOfDay, minute);
+        ClockTimeData clockTimeData = new ClockTimeData();
+        clockTimeData.setHour(hourOfDay);
+        clockTimeData.setMin(minute);
+        clockData.setTime(clockTimeData);
+        clockData.setTimeString(timeString);
+        clockData.setId(new Random().nextInt(9000) + 65);
+        clockDataList.add(clockData);
+
+        String json = gson.toJson(clockDataList);
+        Preferences.saveClockData(context, json);
+        return clockDataList;
+    }
+
+    /**
+     * Modify notification time
+     * 先讓此Item刪除 然後重新新增
+     *
+     * @param context
+     * @param hourOfDay
+     * @param minute
+     * @param selectId
+     * @param clockDataList
+     * @return
+     */
+    public static List<ClockData> modifyNotification(Context context, int hourOfDay, int minute, int selectId, List<ClockData> clockDataList) {
+        for (ClockData item : clockDataList) {
+            if (item.getId() == selectId) {
+                item.setIsCheck(true);
+                deleteNotification(context, clockDataList);
+                break;
+            }
+        }
+
+        return addNotification(context, hourOfDay, minute);
+    }
+
+    /**
+     * Delete notification
+     *
+     * @param context
+     * @param selectList
+     * @return
+     */
+    public static List<ClockData> deleteNotification(Context context, List<ClockData> selectList) {
+
+        List<ClockData> cacheData = new ArrayList<>(selectList);
+
+        for (ClockData item : selectList) {
+            if (item.getIsCheck()) {
+                cacheData.remove(item);
+                if (item.getFlightsData() != null)
+                    Util.cancelAlertClock(context, item.getFlightsData());
+                else {
+                    Log.e(TAG, "subItem.getFlightsData() is null");
+                }
+            }
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(cacheData);
+        Preferences.saveClockData(context, json);
+        return cacheData;
+    }
+
+    /**
+     * Delete notification
+     *
+     * @param context
+     * @param clockList
+     * @return
+     */
+    public static List<ClockData> deleteAllNotification(Context context, List<ClockData> clockList) {
+
+        List<ClockData> cacheData = new ArrayList<>(clockList);
+
+        for (ClockData item : clockList) {
+            cacheData.remove(item);
+            if (item.getFlightsData() != null)
+                Util.cancelAlertClock(context, item.getFlightsData());
+            else {
+                Log.e(TAG, "subItem.getFlightsData() is null");
+
+            }
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(cacheData);
+        Preferences.saveClockData(context, json);
+        return cacheData;
+    }
+
+    public static void resetNotification(Context context, List<FlightsInfoData> myFlightData) {
+        if (myFlightData != null && myFlightData.size() > 0) {
+            List<ClockData> clockList = GetClockDataResponse.newInstance(Preferences.getClockData(context));
+
+            deleteAllNotification(context, clockList);
+            for (ClockData item : clockList) {
+                List<ClockData> changeList = addNotification(context, (int) item.getTime().getHour(), (int) item.getTime().getMin());
+                for (ClockData subItem : changeList) {
+                    setAlertClock(context, subItem);
+                }
+            }
+        }
     }
 }

@@ -64,7 +64,7 @@ public class Preferences {
      * @param context
      * @return
      */
-    public static String getMyFlightsDat(Context context) {
+    public static String getMyFlightsData(Context context) {
         preferences = context.getSharedPreferences(TAG_MY_FLIGHT_INFO, 0);
         return preferences.getString(TAG_MY_FLIGHT_INFO, "");
     }

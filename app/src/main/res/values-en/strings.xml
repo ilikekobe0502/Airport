@@ -664,7 +664,7 @@
 
     <!-- My flights notify -->
     <string name="my_flights_notify">"%1$dhour%2$dminute"</string>
-    <string name="my_flights_notify_message">"%s Flight reminder has arrived"</string>
+    <string name="my_flights_notify_message">"%1$s,%2$s Flight to %3$s to %4$s"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
 

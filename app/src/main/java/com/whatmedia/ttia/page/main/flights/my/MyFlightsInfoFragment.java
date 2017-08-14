@@ -45,6 +45,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     private int mSelectSize = 0;
     private int mDeletePosition = 0;
     private Map<String, FlightsInfoData> mSelectList;
+    private boolean mIsInsert;//是否從新增過來，更新notification 佇列
 
 
     private MyFlightsInfoRecyclerViewAdapter mAdapter;
@@ -77,6 +78,9 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         View view = inflater.inflate(R.layout.fragment_my_flights_info, container, false);
         ButterKnife.bind(this, view);
 
+        if (getArguments() != null) {
+            mIsInsert = getArguments().getBoolean(MyFlightsInfoContract.TAG_INSERT);
+        }
         mPresenter = MyFlightsInfoPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getMyFlightsInfoAPI();
@@ -123,7 +127,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     @Override
     public void getMyFlightsInfoSucceed(final List<FlightsInfoData> response) {
-        mLoadingView.goneLoadingView();
+
         if (response == null) {
             Log.e(TAG, "getMyFlightsInfoSucceed response is null");
 //            showNoDataDialog();
@@ -138,8 +142,12 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
             Gson gson = new Gson();
             String json = gson.toJson(response);
             Preferences.saveMyFlightsData(getContext(), json);
+            if (mIsInsert)
+                Util.resetNotification(getContext(), response);
 
             mMainActivity.setMarqueeMessage(Util.getMarqueeSubMessage(getContext()));
+
+            mLoadingView.goneLoadingView();
         }
 
     }
@@ -156,6 +164,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
         mDeletePosition++;
         if (mSelectSize == mDeletePosition) {//代表佇列中的資料已刪完
+            // TODO: 2017/8/15 Delete Notification
             mSelectSize = 0;
             mDeletePosition = 0;
             mMainActivity.runOnUI(new Runnable() {

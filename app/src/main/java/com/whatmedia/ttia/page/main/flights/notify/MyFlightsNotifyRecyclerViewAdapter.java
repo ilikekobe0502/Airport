@@ -122,7 +122,11 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
             if (isChecked) {
                 Util.setAlertClock(mContext, item);
             } else {
-                Util.cancelAlertClock(mContext, item.getId());
+                if (item.getFlightsData() != null) {
+                    Util.cancelAlertClock(mContext, item.getFlightsData());
+                } else {
+                    Log.e(TAG, "item.getFlightsData() is null");
+                }
             }
         } else {
             Log.d("TAG", "view.getTag error");
@@ -148,33 +152,8 @@ public class MyFlightsNotifyRecyclerViewAdapter extends RecyclerView.Adapter<MyF
                 final ClockData recyclerViewItem = (ClockData) view.getTag();
                 switch (view.getId()) {
                     case R.id.textView_time:
-
-                        Util.showTimePicker(view.getContext(), new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                HashMap<String, Long> diffTime = Util.getCountTime(hourOfDay + ":" + minute);
-                                ClockTimeData clockTimeData = new ClockTimeData();
-                                clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
-                                clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
-                                clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
-
-                                mTextViewTime.setText(view.getContext().getString(R.string.my_flights_notify, diffTime.get(Util.TAG_HOUR), diffTime.get(Util.TAG_MIN)));
-
-                                Gson gson = new Gson();
-
-                                for (ClockData data : mItems) {
-                                    if (data.getId() == recyclerViewItem.getId()) {
-                                        data.setTime(clockTimeData);
-                                        data.setTimeString(mTextViewTime.getText().toString());
-                                        data.setNotify(mSwitchOpen.isChecked());
-                                    }
-                                }
-                                String json = gson.toJson(mItems);
-
-                                Preferences.saveClockData(view.getContext(), json);
-                                notifyDataSetChanged();
-                            }
-                        });
+                        if (mListener!=null)
+                            mListener.onClick(view);
                         break;
                     case R.id.switch_open:
                         for (ClockData data : mItems) {

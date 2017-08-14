@@ -22,7 +22,7 @@ public class FlightClockBroadcast extends BroadcastReceiver {
 
     private void createNotification(Context context, Intent intent) {
         Intent i = new Intent(context, FlightClockIntentService.class);
-        i.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING, intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING));
+        i.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA, intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA));
         i.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_ID, intent.getExtras().getInt(MyFlightsNotifyContract.TAG_NOTIFY_ID));
         context.startService(i);
     }

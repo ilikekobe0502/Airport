@@ -92,6 +92,9 @@ public class FlightsInfoData implements Serializable{
     private String flightCode;
     private String type;
     private boolean isCheck;
+    //Notification!!!!!!!!
+    private int notificationId;
+    private ClockTimeData notificationTime;
 
     public String getId() {
         return id;
@@ -355,5 +358,21 @@ public class FlightsInfoData implements Serializable{
 
     public void setIsCheck(boolean check) {
         isCheck = check;
+    }
+
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public ClockTimeData getNotificationTime() {
+        return notificationTime;
+    }
+
+    public void setNotificationTime(ClockTimeData notificationTime) {
+        this.notificationTime = notificationTime;
     }
 }

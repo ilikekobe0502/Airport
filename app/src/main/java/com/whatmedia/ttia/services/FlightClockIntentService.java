@@ -12,7 +12,8 @@ import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.data.ClockData;
-import com.whatmedia.ttia.response.data.ClockDataList;
+import com.whatmedia.ttia.response.GetClockDataResponse;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Preferences;
 
 import java.util.List;
@@ -41,13 +42,20 @@ public class FlightClockIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d(TAG, "onHandleIntent");
-        if (intent.getExtras() != null) {
+        if (intent.getExtras() != null && intent.getExtras().getInt(MyFlightsNotifyContract.TAG_NOTIFY_ID) != 0
+                && intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA) != null) {
             int id = intent.getExtras().getInt(MyFlightsNotifyContract.TAG_NOTIFY_ID);
-            String timeString = !TextUtils.isEmpty(intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING)) ? intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_TIME_STRING) : "";
+
+
+            FlightsInfoData flightsInfoData = getFlightsInfo(intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA));
 
             Notification.Builder builder = new Notification.Builder(this);
             builder.setContentTitle(getString(R.string.title_flight_notify))
-                    .setContentText(getString(R.string.my_flights_notify_message, timeString))
+                    .setContentText(getString(R.string.my_flights_notify_message,
+                            !TextUtils.isEmpty(flightsInfoData.getAirLineCName()) ? flightsInfoData.getAirLineCName().trim() : "",
+                            !TextUtils.isEmpty(flightsInfoData.getFlightCode()) ? flightsInfoData.getFlightCode().trim() : "",
+                            !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
+                            !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
                     .setDefaults(Notification.DEFAULT_VIBRATE)
                     .setSmallIcon(R.drawable.home_02);
 
@@ -65,7 +73,7 @@ public class FlightClockIntentService extends IntentService {
      * 收到推播之後把推播刪除
      */
     private void deleteReceiveNotification(int receiveId) {
-        List<ClockData> datas = ClockDataList.newInstance(Preferences.getClockData(getApplicationContext()));
+        List<ClockData> datas = GetClockDataResponse.newInstance(Preferences.getClockData(getApplicationContext()));
         for (ClockData item : datas) {
             if (item.getId() == receiveId) {
                 datas.remove(item);
@@ -76,5 +84,18 @@ public class FlightClockIntentService extends IntentService {
             mGson = new Gson();
         String json = mGson.toJson(datas);
         Preferences.saveClockData(getApplicationContext(), json);
+    }
+
+    /**
+     * get Flights Info
+     *
+     * @param flightsData
+     * @return
+     */
+    private FlightsInfoData getFlightsInfo(String flightsData) {
+        if (mGson == null)
+            mGson = new Gson();
+        FlightsInfoData flightsInfoData = mGson.fromJson(flightsData, FlightsInfoData.class);
+        return flightsInfoData;
     }
 }
