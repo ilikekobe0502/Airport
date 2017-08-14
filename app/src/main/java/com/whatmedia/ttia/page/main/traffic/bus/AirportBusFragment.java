@@ -1,13 +1,16 @@
 package com.whatmedia.ttia.page.main.traffic.bus;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -65,6 +68,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
         mPresenter.getAirportBusAPI();
 
         WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
