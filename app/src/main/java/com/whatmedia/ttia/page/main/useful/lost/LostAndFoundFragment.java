@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -64,7 +65,7 @@ public class LostAndFoundFragment extends BaseFragment implements LostAndFoundCo
         mPresenter = LostAndFoundPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getLostAndFoundAPI();
-
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {

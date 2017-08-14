@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,9 +80,11 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
 
         mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.getSettings().setDisplayZoomControls(false);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setBackgroundColor(0);
         mWebViewTerminalTwo.getSettings().setBuiltInZoomControls(true);
         mWebViewTerminalTwo.getSettings().setDisplayZoomControls(false);
+        mWebViewTerminalTwo.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebViewTerminalTwo.setBackgroundColor(0);
         return view;
     }

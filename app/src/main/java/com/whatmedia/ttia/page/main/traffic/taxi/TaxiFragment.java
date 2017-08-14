@@ -63,7 +63,7 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
         mPresenter = TaxiPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTaxiAPI();
-
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -115,8 +115,6 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
                 @Override
                 public void run() {
 
-                    WebSettings webSettings = mWebView.getSettings();
-                    webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
                     mWebView.loadData(response.get(0).getTaxiHtml(), "text/html; charset=utf-8", "UTF-8");
                     mWebView.setBackgroundColor(0);
                 }

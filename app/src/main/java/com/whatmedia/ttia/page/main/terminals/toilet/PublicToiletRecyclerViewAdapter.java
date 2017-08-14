@@ -122,6 +122,7 @@ public class PublicToiletRecyclerViewAdapter extends RecyclerView.Adapter<Public
 
             mWebView.getSettings().setBuiltInZoomControls(true);
             mWebView.getSettings().setDisplayZoomControls(false);
+            //TODO 因為怕list的webview太吃效能
         }
     }
 }

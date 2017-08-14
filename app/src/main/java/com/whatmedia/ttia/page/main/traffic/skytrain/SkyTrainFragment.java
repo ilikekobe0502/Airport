@@ -63,7 +63,7 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
         mPresenter = SkyTrainPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getSkyTrainAPI();
-
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -115,8 +115,6 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
                 @Override
                 public void run() {
 
-                    WebSettings webSettings = mWebView.getSettings();
-                    webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
                     mWebView.loadData(response.get(0).getSkytrainHtml(), "text/html; charset=utf-8", "UTF-8");
                     mWebView.setBackgroundColor(0);
                 }
