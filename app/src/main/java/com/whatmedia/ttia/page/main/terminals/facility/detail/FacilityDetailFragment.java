@@ -92,7 +92,10 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                         mBitmaps[finalI] = bitmap;
                         if (mBitmaps[0] != null && mBitmaps[1] != null && mBitmaps[2] != null) {
-                            mImagePicture.setImage(ImageSource.bitmap(Util.setBitmapScale(Util.combineBitmap(mBitmaps,(int)space))));
+                            for (int i = 0; i < mBitmaps.length; i++) {
+                                mBitmaps[i] = Util.setBitmapScale(mBitmaps[i],mImagePicture.getHeight()/3,mImagePicture.getWidth());
+                            }
+                            mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
                         }
                         Log.d("TAG", "onBitmapLoaded" + finalI);
                     }
