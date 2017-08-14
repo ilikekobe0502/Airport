@@ -68,6 +68,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
         mButtonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mLoadingView.showLoadingView();
                 mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
             }
         });
@@ -119,6 +120,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
         mMainActivity.runOnUI(new Runnable() {
             @Override
             public void run() {
+                mLoadingView.goneLoadingView();
                 Toast.makeText(getContext(),response,Toast.LENGTH_SHORT).show();
             }
         });

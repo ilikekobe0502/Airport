@@ -62,7 +62,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lauguage_result, container, false);
         ButterKnife.bind(this, view);
-
+        mLoadingView.showLoadingView();
         mPresenter = TravelLanguageResultPresenter.getInstance(getContext(), this);
         mPresenter.getLanguageAPI(mQueryId);
 
@@ -93,6 +93,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
 
     @Override
     public void getLanguageSucceed(final List<LanguageData> response) {
+        mLoadingView.goneLoadingView();
         mMainActivity.runOnUI(new Runnable() {
             @Override
             public void run() {
@@ -104,6 +105,6 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
 
     @Override
     public void getLanguageFailed(String message) {
-
+        mLoadingView.goneLoadingView();
     }
 }
