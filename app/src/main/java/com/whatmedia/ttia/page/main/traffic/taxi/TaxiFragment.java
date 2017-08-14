@@ -63,7 +63,11 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
         mPresenter = TaxiPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTaxiAPI();
+
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setDisplayZoomControls(false);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView.setBackgroundColor(0);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
