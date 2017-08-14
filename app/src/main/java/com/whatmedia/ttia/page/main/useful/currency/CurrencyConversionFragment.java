@@ -150,6 +150,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             case R.id.imageView_source_icon:
                 MyCurrencyConversionDialog dialog = MyCurrencyConversionDialog.newInstance()
                         .clearData()
+                        .setTitle(getString(R.string.currency_conversion_dialog_title))
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -164,6 +165,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             case R.id.imageView_target_icon:
                 dialog = MyCurrencyConversionDialog.newInstance()
                         .clearData()
+                        .setTitle(getString(R.string.currency_conversion_dialog_title))
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {

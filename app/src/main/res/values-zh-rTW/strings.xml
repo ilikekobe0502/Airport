@@ -690,6 +690,7 @@
     <string name="currency_conversion_vnd">"VND"</string>
     <string name="currency_conversion_zar">"ZAR"</string>
     <string name="currency_conversion_translate">"換算"</string>
+    <string name="currency_conversion_dialog_title">"請選擇國家"</string>
 
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"確定要切換成%s嗎?"</string>
