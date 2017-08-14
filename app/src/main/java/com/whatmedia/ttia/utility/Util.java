@@ -266,22 +266,52 @@ public class Util {
         if (datas != null) {
             for (FlightsInfoData item : datas) {
                 if (marqueeSubMessage.length() > 0) {
-                    marqueeSubMessage.append(",");
+                    marqueeSubMessage.append(", ");
                 }
-                marqueeSubMessage.append(!TextUtils.isEmpty(item.getCExpectedTime()) ? item.getCExpectedTime() : "")
+//                marqueeSubMessage.append(!TextUtils.isEmpty(item.getCExpectedTime()) ? item.getCExpectedTime() : "")
+//                        .append(" ")
+//                        .append(!TextUtils.isEmpty(item.getCTName()) ? item.getCTName() : "")
+//                        .append(" ")
+//                        .append(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode() : "")
+//                        .append(" ")
+//                        .append(!TextUtils.isEmpty(item.getGate()) ? item.getGate() : "")
+//                        .append(" ")
+//                        .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus() : "");
+
+                marqueeSubMessage.append(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getCTName()) ? item.getCTName() : "")
+                        .append(!TextUtils.isEmpty(item.getAirLineCName()) ? item.getAirLineCName().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode() : "")
+                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE)?context.getString(R.string.marquee_arrive):context.getString(R.string.marquee_dexxxxx) : "")
+                        .append(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getGate()) ? item.getGate() : "")
+                        .append(context.getString(R.string.marquee_ecpected_time))
+                        .append(!TextUtils.isEmpty(item.getCExpectedTime()) ? item.getCExpectedTime().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus() : "");
+                        .append(context.getString(R.string.marquee_status))
+                        .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus().trim() : "")
+                        .append(" ")
+                        .append(context.getString(R.string.marquee_ecpress_time))
+                        .append(!TextUtils.isEmpty(item.getCExpressTime()) ? item.getCExpressTime().trim() : "")
+                        .append(" ")
+                        .append(context.getString(R.string.marquee_terminal))
+                        .append(!TextUtils.isEmpty(item.getTerminals()) ? item.getTerminals().trim() : "")
+                        .append(" ")
+                        .append(context.getString(R.string.marquee_gate))
+                        .append(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "")
+                        .append(" ")
+                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE)?context.getString(R.string.marquee_luggage):context.getString(R.string.marquee_gt) : "")
+                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE)?
+                                !TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "":
+                                !TextUtils.isEmpty(item.getCounter()) ? item.getCounter().trim() : "":"");
+
+
             }
         }
         if (marqueeSubMessage.length() == 0) {
             marqueeSubMessage.append(context.getString(R.string.marquee_default_end_message));
         }
+        Log.e("Ian",marqueeSubMessage.toString());
         return marqueeSubMessage.toString();
     }
 

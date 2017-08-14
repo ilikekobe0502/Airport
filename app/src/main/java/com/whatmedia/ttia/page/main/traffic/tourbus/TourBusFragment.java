@@ -63,7 +63,7 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
         mPresenter = TourBusPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTourBusAPI();
-
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -115,8 +115,6 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
                 @Override
                 public void run() {
 
-                    WebSettings webSettings = mWebView.getSettings();
-                    webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
                     mWebView.loadData(response.get(0).getShuttlesHtml(), "text/html; charset=utf-8", "UTF-8");
                     mWebView.setBackgroundColor(0);
                 }

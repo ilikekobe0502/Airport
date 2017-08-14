@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -58,6 +59,9 @@ public class InternationalCallFragment extends BaseFragment implements Internati
         mPresenter = InternationalCallPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getInternationalCallAPI();
+
+        mWebView1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView2.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
 //        mWebView.setWebViewClient(new WebViewClient() {
 //            @Override

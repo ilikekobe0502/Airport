@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.whatmedia.ttia.R;
@@ -50,6 +51,8 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
         mPresenter = EmergencyCallPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getEmergencyCallAPI();
+
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         return view;
     }
