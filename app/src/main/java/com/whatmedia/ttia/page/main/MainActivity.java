@@ -182,6 +182,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 setMarqueeHomeState();
                 mMyToolbar.clearState()
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorBackgroundHomeDeparture))
+                        .setBackIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.refresh))
                         .setLeftText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setLeftIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.up))
                         .setRightText(getString(R.string.home_more_flights))
@@ -192,6 +193,13 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                                 Bundle bundle = new Bundle();
                                 bundle.putString(MoreFlightsContract.TAG_KIND, FlightsInfoData.TAG_KIND_DEPARTURE);
                                 addFragment(Page.TAG_HOME_MORE_FLIGHTS, bundle, true);
+                            }
+                        })
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Page.clearBackStack(MainActivity.this);
+                                addFragment(Page.TAG_HOME, null, false);
                             }
                         });
             } else if (fragment instanceof FlightsInfoFragment) {//航班資訊
