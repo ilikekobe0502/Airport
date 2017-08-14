@@ -694,4 +694,7 @@
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"確定要切換成%s嗎?"</string>
     <string name="language_setting_select_confirm_dialog">"已經語言設定為%s"</string>
+
+    <string name="store_terminal_1">1航</string>
+    <string name="store_terminal_2">2航</string>
 </resources>

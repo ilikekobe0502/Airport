@@ -694,4 +694,7 @@
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"あなたは必ず%sに切り替えたいです?"</string>
     <string name="language_setting_select_confirm_dialog">"これは、%sの言語に設定されています"</string>
+
+    <string name="store_terminal_1">T1</string>
+    <string name="store_terminal_2">T2</string>
 </resources>

@@ -769,4 +769,7 @@
     <string name="marquee_gate">登機門：</string>
     <string name="marquee_gt">報告櫃檯：</string>
     <string name="marquee_luggage">行李轉盤：</string>
+
+    <string name="store_terminal_1">1航</string>
+    <string name="store_terminal_2">2航</string>
 </resources>

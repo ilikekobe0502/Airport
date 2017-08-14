@@ -26,15 +26,30 @@
             android:background="@drawable/background_corners">
 
             <TextView
+                android:id="@+id/temId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_pixel_5"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_21"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:text="1航"/>
+
+            <TextView
                 android:id="@+id/textView_floor"
                 android:layout_width="@dimen/dp_pixel_35"
                 android:layout_height="@dimen/dp_pixel_35"
-                android:layout_margin="@dimen/sp_pixel_15"
+                android:layout_marginTop="@dimen/sp_pixel_15"
+                android:layout_marginBottom="@dimen/sp_pixel_15"
+                android:layout_marginRight="@dimen/sp_pixel_15"
                 android:background="@drawable/frame_dialog_button"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_21"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/temId"/>
 
             <TextView
                 android:id="@+id/textView_title"
