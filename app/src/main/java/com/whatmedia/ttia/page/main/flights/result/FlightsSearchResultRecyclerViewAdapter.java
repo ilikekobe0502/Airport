@@ -55,7 +55,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         if (item == null)
             return;
 
-        holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? item.getExpressTime().trim() : "");
+        holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
         holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
         holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
         holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");

@@ -6,11 +6,12 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.whatmedia.ttia.enums.FlightInfo;
+import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
+import com.whatmedia.ttia.utility.Preferences;
 
 import java.io.IOException;
 
@@ -37,6 +38,8 @@ public class ApiConnect extends StateCode {
     public final static String TAG_DEVICE_TYPE = "1";
 
     public static String TAG_DEVICE_ID ="A123456789";
+
+    private static String mLocale;
 
     private static OkHttpClient mClient;
     private static ApiConnect mApiConnect;
@@ -66,7 +69,25 @@ public class ApiConnect extends StateCode {
 //            TAG_DEVICE_ID = Util.getDeviceId(mContext);
 //        }
 
+        switchLocale();
+
         return mApiConnect;
+    }
+
+    /**
+     * Switch locale
+     */
+    private static void switchLocale() {
+        String localeCache = Preferences.getLocaleSetting(mContext);
+        if (TextUtils.equals(localeCache, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString())) {
+            mLocale = "tw";
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_SIMPLIFIED_CHINESE.getLocale().toString())) {
+            mLocale = "cn";
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_JAPANESE.getLocale().toString())) {
+            mLocale = "ja";
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
+            mLocale = "en";
+        }
     }
 
     /**
@@ -129,7 +150,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_flight_information")
                 .newBuilder()
                 .addQueryParameter("KeyWord", !TextUtils.isEmpty(searchData.getKeyWord()) ? searchData.getKeyWord() : "")
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .addQueryParameter("QueryType", !TextUtils.isEmpty(searchData.getQueryType()) ? searchData.getQueryType() : "")
                 .build();
         getApi(url, callback);
@@ -145,7 +166,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_flight_information")
                 .newBuilder()
                 .addQueryParameter("ExpressTime", !TextUtils.isEmpty(searchData.getExpressTime()) ? searchData.getExpressTime() : "")
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .addQueryParameter("QueryType", !TextUtils.isEmpty(searchData.getQueryType()) ? searchData.getQueryType() : "")
                 .build();
         getApi(url, callback);
@@ -163,6 +184,8 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", "123")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
+                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -196,7 +219,7 @@ public class ApiConnect extends StateCode {
     public static void getPublicToilet(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_PublicToilet")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -209,7 +232,7 @@ public class ApiConnect extends StateCode {
     public static void getAirportFacility(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_airport_facility_info")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -222,7 +245,7 @@ public class ApiConnect extends StateCode {
     public static void getTerminalCode(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_TerminalsCode")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -235,7 +258,7 @@ public class ApiConnect extends StateCode {
     public static void getAreaCode(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_AreaCode")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -248,7 +271,7 @@ public class ApiConnect extends StateCode {
     public static void getFloorCode(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_FloorCode")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -261,7 +284,7 @@ public class ApiConnect extends StateCode {
     public static void getRestaurantCode(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_RestaurantTypeCode")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -278,7 +301,7 @@ public class ApiConnect extends StateCode {
     public static void getRestaurantInfo(String terminalsID, String areaID, String restaurantTypeID, String floorID, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "seach_restaurant")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .addQueryParameter("TerminalsID", terminalsID)
                 .addQueryParameter("AreaID", areaID)
                 .addQueryParameter("RestaurantTypeID", restaurantTypeID)
@@ -295,7 +318,7 @@ public class ApiConnect extends StateCode {
     public static void getAirportBus(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Buses")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -308,7 +331,7 @@ public class ApiConnect extends StateCode {
     public static void getRoadsideAssistance(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_RoadsideAssistance")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -321,7 +344,7 @@ public class ApiConnect extends StateCode {
     public static void getTaxi(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Taxi")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -334,7 +357,7 @@ public class ApiConnect extends StateCode {
     public static void getTourBus(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Shuttles")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -347,7 +370,7 @@ public class ApiConnect extends StateCode {
     public static void getAirportMrt(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_HighTrail")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -360,7 +383,7 @@ public class ApiConnect extends StateCode {
     public static void getSkyTrain(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Skytrain")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -401,6 +424,8 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
+                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -417,6 +442,8 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
+                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -433,6 +460,8 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
+                .addQueryParameter("DeviceType", "1")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -445,7 +474,7 @@ public class ApiConnect extends StateCode {
     public static void getLostAndFound(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Lost")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -465,6 +494,7 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
     /**
      * 問卷調查題目
      *
@@ -473,7 +503,7 @@ public class ApiConnect extends StateCode {
     public static void getQuestionnaire(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Questions")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -483,7 +513,7 @@ public class ApiConnect extends StateCode {
      *
      * @param callback
      */
-    public static void sendQuestionnaireResult(String answer,Callback callback) {
+    public static void sendQuestionnaireResult(String answer, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Answers")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
@@ -499,7 +529,7 @@ public class ApiConnect extends StateCode {
      *
      * @param callback
      */
-    public static void getLanguages(String id,Callback callback) {
+    public static void getLanguages(String id, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_travel_language")
                 .newBuilder()
                 .addQueryParameter("type", id)
@@ -509,49 +539,53 @@ public class ApiConnect extends StateCode {
 
     /**
      * 取得國際電話html
+     *
      * @param callback
      */
-    public  static void getInternationCall(Callback callback) {
+    public static void getInternationCall(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalCall")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
 
     /**
      * 取得緊急電話html
+     *
      * @param callback
      */
     public static void getEmergencyCall(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyCall")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
 
     /**
      * 取得電信業者清單
+     *
      * @param callback
      */
     public static void getRoamingService(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_TelecommunicationsIndustryCode")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
 
     /**
      * 取得漫遊上網HTML
+     *
      * @param callback
      */
-    public static void getRoamingDetail(String id,Callback callback) {
+    public static void getRoamingDetail(String id, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalRoaming")
                 .newBuilder()
-                .addQueryParameter("lan", "tw")
-                .addQueryParameter("TIID",id)
+                .addQueryParameter("lan", mLocale)
+                .addQueryParameter("TIID", id)
                 .build();
         getApi(url, callback);
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.whatmedia.ttia.enums.LanguageSetting;
+
 /**
  * Created by neo_mac on 2017/8/8.
  */
@@ -13,6 +15,7 @@ public class Preferences {
 
     private final static String TAG_CLOCK_DATA = "clock";
     private final static String TAG_MY_FLIGHT_INFO = "my_flight";
+    private final static String TAG_LOCALE_Setting = "locale";
 
     private static SharedPreferences preferences;
 
@@ -66,5 +69,29 @@ public class Preferences {
         return preferences.getString(TAG_MY_FLIGHT_INFO, "");
     }
 
+    /**
+     * Save Locale Setting
+     *
+     * @param context
+     * @param locale
+     */
+    public static void saveLocaleSetting(Context context, String locale) {
+        Log.d(TAG, locale);
+        preferences = context.getSharedPreferences(TAG_LOCALE_Setting, 0);
+        preferences.edit()
+                .putString(TAG_LOCALE_Setting, locale)
+                .commit();
+    }
+
+    /**
+     * Get My flights data
+     *
+     * @param context
+     * @return
+     */
+    public static String getLocaleSetting(Context context) {
+        preferences = context.getSharedPreferences(TAG_LOCALE_Setting, 0);
+        return preferences.getString(TAG_LOCALE_Setting, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString());
+    }
 
 }

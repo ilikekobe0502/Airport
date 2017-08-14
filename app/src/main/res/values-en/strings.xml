@@ -615,7 +615,7 @@
     <string name="my_flights_delete_message">Are you sure to delete the flight?</string>
 
     <!-- Flights search -->
-    <string name="flights_search_footer_hint">Please enter the airline code for the airline code, airline keyword</string>
+    <string name="flights_search_footer_hint">Please enter the flight code, airline or city keyword you want to inquire about</string>
     <string name="flights_search_search">search</string>
     <string name="flights_search_edit_text_hint">Please enter key words</string>
     <string name="flights_search_not_found_flights_message">Can not find flight</string>
@@ -655,7 +655,7 @@
     <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
 
     <!-- Flights search result -->
-    <string name="flights_search_result_terminal_text">Flight</string>
+    <string name="flights_search_result_terminal_text">Terminal</string>
 
     <!-- Restaurant & Store search info-->
     <string name="restaurant_store_search_info_location">address：%1$s-%2$s</string>
@@ -691,4 +691,7 @@
     <string name="currency_conversion_zar">"ZAR"</string>
     <string name="currency_conversion_translate">"Conversion"</string>
 
+    <!-- Language setting -->
+    <string name="language_setting_select_dialog">"Are you sure you want to switch to %s?"</string>
+    <string name="language_setting_select_confirm_dialog">"Has been set to %s language"</string>
 </resources>

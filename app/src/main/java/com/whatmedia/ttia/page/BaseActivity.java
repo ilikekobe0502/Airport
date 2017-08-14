@@ -1,5 +1,6 @@
 package com.whatmedia.ttia.page;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewStub;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.utility.MyContextWrapper;
+import com.whatmedia.ttia.utility.Preferences;
 
 /**
  * Created by neo_mac on 2017/6/18.
@@ -60,5 +63,11 @@ public class BaseActivity extends AppCompatActivity implements IActivityTools {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Context context = MyContextWrapper.wrap(newBase, Preferences.getLocaleSetting(newBase));
+        super.attachBaseContext(context);
     }
 }

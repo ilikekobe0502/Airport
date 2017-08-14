@@ -615,7 +615,7 @@
     <string name="my_flights_delete_message">確定刪除航班嗎？</string>
 
     <!-- Flights search -->
-    <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司貨城市關鍵字</string>
+    <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司或城市關鍵字</string>
     <string name="flights_search_search">搜尋</string>
     <string name="flights_search_edit_text_hint">請輸入關鍵字</string>
     <string name="flights_search_not_found_flights_message">找不到航班</string>
@@ -691,4 +691,7 @@
     <string name="currency_conversion_zar">"ZAR"</string>
     <string name="currency_conversion_translate">"換算"</string>
 
+    <!-- Language setting -->
+    <string name="language_setting_select_dialog">"確定要切換成%s嗎?"</string>
+    <string name="language_setting_select_confirm_dialog">"已經語言設定為%s"</string>
 </resources>

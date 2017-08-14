@@ -1,9 +1,11 @@
 package com.whatmedia.ttia.page.main.language;
 
-
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.enums.UsefulInfo;
+import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,32 +108,31 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
 
     @Override
     public void onClick(View view) {
-        if (view.getTag() instanceof UsefulInfo) {
-            UsefulInfo info = (UsefulInfo) view.getTag();
-            int page = -1;
-            switch (info) {
-                case TAG_LANGUAGE://旅行外文
-                    page = Page.TAG_USERFUL_LANGUAGE;
-                    break;
-                case TAG_CURRENCY://匯率換算
-                    page = Page.TAG_USERFUL_CURRENCY_CONVERSION;
-                    break;
-                case TAG_WEATHER://天氣
-                    page = Page.TAG_HOME_MORE_WEATHER;
-                    break;
-                case TAG_TIMEZONE://時區查詢
-                    page = Page.TAG_USERFUL_TIMEZONE;
-                    break;
-                case TAG_LOST://失物協尋
-                    page = Page.TAG_USERFUL_LOST;
-                    break;
-                case TAG_QUESTIONNAIRE://問卷調查
-                    page = Page.TAG_USERFUL_QUEST;
-                    break;
-            }
+        if (view.getTag() instanceof LanguageSetting) {
+            final LanguageSetting setting = (LanguageSetting) view.getTag();
+            final String string = getString(setting.getTitle());
 
-            if (page != -1)
-                mMainActivity.replaceFragment(page, null, true);
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.note)
+                    .setMessage(getString(R.string.language_setting_select_dialog, string))
+                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Preferences.saveLocaleSetting(getContext(), setting.getLocale().toString());
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle(R.string.note)
+                                    .setMessage(getString(R.string.language_setting_select_confirm_dialog, string))
+                                    .setPositiveButton(R.string.alert_btn_ok, null)
+                                    .show();
+//                            mAdapter.setData();
+
+                            Intent i = getActivity().getIntent();
+                            getActivity().finish();
+                            getActivity().startActivity(i);
+                        }
+                    })
+                    .setNegativeButton(R.string.alert_btn_cancel, null)
+                    .show();
         } else {
             Log.e(TAG, "View.getTag() is not instance of FlightInfo");
         }

@@ -126,7 +126,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         mLoadingView.goneLoadingView();
         if (response == null) {
             Log.e(TAG, "getMyFlightsInfoSucceed response is null");
-            showNoDataDialog();
+//            showNoDataDialog();
         } else {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
@@ -148,7 +148,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     public void getMyFlightsInfoFailed(String message) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, message);
-        showNoDataDialog();
+//        showNoDataDialog();
     }
 
     @Override
@@ -163,6 +163,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 public void run() {
                     showMessage(response);
                     mPresenter.getMyFlightsInfoAPI();
+                    mAdapter.setData(null);
                 }
             });
         } else {
@@ -180,23 +181,26 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     @OnClick(R.id.layout_delete)
     public void onClick() {
-
-        new AlertDialog.Builder(getContext())
-                .setTitle(R.string.note)
-                .setMessage(R.string.my_flights_delete_message)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mSelectList = mAdapter.getSelectData();
-                        deleteData();
-                    }
-                })
-                .setNegativeButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .show();
+        if (mAdapter.getSelectData().size() > 0) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.note)
+                    .setMessage(R.string.my_flights_delete_message)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mSelectList = mAdapter.getSelectData();
+                            deleteData();
+                        }
+                    })
+                    .setNegativeButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        } else {
+            Log.d(TAG, "mAdapter.getSelectData().size() < 1");
+        }
     }
 
     @Override
