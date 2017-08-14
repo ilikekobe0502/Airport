@@ -18,5 +18,5 @@
         android:id="@+id/imageView_picture"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_130"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitXY" />
 </LinearLayout>

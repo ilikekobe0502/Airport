@@ -384,7 +384,7 @@ public class Util {
             height += bitmapList[i].getHeight();
             height += space;
         }
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(bitmapList[0], 0, 0, null);
         int tempHeight = bitmapList[0].getHeight() + space;
@@ -397,12 +397,29 @@ public class Util {
     }
 
     /**
-     * Bitmap放大的方法
+     *  Bitmap放大的方法  height(想放大的高度) width(想放大的寬度)
+     * @param bitmap
+     * @param height
+     * @param width
+     * @return
      */
-    public static Bitmap setBitmapScale(Bitmap bitmap) {
+    public static Bitmap setBitmapScale(Bitmap bitmap,int height,int width) {
+
+        int bitmapHeight = bitmap.getHeight();
+        int bitmapWidth = bitmap.getWidth();
+
+        if(bitmapHeight <= 0 || bitmapWidth <= 0){
+            return bitmap;
+        }
+
         Matrix matrix = new Matrix();
-        matrix.postScale(1f, 1.5f); //長寬比例
-        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        float scaleWidth = ((float) width<=0?bitmapWidth:width) / bitmapWidth;
+        float scaleHeight = ((float) height<=0?bitmapHeight:height) / bitmapHeight;
+
+        matrix.postScale(scaleWidth, scaleHeight); //長寬比例
+
+        Log.e("Ian","bitmap.getWidth():"+bitmapWidth+", bitmap.getHeight():"+bitmapHeight+", height:"+height+", width:"+width);
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
         return resizeBmp;
     }
 

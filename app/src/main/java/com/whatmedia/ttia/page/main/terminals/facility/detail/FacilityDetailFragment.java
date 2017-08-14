@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.whatmedia.ttia.R;
@@ -25,6 +26,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.utility.Util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
         }
+//        System.gc();
     }
 
     @Override
@@ -76,38 +79,74 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         mPresenter = FacilityDetailPresenter.getInstance(getContext(), this);
 
         final float space = getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
+        final int width = getResources().getDimensionPixelSize(R.dimen.dp_pixel_250);
+        final int height = getResources().getDimensionPixelSize(R.dimen.dp_pixel_100);
 
         if (getArguments() != null && getArguments().getSerializable(FacilityDetailContract.TAG_DATA) != null) {
             AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
             mTextViewSubTitle.setText(facilityData.getFloorName());
-            List<String> imageList = new ArrayList<>();
+            final List<String> imageList = new ArrayList<>();
             imageList.add(facilityData.getMainImgPath());
             imageList.add(facilityData.getLegendImgPath());
             imageList.add(facilityData.getClassImgPath());
 
-            for (int i = 0; i < imageList.size(); i++) {
-                final int finalI = i;
-                Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i)).into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        mBitmaps[finalI] = bitmap;
-                        if (mBitmaps[0] != null && mBitmaps[1] != null && mBitmaps[2] != null) {
-                            mImagePicture.setImage(ImageSource.bitmap(Util.setBitmapScale(Util.combineBitmap(mBitmaps,(int)space))));
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < imageList.size(); i++) {
+                        try {
+                            mBitmaps[i] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i))
+                                    .config(Bitmap.Config.ARGB_4444)
+                                    .resize(width,height)
+                                    .priority(Picasso.Priority.HIGH)
+                                    .get();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        Log.d("TAG", "onBitmapLoaded" + finalI);
+//                final int finalI = i;
+//                Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i))
+//                        .config(Bitmap.Config.ARGB_4444)
+//                        .resize(width,height)
+//                        .priority(Picasso.Priority.HIGH)
+//                        .into(new Target() {
+//                            @Override
+//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//
+//                                mBitmaps[finalI] = bitmap;
+//                                if (mBitmaps[0] != null && mBitmaps[1] != null && mBitmaps[2] != null) {
+////                            for (int i = 0; i < mBitmaps.length; i++) {
+////                                mBitmaps[i] = Util.setBitmapScale(mBitmaps[i],mImagePicture.getHeight()/3,mImagePicture.getWidth());
+////                            }
+//                                    mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
+//                                }
+//                                Log.d("TAG", "onBitmapLoaded" + finalI);
+//                            }
+//
+//                            @Override
+//                            public void onBitmapFailed(Drawable errorDrawable) {
+//                                Log.d("TAG", "onBitmapFailed" + finalI);
+//                            }
+//
+//                            @Override
+//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//                                Log.d("TAG", "onPrepareLoad" + finalI);
+//                            }
+//                        });
                     }
 
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        Log.d("TAG", "onBitmapFailed" + finalI);
-                    }
+                    mMainActivity.runOnUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
+                        }
+                    });
+                }
+            });
 
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        Log.d("TAG", "onPrepareLoad" + finalI);
-                    }
-                });
-            }
+            t.start();
+
+
+
         } else {
             Log.e(TAG, "getArguments() is error");
             showMessage(getString(R.string.data_error));
