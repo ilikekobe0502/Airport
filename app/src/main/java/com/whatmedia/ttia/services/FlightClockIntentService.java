@@ -2,6 +2,7 @@ package com.whatmedia.ttia.services;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
@@ -10,6 +11,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.page.main.MainActivity;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.data.ClockData;
 import com.whatmedia.ttia.response.GetClockDataResponse;
@@ -49,6 +51,7 @@ public class FlightClockIntentService extends IntentService {
 
             FlightsInfoData flightsInfoData = getFlightsInfo(intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA));
 
+            //Notification message
             Notification.Builder builder = new Notification.Builder(this);
             builder.setContentTitle(getString(R.string.title_flight_notify))
                     .setContentText(getString(R.string.my_flights_notify_message,
@@ -57,7 +60,13 @@ public class FlightClockIntentService extends IntentService {
                             !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
                             !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
                     .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setSmallIcon(R.drawable.home_02);
+                    .setSmallIcon(R.drawable.home_02)
+                    .setAutoCancel(true);
+
+            //Click intent
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP), PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(contentIntent);
 
             Notification notificationCompat = builder.build();
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);

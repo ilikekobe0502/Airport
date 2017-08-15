@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         setMarqueeHomeState();
 
+        Page.clearBackStack(MainActivity.this);
         Page.setBackStackChangedListener(this, this);
         addFragment(Page.TAG_HOME, null, false);
 
