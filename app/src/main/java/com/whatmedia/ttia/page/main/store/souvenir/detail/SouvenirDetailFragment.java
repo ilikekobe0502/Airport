@@ -4,6 +4,7 @@ package com.whatmedia.ttia.page.main.store.souvenir.detail;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
+import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 
@@ -48,6 +50,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
     private String textTime;
     private String textPhone;
     private String textDes;
+    private String textName;
     private int mRadius;
 
     public SouvenirDetailFragment() {
@@ -79,6 +82,8 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
                     getArguments().get(SouvenirDetailContract.TEXT_PHONE).toString():"";
             textDes = getArguments().containsKey(SouvenirDetailContract.TEXT_DES)?
                     getArguments().get(SouvenirDetailContract.TEXT_DES).toString():"";
+            textName = getArguments().containsKey(SouvenirDetailContract.TEXT_NAME)?
+                    getArguments().get(SouvenirDetailContract.TEXT_NAME).toString():"";
         }
         mRadius = getResources().getDimensionPixelSize(R.dimen.dp_pixel_8);
     }
@@ -99,6 +104,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         mTextTime.setText(textTime);
         mTextPrice.setText(textPrice);
         mTextDes.setText(textDes);
+        init();
         mLoadingView.goneLoadingView();
 
         return view;
@@ -135,6 +141,23 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public void init(){
+        mMainActivity.getMyToolbar().clearState()
+                .setTitleText(textName)
+                .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
+                .setBackVisibility(View.VISIBLE)
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.imageView_back:
+                                mMainActivity.backPress();
+                                break;
+                        }
+                    }
+                });
     }
 
 }

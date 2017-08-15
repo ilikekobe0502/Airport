@@ -9,6 +9,7 @@ public interface SouvenirDetailContract {
     String TEXT_TIME = "text_time";
     String TEXT_PHONE = "text_phone";
     String TEXT_DES = "text_des";
+    String TEXT_NAME ="text_name";
 
     interface View {
     }

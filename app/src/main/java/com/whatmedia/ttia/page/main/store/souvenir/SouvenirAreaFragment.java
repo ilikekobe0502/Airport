@@ -121,6 +121,7 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
         bundle.putString(SouvenirDetailContract.TEXT_TIME,getString(R.string.souvenir_detail_time)+data.getOpenTime()+"-"+data.getCloseTime());
         bundle.putString(SouvenirDetailContract.TEXT_PHONE,getString(R.string.souvenir_detail_phone)+data.getTel());
         bundle.putString(SouvenirDetailContract.TEXT_DES,data.getContent());
+        bundle.putString(SouvenirDetailContract.TEXT_NAME,data.getName());
         mMainActivity.addFragment(Page.TAG_SOUVENIR_DETAIL,bundle,true);
     }
 
@@ -131,11 +132,6 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
             public void run() {
                 mList = list;
                 mLoadingView.goneLoadingView();
-                list.add(list.get(0));
-                list.add(list.get(0));
-                list.add(list.get(0));
-                list.add(list.get(0));
-                list.add(list.get(0));
                 mAdapter.setmItems(list);
                 mAdapter.notifyDataSetChanged();
             }
