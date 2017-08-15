@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.QuestionnaireData;
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View{
+public class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View , IOnItemClickListener {
 
     @BindView(R.id.layout_recycler_view)
     RecyclerView mRecyclerView;
@@ -64,6 +65,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
         mQuestionnaireRecyclerViewAdapter = new QuestionnaireRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mQuestionnaireRecyclerViewAdapter);
+        mQuestionnaireRecyclerViewAdapter.setClickListener(this);
 
         mButtonSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,4 +133,9 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
 
     }
 
+    @Override
+    public void onClick(View view) {
+        mLoadingView.showLoadingView();
+        mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
+    }
 }

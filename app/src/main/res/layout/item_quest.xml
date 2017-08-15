@@ -145,6 +145,32 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/view_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_delete"
+            android:layout_width="@dimen/dp_pixel_60"
+            android:layout_height="@dimen/dp_pixel_40"
+            android:layout_centerInParent="true"
+            android:background="@drawable/but_bg_mdpi"
+            android:layout_marginTop="@dimen/dp_pixel_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/useful_quest_send"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_15" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
 
 
 </LinearLayout>
