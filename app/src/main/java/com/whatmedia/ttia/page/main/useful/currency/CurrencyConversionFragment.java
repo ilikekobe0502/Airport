@@ -11,16 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.component.dialog.MyCurrencyConversionDialog;
 import com.whatmedia.ttia.enums.ExchangeRate;
-import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +42,12 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     TextView mTextViewTargetAmount;
     @BindView(R.id.layout_translate)
     RelativeLayout mLayoutTranslate;
+    @BindView(R.id.layout_ok)
+    RelativeLayout mLayoutOk;
+    @BindView(R.id.number_picker_left)
+    NumberPicker mNumberPickerLeft;
+    @BindView(R.id.layout_selector)
+    RelativeLayout mLayoutSelector;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -144,39 +150,33 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
         });
     }
 
-    @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_translate})
+    @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_translate, R.id.layout_ok})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_source_icon:
-                MyCurrencyConversionDialog dialog = MyCurrencyConversionDialog.newInstance()
-                        .clearData()
-                        .setTitle(getString(R.string.currency_conversion_dialog_title))
-                        .setItemClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ExchangeRate rate = (ExchangeRate) view.getTag();
-                                setSourceState(rate);
-                            }
-                        });
-                dialog.show(getActivity().getFragmentManager(), "dialog");
+                if (mLayoutSelector.isShown())
+                    mLayoutSelector.setVisibility(View.GONE);
+                else {
+                    mLayoutSelector.setVisibility(View.VISIBLE);
+                    setPicker(true);
+                }
                 break;
             case R.id.editText_source_amount:
                 break;
             case R.id.imageView_target_icon:
-                dialog = MyCurrencyConversionDialog.newInstance()
-                        .clearData()
-                        .setTitle(getString(R.string.currency_conversion_dialog_title))
-                        .setItemClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ExchangeRate rate = (ExchangeRate) view.getTag();
-                                setTargetState(rate);
-                            }
-                        });
-                dialog.show(getActivity().getFragmentManager(), "dialog");
+                if (mLayoutSelector.isShown())
+                    mLayoutSelector.setVisibility(View.GONE);
+                else {
+                    mLayoutSelector.setVisibility(View.VISIBLE);
+                    setPicker(false);
+                }
                 break;
             case R.id.layout_translate:
+                mLayoutSelector.setVisibility(View.GONE);
                 getTransAPI();
+                break;
+            case R.id.layout_ok:
+                mLayoutSelector.setVisibility(View.GONE);
                 break;
         }
     }
@@ -219,5 +219,56 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     private void setTargetState(ExchangeRate rate) {
         mImageViewTargetIcon.setBackground(ContextCompat.getDrawable(getContext(), ExchangeRate.getItemByTag(rate).getIcon()));
         mTextViewTargetCode.setText(getString(ExchangeRate.getItemByTag(rate).getTitle()));
+    }
+
+    /**
+     * set Left picker
+     *
+     * @param source
+     */
+    private void setPicker(final boolean source) {
+        String[] data = getContext().getResources().getStringArray(R.array.rateexchange_array);
+        Util.setNumberPickerTextColor(mNumberPickerLeft, ContextCompat.getColor(getContext(), android.R.color.white));
+        mNumberPickerLeft.setMinValue(0);
+        mNumberPickerLeft.setMaxValue(data.length - 1);
+        mNumberPickerLeft.setWrapSelectorWheel(false);
+        mNumberPickerLeft.setDisplayedValues(data);
+        mNumberPickerLeft.setValue(0);
+        if (source) {
+            setSourceState(0);
+        } else {
+            setTargetState(0);
+        }
+        mNumberPickerLeft.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                Log.d("TAG", "old = " + oldVal + " new = " + newVal);
+                if (source) {
+                    setSourceState(newVal);
+                } else {
+                    setTargetState(newVal);
+                }
+            }
+        });
+    }
+
+    /**
+     * Set source state
+     *
+     * @param position
+     */
+    private void setSourceState(int position) {
+        ExchangeRate rate = ExchangeRate.getItemByPosition(position);
+        setSourceState(rate);
+    }
+
+    /**
+     * Set target state
+     *
+     * @param position
+     */
+    private void setTargetState(int position) {
+        ExchangeRate rate = ExchangeRate.getItemByPosition(position);
+        setTargetState(rate);
     }
 }

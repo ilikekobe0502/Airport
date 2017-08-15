@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_bg"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/layout_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_152"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_ok"
+            android:layout_width="@dimen/dp_pixel_60"
+            android:layout_height="@dimen/dp_pixel_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:layout_marginTop="@dimen/dp_pixel_10"
+            android:background="@drawable/but_bg_mdpi">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/ok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_15" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_ok"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <NumberPicker
+                android:id="@+id/number_picker_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <NumberPicker
+                android:id="@+id/number_picker_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

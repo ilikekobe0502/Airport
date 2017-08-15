@@ -8,11 +8,14 @@ import android.graphics.Bitmap;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
@@ -25,6 +28,7 @@ import com.whatmedia.ttia.response.data.ClockTimeData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.services.FlightClockBroadcast;
 
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -333,7 +337,7 @@ public class Util {
                         .append(" ")
                         .append(!TextUtils.isEmpty(item.getAirLineCName()) ? item.getAirLineCName().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE)?context.getString(R.string.marquee_arrive):context.getString(R.string.marquee_dexxxxx) : "")
+                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE) ? context.getString(R.string.marquee_arrive) : context.getString(R.string.marquee_dexxxxx) : "")
                         .append(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "")
                         .append(" ")
                         .append(context.getString(R.string.marquee_ecpected_time))
@@ -351,10 +355,10 @@ public class Util {
                         .append(context.getString(R.string.marquee_gate))
                         .append(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE)?context.getString(R.string.marquee_luggage):context.getString(R.string.marquee_gt) : "")
-                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE)?
-                                !TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "":
-                                !TextUtils.isEmpty(item.getCounter()) ? item.getCounter().trim() : "":"");
+                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE) ? context.getString(R.string.marquee_luggage) : context.getString(R.string.marquee_gt) : "")
+                        .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE) ?
+                                !TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "" :
+                                !TextUtils.isEmpty(item.getCounter()) ? item.getCounter().trim() : "" : "");
 
 
             }
@@ -362,7 +366,7 @@ public class Util {
         if (marqueeSubMessage.length() == 0) {
             marqueeSubMessage.append(context.getString(R.string.marquee_default_end_message));
         }
-        Log.e("Ian",marqueeSubMessage.toString());
+        Log.e("Ian", marqueeSubMessage.toString());
         return marqueeSubMessage.toString();
     }
 
@@ -397,38 +401,40 @@ public class Util {
     }
 
     /**
-     *  Bitmap放大的方法  height(想放大的高度) width(想放大的寬度)
+     * Bitmap放大的方法  height(想放大的高度) width(想放大的寬度)
+     *
      * @param bitmap
      * @param height
      * @param width
      * @return
      */
-    public static Bitmap setBitmapScale(Bitmap bitmap,int height,int width) {
+    public static Bitmap setBitmapScale(Bitmap bitmap, int height, int width) {
 
         int bitmapHeight = bitmap.getHeight();
         int bitmapWidth = bitmap.getWidth();
 
-        if(bitmapHeight <= 0 || bitmapWidth <= 0){
+        if (bitmapHeight <= 0 || bitmapWidth <= 0) {
             return bitmap;
         }
 
         Matrix matrix = new Matrix();
-        float scaleWidth = ((float) width<=0?bitmapWidth:width) / bitmapWidth;
-        float scaleHeight = ((float) height<=0?bitmapHeight:height) / bitmapHeight;
+        float scaleWidth = ((float) width <= 0 ? bitmapWidth : width) / bitmapWidth;
+        float scaleHeight = ((float) height <= 0 ? bitmapHeight : height) / bitmapHeight;
 
         matrix.postScale(scaleWidth, scaleHeight); //長寬比例
 
-        Log.e("Ian","bitmap.getWidth():"+bitmapWidth+", bitmap.getHeight():"+bitmapHeight+", height:"+height+", width:"+width);
+        Log.e("Ian", "bitmap.getWidth():" + bitmapWidth + ", bitmap.getHeight():" + bitmapHeight + ", height:" + height + ", width:" + width);
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
         return resizeBmp;
     }
 
     /**
      * 取得 deviceId
+     *
      * @param context
      * @return
      */
-    public static String getDeviceId(Context context){
+    public static String getDeviceId(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
     }
@@ -573,5 +579,37 @@ public class Util {
                 }
             }
         }
+    }
+
+    /**
+     * Set NumberPicker Text color
+     *
+     * @param numberPicker
+     * @param color
+     * @return
+     */
+    public static boolean setNumberPickerTextColor(NumberPicker numberPicker, int color) {
+        final int count = numberPicker.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = numberPicker.getChildAt(i);
+            if (child instanceof EditText) {
+                try {
+                    Field selectorWheelPaintField = numberPicker.getClass()
+                            .getDeclaredField("mSelectorWheelPaint");
+                    selectorWheelPaintField.setAccessible(true);
+                    ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
+                    ((EditText) child).setTextColor(color);
+                    numberPicker.invalidate();
+                    return true;
+                } catch (NoSuchFieldException e) {
+                    Log.w("TAG", "NoSuchFieldException " + e.toString());
+                } catch (IllegalAccessException e) {
+                    Log.w("TAG", "setNumberPickerTextColor" + e);
+                } catch (IllegalArgumentException e) {
+                    Log.w("TAG", "setNumberPickerTextColor" + e);
+                }
+            }
+        }
+        return false;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/all_bg">
 
@@ -8,35 +8,38 @@
         android:id="@+id/text_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_24"
         android:layout_marginTop="@dimen/dp_pixel_70"
         android:gravity="center|bottom"
-        android:text="台北"/>
+        android:text="台北"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_24" />
 
     <TextView
         android:id="@+id/text_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_24"
-        android:gravity="center"
+        android:layout_below="@+id/text_city"
         android:layout_marginTop="@dimen/dp_pixel_20"
-        android:text="2017/06/26"/>
+        android:gravity="center"
+        android:text="2017/06/26"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_24" />
 
     <TextView
         android:id="@+id/text_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:layout_below="@+id/text_date"
         android:layout_marginTop="@dimen/dp_pixel_20"
-        android:textSize="@dimen/sp_pixel_48"
         android:gravity="center"
-        android:text="18:29:18"/>
+        android:text="18:29:18"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_48" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/text_time">
 
         <ImageView
             android:id="@+id/clock_bg"
@@ -44,20 +47,65 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/dp_pixel_50"
-            android:src="@drawable/clock_bg"/>
+            android:src="@drawable/clock_bg" />
 
         <com.whatmedia.ttia.component.ClockView
             android:id="@+id/clockview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignBottom="@+id/clock_bg"
             android:layout_alignLeft="@+id/clock_bg"
             android:layout_alignRight="@+id/clock_bg"
-            android:layout_alignBottom="@+id/clock_bg"
             android:layout_alignTop="@+id/clock_bg"
-            />
+            android:layout_centerInParent="true" />
 
 
     </RelativeLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layout_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_152"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_ok"
+            android:layout_width="@dimen/dp_pixel_60"
+            android:layout_height="@dimen/dp_pixel_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:layout_marginTop="@dimen/dp_pixel_10"
+            android:background="@drawable/but_bg_mdpi">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/ok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_15" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_ok"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <NumberPicker
+                android:id="@+id/number_picker_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <NumberPicker
+                android:id="@+id/number_picker_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
