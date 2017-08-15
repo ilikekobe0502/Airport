@@ -589,4 +589,16 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
+    /**
+     * 取得紀念品資訊
+     * @param callback
+     */
+    public static void getSouvenirList(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Souvenir")
+                .newBuilder()
+                .addQueryParameter("lan", mLocale)
+                .build();
+        getApi(url, callback);
+    }
 }

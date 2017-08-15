@@ -32,6 +32,8 @@ import com.whatmedia.ttia.page.main.secretary.emergency.AirportEmergencyFragment
 import com.whatmedia.ttia.page.main.secretary.news.AirportUserNewsFragment;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyFragment;
 import com.whatmedia.ttia.page.main.store.StoreOffersFragment;
+import com.whatmedia.ttia.page.main.store.souvenir.SouvenirAreaFragment;
+import com.whatmedia.ttia.page.main.store.souvenir.detail.SouvenirDetailFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.detail.FacilityDetailFragment;
 import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoFragment;
@@ -101,6 +103,8 @@ public class Page {
     public static final int TAG_AIRPORT_SWEET_DETAIL = 1407;
 
     public static final int TAG_STORE_OFFERS = 1501;
+    public static final int TAG_SOUVENIR_AREA = 1502;
+    public static final int TAG_SOUVENIR_DETAIL = 1503;
 
     public static final int TAG_COMMUNICATION_SERVICE = 1601;
 
@@ -281,6 +285,10 @@ public class Page {
                 return new RoamingDetailFragment().newInstance();
             case TAG_LANGUAGE_SETTING:
                 return new LanguageSettingFragment().newInstance();
+            case TAG_SOUVENIR_AREA:
+                return new SouvenirAreaFragment().newInstance();
+            case TAG_SOUVENIR_DETAIL:
+                return new SouvenirDetailFragment().newInstance();
         }
 
         return null;

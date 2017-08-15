@@ -697,4 +697,10 @@
 
     <string name="store_terminal_1">T1</string>
     <string name="store_terminal_2">T2</string>
+
+    <!-- SouvenirArea -->
+    <string name="souvenir_button_des">DESC。</string>
+    <string name="souvenir_detail_address">アドレス：</string>
+    <string name="souvenir_detail_time">営業時間：</string>
+    <string name="souvenir_detail_phone">電話番号：</string>
 </resources>

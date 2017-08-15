@@ -772,4 +772,10 @@
 
     <string name="store_terminal_1">1航</string>
     <string name="store_terminal_2">2航</string>
+
+    <!-- SouvenirArea -->
+    <string name="souvenir_button_des">商品說明</string>
+    <string name="souvenir_detail_address">地址：</string>
+    <string name="souvenir_detail_time">營業時間：</string>
+    <string name="souvenir_detail_phone">電話：</string>
 </resources>
