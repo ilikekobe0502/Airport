@@ -125,6 +125,15 @@ public class MyToolbar extends RelativeLayout {
         return this;
     }
 
+    public MyToolbar setBackIcon(Drawable drawable) {
+        if (drawable != null) {
+            mImageViewBack.setVisibility(VISIBLE);
+            mImageViewBack.setBackground(drawable);
+        } else
+            mImageViewBack.setVisibility(GONE);
+        return this;
+    }
+
     public MyToolbar setMoreLayoutVisibility(int visibility) {
         mLayoutRight.setVisibility(visibility);
         return this;
@@ -177,6 +186,7 @@ public class MyToolbar extends RelativeLayout {
         mImageViewMore.setVisibility(GONE);
         mLayoutMore.setVisibility(GONE);
         mImageViewBack.setVisibility(GONE);
+        mImageViewBack.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.back));
         mImageViewRightSingle.setVisibility(GONE);
         mLayoutArea.setVisibility(GONE);
         mLayoutRight.setVisibility(VISIBLE);

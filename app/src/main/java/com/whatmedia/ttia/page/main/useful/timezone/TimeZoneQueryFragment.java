@@ -12,20 +12,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.ClockView;
 import com.whatmedia.ttia.component.MyToolbar;
-import com.whatmedia.ttia.component.dialog.MyWeatherDialog;
-import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQueryContract.View {
 
@@ -41,6 +44,14 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     ClockView mClockView;
 
     private static final int RUNNING = 1000;
+    @BindView(R.id.layout_ok)
+    RelativeLayout mLayoutOk;
+    @BindView(R.id.number_picker_left)
+    NumberPicker mNumberPickerLeft;
+    @BindView(R.id.number_picker_right)
+    NumberPicker mNumberPickerRight;
+    @BindView(R.id.layout_selector)
+    RelativeLayout mLayoutSelector;
 
 
     private IActivityTools.ILoadingView mLoadingView;
@@ -86,7 +97,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         mPresenter = TimeZoneQueryPresenter.getInstance(getContext(), this);
 
         Calendar c = Calendar.getInstance();
-        c.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + mTimeStamp));
+        c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -162,7 +173,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 //                    mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
 
                     Calendar c = Calendar.getInstance();
-                    c.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + mTimeStamp));
+                    c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
 //                    long sysTime = c.getTimeInMillis();
 //                    CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
 //                    mTextTime.setText(sysTimeStr);
@@ -202,6 +213,12 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         }
     };
 
+    @OnClick(R.id.layout_ok)
+    public void onClick() {
+        mLayoutSelector.setVisibility(View.GONE);
+        setClock();
+    }
+
     public class TimeThread extends Thread {
         @Override
         public void run() {
@@ -227,35 +244,12 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                 .setOnAreaClickListener(new MyToolbar.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyWeatherDialog dialog = new MyWeatherDialog()
-                                .setTitle(getString(R.string.timezone_other_area_dialog_title))
-                                .setItemClickListener(new IOnItemClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if (view.getTag() != null && view.getTag() instanceof Integer) {
-                                            mRegion = (int) view.getTag();
-                                            MyWeatherDialog dialog = MyWeatherDialog.newInstance()
-                                                    .setTitle(getString(R.string.timezone_other_area_dialog_title))
-                                                    .setRegion((Integer) view.getTag()).setItemClickListener(new IOnItemClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            if (view.getTag() != null && view.getTag() instanceof Integer) {
-                                                                mCountry = (int) view.getTag();
-                                                                switchRegion();
-                                                            } else {
-                                                                Log.e(TAG, "view.getTag() is error");
-                                                                showMessage(getString(R.string.data_error));
-                                                            }
-                                                        }
-                                                    });
-                                            dialog.show(getActivity().getFragmentManager(), "dialog");
-                                        } else {
-                                            Log.e(TAG, "view.getTag() is error");
-                                            showMessage(getString(R.string.data_error));
-                                        }
-                                    }
-                                });
-                        dialog.show(getActivity().getFragmentManager(), "dialog");
+                        if (mLayoutSelector.isShown()) {
+                            mLayoutSelector.setVisibility(View.GONE);
+                        } else {
+                            mLayoutSelector.setVisibility(View.VISIBLE);
+                            initLeftPicker();
+                        }
                     }
                 })
                 .setAreaLayoutVisibility(View.VISIBLE)
@@ -272,32 +266,33 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                 });
     }
 
-    boolean a = false;
-
-    private void switchRegion() {
+    private String[] switchRegion() {
         switch (mRegion) {
             case 0:
                 mCodeArray = getResources().getStringArray(R.array.weather_taiwan_time_stamp_array);
-                mItems = getResources().getStringArray(R.array.weather_taiwan_city_array);
-                break;
+                return mItems = getResources().getStringArray(R.array.weather_taiwan_city_array);
+
             case 1:
                 mCodeArray = getResources().getStringArray(R.array.weather_asia_time_stamp_array);
-                mItems = getResources().getStringArray(R.array.weather_asia_oceania_city_array);
-                break;
+                return mItems = getResources().getStringArray(R.array.weather_asia_oceania_city_array);
+
             case 2:
                 mCodeArray = getResources().getStringArray(R.array.weather_america_time_stamp_array);
-                mItems = getResources().getStringArray(R.array.weather_america_city_array);
-                break;
+                return mItems = getResources().getStringArray(R.array.weather_america_city_array);
+
             case 3:
                 mCodeArray = getResources().getStringArray(R.array.weather_eurpo_time_stamp_array);
-                mItems = getResources().getStringArray(R.array.weather_eurpo_city_array);
-                break;
+                return mItems = getResources().getStringArray(R.array.weather_eurpo_city_array);
+
             case 4:
                 mCodeArray = getResources().getStringArray(R.array.weather_china_time_stamp_array);
-                mItems = getResources().getStringArray(R.array.weather_china_city_array);
-                break;
+                return mItems = getResources().getStringArray(R.array.weather_china_city_array);
+            default:
+                return new String[0];
         }
+    }
 
+    private void setClock() {
         if (mCodeArray.length > mCountry && mItems.length > mCountry) {
             Log.d(TAG, "switchRegion():" + mCodeArray[mCountry] + mItems[mCountry]);
         } else {
@@ -311,7 +306,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         mTimeStamp = mCodeArray[mCountry];
 
         Calendar c = Calendar.getInstance();
-        c.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + mTimeStamp));
+        c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
@@ -329,4 +324,54 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         }
         mTextDate.setText(year + "/" + monthtext + "/" + dattext);
     }
+
+    /**
+     * set Left picker
+     */
+    private void initLeftPicker() {
+        String[] data = getContext().getResources().getStringArray(R.array.weather_region_array);
+        Util.setNumberPickerTextColor(mNumberPickerLeft, ContextCompat.getColor(getContext(), android.R.color.white));
+        mNumberPickerLeft.setMinValue(0);
+        mNumberPickerLeft.setMaxValue(data.length - 1);
+        mNumberPickerLeft.setWrapSelectorWheel(false);
+        mNumberPickerLeft.setDisplayedValues(data);
+        mNumberPickerLeft.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                Log.d("TAG", "old = " + oldVal + " new = " + newVal);
+                mRegion = newVal;
+                setRightPicker();
+            }
+        });
+
+        setRightPicker();
+    }
+
+    /**
+     * Set Right picker
+     */
+    private void setRightPicker() {
+        switchRegion();
+        String[] data = mItems;
+        Util.setNumberPickerTextColor(mNumberPickerRight, ContextCompat.getColor(getContext(), android.R.color.white));
+        mNumberPickerRight.setMinValue(0);
+        mNumberPickerRight.setMaxValue(0);
+        try {
+            mNumberPickerRight.setDisplayedValues(data);
+        } catch (Exception e) {
+            Log.e(TAG, "[mNumberPickerRight.setDisplayedValues(data) error ] " + e.toString());
+        }
+        mNumberPickerRight.setMaxValue(data.length - 1);
+        mNumberPickerRight.setWrapSelectorWheel(false);
+        mNumberPickerRight.setValue(0);
+        mNumberPickerRight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                Log.d("TAG", "old = " + oldVal + " new = " + newVal);
+                mCountry = newVal;
+            }
+        });
+    }
+
+
 }

@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -47,6 +47,8 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     ImageView mImageViewUp;
     @BindView(R.id.imageView_down)
     ImageView mImageViewDown;
+    @BindView(R.id.textView_now)
+    TextView mTextViewNow;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -111,6 +113,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
             setImageState(mQueryType);
         }
         mTextViewLast.setText(mLastShowDate);
+        mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
@@ -206,7 +209,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
 
     }
 
-    @OnClick({R.id.imageView_up, R.id.imageView_down, R.id.textView_last, R.id.textView_next})
+    @OnClick({R.id.imageView_up, R.id.imageView_down, R.id.textView_last, R.id.textView_next, R.id.textView_now})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_up:
@@ -220,32 +223,38 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 setImageState(mQueryType);
                 break;
             case R.id.textView_last:
-                if (TextUtils.equals(mTextViewLast.getText().toString(), mNowShowDate)) {
-                    mTextViewLast.setText(mLastShowDate);
-                    mQueryDate = mNowDate;
-                    mShowDate = mNowShowDate;
-                } else {
-                    mTextViewLast.setText(mNowShowDate);
-                    mQueryDate = mLastDate;
-                    mShowDate = mLastShowDate;
-                }
-                mTextViewNext.setText(mNextShowDate);
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
+                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
 
-                mMainActivity.getMyToolbar().setTitleText(mShowDate);
+                mQueryDate = mLastDate;
+                mShowDate = mLastShowDate;
+                getFlight();
+                break;
+            case R.id.textView_now:
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
+                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mQueryDate = mNowDate;
+                mShowDate = mNowShowDate;
                 getFlight();
                 break;
             case R.id.textView_next:
-                if (TextUtils.equals(mTextViewNext.getText().toString(), mNowShowDate)) {
-                    mTextViewNext.setText(mNextShowDate);
-                    mQueryDate = mNowDate;
-                    mShowDate = mNowShowDate;
-                } else {
-                    mTextViewNext.setText(mNowShowDate);
-                    mQueryDate = mNextDate;
-                    mShowDate = mNextShowDate;
-                }
-                mTextViewLast.setText(mLastShowDate);
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
+                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
 
+                mQueryDate = mNextDate;
+                mShowDate = mNextShowDate;
                 getFlight();
                 break;
             case R.id.layout_frame:

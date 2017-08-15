@@ -179,8 +179,8 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
                         case HomeParkingInfoData.TAG_ID_P1:
                             P1.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
                                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50))));
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
 
                             mMap.addMarker(P1).setTag(mParkingDetailList.get(i));
                             mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
@@ -188,24 +188,24 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
                         case HomeParkingInfoData.TAG_ID_P2:
                             P2.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
                                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50))));
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
                             mMap.addMarker(P2).setTag(mParkingDetailList.get(i));
                             mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
                             break;
                         case HomeParkingInfoData.TAG_ID_P3:
                             P4_B1.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
                                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50))));
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
                             mMap.addMarker(P4_B1).setTag(mParkingDetailList.get(i));
                             mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
                             break;
                         case HomeParkingInfoData.TAG_ID_P4:
                             P4_1F.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
                                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_50))));
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
                             mMap.addMarker(P4_1F).setTag(mParkingDetailList.get(i));
                             mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
                             break;

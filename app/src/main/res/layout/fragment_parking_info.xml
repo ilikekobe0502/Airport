@@ -27,8 +27,8 @@
             android:paddingRight="@dimen/dp_pixel_40">
 
             <ImageView
-                android:layout_width="@dimen/dp_pixel_40"
-                android:layout_height="@dimen/dp_pixel_40"
+                android:layout_width="@dimen/dp_pixel_30"
+                android:layout_height="@dimen/dp_pixel_37"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dp_pixel_8"
                 android:background="@drawable/parking_info_04_01_01"
@@ -52,8 +52,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="@dimen/dp_pixel_40"
-                android:layout_height="@dimen/dp_pixel_40"
+                android:layout_width="@dimen/dp_pixel_30"
+                android:layout_height="@dimen/dp_pixel_37"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dp_pixel_8"
                 android:background="@drawable/parking_info_04_01_02_1"
@@ -77,8 +77,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="@dimen/dp_pixel_40"
-                android:layout_height="@dimen/dp_pixel_40"
+                android:layout_width="@dimen/dp_pixel_30"
+                android:layout_height="@dimen/dp_pixel_37"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dp_pixel_8"
                 android:background="@drawable/parking_info_04_01_03_1"

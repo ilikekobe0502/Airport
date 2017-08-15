@@ -1,6 +1,8 @@
 package com.whatmedia.ttia.component.dialog;
 
 import android.app.DialogFragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,6 +66,7 @@ public class MyStoreDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_store_my_dialog, container);
         ButterKnife.bind(this, view);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return view;
     }
 
