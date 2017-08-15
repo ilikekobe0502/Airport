@@ -93,47 +93,26 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i < imageList.size(); i++) {
+                    try {
+                        mBitmaps[0] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(0))
+                                .config(Bitmap.Config.ARGB_4444)
+                                .resize(width,height)
+                                .priority(Picasso.Priority.HIGH)
+                                .get();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    for (int i = 1; i < imageList.size(); i++) {
                         try {
                             mBitmaps[i] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i))
                                     .config(Bitmap.Config.ARGB_4444)
-                                    .resize(width,height)
+//                                    .resize(width,height)
                                     .priority(Picasso.Priority.HIGH)
                                     .get();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-//                final int finalI = i;
-//                Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i))
-//                        .config(Bitmap.Config.ARGB_4444)
-//                        .resize(width,height)
-//                        .priority(Picasso.Priority.HIGH)
-//                        .into(new Target() {
-//                            @Override
-//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//
-//                                mBitmaps[finalI] = bitmap;
-//                                if (mBitmaps[0] != null && mBitmaps[1] != null && mBitmaps[2] != null) {
-////                            for (int i = 0; i < mBitmaps.length; i++) {
-////                                mBitmaps[i] = Util.setBitmapScale(mBitmaps[i],mImagePicture.getHeight()/3,mImagePicture.getWidth());
-////                            }
-//                                    mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
-//                                }
-//                                Log.d("TAG", "onBitmapLoaded" + finalI);
-//                            }
-//
-//                            @Override
-//                            public void onBitmapFailed(Drawable errorDrawable) {
-//                                Log.d("TAG", "onBitmapFailed" + finalI);
-//                            }
-//
-//                            @Override
-//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-//                                Log.d("TAG", "onPrepareLoad" + finalI);
-//                            }
-//                        });
                     }
-
                     mMainActivity.runOnUI(new Runnable() {
                         @Override
                         public void run() {
