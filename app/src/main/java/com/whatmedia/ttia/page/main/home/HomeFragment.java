@@ -134,6 +134,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 case TAG_INDOOR_MAP://室內地圖導航
                     break;
                 case TAG_AIRPORT_ACHIEVEMENT://機場成就
+                    mMainActivity.addFragment(Page.TAG_ACHIEVEMENT,null,true);
                     break;
             }
         } else {

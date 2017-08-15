@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.page.main.Achievement.AchievementFragment;
+import com.whatmedia.ttia.page.main.Achievement.Detail.AchievementDetailFragment;
 import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
 import com.whatmedia.ttia.page.main.communication.emergency.EmergencyCallFragment;
 import com.whatmedia.ttia.page.main.communication.international.InternationalCallFragment;
@@ -122,6 +124,9 @@ public class Page {
     public static final int TAG_COMMUNICATION_EMERGENCY_CALL = 3002;
     public static final int TAG_COMMUNICATION_ROAMING_SERVICE =3003;
     public static final int TAG_COMMUNICATION_ROAMING_DETAIL =3004;
+
+    public static final int TAG_ACHIEVEMENT = 4000;
+    public static final int TAG_ACHIEVEMENT_DETAIL = 4001;
 
     /**
      * Switch AirportEmergencyFragment
@@ -289,6 +294,11 @@ public class Page {
                 return new SouvenirAreaFragment().newInstance();
             case TAG_SOUVENIR_DETAIL:
                 return new SouvenirDetailFragment().newInstance();
+            case TAG_ACHIEVEMENT:
+                return new AchievementFragment().newInstance();
+            case TAG_ACHIEVEMENT_DETAIL:
+                return new AchievementDetailFragment().newInstance();
+
         }
 
         return null;

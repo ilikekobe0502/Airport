@@ -601,4 +601,19 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
+    /**
+     * 取得機場成就
+     * @param callback
+     */
+    public static void getAchievementList(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Achievement")
+                .newBuilder()
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("lan", mLocale)
+                .build();
+        getApi(url, callback);
+    }
 }

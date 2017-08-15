@@ -20,6 +20,8 @@ import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.Achievement.AchievementFragment;
+import com.whatmedia.ttia.page.main.Achievement.Detail.AchievementDetailFragment;
 import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
 import com.whatmedia.ttia.page.main.communication.emergency.EmergencyCallFragment;
 import com.whatmedia.ttia.page.main.communication.international.InternationalCallFragment;
@@ -788,6 +790,21 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof SouvenirAreaFragment) {//紀念品專區
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_souvenirs))
+                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setBackVisibility(View.VISIBLE)
+                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.imageView_back:
+                                        backPress();
+                                        break;
+                                }
+                            }
+                        });
+            } else if (fragment instanceof AchievementFragment || fragment instanceof AchievementDetailFragment) {//紀念品專區
+                mMyToolbar.clearState()
+                        .setTitleText(getString(R.string.home_airport_achievement_title))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
