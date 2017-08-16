@@ -686,6 +686,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                             public void onClick(View v) {
                                 switch (v.getId()) {
                                     case R.id.imageView_back:
+                                        Util.hideSoftKeyboard(v);
                                         backPress();
                                         break;
                                 }
