@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/all_bg">
+
+    <ImageView
+        android:id="@+id/image_icon"
+        android:layout_width="@dimen/dp_pixel_223"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_pixel_25"/>
+
+    <TextView
+        android:id="@+id/text_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffff00"
+        android:textSize="@dimen/sp_pixel_13"
+        android:layout_below="@+id/image_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:text="NT$200"/>
+
+    <TextView
+        android:id="@+id/text_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_13"
+        android:layout_below="@+id/text_price"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:text="地址：ＸＸＸＸＸ"/>
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_13"
+        android:layout_below="@+id/text_address"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:text="營業時間:06:00-23:30"/>
+
+    <TextView
+        android:id="@+id/text_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_13"
+        android:layout_below="@+id/text_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:text="電話：0800-055-556"/>
+
+    <TextView
+        android:id="@+id/text_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_13"
+        android:layout_below="@+id/text_phone"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_pixel_15"
+        android:text="商品介紹"/>
+
+
+</RelativeLayout>

@@ -9,26 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.QuestionnaireData;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<QuestionnaireRecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
     private final static String TAG = QuestionnaireRecyclerViewAdapter.class.getSimpleName();
 
     private List<QuestionnaireData> mItems ;
     private Context mContext;
-//    private OnItemClickListener mClickListener;
-
-//    public interface OnItemClickListener {
-//        void OnClick(View view, int score, int position);
-//    }
+    private IOnItemClickListener mListener;
 
     public QuestionnaireRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -114,6 +113,13 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
         holder.mViewScore3.setTag(position);
         holder.mViewScore4.setTag(position);
         holder.mViewScore5.setTag(position);
+
+        if(position == mItems.size()-1){
+            holder.mViewSend.setVisibility(View.VISIBLE);
+        }else{
+            holder.mViewSend.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -121,9 +127,9 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
         return mItems != null ? mItems.size() : 0;
     }
 
-//    public void setOnClickListener(OnItemClickListener listener) {
-//        mClickListener = listener;
-//    }
+    public void setClickListener(IOnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public void setData(List<QuestionnaireData> list){
         mItems = list;
@@ -172,10 +178,19 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
         ImageView mViewScore4;
         @BindView(R.id.img_5)
         ImageView mViewScore5;
+        @BindView(R.id.view_delete)
+        RelativeLayout mViewSend;
+        @BindView(R.id.layout_delete)
+        RelativeLayout mButtonSend;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.layout_delete)
+        public void onViewClicked(View view) {
+            mListener.onClick(view);
         }
 
 

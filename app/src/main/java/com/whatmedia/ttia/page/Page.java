@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.page.main.Achievement.AchievementFragment;
+import com.whatmedia.ttia.page.main.Achievement.Detail.AchievementDetailFragment;
 import com.whatmedia.ttia.page.main.communication.CommunicationFragment;
 import com.whatmedia.ttia.page.main.communication.emergency.EmergencyCallFragment;
 import com.whatmedia.ttia.page.main.communication.international.InternationalCallFragment;
@@ -32,6 +34,8 @@ import com.whatmedia.ttia.page.main.secretary.emergency.AirportEmergencyFragment
 import com.whatmedia.ttia.page.main.secretary.news.AirportUserNewsFragment;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyFragment;
 import com.whatmedia.ttia.page.main.store.StoreOffersFragment;
+import com.whatmedia.ttia.page.main.store.souvenir.SouvenirAreaFragment;
+import com.whatmedia.ttia.page.main.store.souvenir.detail.SouvenirDetailFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.detail.FacilityDetailFragment;
 import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoFragment;
@@ -101,6 +105,8 @@ public class Page {
     public static final int TAG_AIRPORT_SWEET_DETAIL = 1407;
 
     public static final int TAG_STORE_OFFERS = 1501;
+    public static final int TAG_SOUVENIR_AREA = 1502;
+    public static final int TAG_SOUVENIR_DETAIL = 1503;
 
     public static final int TAG_COMMUNICATION_SERVICE = 1601;
 
@@ -118,6 +124,9 @@ public class Page {
     public static final int TAG_COMMUNICATION_EMERGENCY_CALL = 3002;
     public static final int TAG_COMMUNICATION_ROAMING_SERVICE =3003;
     public static final int TAG_COMMUNICATION_ROAMING_DETAIL =3004;
+
+    public static final int TAG_ACHIEVEMENT = 4000;
+    public static final int TAG_ACHIEVEMENT_DETAIL = 4001;
 
     /**
      * Switch AirportEmergencyFragment
@@ -281,6 +290,15 @@ public class Page {
                 return new RoamingDetailFragment().newInstance();
             case TAG_LANGUAGE_SETTING:
                 return new LanguageSettingFragment().newInstance();
+            case TAG_SOUVENIR_AREA:
+                return new SouvenirAreaFragment().newInstance();
+            case TAG_SOUVENIR_DETAIL:
+                return new SouvenirDetailFragment().newInstance();
+            case TAG_ACHIEVEMENT:
+                return new AchievementFragment().newInstance();
+            case TAG_ACHIEVEMENT_DETAIL:
+                return new AchievementDetailFragment().newInstance();
+
         }
 
         return null;

@@ -28,7 +28,8 @@
             android:layout_height="@dimen/dp_pixel_40"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/but_bg_mdpi">
+            android:background="@drawable/but_bg_mdpi"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

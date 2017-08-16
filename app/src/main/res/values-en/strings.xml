@@ -698,4 +698,10 @@
 
     <string name="store_terminal_1">T1</string>
     <string name="store_terminal_2">T2</string>
+
+    <!-- SouvenirArea -->
+    <string name="souvenir_button_des">Product description</string>
+    <string name="souvenir_detail_address">Address：</string>
+    <string name="souvenir_detail_time">Business hours：</string>
+    <string name="souvenir_detail_phone">Phone：</string>
 </resources>
