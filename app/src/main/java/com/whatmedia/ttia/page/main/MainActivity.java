@@ -1,11 +1,18 @@
 package com.whatmedia.ttia.page.main;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -66,6 +73,7 @@ import com.whatmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 import com.whatmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.services.IBeacon;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.Locale;
@@ -76,6 +84,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity implements IActivityTools.ILoadingView, IActivityTools.IMainActivity, FragmentManager.OnBackStackChangedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
 
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     public final static String TAG_DATA = "data";
 
     @BindView(R.id.myToolbar)
@@ -109,6 +118,50 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 addFragment(Page.TAG_HOME, null, false);
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check?
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("This app needs location access");
+                builder.setMessage("Please grant location access so this app can detect beacons.");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    public void onDismiss(DialogInterface dialog) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                        }
+                    }
+                });
+                builder.show();
+            }
+        }
+
+        Intent beacons = new Intent(this, IBeacon.class);
+        startService(beacons);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("MainActivity", "coarse location permission granted");
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to discover beacons when in the background.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                        }
+                    });
+                    builder.show();
+                }
+                return;
+            }
+        }
     }
 
     @Override
