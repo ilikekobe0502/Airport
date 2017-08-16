@@ -4,14 +4,13 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_pixel_163"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/item_souvenir_background"
-        android:orientation="vertical"
         android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
-        android:layout_marginBottom="@dimen/dp_pixel_15">
+        android:background="@drawable/item_souvenir_background"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_icon"
@@ -19,9 +18,10 @@
             android:layout_height="@dimen/dp_pixel_87"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
             android:layout_marginLeft="@dimen/dp_pixel_15"
             android:layout_marginRight="@dimen/dp_pixel_15"
-            android:layout_marginTop="@dimen/dp_pixel_15" />
+            android:layout_marginTop="@dimen/dp_pixel_15"/>
 
         <TextView
             android:id="@+id/text_name"
@@ -61,8 +61,6 @@
             android:text="@string/souvenir_button_des"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_pixel_13" />
-
-
     </RelativeLayout>
 
 

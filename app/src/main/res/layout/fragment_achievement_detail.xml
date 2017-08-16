@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_bg">
+    android:background="@drawable/all_bg"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffff00"
-        android:textSize="@dimen/sp_pixel_16"
-        android:text="2017/02/06"
-        android:gravity="center"
         android:layout_marginTop="@dimen/dp_pixel_20"
-        />
+        android:gravity="center"
+        android:text="2017/02/06"
+        android:textColor="#ffff00"
+        android:textSize="@dimen/sp_pixel_16" />
 
     <TextView
         android:id="@+id/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_18"
-        android:text="這是測試標題"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/dp_pixel_15"
         android:layout_below="@+id/text_date"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:gravity="center"
+        android:text="這是測試標題"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_18" />
 
     <ImageView
         android:id="@+id/image_icon"
@@ -33,18 +33,19 @@
         android:layout_height="@dimen/dp_pixel_145"
         android:layout_below="@+id/text_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_pixel_15"/>
+        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/text_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_16"
-        android:text="這是測試標題"
-        android:gravity="center|left"
-        android:layout_margin="@dimen/dp_pixel_15"
         android:layout_below="@+id/image_icon"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_pixel_15"
+        android:gravity="center|left"
+        android:text="這是測試標題"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_16" />
 
 </RelativeLayout>

@@ -62,7 +62,7 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_store_offer_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_souvenir, container, false);
         ButterKnife.bind(this, view);
 
         mPresenter = SouvenirAreaPresenter.getInstance(getContext(), this);
@@ -115,14 +115,14 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
     public void onClick(View view) {
         SouvenirData data = mList.get(Integer.valueOf(view.getTag().toString()));
         Bundle bundle = new Bundle();
-        bundle.putString(SouvenirDetailContract.IMG_PATH,data.getImgPath());
-        bundle.putString(SouvenirDetailContract.TEXT_PRICE,"NT$"+data.getPrice());
-        bundle.putString(SouvenirDetailContract.TEXT_ADDRESS,getString(R.string.souvenir_detail_address)+data.getTerminalsName()+"-"+data.getFloorId());
-        bundle.putString(SouvenirDetailContract.TEXT_TIME,getString(R.string.souvenir_detail_time)+data.getOpenTime()+"-"+data.getCloseTime());
-        bundle.putString(SouvenirDetailContract.TEXT_PHONE,getString(R.string.souvenir_detail_phone)+data.getTel());
-        bundle.putString(SouvenirDetailContract.TEXT_DES,data.getContent());
-        bundle.putString(SouvenirDetailContract.TEXT_NAME,data.getName());
-        mMainActivity.addFragment(Page.TAG_SOUVENIR_DETAIL,bundle,true);
+        bundle.putString(SouvenirDetailContract.IMG_PATH, data.getImgPath());
+        bundle.putString(SouvenirDetailContract.TEXT_PRICE, "NT$" + data.getPrice());
+        bundle.putString(SouvenirDetailContract.TEXT_ADDRESS, getString(R.string.souvenir_detail_address) + data.getTerminalsName() + "-" + data.getFloorId());
+        bundle.putString(SouvenirDetailContract.TEXT_TIME, getString(R.string.souvenir_detail_time) + data.getOpenTime() + "-" + data.getCloseTime());
+        bundle.putString(SouvenirDetailContract.TEXT_PHONE, getString(R.string.souvenir_detail_phone) + data.getTel());
+        bundle.putString(SouvenirDetailContract.TEXT_DES, data.getContent());
+        bundle.putString(SouvenirDetailContract.TEXT_NAME, data.getName());
+        mMainActivity.addFragment(Page.TAG_SOUVENIR_DETAIL, bundle, true);
     }
 
     @Override
