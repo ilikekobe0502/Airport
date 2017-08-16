@@ -25,6 +25,7 @@ import com.whatmedia.ttia.utility.Util;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,10 +60,13 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     private TimeZoneQueryContract.Presenter mPresenter;
 
     private int mRegion = 0;
-    private int mCountry = 1;
-    private String[] mCodeArray;
+    private int mCountry = 0;
+//    private String[] mCodeArray;
     private String[] mItems;
     private String mTimeStamp = "+8";
+
+    private String[] mCountryName;
+    private String[] mTownName;
 
     public TimeZoneQueryFragment() {
         // Required empty public constructor
@@ -269,32 +273,48 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     private String[] switchRegion() {
         switch (mRegion) {
             case 0:
-                mCodeArray = getResources().getStringArray(R.array.weather_taiwan_time_stamp_array);
-                return mItems = getResources().getStringArray(R.array.weather_taiwan_city_array);
-
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_africa_array);
+//                mCodeArray = getResources().getStringArray(R.array.weather_taiwan_time_stamp_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_africa_array);
             case 1:
-                mCodeArray = getResources().getStringArray(R.array.weather_asia_time_stamp_array);
-                return mItems = getResources().getStringArray(R.array.weather_asia_oceania_city_array);
-
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_america_array);
+//                mCodeArray = getResources().getStringArray(R.array.weather_asia_time_stamp_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_america_array);
             case 2:
-                mCodeArray = getResources().getStringArray(R.array.weather_america_time_stamp_array);
-                return mItems = getResources().getStringArray(R.array.weather_america_city_array);
-
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_sg_array);
+//                mCodeArray = getResources().getStringArray(R.array.weather_america_time_stamp_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_sg_array);
             case 3:
-                mCodeArray = getResources().getStringArray(R.array.weather_eurpo_time_stamp_array);
-                return mItems = getResources().getStringArray(R.array.weather_eurpo_city_array);
-
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_ng_array);
+//                mCodeArray = getResources().getStringArray(R.array.weather_eurpo_time_stamp_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_ng_array);
             case 4:
-                mCodeArray = getResources().getStringArray(R.array.weather_china_time_stamp_array);
-                return mItems = getResources().getStringArray(R.array.weather_china_city_array);
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_asia_array);
+//                mCodeArray = getResources().getStringArray(R.array.weather_china_time_stamp_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_asia_array);
+            case 5:
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_tcy_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_tcy_array);
+            case 6:
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_a_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_a_array);
+            case 7:
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_zu_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_zu_array);
+            case 8:
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_id_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_id_array);
+            case 9:
+                mTownName = getResources().getStringArray(R.array.ori_time_zone_tpy_array);
+                return mItems = getResources().getStringArray(R.array.time_zone_tpy_array);
             default:
                 return new String[0];
         }
     }
 
     private void setClock() {
-        if (mCodeArray.length > mCountry && mItems.length > mCountry) {
-            Log.d(TAG, "switchRegion():" + mCodeArray[mCountry] + mItems[mCountry]);
+        if ( mItems.length > mCountry) {
+            Log.d(TAG, "switchRegion():" + "mCodeArray[mCountry]" + mItems[mCountry]);
         } else {
             Log.e(TAG, "switchRegion():mCodeArray.length < mCountry + mItems.length < mCountry");
             mRegion = 0;
@@ -303,7 +323,10 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
             return;
         }
         mTextCity.setText(mItems[mCountry]);
-        mTimeStamp = mCodeArray[mCountry];
+        String zoneName = mCountryName[mRegion]+"/"+mTownName[mCountry];
+        mTimeStamp =String.valueOf(TimeUnit.MILLISECONDS.toHours(TimeZone.getTimeZone(zoneName).getRawOffset()));
+
+        Log.e("TIMEZONE",zoneName+":"+mTimeStamp);
 
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
@@ -329,7 +352,8 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
      * set Left picker
      */
     private void initLeftPicker() {
-        String[] data = getContext().getResources().getStringArray(R.array.weather_region_array);
+        String[] data = getContext().getResources().getStringArray(R.array.time_zone_region_array);
+        mCountryName = getContext().getResources().getStringArray(R.array.ori_time_zone_region_array);
         Util.setNumberPickerTextColor(mNumberPickerLeft, ContextCompat.getColor(getContext(), android.R.color.white));
         mNumberPickerLeft.setMinValue(0);
         mNumberPickerLeft.setMaxValue(data.length - 1);
@@ -364,6 +388,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         mNumberPickerRight.setMaxValue(data.length - 1);
         mNumberPickerRight.setWrapSelectorWheel(false);
         mNumberPickerRight.setValue(0);
+        mCountry = 0;
         mNumberPickerRight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {

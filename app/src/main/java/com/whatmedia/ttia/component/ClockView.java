@@ -46,7 +46,7 @@ public class ClockView extends View {
 //        p.setColor(Color.WHITE);
 //        canvas.drawCircle(center_w, center_h, (float) (int) (len * 0.8), p);
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth((float) (int) (len * 0.02));
+        p.setStrokeWidth((float) (len * 0.03));
         p.setStrokeJoin(Paint.Join.ROUND);
         p.setStrokeCap(Paint.Cap.ROUND);
         p.setColor(c);
@@ -56,8 +56,10 @@ public class ClockView extends View {
 
         p.setColor(Color.BLACK);
         //p.setColor(getResources().getColor(R.color.textColorSecondary));
+        p.setStrokeWidth((float) (len * 0.04));
         canvas.drawLine(center_w, center_h, center_w + getMinuteX(len), center_h + getMinuteY(len), p);
         //p.setColor(getResources().getColor(R.color.textColorPrimary));
+        p.setStrokeWidth((float) (len * 0.045));
         canvas.drawLine(center_w, center_h, center_w + getHourX(len), center_h + getHourY(len), p);
     }
 
