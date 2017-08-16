@@ -2,13 +2,18 @@ package com.whatmedia.ttia.page.main.useful.lost;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LostAndFoundFragment extends BaseFragment implements LostAndFoundContract.View{
+public class LostAndFoundFragment extends BaseFragment implements LostAndFoundContract.View {
 
     private static final String TAG = LostAndFoundFragment.class.getSimpleName();
 
@@ -66,7 +71,37 @@ public class LostAndFoundFragment extends BaseFragment implements LostAndFoundCo
         mLoadingView.showLoadingView();
         mPresenter.getLostAndFoundAPI();
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView.setBackgroundColor(0);
         mWebView.setWebViewClient(new WebViewClient() {
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                if (url.startsWith("tel:")) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                    startActivity(intent);
+                    view.reload();
+                    return true;
+                }
+
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("tel:")) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                    startActivity(intent);
+                    view.reload();
+                    return true;
+                }
+
+                view.loadUrl(url);
+                return true;
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);

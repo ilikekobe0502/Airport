@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CurrencyConversionFragment extends BaseFragment implements CurrencyConversionContract.View {
+public class CurrencyConversionFragment extends BaseFragment implements CurrencyConversionContract.View,TextView.OnEditorActionListener {
     private static final String TAG = CurrencyConversionFragment.class.getSimpleName();
     @BindView(R.id.imageView_source_icon)
     ImageView mImageViewSourceIcon;
@@ -40,8 +43,6 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     EditText mEditTextSourceAmount;
     @BindView(R.id.textView_target_amount)
     TextView mTextViewTargetAmount;
-    @BindView(R.id.layout_translate)
-    RelativeLayout mLayoutTranslate;
     @BindView(R.id.layout_ok)
     RelativeLayout mLayoutOk;
     @BindView(R.id.number_picker_left)
@@ -79,6 +80,8 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
 
         setSourceState(ExchangeRate.TAG_TWD);
         setTargetState(ExchangeRate.TAG_USD);
+
+        mEditTextSourceAmount.setOnEditorActionListener(this);
         return view;
     }
 
@@ -150,10 +153,11 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
         });
     }
 
-    @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_translate, R.id.layout_ok})
+    @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_ok})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_source_icon:
+                Util.hideSoftKeyboard(view);
                 if (mLayoutSelector.isShown())
                     mLayoutSelector.setVisibility(View.GONE);
                 else {
@@ -164,6 +168,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             case R.id.editText_source_amount:
                 break;
             case R.id.imageView_target_icon:
+                Util.hideSoftKeyboard(view);
                 if (mLayoutSelector.isShown())
                     mLayoutSelector.setVisibility(View.GONE);
                 else {
@@ -171,12 +176,13 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
                     setPicker(false);
                 }
                 break;
-            case R.id.layout_translate:
-                mLayoutSelector.setVisibility(View.GONE);
-                getTransAPI();
-                break;
+//            case R.id.layout_translate:
+//                mLayoutSelector.setVisibility(View.GONE);
+//                getTransAPI();
+//                break;
             case R.id.layout_ok:
                 mLayoutSelector.setVisibility(View.GONE);
+                getTransAPI();
                 break;
         }
     }
@@ -270,5 +276,19 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     private void setTargetState(int position) {
         ExchangeRate rate = ExchangeRate.getItemByPosition(position);
         setTargetState(rate);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        getTransAPI();
+        Log.d("TAG","event = " + event + "actid = " + actionId);
+//        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
+//                event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//            if (!event.isShiftPressed()) {
+//
+//                return true; // consume.
+//            }
+//        }
+        return true;
     }
 }

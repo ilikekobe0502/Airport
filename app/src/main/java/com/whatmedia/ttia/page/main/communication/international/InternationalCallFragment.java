@@ -4,14 +4,12 @@ package com.whatmedia.ttia.page.main.communication.international;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -25,14 +23,14 @@ import butterknife.ButterKnife;
 
 public class InternationalCallFragment extends BaseFragment implements InternationalCallContract.View {
 
-    @BindView(R.id.text_title1)
-    TextView mTextTitle1;
-    @BindView(R.id.text_title2)
-    TextView mTextTitle2;
-    @BindView(R.id.webView1)
-    WebView mWebView1;
-    @BindView(R.id.webView2)
-    WebView mWebView2;
+//    @BindView(R.id.text_title1)
+//    TextView mTextTitle1;
+//    @BindView(R.id.text_title2)
+//    TextView mTextTitle2;
+    @BindView(R.id.webView)
+    WebView mWebView;
+//    @BindView(R.id.webView2)
+//    WebView mWebView2;
 
     private static final String TAG = InternationalCallFragment.class.getSimpleName();
 
@@ -53,15 +51,15 @@ public class InternationalCallFragment extends BaseFragment implements Internati
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_international_call, container, false);
+        View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
         mPresenter = InternationalCallPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getInternationalCallAPI();
 
-        mWebView1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView2.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        mWebView2.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
 //        mWebView.setWebViewClient(new WebViewClient() {
 //            @Override
@@ -98,12 +96,12 @@ public class InternationalCallFragment extends BaseFragment implements Internati
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    mTextTitle1.setText(response.get(0).getIcTitle().trim());
-                    mWebView1.loadData(response.get(0).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
-                    mWebView1.setBackgroundColor(Color.TRANSPARENT);
-                    mTextTitle2.setText(response.get(1).getIcTitle().trim());
-                    mWebView2.loadData(response.get(1).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
-                    mWebView2.setBackgroundColor(Color.TRANSPARENT);
+//                    mTextTitle1.setText(response.get(0).getIcTitle().trim());
+                    mWebView.loadData(response.get(0).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
+                    mWebView.setBackgroundColor(Color.TRANSPARENT);
+//                    mTextTitle2.setText(response.get(1).getIcTitle().trim());
+//                    mWebView2.loadData(response.get(1).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
+//                    mWebView2.setBackgroundColor(Color.TRANSPARENT);
                 }
             });
         } else {
