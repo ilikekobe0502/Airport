@@ -102,24 +102,6 @@
                         android:textSize="@dimen/sp_pixel_18" />
                 </LinearLayout>
             </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_translate"
-                android:layout_width="@dimen/dp_pixel_60"
-                android:layout_height="@dimen/dp_pixel_40"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/dp_pixel_10"
-                android:layout_marginTop="@dimen/dp_pixel_20"
-                android:background="@drawable/but_bg_mdpi">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/currency_conversion_translate"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp_pixel_15" />
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

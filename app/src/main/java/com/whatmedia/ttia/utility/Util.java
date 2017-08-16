@@ -231,6 +231,18 @@ public class Util {
     }
 
     /**
+     * Show soft keyboard
+     *
+     * @param view
+     */
+    public static void showSoftKeyboard(View view) {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInputFromInputMethod(view.getWindowToken(), InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    /**
      * Show time picker
      *
      * @param context
