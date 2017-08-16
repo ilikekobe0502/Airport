@@ -697,6 +697,7 @@
     <string name="data_not_found">找不到資料</string>
     <string name="ok">確定</string>
     <string name="note">提醒</string>
+    <string name="no_search_store">查無符合商店</string>
 
     <!-- Marquee -->
     <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>

@@ -598,7 +598,7 @@
 
     <!-- Restaurant & Store search -->
     <string name="restaurant_search_subtitle">餐厅查询</string>
-    <string name="restaurant_store_search_subtitle">商店查詢</string>
+    <string name="restaurant_store_search_subtitle">商店查询</string>
     <string name="restaurant_store_search_select_terminal">选择航厦</string>
     <string name="restaurant_store_search_non_select_terminal">不分航厦</string>
     <string name="restaurant_store_search_select_terminal_title">请选择航厦</string>
@@ -611,8 +611,8 @@
     <string name="restaurant_store_search_select_kind_of_restaurant">选择餐厅种类</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐厅种类</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">请选择餐厅种类</string>
-    <string name="restaurant_store_search_select_kind_of_store_title">請選擇商店類型</string>
-    <string name="restaurant_store_search_non_select_kind_of_store_title">不分擇商店類型</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">请选择商店类型</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">不分择商店类型</string>
 
     <!-- My Flights -->
     <string name="my_flights_delete_message">确定删除航班吗？</string>
@@ -630,6 +630,7 @@
     <string name="data_not_found">找不到资料</string>
     <string name="ok">确定</string>
     <string name="note">提醒</string>
+    <string name="no_search_store">查无符合商店</string>
 
     <!-- Marquee -->
     <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
