@@ -19,9 +19,10 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.store.info.StoreSearchInfoContract;
 import com.whatmedia.ttia.response.GetRestaurantInfoResponse;
+import com.whatmedia.ttia.response.GetStoreInfoDataResponse;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
+import com.whatmedia.ttia.response.data.StoreInfoData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,11 +67,13 @@ public class StoreSearchResultFragment extends BaseFragment implements StoreSear
         ButterKnife.bind(this, view);
 
         mPresenter = StoreSearchResultPresenter.getInstance(getContext(), this);
-        List<RestaurantInfoData> list;
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_RESULT)))
-            list = GetRestaurantInfoResponse.newInstance(getArguments().getString(StoreSearchResultContract.TAG_RESULT));
-        else
-            list = new ArrayList<>();
+        List<RestaurantInfoData> list = null;
+        List<StoreInfoData> storeList = null;
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT)))
+            list = GetRestaurantInfoResponse.newInstance(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT));
+        else if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT))) {
+            storeList = GetStoreInfoDataResponse.newInstance(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT));
+        }
 
         // TODO: 2017/8/6 Subtitle
 //        if (list.size()>0){
@@ -80,7 +83,11 @@ public class StoreSearchResultFragment extends BaseFragment implements StoreSear
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setData(list);
+        if (list != null)
+            mAdapter.setData(list);
+        else if (storeList != null)
+            mAdapter.setStoreData(storeList);
+
         mAdapter.setOnClickListener(this);
 
         return view;
@@ -126,8 +133,13 @@ public class StoreSearchResultFragment extends BaseFragment implements StoreSear
                 if (view.getTag() != null && view.getTag() instanceof RestaurantInfoData) {
                     RestaurantInfoData item = (RestaurantInfoData) view.getTag();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(StoreSearchInfoContract.TAG_RESULT, item);
-                    mMainActivity.addFragment(Page.TAG_STORE_SEARCH_INFO,bundle,true);
+                    bundle.putSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT, item);
+                    mMainActivity.addFragment(Page.TAG_STORE_SEARCH_INFO, bundle, true);
+                } else if (view.getTag() != null && view.getTag() instanceof StoreInfoData) {
+                    StoreInfoData item = (StoreInfoData) view.getTag();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(StoreSearchInfoContract.TAG_STORE_RESULT, item);
+                    mMainActivity.addFragment(Page.TAG_STORE_SEARCH_INFO, bundle, true);
                 }
                 break;
         }

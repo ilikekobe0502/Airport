@@ -10,7 +10,9 @@ import com.whatmedia.ttia.response.GetRestaurantCodeResponse;
 import com.whatmedia.ttia.response.GetTerminalCodeResponse;
 import com.whatmedia.ttia.response.data.AreaCodeData;
 import com.whatmedia.ttia.response.data.FloorCodeData;
+import com.whatmedia.ttia.response.GetStoreCodeResponse;
 import com.whatmedia.ttia.response.data.RestaurantCodeData;
+import com.whatmedia.ttia.response.data.StoreCodeData;
 import com.whatmedia.ttia.response.data.TerminalCodeData;
 
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     }
 
     @Override
-    public void getTerminalAPI() {
+    public void getTerminalCodeAPI() {
         mApiConnect.getTerminalCode(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -61,7 +63,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     }
 
     @Override
-    public void getAreaAPI() {
+    public void getAreaCodeAPI() {
         mApiConnect.getAreaCode(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -82,7 +84,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     }
 
     @Override
-    public void getFloorAPI() {
+    public void getFloorCodeAPI() {
         mApiConnect.getFloorCode(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -104,7 +106,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     }
 
     @Override
-    public void getKindOfRestaurantAPI() {
+    public void getKindOfRestaurantCodeAPI() {
         mApiConnect.getRestaurantCode(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -137,6 +139,47 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     mView.getRestaurantInfoSucceed(result);
+                } else {
+                    mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getStoreCodeAPI() {
+        mApiConnect.getStoreCode(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                mView.getTerminalFailed(e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    String result = response.body().string();
+                    List<StoreCodeData> list = GetStoreCodeResponse.newInstance(result);
+                    mView.getStoreCodeSuccess(list);
+                } else {
+                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getStoreInfoAPI(String terminalsID, String areaID, String storeTypeID, String floorID) {
+        mApiConnect.getStoreInfo(terminalsID, areaID, storeTypeID, floorID, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                mView.getRestaurantInfoFailed(e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    String result = response.body().string();
+                    mView.getStoreSuccess(result);
                 } else {
                     mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
                 }

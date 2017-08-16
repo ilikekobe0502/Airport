@@ -84,6 +84,8 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
                     getArguments().get(SouvenirDetailContract.TEXT_DES).toString():"";
             textName = getArguments().containsKey(SouvenirDetailContract.TEXT_NAME)?
                     getArguments().get(SouvenirDetailContract.TEXT_NAME).toString():"";
+            textPhone = getArguments().containsKey(SouvenirDetailContract.TEXT_PHONE)?
+                    getArguments().get(SouvenirDetailContract.TEXT_PHONE).toString():"";
         }
         mRadius = getResources().getDimensionPixelSize(R.dimen.dp_pixel_8);
     }
@@ -104,6 +106,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         mTextTime.setText(textTime);
         mTextPrice.setText(textPrice);
         mTextDes.setText(textDes);
+        mTextPhone.setText(textPhone);
         init();
         mLoadingView.goneLoadingView();
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.response.data.GetLostAndFoundResponse;
+import com.whatmedia.ttia.response.GetLostAndFoundResponse;
 import com.whatmedia.ttia.response.data.LostAndFoundData;
 
 import java.io.IOException;

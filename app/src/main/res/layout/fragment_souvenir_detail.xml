@@ -21,7 +21,6 @@
         android:layout_below="@+id/image_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
-        android:text="NT$200"
         android:textColor="#ffff00"
         android:textSize="@dimen/sp_pixel_13" />
 
@@ -32,7 +31,6 @@
         android:layout_below="@+id/text_price"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
-        android:text="地址：ＸＸＸＸＸ"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_13" />
 
@@ -43,7 +41,6 @@
         android:layout_below="@+id/text_address"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
-        android:text="營業時間:06:00-23:30"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_13" />
 
@@ -54,7 +51,6 @@
         android:layout_below="@+id/text_time"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
-        android:text="電話：0800-055-556"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_13" />
 
@@ -65,7 +61,6 @@
         android:layout_below="@+id/text_phone"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/dp_pixel_15"
-        android:text="商品介紹"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_13" />
 

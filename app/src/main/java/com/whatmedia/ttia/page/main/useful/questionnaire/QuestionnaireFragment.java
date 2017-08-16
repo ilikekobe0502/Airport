@@ -2,7 +2,9 @@ package com.whatmedia.ttia.page.main.useful.questionnaire;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View , IOnItemClickListener {
+public class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View, IOnItemClickListener {
 
     @BindView(R.id.layout_recycler_view)
     RecyclerView mRecyclerView;
@@ -99,7 +101,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     @Override
     public void getQuestionnaireSucceed(final List<QuestionnaireData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null && response.size() > 0 ) {
+        if (response != null && response.size() > 0) {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
@@ -123,7 +125,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
             @Override
             public void run() {
                 mLoadingView.goneLoadingView();
-                Toast.makeText(getContext(),response,Toast.LENGTH_SHORT).show();
+                showNoDataDialog();
             }
         });
     }
@@ -137,5 +139,23 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     public void onClick(View view) {
         mLoadingView.showLoadingView();
         mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
+    }
+
+    private void showNoDataDialog() {
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.note)
+                        .setMessage(R.string.no_search_store)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mMainActivity.backPress();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 }

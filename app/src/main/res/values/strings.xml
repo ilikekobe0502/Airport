@@ -662,7 +662,8 @@
     <string name="timezone_other_area_dialog_title">"請選擇地區"</string>
 
     <!-- Restaurant & Store search -->
-    <string name="restaurant_store_search_subtitle">餐廳查詢</string>
+    <string name="restaurant_search_subtitle">餐廳查詢</string>
+    <string name="restaurant_store_search_subtitle">商店查詢</string>
     <string name="restaurant_store_search_select_terminal">選擇航廈</string>
     <string name="restaurant_store_search_non_select_terminal">不分航廈</string>
     <string name="restaurant_store_search_select_terminal_title">請選擇航廈</string>
@@ -675,6 +676,8 @@
     <string name="restaurant_store_search_select_kind_of_restaurant">選擇餐廳總類</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐廳總類</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">請選擇餐廳總類</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">請選擇商店類型</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">不分擇商店類型</string>
 
     <!-- My Flights -->
     <string name="my_flights_delete_message">確定刪除航班嗎？</string>
@@ -692,6 +695,7 @@
     <string name="data_not_found">找不到資料</string>
     <string name="ok">確定</string>
     <string name="note">提醒</string>
+    <string name="no_search_store">查無符合商店</string>
 
     <!-- Marquee -->
     <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>

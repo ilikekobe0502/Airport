@@ -19,6 +19,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
+import com.whatmedia.ttia.response.data.StoreInfoData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,37 +72,64 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
         mPresenter = StoreSearchInfoPresenter.getInstance(getContext(), this);
         mRadius = getContext().getResources().getDimensionPixelSize(R.dimen.dp_pixel_7);
         RestaurantInfoData data;
-        if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_RESULT) != null) {
-            data = (RestaurantInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_RESULT);
+        StoreInfoData storeData;
+        if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT) != null) {
+            data = (RestaurantInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT);
             Log.d(TAG, data.toString());
-        } else {
-            data = new RestaurantInfoData();
+
+            mTextViewTitle.setText(!TextUtils.isEmpty(data.getRestaurantName()) ? data.getRestaurantName() : "");
+
+            String terminal = "";
+            if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST)) {
+                terminal = getString(R.string.terminal_1);
+            } else if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_SECOND))
+                terminal = getString(R.string.terminal_2);
+
+            if (!TextUtils.isEmpty(data.getImgPath())) {
+                String image = ApiConnect.TAG_IMAGE_HOST + data.getImgPath();
+                Log.d(TAG, "image url = " + image);
+                Picasso.with(getContext())
+                        .load(image)
+                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
+                        .transform(new CornorTransform(mRadius, 0))
+                        .into(mImageViewPicture);
+            }
+
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(data.getFloorId()) ? data.getFloorId() : ""));
+            mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
+                    !TextUtils.isEmpty(data.getOpenStime()) ? data.getOpenStime() : "",
+                    !TextUtils.isEmpty(data.getOpenEtime()) ? data.getOpenEtime() : ""));
+            mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(data.getTel()) ? data.getTel() : ""));
+            mTextViewContent.setText(!TextUtils.isEmpty(data.getContenct()) ? data.getContenct() : "");
+        } else if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT) != null) {
+            storeData = (StoreInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT);
+            Log.d(TAG, storeData.toString());
+
+            mTextViewTitle.setText(!TextUtils.isEmpty(storeData.getStoreName()) ? storeData.getStoreName() : "");
+
+            String terminal = "";
+            if (TextUtils.equals(storeData.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST)) {
+                terminal = getString(R.string.terminal_1);
+            } else if (TextUtils.equals(storeData.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_SECOND))
+                terminal = getString(R.string.terminal_2);
+
+            if (!TextUtils.isEmpty(storeData.getStoreIMGPath())) {
+                String image = ApiConnect.TAG_IMAGE_HOST + storeData.getStoreIMGPath();
+                Log.d(TAG, "image url = " + image);
+                Picasso.with(getContext())
+                        .load(image)
+                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
+                        .transform(new CornorTransform(mRadius, 0))
+                        .into(mImageViewPicture);
+            }
+
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(storeData.getFloorId()) ? storeData.getFloorId() : ""));
+            mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
+                    !TextUtils.isEmpty(storeData.getOpenStime()) ? storeData.getOpenStime() : "",
+                    !TextUtils.isEmpty(storeData.getOpenEtime()) ? storeData.getOpenEtime() : ""));
+            mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(storeData.getStoreTel()) ? storeData.getStoreTel() : ""));
+            mTextViewContent.setText(!TextUtils.isEmpty(storeData.getConetnt()) ? storeData.getConetnt() : "");
         }
-
-        mTextViewTitle.setText(!TextUtils.isEmpty(data.getRestaurantName()) ? data.getRestaurantName() : "");
-
-        String terminal = "";
-        if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST)) {
-            terminal = getString(R.string.terminal_1);
-        } else if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_SECOND))
-            terminal = getString(R.string.terminal_2);
-
-        if (!TextUtils.isEmpty(data.getImgPath())) {
-            String image = ApiConnect.TAG_IMAGE_HOST + data.getImgPath();
-            Log.d(TAG, "image url = " + image);
-            Picasso.with(getContext())
-                    .load(image)
-                    .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
-                    .transform(new CornorTransform(mRadius, 0) )
-                    .into(mImageViewPicture);
-        }
-
-        mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(data.getFloorId()) ? data.getFloorId() : ""));
-        mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
-                !TextUtils.isEmpty(data.getOpenStime()) ? data.getOpenStime() : "",
-                !TextUtils.isEmpty(data.getOpenEtime()) ? data.getOpenEtime() : ""));
-        mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(data.getTel()) ? data.getTel() : ""));
-        mTextViewContent.setText(!TextUtils.isEmpty(data.getContenct()) ? data.getContenct() : "");
         return view;
     }
 

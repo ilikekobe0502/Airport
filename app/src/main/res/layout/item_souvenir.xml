@@ -50,8 +50,8 @@
 
         <Button
             android:id="@+id/bt_des"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_pixel_80"
+            android:layout_height="@dimen/dp_pixel_40"
             android:layout_alignLeft="@+id/image_icon"
             android:layout_alignRight="@+id/image_icon"
             android:layout_below="@+id/text_price"

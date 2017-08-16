@@ -37,14 +37,13 @@ public class ApiConnect extends StateCode {
 
     public final static String TAG_DEVICE_TYPE = "1";
 
-    public static String TAG_DEVICE_ID ="A123456789";
+    public static String TAG_DEVICE_ID = "A123456789";
 
     private static String mLocale;
 
     private static OkHttpClient mClient;
     private static ApiConnect mApiConnect;
     private static Context mContext;
-
 
 
     public ApiConnect() {
@@ -238,7 +237,7 @@ public class ApiConnect extends StateCode {
     }
 
     /**
-     * 航廈列別代碼
+     * 航廈類別代碼
      *
      * @param callback
      */
@@ -251,7 +250,7 @@ public class ApiConnect extends StateCode {
     }
 
     /**
-     * 區域列別代碼
+     * 區域類別代碼
      *
      * @param callback
      */
@@ -264,7 +263,7 @@ public class ApiConnect extends StateCode {
     }
 
     /**
-     * 樓層列別代碼
+     * 樓層類別代碼
      *
      * @param callback
      */
@@ -277,12 +276,25 @@ public class ApiConnect extends StateCode {
     }
 
     /**
-     * 餐廳列別代碼
+     * 餐廳類別代碼
      *
      * @param callback
      */
     public static void getRestaurantCode(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_RestaurantTypeCode")
+                .newBuilder()
+                .addQueryParameter("lan", mLocale)
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 商店類別代碼
+     *
+     * @param callback
+     */
+    public static void getStoreCode(Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_StoreCode")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -305,6 +317,27 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("TerminalsID", terminalsID)
                 .addQueryParameter("AreaID", areaID)
                 .addQueryParameter("RestaurantTypeID", restaurantTypeID)
+                .addQueryParameter("FloorID", floorID)
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 取得商店資訊
+     *
+     * @param terminalsID
+     * @param areaID
+     * @param StoreTypeID
+     * @param floorID
+     * @param callback
+     */
+    public static void getStoreInfo(String terminalsID, String areaID, String StoreTypeID, String floorID, Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Store")
+                .newBuilder()
+                .addQueryParameter("lan", mLocale)
+                .addQueryParameter("TerminalsID", terminalsID)
+                .addQueryParameter("AreaID", areaID)
+                .addQueryParameter("Store_type", StoreTypeID)
                 .addQueryParameter("FloorID", floorID)
                 .build();
         getApi(url, callback);
@@ -592,6 +625,7 @@ public class ApiConnect extends StateCode {
 
     /**
      * 取得紀念品資訊
+     *
      * @param callback
      */
     public static void getSouvenirList(Callback callback) {
@@ -604,6 +638,7 @@ public class ApiConnect extends StateCode {
 
     /**
      * 取得機場成就
+     *
      * @param callback
      */
     public static void getAchievementList(Callback callback) {
