@@ -651,4 +651,34 @@ public class ApiConnect extends StateCode {
                 .build();
         getApi(url, callback);
     }
+
+    /**
+     *
+     * @param minorID
+     * @param callback
+     */
+    public static void saveAchievement(String minorID,Callback callback){
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
+                .newBuilder()
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("Beacon_ID", minorID)
+                .build();
+        getApi(url, callback);
+    }
+
+    /**
+     * 寫入/刪除場域內使用者
+     */
+    public static void registerUser(boolean isAdd,Callback callback){
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
+                .newBuilder()
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("type", isAdd?"0":"1")
+                .build();
+        getApi(url, callback);
+    }
 }
