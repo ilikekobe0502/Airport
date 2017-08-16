@@ -597,7 +597,8 @@
     <string name="timezone_other_area_dialog_title">"please select the region"</string>
 
     <!-- Restaurant & Store search -->
-    <string name="restaurant_store_search_subtitle">Restaurant inquiries</string>
+    <string name="restaurant_search_subtitle">Restaurant inquiries</string>
+    <string name="restaurant_store_search_subtitle">商店查詢</string>
     <string name="restaurant_store_search_select_terminal">Choose the terminal</string>
     <string name="restaurant_store_search_non_select_terminal">Regardless of the terminal</string>
     <string name="restaurant_store_search_select_terminal_title">Please choose the terminal</string>
@@ -610,6 +611,8 @@
     <string name="restaurant_store_search_select_kind_of_restaurant">Choose the type of restaurant</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">Regardless of restaurant type</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">Please choose the type of restaurant</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">請選擇商店類型</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">不分擇商店類型</string>
 
     <!-- My Flights -->
     <string name="my_flights_delete_message">Are you sure to delete the flight?</string>

@@ -20,6 +20,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.AreaCodeData;
 import com.whatmedia.ttia.response.data.FloorCodeData;
 import com.whatmedia.ttia.response.data.RestaurantCodeData;
+import com.whatmedia.ttia.response.data.StoreCodeData;
 import com.whatmedia.ttia.response.data.TerminalCodeData;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class MyStoreDialog extends DialogFragment {
     private List<AreaCodeData> mAreaCodeList;
     private List<FloorCodeData> mFloorCodeList;
     private List<RestaurantCodeData> mRestaurantCodeList;
+    private List<StoreCodeData> mStoreCodeList;
 
     public static MyStoreDialog newInstance() {
         if (mMyDialog == null) {
@@ -108,6 +110,8 @@ public class MyStoreDialog extends DialogFragment {
             mSearchAdapter.setFloorCodeData(mFloorCodeList);
         if (mRestaurantCodeList != null)
             mSearchAdapter.setRestaurantCodeData(mRestaurantCodeList);
+        if (mStoreCodeList != null)
+            mSearchAdapter.setStoreCodeData(mStoreCodeList);
     }
 
     public MyStoreDialog setCancelClickListener(IOnItemClickListener listener) {
@@ -149,11 +153,18 @@ public class MyStoreDialog extends DialogFragment {
         return this;
     }
 
+    public MyStoreDialog setStoreCodeData(List<StoreCodeData> list) {
+        clearData();
+        mStoreCodeList = list;
+        return this;
+    }
+
     public MyStoreDialog clearData() {
         mTerminalCodeList = null;
         mAreaCodeList = null;
         mFloorCodeList = null;
         mRestaurantCodeList = null;
+        mStoreCodeList = null;
         return this;
     }
 }

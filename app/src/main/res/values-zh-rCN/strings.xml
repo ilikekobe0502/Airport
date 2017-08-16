@@ -597,7 +597,8 @@
     <string name="timezone_other_area_dialog_title">"请选择地区"</string>
 
     <!-- Restaurant & Store search -->
-    <string name="restaurant_store_search_subtitle">餐厅查询</string>
+    <string name="restaurant_search_subtitle">餐厅查询</string>
+    <string name="restaurant_store_search_subtitle">商店查詢</string>
     <string name="restaurant_store_search_select_terminal">选择航厦</string>
     <string name="restaurant_store_search_non_select_terminal">不分航厦</string>
     <string name="restaurant_store_search_select_terminal_title">请选择航厦</string>
@@ -610,6 +611,8 @@
     <string name="restaurant_store_search_select_kind_of_restaurant">选择餐厅种类</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐厅种类</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">请选择餐厅种类</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">請選擇商店類型</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">不分擇商店類型</string>
 
     <!-- My Flights -->
     <string name="my_flights_delete_message">确定删除航班吗？</string>

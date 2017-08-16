@@ -22,6 +22,7 @@ import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultCont
 import com.whatmedia.ttia.response.data.AreaCodeData;
 import com.whatmedia.ttia.response.data.FloorCodeData;
 import com.whatmedia.ttia.response.data.RestaurantCodeData;
+import com.whatmedia.ttia.response.data.StoreCodeData;
 import com.whatmedia.ttia.response.data.TerminalCodeData;
 
 import java.util.List;
@@ -55,11 +56,14 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     private List<AreaCodeData> mAreaCodeList;
     private List<FloorCodeData> mFloorCodeList;
     private List<RestaurantCodeData> mRestaurantCodeList;
+    private List<StoreCodeData> mStoreCodeList;
 
     private TerminalCodeData mTerminalCodeData;
     private AreaCodeData mAreaCodeData;
     private FloorCodeData mFloorCodeData;
     private RestaurantCodeData mRestaurantCodeData;
+    private StoreCodeData mStoreCodeData;
+    private int mFromPage = 0;
 
     public StoreSearchFragment() {
         // Required empty public constructor
@@ -89,11 +93,20 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         View view = inflater.inflate(R.layout.fragment_store_search, container, false);
         ButterKnife.bind(this, view);
 
+        if (getArguments() != null) {
+            mFromPage = getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE);
+        }
         mPresenter = StoreSearchPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
-        mPresenter.getTerminalAPI();
+        mPresenter.getTerminalCodeAPI();
 
-        mTextViewSubtitle.setText(getString(R.string.restaurant_store_search_subtitle));
+
+        if (mFromPage == Page.TAG_STORE_OFFERS) {
+            mTextViewSubtitle.setText(getString(R.string.restaurant_store_search_subtitle));
+            mTextViewRestaurant.setText(getString(R.string.restaurant_store_search_select_kind_of_store_title));
+        } else {
+            mTextViewSubtitle.setText(getString(R.string.restaurant_search_subtitle));
+        }
 
         return view;
     }
@@ -138,7 +151,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         nonSelect.setTerminalsName(getString(R.string.restaurant_store_search_non_select_terminal));
         mTerminalCodeList.add(0, nonSelect);
 
-        mPresenter.getAreaAPI();
+        mPresenter.getAreaCodeAPI();
     }
 
     @Override
@@ -154,7 +167,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         AreaCodeData nonSelect = new AreaCodeData();
         nonSelect.setAreaName(getString(R.string.restaurant_store_search_non_select_area));
         mAreaCodeList.add(0, nonSelect);
-        mPresenter.getFloorAPI();
+        mPresenter.getFloorCodeAPI();
     }
 
     @Override
@@ -163,7 +176,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         FloorCodeData nonSelect = new FloorCodeData();
         nonSelect.setFloorName(getString(R.string.restaurant_store_search_non_select_floor));
         mFloorCodeList.add(0, nonSelect);
-        mPresenter.getKindOfRestaurantAPI();
+
+        if (mFromPage == Page.TAG_STORE_OFFERS)
+            mPresenter.getStoreCodeAPI();
+        else
+            mPresenter.getKindOfRestaurantCodeAPI();
     }
 
     @Override
@@ -197,15 +214,35 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         }
     }
 
+    @Override
+    public void getStoreCodeSuccess(List<StoreCodeData> response) {
+        mStoreCodeList = response;
+        StoreCodeData nonSelect = new StoreCodeData();
+        nonSelect.setStoreTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_store_title));
+        mStoreCodeList.add(0, nonSelect);
+        mLoadingView.goneLoadingView();
+    }
+
+    @Override
+    public void getStoreSuccess(String response) {
+
+    }
+
     @OnClick({R.id.layout_search, R.id.textView_terminal, R.id.textView_area, R.id.textView_floor, R.id.textView_restaurant})
     public void onClick(View view) {
         MyStoreDialog dialog;
         switch (view.getId()) {
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
-                mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
-                        mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : ""
-                        , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
+                if (mFromPage==Page.TAG_STORE_OFFERS) {
+                    mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
+                            mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mStoreCodeData != null ? mStoreCodeData.getStoreTypeId() : ""
+                            , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
+                }else {
+                    mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
+                            mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : ""
+                            , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
+                }
                 break;
             case R.id.textView_terminal:
                 dialog = MyStoreDialog.newInstance()
@@ -277,27 +314,52 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 dialog.show(getActivity().getFragmentManager(), "dialog");
                 break;
             case R.id.textView_restaurant:
-                dialog = MyStoreDialog.newInstance()
-                        .setTitle(getString(R.string.restaurant_store_search_select_kind_of_restaurant_title))
-                        .setCancelClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                if (mFromPage == Page.TAG_STORE_OFFERS ){
+                    dialog = MyStoreDialog.newInstance()
+                            .setTitle(getString(R.string.restaurant_store_search_select_kind_of_store_title))
+                            .setCancelClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
 
-                            }
-                        })
-                        .setItemClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (view.getTag() != null && view.getTag() instanceof RestaurantCodeData) {
-                                    mRestaurantCodeData = (RestaurantCodeData) view.getTag();
-                                    mTextViewRestaurant.setText(mRestaurantCodeData.getRestaurantTypeName());
-                                } else {
-                                    Log.e(TAG, "View.getTag() is null or data error");
                                 }
-                            }
-                        })
-                        .setRestaurantCodeData(mRestaurantCodeList);
-                dialog.show(getActivity().getFragmentManager(), "dialog");
+                            })
+                            .setItemClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (view.getTag() != null && view.getTag() instanceof RestaurantCodeData) {
+                                        mStoreCodeData = (StoreCodeData) view.getTag();
+                                        mTextViewRestaurant.setText(mStoreCodeData.getStoreTypeName());
+                                    } else {
+                                        Log.e(TAG, "View.getTag() is null or data error");
+                                    }
+                                }
+                            })
+                            .setStoreCodeData(mStoreCodeList);
+                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                }else {
+
+                    dialog = MyStoreDialog.newInstance()
+                            .setTitle(getString(R.string.restaurant_store_search_select_kind_of_restaurant_title))
+                            .setCancelClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .setItemClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (view.getTag() != null && view.getTag() instanceof RestaurantCodeData) {
+                                        mRestaurantCodeData = (RestaurantCodeData) view.getTag();
+                                        mTextViewRestaurant.setText(mRestaurantCodeData.getRestaurantTypeName());
+                                    } else {
+                                        Log.e(TAG, "View.getTag() is null or data error");
+                                    }
+                                }
+                            })
+                            .setRestaurantCodeData(mRestaurantCodeList);
+                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                }
                 break;
         }
     }
