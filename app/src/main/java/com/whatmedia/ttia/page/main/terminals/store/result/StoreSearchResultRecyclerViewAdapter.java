@@ -17,6 +17,7 @@ import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
+import com.whatmedia.ttia.response.data.StoreInfoData;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
     private Context mContext;
     private IOnItemClickListener mListener;
     private int mRadius;
+    private List<StoreInfoData> mStoreItems;
 
     public StoreSearchResultRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -49,32 +51,59 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (mItems == null)
-            return;
-        RestaurantInfoData item = mItems.get(position);
-        if (item == null)
-            return;
+        if (mItems != null) {
+            RestaurantInfoData item = mItems.get(position);
+            if (item == null)
+                return;
 
-        holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsId()) ?
-                item.getTerminalsId().equals("1")?mContext.getString(R.string.store_terminal_1):mContext.getString(R.string.store_terminal_2) :"");
-        holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorId()) ? item.getFloorId() : "");
-        holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
-        holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
-        String pictureUrl;
-        if (!TextUtils.isEmpty(item.getImgPath())) {
-            pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
-            // TODO: 2017/8/6 corner mot work
-            Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
-        } else
-            pictureUrl = "";
+            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsId()) ?
+                    item.getTerminalsId().equals("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
+            holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorId()) ? item.getFloorId() : "");
+            holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
+            holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
+            String pictureUrl;
+            if (!TextUtils.isEmpty(item.getImgPath())) {
+                pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
+                // TODO: 2017/8/6 corner mot work
+                Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
+            } else
+                pictureUrl = "";
 
-        Log.d(TAG, "Store image url = " + pictureUrl);
-        holder.mLayoutFrame.setTag(item);
+            Log.d(TAG, "Store image url = " + pictureUrl);
+            holder.mLayoutFrame.setTag(item);
+        }else if (mStoreItems!=null){
+
+            StoreInfoData storeItem = mStoreItems.get(position);
+            if (storeItem == null)
+                return;
+
+            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsId()) ?
+                    storeItem.getTerminalsId().equals("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
+            holder.mTextViewFloor.setText(!TextUtils.isEmpty(storeItem.getFloorId()) ? storeItem.getFloorId() : "");
+            holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getStoreName()) ? storeItem.getStoreName() : "");
+            holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getConetnt()) ? storeItem.getConetnt() : "");
+            String pictureUrl;
+            if (!TextUtils.isEmpty(storeItem.getStoreIMGPath())) {
+                pictureUrl = ApiConnect.TAG_IMAGE_HOST + storeItem.getStoreIMGPath();
+                // TODO: 2017/8/6 corner mot work
+                Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
+            } else
+                pictureUrl = "";
+
+            Log.d(TAG, "Store image url = " + pictureUrl);
+            holder.mLayoutFrame.setTag(storeItem);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mItems != null ? mItems.size() : 0;
+        int count = 0;
+        if (mItems != null)
+            count = mItems.size();
+        else if (mStoreItems != null) {
+            count = mStoreItems.size();
+        }
+        return count;
     }
 
     public void setData(List<RestaurantInfoData> data) {
@@ -84,6 +113,11 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
     public void setOnClickListener(IOnItemClickListener listener) {
         mListener = listener;
+    }
+
+    public void setStoreData(List<StoreInfoData> storeData) {
+        mStoreItems = storeData;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

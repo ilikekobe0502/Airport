@@ -10,7 +10,7 @@ import com.whatmedia.ttia.response.GetRestaurantCodeResponse;
 import com.whatmedia.ttia.response.GetTerminalCodeResponse;
 import com.whatmedia.ttia.response.data.AreaCodeData;
 import com.whatmedia.ttia.response.data.FloorCodeData;
-import com.whatmedia.ttia.response.data.GetStoreCodeResponse;
+import com.whatmedia.ttia.response.GetStoreCodeResponse;
 import com.whatmedia.ttia.response.data.RestaurantCodeData;
 import com.whatmedia.ttia.response.data.StoreCodeData;
 import com.whatmedia.ttia.response.data.TerminalCodeData;
@@ -179,7 +179,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
-                    mView.getRestaurantInfoSucceed(result);
+                    mView.getStoreSuccess(result);
                 } else {
                     mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
                 }

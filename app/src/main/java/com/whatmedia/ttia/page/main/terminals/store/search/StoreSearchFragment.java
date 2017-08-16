@@ -197,7 +197,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         if (!TextUtils.isEmpty(response)) {
             mLoadingView.goneLoadingView();
             Bundle bundle = new Bundle();
-            bundle.putString(StoreSearchResultContract.TAG_RESULT, response);
+            bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
             mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
         } else {
             Log.e(TAG, "getRestaurantInfoSucceed response is null");
@@ -225,6 +225,15 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
 
     @Override
     public void getStoreSuccess(String response) {
+        if (!TextUtils.isEmpty(response)) {
+            mLoadingView.goneLoadingView();
+            Bundle bundle = new Bundle();
+            bundle.putString(StoreSearchResultContract.TAG_STORE_RESULT, response);
+            mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+        } else {
+            Log.e(TAG, "getRestaurantInfoSucceed response is null");
+            showNoDataDialog();
+        }
 
     }
 
