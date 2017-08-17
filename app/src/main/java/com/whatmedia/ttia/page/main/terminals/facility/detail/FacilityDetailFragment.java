@@ -115,18 +115,24 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 //                                    .resize(width,height)
                                     .priority(Picasso.Priority.HIGH)
                                     .get();
-                            if(mBitmaps[i].getWidth()>mBitmaps[0].getWidth()){
-                                mBitmaps[i] = Util.setBitmapScale(mBitmaps[i],mBitmaps[i].getHeight(),mBitmaps[0].getWidth());
-                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
 
-                    // 這就是那個解
+                    // 這就是那個解 在高解析的情況下 會進行放大的動作(低解析也有可能 只是比較少)
                     if(mBitmaps[1].getWidth()<mBitmaps[0].getWidth()/2 || mBitmaps[2].getWidth()<mBitmaps[0].getWidth()/2){
                         mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[1].getWidth()*3/2);
                         mBitmaps[2] = Util.setBitmapScale(mBitmaps[2],mBitmaps[2].getHeight(),mBitmaps[2].getWidth()*3/2);
+                    }
+
+                    //在最後combine前 將超過Ａ圖寬的通通進行縮小的動作
+                    if(mBitmaps[1].getWidth()>mBitmaps[0].getWidth()){
+                        mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[0].getWidth());
+                    }
+                    //在最後combine前 將超過Ａ圖寬的通通進行縮小的動作
+                    if(mBitmaps[2].getWidth()>mBitmaps[0].getWidth()){
+                        mBitmaps[2] = Util.setBitmapScale(mBitmaps[2],mBitmaps[2].getHeight(),mBitmaps[0].getWidth());
                     }
 
                     mMainActivity.runOnUI(new Runnable() {
