@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,9 +79,14 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 
         mPresenter = FacilityDetailPresenter.getInstance(getContext(), this);
 
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        final int width = dm.widthPixels;
+        final int height = dm.heightPixels/3;
+
         final float space = getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
-        final int width = getResources().getDimensionPixelSize(R.dimen.dp_pixel_250);
-        final int height = getResources().getDimensionPixelSize(R.dimen.dp_pixel_100);
+//        final int width = getResources().getDimensionPixelSize(R.dimen.dp_pixel_250);
+//        final int height = getResources().getDimensionPixelSize(R.dimen.dp_pixel_100);
 
         if (getArguments() != null && getArguments().getSerializable(FacilityDetailContract.TAG_DATA) != null) {
             AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
@@ -109,6 +115,9 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 //                                    .resize(width,height)
                                     .priority(Picasso.Priority.HIGH)
                                     .get();
+                            if(mBitmaps[i].getWidth()>mBitmaps[0].getWidth()){
+                                mBitmaps[i] = Util.setBitmapScale(mBitmaps[i],mBitmaps[i].getHeight(),mBitmaps[0].getWidth());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
