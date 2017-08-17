@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -76,6 +77,7 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
         ButterKnife.bind(this, view);
 
         mMapView.onCreate(savedInstanceState);
+        MapsInitializer.initialize(getContext());
 
         mPresenter = ParkingInfoPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
