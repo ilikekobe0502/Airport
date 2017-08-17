@@ -1,11 +1,16 @@
 package com.whatmedia.ttia.connect;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.whatmedia.ttia.Manifest;
 import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
@@ -37,7 +42,7 @@ public class ApiConnect extends StateCode {
 
     public final static String TAG_DEVICE_TYPE = "1";
 
-    public static String TAG_DEVICE_ID = "A123456789";
+    public static String TAG_DEVICE_ID;
 
     private static String mLocale;
 
@@ -64,9 +69,9 @@ public class ApiConnect extends StateCode {
             mApiConnect = new ApiConnect();
         }
 
-//        if(TAG_DEVICE_ID == null){
-//            TAG_DEVICE_ID = Util.getDeviceId(mContext);
-//        }
+        if (TAG_DEVICE_ID == null) {
+            TAG_DEVICE_ID = Util.getDeviceId(context);
+        }
 
         switchLocale();
 
@@ -645,7 +650,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Achievement")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -653,15 +658,14 @@ public class ApiConnect extends StateCode {
     }
 
     /**
-     *
      * @param minorID
      * @param callback
      */
-    public static void saveAchievement(String minorID,Callback callback){
+    public static void saveAchievement(String minorID, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("Beacon_ID", minorID)
                 .build();
@@ -671,13 +675,13 @@ public class ApiConnect extends StateCode {
     /**
      * 寫入/刪除場域內使用者
      */
-    public static void registerUser(boolean isAdd,Callback callback){
+    public static void registerUser(boolean isAdd, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("type", isAdd?"0":"1")
+                .addQueryParameter("type", isAdd ? "0" : "1")
                 .build();
         getApi(url, callback);
     }

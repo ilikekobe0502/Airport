@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -422,7 +423,7 @@ public class Util {
      */
     public static Bitmap setBitmapScale(Bitmap bitmap, int height, int width) {
         Matrix matrix = new Matrix();
-        matrix.postScale((float) width/(float) bitmap.getWidth(), 1f); //長寬比例
+        matrix.postScale((float) width / (float) bitmap.getWidth(), 1f); //長寬比例
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizeBmp;
     }
@@ -434,8 +435,7 @@ public class Util {
      * @return
      */
     public static String getDeviceId(Context context) {
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getDeviceId();
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     /**
