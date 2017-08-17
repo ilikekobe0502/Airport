@@ -611,7 +611,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof MoreFlightsFragment) {//更多航班
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.home_more_flights))
+                        .setTitleText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
