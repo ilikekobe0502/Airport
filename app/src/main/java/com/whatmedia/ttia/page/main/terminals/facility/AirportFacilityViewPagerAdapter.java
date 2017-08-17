@@ -26,7 +26,6 @@ public class AirportFacilityViewPagerAdapter extends PagerAdapter implements IOn
 
     private AirportFacilityRecyclerViewAdapter mAdapter;
     private IOnItemClickListener mListener;
-    private AirportFacilityRecyclerViewAdapter.OnImageLoadingListener mLoadingListener;
     private List<AirportFacilityData> mItems;
 
     @Override

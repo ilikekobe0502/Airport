@@ -37,16 +37,21 @@
             android:background="@drawable/right_off" />
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/webView"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_subtitle" />
+    <!--<WebView-->
+    <!--android:id="@+id/webView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@+id/layout_subtitle" />-->
 
-    <WebView
-        android:id="@+id/webView_terminal_two"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_subtitle"
-        android:visibility="gone" />
+    <!--<WebView-->
+    <!--android:id="@+id/webView_terminal_two"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@+id/layout_subtitle"-->
+    <!--android:visibility="gone" />-->
 </RelativeLayout>
