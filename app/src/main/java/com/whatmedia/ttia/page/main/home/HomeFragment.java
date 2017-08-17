@@ -1,6 +1,8 @@
 package com.whatmedia.ttia.page.main.home;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -132,9 +134,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
                 case TAG_INDOOR_MAP://室內地圖導航
+
+                    Intent i = null;
+                    i = new Intent();
+                    i.setComponent(new ComponentName("com.point_consulting.testindoormap", "com.point_consulting.testindoormap.MapsActivity"));
+                    getActivity().startActivity(i);
                     break;
                 case TAG_AIRPORT_ACHIEVEMENT://機場成就
-                    mMainActivity.addFragment(Page.TAG_ACHIEVEMENT,null,true);
+                    mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);
                     break;
             }
         } else {
