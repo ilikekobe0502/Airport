@@ -82,7 +82,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         final int width = dm.widthPixels;
-        final int height = dm.heightPixels/3;
+        final int height = dm.heightPixels/5;
 
         final float space = getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
 //        final int width = getResources().getDimensionPixelSize(R.dimen.dp_pixel_250);
@@ -122,6 +122,13 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                             e.printStackTrace();
                         }
                     }
+
+                    // 這就是那個解
+                    if(mBitmaps[1].getWidth()<mBitmaps[0].getWidth()/2 || mBitmaps[2].getWidth()<mBitmaps[0].getWidth()/2){
+                        mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[1].getWidth()*3/2);
+                        mBitmaps[2] = Util.setBitmapScale(mBitmaps[2],mBitmaps[2].getHeight(),mBitmaps[2].getWidth()*3/2);
+                    }
+
                     mMainActivity.runOnUI(new Runnable() {
                         @Override
                         public void run() {
