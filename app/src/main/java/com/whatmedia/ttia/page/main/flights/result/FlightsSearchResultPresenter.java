@@ -5,9 +5,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.response.GetFlightsInfoResponse;
+import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,6 +51,28 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
                     mView.saveMyFlightSucceed(result);
                 } else {
                     mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getFlightAPI(FlightSearchData searchData) {
+        mApiConnect.getSearchFlightsInfoByDate(searchData, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                mView.getFlightFailed(e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    String result = response.body().string();
+                    Log.d(TAG, result);
+                    List<FlightsInfoData> list = GetFlightsInfoResponse.newInstance(result);
+                    mView.getFlightSucceed(list);
+                } else {
+                    mView.getFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
                 }
             }
         });

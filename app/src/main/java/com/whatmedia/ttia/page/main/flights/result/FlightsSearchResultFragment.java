@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
@@ -21,8 +23,10 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.response.data.DialogContentData;
+import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -39,6 +43,12 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     ImageView mImageViewUp;
     @BindView(R.id.imageView_down)
     ImageView mImageViewDown;
+    @BindView(R.id.textView_last)
+    TextView mTextViewLast;
+    @BindView(R.id.textView_next)
+    TextView mTextViewNext;
+    @BindView(R.id.textView_now)
+    TextView mTextViewNow;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -48,8 +58,15 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private List<FlightsInfoData> mDepartureList;
     private List<FlightsInfoData> mArriveList;
 
-    private String mDepartureDate;
-    private String mArriveDate;
+    private String mLastShowDate = Util.getCountDate(-1);
+    private String mNowShowDate = Util.getNowDate(Util.TAG_FORMAT_MD);
+    private String mNextShowDate = Util.getCountDate(1);
+    private String mShowDate = mNowShowDate;
+    private String mLastDate = Util.getCountDate(-1, Util.TAG_FORMAT_YMD);
+    private String mNowDate = Util.getNowDate();
+    private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
+    private String mQueryDate = mNowDate;
+    private String mQueryType = FlightsInfoData.TAG_KIND_TOP4_DEPARTURE;
 
 
     public FlightsSearchResultFragment() {
@@ -80,15 +97,18 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
             mArriveList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS));
             mDepartureList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS));
 
-            if (mArriveList.size() > 0)
-                mArriveDate = !TextUtils.isEmpty(mArriveList.get(0).getExpressDate()) ? mArriveList.get(0).getExpressDate() : "";
-            if (mDepartureList.size() > 0)
-                mDepartureDate = !TextUtils.isEmpty(mDepartureList.get(0).getExpressDate()) ? mDepartureList.get(0).getExpressDate() : "";
+//            if (mArriveList.size() > 0)
+//                mArriveDate = !TextUtils.isEmpty(mArriveList.get(0).getExpressDate()) ? mArriveList.get(0).getExpressDate() : "";
+//            if (mDepartureList.size() > 0)
+//                mDepartureDate = !TextUtils.isEmpty(mDepartureList.get(0).getExpressDate()) ? mDepartureList.get(0).getExpressDate() : "";
         } else {
             Log.e(TAG, "data error");
             showMessage(getString(R.string.data_error));
         }
 
+        mTextViewLast.setText(mLastShowDate);
+        mTextViewNow.setText(mNowShowDate);
+        mTextViewNext.setText(mNextShowDate);
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mDepartureList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
@@ -129,18 +149,22 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         super.onDetach();
     }
 
-    @OnClick({R.id.imageView_up, R.id.imageView_down})
+    @OnClick({R.id.imageView_up, R.id.imageView_down, R.id.textView_last, R.id.textView_next, R.id.textView_now})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_up:
+                mQueryType = FlightsInfoData.TAG_KIND_TOP4_DEPARTURE;
                 mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_on));
                 mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_off));
-                mAdapter.setData(mDepartureList);
+//                mAdapter.setData(mDepartureList);
+                getFlight();
                 break;
             case R.id.imageView_down:
+                mQueryType = FlightsInfoData.TAG_KIND_TOP4_ARRIVE;
                 mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_off));
                 mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
-                mAdapter.setData(mArriveList);
+//                mAdapter.setData(mArriveList);
+                getFlight();
                 break;
             case R.id.layout_frame:
                 if (view.getTag() instanceof FlightsInfoData) {
@@ -183,6 +207,41 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                     showMessage(getString(R.string.data_error));
                 }
                 break;
+            case R.id.textView_last:
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
+                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+
+                mQueryDate = mLastDate;
+                mShowDate = mLastShowDate;
+                getFlight();
+                break;
+            case R.id.textView_now:
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
+                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mQueryDate = mNowDate;
+                mShowDate = mNowShowDate;
+                getFlight();
+                break;
+            case R.id.textView_next:
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
+                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
+                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+
+                mQueryDate = mNextDate;
+                mShowDate = mNextShowDate;
+                getFlight();
+                break;
         }
     }
 
@@ -211,5 +270,48 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 showMessage(message);
             }
         });
+    }
+
+    @Override
+    public void getFlightSucceed(final List<FlightsInfoData> list) {
+
+        mLoadingView.goneLoadingView();
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.setData(list);
+            }
+        });
+    }
+
+    @Override
+    public void getFlightFailed(String message) {
+
+        Log.d(TAG, "getFlightFailed : " + message);
+        mLoadingView.goneLoadingView();
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.note)
+                        .setMessage(R.string.data_not_found)
+                        .setPositiveButton(R.string.ok, null)
+                        .show();
+                mAdapter.setData(null);
+            }
+        });
+    }
+
+    private void getFlight() {
+        if (TextUtils.equals(mQueryType, FlightsInfoData.TAG_KIND_TOP4_DEPARTURE))
+            mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_takeoff, mShowDate));
+        else
+            mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_arrival, mShowDate));
+
+        FlightSearchData data = new FlightSearchData();
+        data.setQueryType(mQueryType);
+        data.setExpressTime(mQueryDate);
+        mLoadingView.showLoadingView();
+        mPresenter.getFlightAPI(data);
     }
 }
