@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AirportFacilityFragment extends BaseFragment implements AirportFacilityContract.View, IOnItemClickListener{
+public class AirportFacilityFragment extends BaseFragment implements AirportFacilityContract.View, IOnItemClickListener, ViewPager.OnPageChangeListener {
     private static final String TAG = AirportFacilityFragment.class.getSimpleName();
     @BindView(R.id.textView_subtitle)
     TextView mTextViewSubtitle;
@@ -44,7 +44,7 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     private IActivityTools.IMainActivity mMainActivity;
     private AirportFacilityContract.Presenter mPresenter;
 
-//    private AirportFacilityRecyclerViewAdapter mAdapter;
+    //    private AirportFacilityRecyclerViewAdapter mAdapter;
     private AirportFacilityViewPagerAdapter mViewPagerAdapter = new AirportFacilityViewPagerAdapter();
 
     public AirportFacilityFragment() {
@@ -83,6 +83,7 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPagerAdapter.setClickListener(this);
+        mViewPager.addOnPageChangeListener(this);
 
 //        mAdapter = new AirportFacilityRecyclerViewAdapter(getContext());
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -146,15 +147,11 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_left:
-                mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_on));
-                mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_off));
-                mTextViewSubtitle.setText(getString(R.string.terminal_1));
+                setLeft();
                 mViewPager.setCurrentItem(0, true);
                 break;
             case R.id.imageView_right:
-                mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
-                mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
-                mTextViewSubtitle.setText(getString(R.string.terminal_2));
+                setRight();
                 mViewPager.setCurrentItem(1, true);
                 break;
             case R.id.imageView_picture:
@@ -169,5 +166,37 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (position == 0) {
+            setLeft();
+        } else {
+            setRight();
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private void setLeft() {
+        mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_on));
+        mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_off));
+        mTextViewSubtitle.setText(getString(R.string.terminal_1));
+
+    }
+
+    private void setRight() {
+        mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
+        mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
+        mTextViewSubtitle.setText(getString(R.string.terminal_2));
     }
 }

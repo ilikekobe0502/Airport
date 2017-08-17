@@ -36,7 +36,6 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
     private Context mContext;
     private boolean mIsFirst;//判斷是否為第一航廈
     private IOnItemClickListener mListener;
-    private OnImageLoadingListener mLoadingListener;
 
     public AirportFacilityRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -46,12 +45,6 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_airport_facility, parent, false);
         return new ViewHolder(view);
-    }
-
-    interface OnImageLoadingListener {
-        void onSuccess();
-
-        void onError();
     }
 
     @Override

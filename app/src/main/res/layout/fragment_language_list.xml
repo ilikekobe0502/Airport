@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@drawable/all_bg">
+    android:background="@drawable/all_bg"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_width="0dip"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -20,23 +20,24 @@
 
             <ImageView
                 android:id="@+id/img_l1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_l1"
-                android:layout_alignLeft="@+id/img_l1"
                 android:layout_alignBottom="@+id/img_l1"
+                android:layout_alignLeft="@+id/img_l1"
                 android:layout_alignRight="@+id/img_l1"
+                android:layout_alignTop="@+id/img_l1"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="基本會話"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
 
         </RelativeLayout>
 
@@ -52,20 +53,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_l2"
-                android:layout_alignLeft="@+id/img_l2"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_alignBottom="@+id/img_l2"
+                android:layout_alignLeft="@+id/img_l2"
                 android:layout_alignRight="@+id/img_l2"
+                android:layout_alignTop="@+id/img_l2"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="問路"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
 
         </RelativeLayout>
 
@@ -78,23 +80,24 @@
 
             <ImageView
                 android:id="@+id/img_l3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_l3"
-                android:layout_alignLeft="@+id/img_l3"
                 android:layout_alignBottom="@+id/img_l3"
+                android:layout_alignLeft="@+id/img_l3"
                 android:layout_alignRight="@+id/img_l3"
+                android:layout_alignTop="@+id/img_l3"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="交通機關"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -106,23 +109,24 @@
 
             <ImageView
                 android:id="@+id/img_l4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_l4"
-                android:layout_alignLeft="@+id/img_l4"
                 android:layout_alignBottom="@+id/img_l4"
+                android:layout_alignLeft="@+id/img_l4"
                 android:layout_alignRight="@+id/img_l4"
+                android:layout_alignTop="@+id/img_l4"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="旅行社櫃台"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
 
         </RelativeLayout>
 
@@ -130,123 +134,127 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_width="0dip"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginTop="@dimen/dp_pixel_20">
 
             <ImageView
                 android:id="@+id/img_r1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_r1"
-                android:layout_alignLeft="@+id/img_r1"
                 android:layout_alignBottom="@+id/img_r1"
+                android:layout_alignLeft="@+id/img_r1"
                 android:layout_alignRight="@+id/img_r1"
+                android:layout_alignTop="@+id/img_r1"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="租車"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginTop="@dimen/dp_pixel_20">
 
             <ImageView
                 android:id="@+id/img_r2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_r2"
-                android:layout_alignLeft="@+id/img_r2"
                 android:layout_alignBottom="@+id/img_r2"
+                android:layout_alignLeft="@+id/img_r2"
                 android:layout_alignRight="@+id/img_r2"
+                android:layout_alignTop="@+id/img_r2"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="餐飲設施"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginTop="@dimen/dp_pixel_20">
 
             <ImageView
                 android:id="@+id/img_r3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_r3"
-                android:layout_alignLeft="@+id/img_r3"
                 android:layout_alignBottom="@+id/img_r3"
+                android:layout_alignLeft="@+id/img_r3"
                 android:layout_alignRight="@+id/img_r3"
+                android:layout_alignTop="@+id/img_r3"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="住宿設施"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:layout_marginRight="@dimen/dp_pixel_25"
             android:layout_marginTop="@dimen/dp_pixel_20">
 
             <ImageView
                 android:id="@+id/img_r4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_140"
+                android:layout_height="@dimen/dp_pixel_80"
                 android:layout_centerVertical="true"
-                android:src="@drawable/language_05_01_t"
-                />
+                android:src="@drawable/language_05_01_t" />
+
             <TextView
                 android:id="@+id/item_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/img_r4"
-                android:layout_alignLeft="@+id/img_r4"
                 android:layout_alignBottom="@+id/img_r4"
+                android:layout_alignLeft="@+id/img_r4"
                 android:layout_alignRight="@+id/img_r4"
+                android:layout_alignTop="@+id/img_r4"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:gravity="center"
                 android:text="購物"
                 android:textColor="@android:color/white"
-                android:gravity="center"
-                android:textSize="@dimen/sp_pixel_16"/>
+                android:textSize="@dimen/sp_pixel_16" />
 
         </RelativeLayout>
 

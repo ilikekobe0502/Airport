@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PublicToiletFragment extends BaseFragment implements PublicToiletContract.View {
+public class PublicToiletFragment extends BaseFragment implements PublicToiletContract.View, ViewPager.OnPageChangeListener {
     private static final String TAG = PublicToiletFragment.class.getSimpleName();
     @BindView(R.id.textView_subtitle)
     TextView mTextViewSubtitle;
@@ -33,15 +34,19 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     ImageView mImageViewLeft;
     @BindView(R.id.imageView_right)
     ImageView mImageViewRight;
-    @BindView(R.id.webView)
-    WebView mWebView;
-    @BindView(R.id.webView_terminal_two)
-    WebView mWebViewTerminalTwo;
+    //    @BindView(R.id.webView)
+//    WebView mWebView;
+//    @BindView(R.id.webView_terminal_two)
+//    WebView mWebViewTerminalTwo;
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
 
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private PublicToiletContract.Presenter mPresenter;
+
+    private PublicToiletViewPagerAdapter mAdapter;
 
     private AirportFacilityData mTerminalOne;
     private AirportFacilityData mTerminalTwo;
@@ -78,16 +83,10 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
         mLoadingView.showLoadingView();
         mPresenter.getPublicToiletAPI();
 
-        mWebView.getSettings().setBuiltInZoomControls(true);
-        mWebView.getSettings().setDisplayZoomControls(false);
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.setBackgroundColor(0);
-        mWebView.setInitialScale(100);
-        mWebViewTerminalTwo.getSettings().setBuiltInZoomControls(true);
-        mWebViewTerminalTwo.getSettings().setDisplayZoomControls(false);
-        mWebViewTerminalTwo.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebViewTerminalTwo.setBackgroundColor(0);
-        mWebViewTerminalTwo.setInitialScale(100);
+        mAdapter = new PublicToiletViewPagerAdapter(this, mLoadingView);
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(this);
+        setLeftView();
         return view;
     }
 
@@ -134,21 +133,21 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
+                    mAdapter.setData(response);
 
-                    if (!TextUtils.isEmpty(mTerminalOne.getContent())) {
-                        mWebView.loadData(mTerminalOne.getContent(), "text/html; charset=utf-8", "UTF-8");
-                    } else {
-                        Log.e(TAG, "mTerminalTwo.getContent() is error");
-                        showMessage(getString(R.string.data_error));
-                    }
-
-                    if (!TextUtils.isEmpty(mTerminalTwo.getContent())) {
-                        mWebViewTerminalTwo.loadData(mTerminalTwo.getContent(), "text/html; charset=utf-8", "UTF-8");
-                    } else {
-                        Log.e(TAG, "mTerminalTwo.getContent() is error");
-                        showMessage(getString(R.string.data_error));
-                    }
-                    setLeftView();
+//                    if (!TextUtils.isEmpty(mTerminalOne.getContent())) {
+//                        mWebView.loadData(mTerminalOne.getContent(), "text/html; charset=utf-8", "UTF-8");
+//                    } else {
+//                        Log.e(TAG, "mTerminalTwo.getContent() is error");
+//                        showMessage(getString(R.string.data_error));
+//                    }
+//
+//                    if (!TextUtils.isEmpty(mTerminalTwo.getContent())) {
+//                        mWebViewTerminalTwo.loadData(mTerminalTwo.getContent(), "text/html; charset=utf-8", "UTF-8");
+//                    } else {
+//                        Log.e(TAG, "mTerminalTwo.getContent() is error");
+//                        showMessage(getString(R.string.data_error));
+//                    }
                 }
             });
         } else {
@@ -173,35 +172,66 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_left:
-                mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_on));
-                mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_off));
-
+                setLeftImageState();
                 setLeftView();
                 break;
             case R.id.imageView_right:
-                mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
-                mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
+                setLRightImageState();
 
                 setRightView();
                 break;
         }
     }
 
+    private void setLeftImageState() {
+        mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_on));
+        mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_off));
+    }
+
+    private void setLRightImageState() {
+        mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
+        mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
+    }
+
     /**
      * Set left view
      */
     private void setLeftView() {
-        mWebViewTerminalTwo.setVisibility(View.GONE);
-        mWebView.setVisibility(View.VISIBLE);
-        mTextViewSubtitle.setText(!TextUtils.isEmpty(mTerminalOne.getTerminalsName()) ? mTerminalOne.getTerminalsName() : "");
+        mViewPager.setCurrentItem(0, true);
+//        mWebViewTerminalTwo.setVisibility(View.GONE);
+//        mWebView.setVisibility(View.VISIBLE);
+        mTextViewSubtitle.setText(getString(R.string.terminal_1));
     }
 
     /**
      * Set right view
      */
     private void setRightView() {
-        mWebViewTerminalTwo.setVisibility(View.VISIBLE);
-        mWebView.setVisibility(View.GONE);
-        mTextViewSubtitle.setText(!TextUtils.isEmpty(mTerminalTwo.getTerminalsName()) ? mTerminalTwo.getTerminalsName() : "");
+
+        mViewPager.setCurrentItem(1, true);
+//        mWebViewTerminalTwo.setVisibility(View.VISIBLE);
+//        mWebView.setVisibility(View.GONE);
+        mTextViewSubtitle.setText(getString(R.string.terminal_2));
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (position == 0) {
+            setLeftImageState();
+            mTextViewSubtitle.setText(getString(R.string.terminal_1));
+        } else {
+            setLRightImageState();
+            mTextViewSubtitle.setText(getString(R.string.terminal_2));
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
