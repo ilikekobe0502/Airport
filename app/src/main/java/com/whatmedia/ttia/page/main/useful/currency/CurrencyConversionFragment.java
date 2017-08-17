@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CurrencyConversionFragment extends BaseFragment implements CurrencyConversionContract.View,TextView.OnEditorActionListener {
+public class CurrencyConversionFragment extends BaseFragment implements CurrencyConversionContract.View, TextView.OnEditorActionListener, View.OnFocusChangeListener {
     private static final String TAG = CurrencyConversionFragment.class.getSimpleName();
     @BindView(R.id.imageView_source_icon)
     ImageView mImageViewSourceIcon;
@@ -41,8 +41,8 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     TextView mTextViewTargetCode;
     @BindView(R.id.editText_source_amount)
     EditText mEditTextSourceAmount;
-    @BindView(R.id.textView_target_amount)
-    TextView mTextViewTargetAmount;
+    @BindView(R.id.editText_target_amount)
+    TextView mEditTextTargetAmount;
     @BindView(R.id.layout_ok)
     RelativeLayout mLayoutOk;
     @BindView(R.id.number_picker_left)
@@ -54,6 +54,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     private IActivityTools.IMainActivity mMainActivity;
     private CurrencyConversionContract.Presenter mPresenter;
     private ExchangeRateData mExchangeRateData = new ExchangeRateData();
+    private boolean mIsClickBottom;
 
     public CurrencyConversionFragment() {
         // Required empty public constructor
@@ -82,6 +83,10 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
         setTargetState(ExchangeRate.TAG_USD);
 
         mEditTextSourceAmount.setOnEditorActionListener(this);
+        mEditTextTargetAmount.setOnEditorActionListener(this);
+
+        mEditTextSourceAmount.setOnFocusChangeListener(this);
+        mEditTextTargetAmount.setOnFocusChangeListener(this);
         return view;
     }
 
@@ -125,7 +130,10 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    mTextViewTargetAmount.setText(response.getAmount());
+                    if (!mIsClickBottom)
+                        mEditTextTargetAmount.setText(response.getAmount());
+                    else
+                        mEditTextSourceAmount.setText(response.getAmount());
                 }
             });
         } else {
@@ -133,7 +141,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    mTextViewTargetAmount.setText("");
+                    mEditTextTargetAmount.setText("");
                     showMessage(getString(R.string.data_error));
                 }
             });
@@ -147,13 +155,13 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
         mMainActivity.runOnUI(new Runnable() {
             @Override
             public void run() {
-                mTextViewTargetAmount.setText("");
+                mEditTextTargetAmount.setText("");
                 showMessage(getString(R.string.data_error));
             }
         });
     }
 
-    @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_ok})
+    @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_ok, R.id.editText_target_amount})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_source_icon:
@@ -175,6 +183,8 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
                     mLayoutSelector.setVisibility(View.VISIBLE);
                     setPicker(false);
                 }
+                break;
+            case R.id.editText_target_amount:
                 break;
 //            case R.id.layout_translate:
 //                mLayoutSelector.setVisibility(View.GONE);
@@ -198,9 +208,15 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             mLoadingView.showLoadingView();
 
             ExchangeRateData data = new ExchangeRateData();
-            data.setSource(mTextViewSourceCode.getText().toString());
-            data.setTarget(mTextViewTargetCode.getText().toString());
-            data.setAmount(mEditTextSourceAmount.getText().toString());
+            if (!mIsClickBottom) {
+                data.setSource(mTextViewSourceCode.getText().toString());
+                data.setTarget(mTextViewTargetCode.getText().toString());
+                data.setAmount(mEditTextSourceAmount.getText().toString());
+            } else {
+                data.setSource(mTextViewTargetCode.getText().toString());
+                data.setTarget(mTextViewSourceCode.getText().toString());
+                data.setAmount(mEditTextTargetAmount.getText().toString());
+            }
             mPresenter.getExchangeRate(data);
         } else {
             Log.d(TAG, "some data not ok");
@@ -281,7 +297,8 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         getTransAPI();
-        Log.d("TAG","event = " + event + "actid = " + actionId);
+        Util.hideSoftKeyboard(v);
+        Log.d("TAG", "event = " + event + "actid = " + actionId);
 //        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
 //                event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 //            if (!event.isShiftPressed()) {
@@ -290,5 +307,17 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
 //            }
 //        }
         return true;
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.editText_source_amount:
+                mIsClickBottom = false;
+                break;
+            case R.id.editText_target_amount:
+                mIsClickBottom = true;
+                break;
+        }
     }
 }
