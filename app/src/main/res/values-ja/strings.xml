@@ -591,6 +591,7 @@
     <string name="useful_quest_des">説明：非常に不満1分、非常に満足2点、3点、通常、\ nは4点に満足し、5点に満足していません。</string>
     <string name="useful_quest_number">問題</string>
     <string name="useful_quest_send">アウト</string>
+    <string name="useful_quest_send_message">アンケートの結果は、正常に送信されてきた、あなたの塗りつぶしをありがとう！</string>
 
     <!-- Timezone -->
     <string name="timezone_other_area">"その他の地域"</string>

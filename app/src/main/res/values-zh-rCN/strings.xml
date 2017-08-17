@@ -591,6 +591,7 @@
     <string name="useful_quest_des">说明:非常不满意1分、不满意2分、普通3分、\n满意4分、非常满意5分。</string>
     <string name="useful_quest_number">问题</string>
     <string name="useful_quest_send">送出</string>
+    <string name="useful_quest_send_message">问卷结果已成功送出，感谢您的填写！</string>
 
     <!-- Timezone -->
     <string name="timezone_other_area">"其他地区"</string>

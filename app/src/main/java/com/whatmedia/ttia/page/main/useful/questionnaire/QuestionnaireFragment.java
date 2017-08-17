@@ -147,7 +147,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
             public void run() {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.note)
-                        .setMessage(R.string.no_search_store)
+                        .setMessage(R.string.useful_quest_send_message )
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

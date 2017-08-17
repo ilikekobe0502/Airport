@@ -591,6 +591,7 @@
     <string name="useful_quest_des">Description: very dissatisfied with 1 point, not satisfied with 2 points, ordinary 3 points, \ n satisfaction 4 points, very satisfied with 5 points.</string>
     <string name="useful_quest_number">problem</string>
     <string name="useful_quest_send">Sent out</string>
+    <string name="useful_quest_send_message">The questionnaire results have been successfully sent, thanks for your fill!</string>
 
     <!-- Timezone -->
     <string name="timezone_other_area">"other areas"</string>

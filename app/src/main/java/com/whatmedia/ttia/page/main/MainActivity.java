@@ -242,7 +242,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         .setBackIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.refresh))
                         .setLeftText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
                         .setLeftIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.up))
-                        .setRightText(getString(R.string.home_more_flights))
+                        .setRightText(getString(R.string.home_more))
                         .setMoreIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.home_more))
                         .setOnMoreClickListener(new MyToolbar.OnClickListener() {
                             @Override
