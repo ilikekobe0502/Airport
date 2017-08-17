@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.ApiConnect;
@@ -35,6 +36,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
     private Context mContext;
     private boolean mIsFirst;//判斷是否為第一航廈
     private IOnItemClickListener mListener;
+    private OnImageLoadingListener mLoadingListener;
 
     public AirportFacilityRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -46,8 +48,14 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         return new ViewHolder(view);
     }
 
+    interface OnImageLoadingListener {
+        void onSuccess();
+
+        void onError();
+    }
+
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         AirportFacilityData item;
         if (mIsFirst) {
             if (mFirstItems == null)
@@ -70,7 +78,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
             String imageUrl = ApiConnect.TAG_IMAGE_HOST + item.getMainImgPath();
             Log.d(TAG, imageUrl);
-            Picasso.with(mContext).load(imageUrl).into(holder.mImageViewPicture);
+            Picasso.with(mContext).load(imageUrl).placeholder(R.drawable.ic_loop_white_48dp).into(holder.mImageViewPicture);
         } else
             holder.mImageViewPicture.setVisibility(View.INVISIBLE);
 

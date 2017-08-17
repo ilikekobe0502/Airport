@@ -1,14 +1,10 @@
 package com.whatmedia.ttia.page.main.terminals.facility;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AirportFacilityFragment extends BaseFragment implements AirportFacilityContract.View, IOnItemClickListener {
+public class AirportFacilityFragment extends BaseFragment implements AirportFacilityContract.View, IOnItemClickListener{
     private static final String TAG = AirportFacilityFragment.class.getSimpleName();
     @BindView(R.id.textView_subtitle)
     TextView mTextViewSubtitle;
@@ -38,16 +34,18 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     ImageView mImageViewLeft;
     @BindView(R.id.imageView_right)
     ImageView mImageViewRight;
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    //    @BindView(R.id.recyclerView)
+//    RecyclerView mRecyclerView;
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
 
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private AirportFacilityContract.Presenter mPresenter;
 
-    private AirportFacilityRecyclerViewAdapter mAdapter;
-    private boolean mIsZoomIn = false;
+//    private AirportFacilityRecyclerViewAdapter mAdapter;
+    private AirportFacilityViewPagerAdapter mViewPagerAdapter = new AirportFacilityViewPagerAdapter();
 
     public AirportFacilityFragment() {
         // Required empty public constructor
@@ -81,10 +79,15 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
         mLoadingView.showLoadingView();
         mPresenter.getAirportFacilityAPI();
 
-        mAdapter = new AirportFacilityRecyclerViewAdapter(getContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnclickListener(this);
+        mTextViewSubtitle.setText(getString(R.string.terminal_1));
+
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPagerAdapter.setClickListener(this);
+
+//        mAdapter = new AirportFacilityRecyclerViewAdapter(getContext());
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        mRecyclerView.setAdapter(mAdapter);
+//        mAdapter.setOnclickListener(this);
 
         return view;
     }
@@ -128,7 +131,8 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
         mMainActivity.runOnUI(new Runnable() {
             @Override
             public void run() {
-                mTextViewSubtitle.setText(mAdapter.setData(response));
+                mViewPagerAdapter.setData(response);
+//                mTextViewSubtitle.setText(mAdapter.setData(response));
             }
         });
     }
@@ -144,12 +148,14 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
             case R.id.imageView_left:
                 mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_on));
                 mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_off));
-                mTextViewSubtitle.setText(mAdapter.setTerminal(true));
+                mTextViewSubtitle.setText(getString(R.string.terminal_1));
+                mViewPager.setCurrentItem(0, true);
                 break;
             case R.id.imageView_right:
                 mImageViewLeft.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.left_off));
                 mImageViewRight.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.right_on));
-                mTextViewSubtitle.setText(mAdapter.setTerminal(false));
+                mTextViewSubtitle.setText(getString(R.string.terminal_2));
+                mViewPager.setCurrentItem(1, true);
                 break;
             case R.id.imageView_picture:
                 if (view.getTag() != null && view.getTag() instanceof AirportFacilityData) {
