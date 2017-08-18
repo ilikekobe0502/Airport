@@ -207,7 +207,7 @@
     <string name="cannot_obtain_information">无法获取资料</string>
     <string name="getactivity">您随时可以在「实用资讯」->「问卷调查」页面中参加此抽奖活动</string>
     <string name="activity_title">送你智慧手机</string>
-    
+
     <string name="join_now">立即參加</string>
     <string name="next_time">下次再說</string>
     <string name="city">城市</string>
@@ -593,6 +593,7 @@
     <string name="useful_quest_number">问题</string>
     <string name="useful_quest_send">送出</string>
     <string name="useful_quest_send_message">问卷结果已成功送出，感谢您的填写！</string>
+    <string name="useful_quest_no_finish">尚有题目未填写</string>
 
     <!-- Timezone -->
     <string name="timezone_other_area">"其他地区"</string>
@@ -679,6 +680,8 @@
     <string name="my_flights_notify_message">"%1$s,%2$s班机于%3$s飞往%4$s"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
+    <string name="my_flights_notify_delete_check_message">"确定要删除提醒?"</string>
+    <string name="my_flights_notify_delete_button">"删除提醒"</string>
 
     <!-- Currency conversion -->
     <string name="currency_conversion_aud">"AUD"</string>
@@ -718,4 +721,16 @@
     <string name="souvenir_detail_address">地址：</string>
     <string name="souvenir_detail_time">营业时间：</string>
     <string name="souvenir_detail_phone">电话：</string>
+
+    <!-- Other -->
+    <string name="controlled_area">管制区</string>
+    <string name="uncontrolled_area">非管制区</string>
+    <string name="floor_1">1楼</string>
+    <string name="floor_2">2楼</string>
+    <string name="floor_3">3楼</string>
+    <string name="floor_4">4楼</string>
+    <string name="floor_b1">B1</string>
+    <string name="floor_b2">B2</string>
+    <string name="satisfaction_with_taoyuan_airport">对桃园机场的整体满意度?</string>
+    <string name="sign_at_taoyuan_airport">对桃园机场方向的指示满意度?</string>
 </resources>
