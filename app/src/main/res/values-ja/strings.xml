@@ -12,7 +12,7 @@
 
     <string name="navi_btn_back">返し</string>
     <string name="navi_title_menu">メニュー</string>
-    <string name="tableview_header_takeoff">%s離陸</string>
+    <string name="tableview_header_takeoff">%s出発便</string>
     <string name="tableview_header_arrival">%s到着</string>
 
     <string name="cell_terminal">T.</string>
@@ -100,7 +100,7 @@
     <string name="title_parking">駐車場</string>
     <string name="title_restroom">トイレ</string>
     <string name="title_parking_infomation">パーキング</string>
-    <string name="title_road_rescue">ロードサービス</string>
+    <string name="title_road_rescue">道路救援</string>
     <string name="title_tourist_bus">連絡バス</string>
     <string name="title_tram_car">電車</string>
     <string name="title_airport_bus">バス</string>
@@ -144,7 +144,7 @@
     <string name="flight_state_on_time">オンタイム</string>
     <string name="flight_state_departed">出発する</string>
 
-    <string name="marquee_parking_info">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！%s</string>
+    <string name="marquee_parking_info">マイカー族にうれしいお知らせ！第1、第2ターミナルの駐車場は最初の30分が無料、しかも空港の公式サイトで混雑度と残り駐車枠数を確認できるので、お迎えの方々はぜひ、ご利用ください。%s</string>
     <string name="marquee_my_flight_emprt">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          あなたは、どのフライトを保存しません！あなたは、ホームページまたはフライト検索結果に飛行リストを押すことでフライトを追加することができます！          </string>
     <string name="marquee_my_flight_arrival">          出発地：      到着予定時刻：        状況：     実際の到着時刻：        ターミナル：     手荷物受取：  </string>
     <string name="marquee_my_flight_takeoff">          目的地：      出発予定時刻 ：        状況：     実際の出発時間：        ターミナル：     ゲート：     チェックインカウンター：  </string>
@@ -165,7 +165,7 @@
 
     <string name="cannot_retrived_the_flight_information_due_to_network_issue">ネットワークの問題が原因フライト情報を取得できません。</string>
     <string name="cannot_retrived_the_information_due_to_network_issue">ネットワークの問題に起因した情報を取得できません。</string>
-    <string name="no_flight_information_found">いいえフライト情報が見つかりませんでした。</string>
+    <string name="no_flight_information_found">ヒットした便名はありませんでした</string>
 
     <string name="terminal_1">第一ターミナル</string>
     <string name="terminal_2">第二ターミナル</string>
@@ -213,10 +213,10 @@
     <string name="city">シティ</string>
 
     <!--  foreignLanguage  -->
-    <string name="zhtw">繁體中文</string>
-    <string name="zhcn">简体中文</string>
+    <string name="zhtw">繁体字中国語</string>
+    <string name="zhcn">簡体字中国語</string>
     <string name="ja">日本語</string>
-    <string name="en">English</string>
+    <string name="en">英語</string>
 
     <string name="app_name">Smart Airport</string>
 
@@ -571,9 +571,10 @@
 
     <!-- communication -->
     <string name="internation_title">国際電話は道を呼び出します</string>
-    <string name="roaming_service_title">モバイルインターネットのローミング</string>
-    <string name="roaming_service_des">あなたの計画のために最も適したを選択し、様々なローミングサービスをご参照ください：</string>
-    <string name="roaming_detail_query">ローミングソリューションクエリ</string>
+    <string name="roaming_service_title">ローミングによるネット接続サービス</string>
+    <string name="roaming_service_des">各社のサービス案を参考に、最適のパッケージ案をお選びください：</string>
+    <string name="roaming_detail_query">ローミングサービス検索</string>
+    <string name="communication_time">サービス時間</string>
 
     <!-- Store Offers -->
     <string name="store_offers_info">"店舗情報"</string>
@@ -587,7 +588,7 @@
     <string name="restaurant_store_search_result_subtitle">メッセージストア</string>
 
     <!-- Useful questionnaire -->
-    <string name="useful_quest_title">アンケートに記入</string>
+    <string name="useful_quest_title">アンケートに答える</string>
     <string name="useful_quest_des">説明：非常に不満1分、非常に満足2点、3点、通常、\ nは4点に満足し、5点に満足していません。</string>
     <string name="useful_quest_number">問題</string>
     <string name="useful_quest_send">アウト</string>
@@ -598,30 +599,34 @@
     <string name="timezone_other_area_dialog_title">"地域を選択してください"</string>
 
     <!-- Restaurant & Store search -->
-    <string name="restaurant_search_subtitle">レストランのお問い合わせ</string>
+    <string name="restaurant_search_subtitle">レストラン検索</string>
     <string name="restaurant_store_search_subtitle">店舗検索</string>
     <string name="restaurant_store_search_select_terminal">ターミナルを選択</string>
-    <string name="restaurant_store_search_non_select_terminal">かかわらず、ターミナル</string>
-    <string name="restaurant_store_search_select_terminal_title">ターミナルを選択してください</string>
+    <string name="restaurant_store_search_non_select_terminal">ターミナルで区別しない</string>
+    <string name="restaurant_store_search_select_terminal_title">ターミナルで検索</string>
     <string name="restaurant_store_search_select_area">エリアを選択</string>
-    <string name="restaurant_store_search_non_select_area">地域にかかわらず</string>
-    <string name="restaurant_store_search_select_area_title">地域を選択してください</string>
+    <string name="restaurant_store_search_non_select_area">エリアで区別しない</string>
+    <string name="restaurant_store_search_select_area_title">エリアで検索</string>
     <string name="restaurant_store_search_select_floor">選択階</string>
-    <string name="restaurant_store_search_non_select_floor">かかわらず、床の</string>
-    <string name="restaurant_store_search_select_floor_title">選択階</string>
+    <string name="restaurant_store_search_non_select_floor">フロアで区別しない</string>
+    <string name="restaurant_store_search_select_floor_title">フロアで検索</string>
     <string name="restaurant_store_search_select_kind_of_restaurant">レストランの種類を選択</string>
-    <string name="restaurant_store_search_non_select_kind_of_restaurant">かかわらず、レストランのタイプの</string>
-    <string name="restaurant_store_search_select_kind_of_restaurant_title">レストランの種類を選択してください</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">レストランの種類で区別しない</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">レストランの種類で検索</string>
     <string name="restaurant_store_search_select_kind_of_store_title">店舗の種類を選択してください</string>
-    <string name="restaurant_store_search_non_select_kind_of_store_title">かかわらず、店舗の選択のタイプの</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">ストアの種類で区別しない</string>
+    <string name="restaurant_store_search_not_found">ヒットしたレストランはありませんでした</string>
+    <string name="restaurant_store_search_not_found_store">ヒットしたストアはありませんでした</string>
 
     <!-- My Flights -->
-    <string name="my_flights_delete_message">飛行を削除OK？</string>
+    <string name="my_flights_delete_message">調べたい便名、航空会社、または空港コードを入力してください？</string>
+    <string name="my_flights_delete">便名の削除</string>
+    <string name="my_flights_expired">この便は運行されていません</string>
 
     <!-- Flights search -->
-    <string name="flights_search_footer_hint">街を知るには、コード便、航空会社やキーワードを入力してください</string>
+    <string name="flights_search_footer_hint">調べたい便名、航空会社、または空港コードを入力してください</string>
     <string name="flights_search_search">検索</string>
-    <string name="flights_search_edit_text_hint">キーワードを入力してください。</string>
+    <string name="flights_search_edit_text_hint">キーワード入力</string>
     <string name="flights_search_not_found_flights_message">いいえ飛行ん</string>
 
     <!-- Comment -->
@@ -638,19 +643,19 @@
 
     <!-- Home -->
     <string name="home_weather_title">天気情報</string>
-    <string name="home_more">もっと</string>
+    <string name="home_more">もっと見る</string>
     <string name="home_more_flights">その他の便</string>
     <string name="home_terminal_info_title">ターミナル情報</string>
     <string name="home_store_offers_title">店舗申し出</string>
     <string name="home_language_setting_title">言語設定</string>
-    <string name="home_airport_secretary_title">空港秘書</string>
-    <string name="home_indoor_map_title">インドアマップのナビ</string>
-    <string name="home_airport_achievement_title">空港達成</string>
+    <string name="home_airport_secretary_title">空港セクレタリー</string>
+    <string name="home_indoor_map_title">室内ガイド</string>
+    <string name="home_airport_achievement_title">空港としての成就</string>
 
     <!-- Parking info -->
-    <string name="parking_info_parking_space_much">"十分な駐車スペース"</string>
-    <string name="parking_info_parking_space_enough">"駐車スペースがあります。"</string>
-    <string name="parking_info_parking_space_full">"駐車場がいっぱいです"</string>
+    <string name="parking_info_parking_space_much">"空きスペースが十分にあります"</string>
+    <string name="parking_info_parking_space_enough">"駐車場が混雑しています"</string>
+    <string name="parking_info_parking_space_full">"駐車場が満車です"</string>
     <string name="parking_info_parking_space_number_of">"そこ%s"</string>
     <string name="parking_info_parking_space_full_state">"いっぱい"</string>
     <string name="parking_info_parking_space_P1">"P1"</string>
@@ -658,6 +663,9 @@
     <string name="parking_info_parking_space_P4">"P4"</string>
     <string name="parking_info_parking_space_1F">"(1F)"</string>
     <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+    <string name="parking_info_plenty">"空車"</string>
+    <string name="parking_info_full">"満車"</string>
+    <string name="parking_info_still_available">"混雑"</string>
 
     <!-- Flights search result -->
     <string name="flights_search_result_terminal_text">ターミナル</string>
@@ -699,13 +707,15 @@
 
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"あなたは必ず%sに切り替えたいです?"</string>
-    <string name="language_setting_select_confirm_dialog">"これは、%sの言語に設定されています"</string>
+    <string name="language_setting_select_confirm_dialog">"言語が%sに設定されました"</string>
+    <string name="language_setting_japanese">"日本語"</string>
+    <string name="language_setting_english">"英語"</string>
 
     <string name="store_terminal_1">T1</string>
     <string name="store_terminal_2">T2</string>
 
     <!-- SouvenirArea -->
-    <string name="souvenir_button_des">DESC。</string>
+    <string name="souvenir_button_des">商品説明</string>
     <string name="souvenir_detail_address">アドレス：</string>
     <string name="souvenir_detail_time">営業時間：</string>
     <string name="souvenir_detail_phone">電話番号：</string>

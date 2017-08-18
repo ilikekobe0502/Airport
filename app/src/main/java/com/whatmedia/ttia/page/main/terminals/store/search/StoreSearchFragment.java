@@ -243,11 +243,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         switch (view.getId()) {
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
-                if (mFromPage==Page.TAG_STORE_OFFERS) {
+                if (mFromPage == Page.TAG_STORE_OFFERS) {
                     mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
                             mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mStoreCodeData != null ? mStoreCodeData.getStoreTypeId() : ""
                             , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
-                }else {
+                } else {
                     mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
                             mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : ""
                             , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
@@ -323,7 +323,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 dialog.show(getActivity().getFragmentManager(), "dialog");
                 break;
             case R.id.textView_restaurant:
-                if (mFromPage == Page.TAG_STORE_OFFERS ){
+                if (mFromPage == Page.TAG_STORE_OFFERS) {
                     dialog = MyStoreDialog.newInstance()
                             .setTitle(getString(R.string.restaurant_store_search_select_kind_of_store_title))
                             .setCancelClickListener(new IOnItemClickListener() {
@@ -345,7 +345,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             })
                             .setStoreCodeData(mStoreCodeList);
                     dialog.show(getActivity().getFragmentManager(), "dialog");
-                }else {
+                } else {
 
                     dialog = MyStoreDialog.newInstance()
                             .setTitle(getString(R.string.restaurant_store_search_select_kind_of_restaurant_title))
@@ -382,7 +382,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             public void run() {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.note)
-                        .setMessage(R.string.data_not_found)
+                        .setMessage(mFromPage == Page.TAG_STORE_OFFERS ? R.string.restaurant_store_search_not_found_store : R.string.restaurant_store_search_not_found)
                         .setPositiveButton(R.string.ok, null)
                         .show();
             }

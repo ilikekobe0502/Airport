@@ -12,7 +12,7 @@
 
     <string name="navi_btn_back">Back</string>
     <string name="navi_title_menu">Menu</string>
-    <string name="tableview_header_takeoff">%sDeparture</string>
+    <string name="tableview_header_takeoff">%s Departing flights</string>
     <string name="tableview_header_arrival">%sArrival</string>
 
     <string name="cell_terminal">T.</string>
@@ -100,7 +100,7 @@
     <string name="title_parking">Parking Lot</string>
     <string name="title_restroom">Restroom</string>
     <string name="title_parking_infomation">Parking</string>
-    <string name="title_road_rescue">Roadside Assistance</string>
+    <string name="title_road_rescue">Emergency road assistance</string>
     <string name="title_tourist_bus">Shuttle Bus</string>
     <string name="title_tram_car">Terminal Transit</string>
     <string name="title_airport_bus">City Bus</string>
@@ -144,7 +144,7 @@
     <string name="flight_state_on_time">On Time</string>
     <string name="flight_state_departed">Departed</string>
 
-    <string name="marquee_parking_info">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！%s</string>
+    <string name="marquee_parking_info">Conveniences for persons driving to the airport～ Apart from a free first 30 minutes of parking in the Terminal 1 and 2 parking areas, you can also check the number of open parking spaces on the airport website at any time—We encourage motorists picking up and taking people to the airport to make use of this feature!%s</string>
     <string name="marquee_my_flight_emprt">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          You have not saved any flight yet! You can add the flight by pressing the flight list in home page or flight search result!          </string>
     <string name="marquee_my_flight_arrival">          From：      Expected Arrival Time：        Status：     Actual Arrival Time：        Terminal：     Baggage Carousel：  </string>
     <string name="marquee_my_flight_takeoff">          To：      Expected Takeoff Time ：        Status：     Actual Takeoff Time：        Terminal：     Gate：     Checkin Counter：  </string>
@@ -165,7 +165,7 @@
 
     <string name="cannot_retrived_the_flight_information_due_to_network_issue">Cannot retrieve the flight information due to network issue.</string>
     <string name="cannot_retrived_the_information_due_to_network_issue">Cannot retrieve the information due to network issue.</string>
-    <string name="no_flight_information_found">No flight information found.</string>
+    <string name="no_flight_information_found">No applicable flights.</string>
 
     <string name="terminal_1">Terminal 1</string>
     <string name="terminal_2">Terminal 2</string>
@@ -213,9 +213,9 @@
     <string name="city">City</string>
 
     <!--  foreignLanguage  -->
-    <string name="zhtw">繁體中文</string>
-    <string name="zhcn">简体中文</string>
-    <string name="ja">日本語</string>
+    <string name="zhtw">traditional Chinese</string>
+    <string name="zhcn">simplified Chinese</string>
+    <string name="ja">Japanese</string>
     <string name="en">English</string>
 
     <string name="app_name">Smart Airport</string>
@@ -571,9 +571,10 @@
 
     <!-- communication -->
     <string name="internation_title">International telephone call mode</string>
-    <string name="roaming_service_title">Roaming action online</string>
-    <string name="roaming_service_des">Please refer to the various roaming services, select the most suitable for your tariff program:</string>
-    <string name="roaming_detail_query">Roaming program inquiries</string>
+    <string name="roaming_service_title">Roaming mobile Internet</string>
+    <string name="roaming_service_des">companies roaming services to select the fee plan most suitable for you:</string>
+    <string name="roaming_detail_query">Roaming plan queries</string>
+    <string name="communication_time">Service hours</string>
 
     <!-- Store Offers -->
     <string name="store_offers_info">"Store information"</string>
@@ -587,7 +588,7 @@
     <string name="restaurant_store_search_result_subtitle">Store message</string>
 
     <!-- Useful questionnaire -->
-    <string name="useful_quest_title">Fill in the questionnaire</string>
+    <string name="useful_quest_title">Fill out questionnaire</string>
     <string name="useful_quest_des">Description: very dissatisfied with 1 point, not satisfied with 2 points, ordinary 3 points, \ n satisfaction 4 points, very satisfied with 5 points.</string>
     <string name="useful_quest_number">problem</string>
     <string name="useful_quest_send">Sent out</string>
@@ -598,30 +599,34 @@
     <string name="timezone_other_area_dialog_title">"please select the region"</string>
 
     <!-- Restaurant & Store search -->
-    <string name="restaurant_search_subtitle">Restaurant inquiries</string>
+    <string name="restaurant_search_subtitle">Restaurant queries</string>
     <string name="restaurant_store_search_subtitle">Store inquiries</string>
     <string name="restaurant_store_search_select_terminal">Choose the terminal</string>
-    <string name="restaurant_store_search_non_select_terminal">Regardless of the terminal</string>
-    <string name="restaurant_store_search_select_terminal_title">Please choose the terminal</string>
+    <string name="restaurant_store_search_non_select_terminal">Any terminal</string>
+    <string name="restaurant_store_search_select_terminal_title">Please select terminal</string>
     <string name="restaurant_store_search_select_area">Select area</string>
-    <string name="restaurant_store_search_non_select_area">Regardless of area</string>
-    <string name="restaurant_store_search_select_area_title">Please select area</string>
+    <string name="restaurant_store_search_non_select_area">Any zone</string>
+    <string name="restaurant_store_search_select_area_title">Please select zone</string>
     <string name="restaurant_store_search_select_floor">Choose floor</string>
-    <string name="restaurant_store_search_non_select_floor">Regardless of floor</string>
-    <string name="restaurant_store_search_select_floor_title">Please choose floor</string>
+    <string name="restaurant_store_search_non_select_floor">Any floor</string>
+    <string name="restaurant_store_search_select_floor_title">Please select floor</string>
     <string name="restaurant_store_search_select_kind_of_restaurant">Choose the type of restaurant</string>
-    <string name="restaurant_store_search_non_select_kind_of_restaurant">Regardless of restaurant type</string>
-    <string name="restaurant_store_search_select_kind_of_restaurant_title">Please choose the type of restaurant</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">Any restaurant type</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">Please select restaurant type</string>
     <string name="restaurant_store_search_select_kind_of_store_title">Please select the store type</string>
-    <string name="restaurant_store_search_non_select_kind_of_store_title">Do not sort the store type</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">Any shop type</string>
+    <string name="restaurant_store_search_not_found">No applicable restaurants</string>
+    <string name="restaurant_store_search_not_found_store">No applicable shops</string>
 
     <!-- My Flights -->
-    <string name="my_flights_delete_message">Are you sure to delete the flight?</string>
+    <string name="my_flights_delete_message">Confirm deletion of flight？</string>
+    <string name="my_flights_delete">Delete flight</string>
+    <string name="my_flights_expired">Flight late</string>
 
     <!-- Flights search -->
-    <string name="flights_search_footer_hint">Please enter the flight code, airline or city keyword you want to inquire about</string>
+    <string name="flights_search_footer_hint">Please enter the desired flight code, airline, or city keyword</string>
     <string name="flights_search_search">search</string>
-    <string name="flights_search_edit_text_hint">Please enter key words</string>
+    <string name="flights_search_edit_text_hint">Please enter keyword</string>
     <string name="flights_search_not_found_flights_message">Can not find flight</string>
 
     <!-- Comment -->
@@ -645,13 +650,13 @@
     <string name="home_store_offers_title">Store offers</string>
     <string name="home_language_setting_title">Language setting</string>
     <string name="home_airport_secretary_title">Airport secretary</string>
-    <string name="home_indoor_map_title">Indoor map navigation</string>
+    <string name="home_indoor_map_title">Interior guide</string>
     <string name="home_airport_achievement_title">Airport achievements</string>
 
     <!-- Parking info -->
-    <string name="parking_info_parking_space_much">"Plenty of parking spaces"</string>
-    <string name="parking_info_parking_space_enough">"There are parking spaces"</string>
-    <string name="parking_info_parking_space_full">"The parking spaces are full"</string>
+    <string name="parking_info_parking_space_much">"Plenty of parking available"</string>
+    <string name="parking_info_parking_space_enough">"Parking still available"</string>
+    <string name="parking_info_parking_space_full">"Parking full"</string>
     <string name="parking_info_parking_space_number_of">"There are still%s"</string>
     <string name="parking_info_parking_space_full_state">"Is full"</string>
     <string name="parking_info_parking_space_P1">"P1"</string>
@@ -659,6 +664,9 @@
     <string name="parking_info_parking_space_P4">"P4"</string>
     <string name="parking_info_parking_space_1F">"(1F)"</string>
     <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+    <string name="parking_info_plenty">"Plenty"</string>
+    <string name="parking_info_full">"Full"</string>
+    <string name="parking_info_still_available">"Still available"</string>
 
     <!-- Flights search result -->
     <string name="flights_search_result_terminal_text">Terminal</string>
@@ -700,13 +708,15 @@
 
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"Are you sure you want to switch to %s?"</string>
-    <string name="language_setting_select_confirm_dialog">"Has been set to %s language"</string>
+    <string name="language_setting_select_confirm_dialog">"Language has been set as %s"</string>
+    <string name="language_setting_japanese">"Japanese"</string>
+    <string name="language_setting_english">"English"</string>
 
     <string name="store_terminal_1">T1</string>
     <string name="store_terminal_2">T2</string>
 
     <!-- SouvenirArea -->
-    <string name="souvenir_button_des">Product description</string>
+    <string name="souvenir_button_des">Product instructions</string>
     <string name="souvenir_detail_address">Address：</string>
     <string name="souvenir_detail_time">Business hours：</string>
     <string name="souvenir_detail_phone">Phone：</string>

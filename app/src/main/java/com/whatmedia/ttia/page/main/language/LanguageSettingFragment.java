@@ -110,8 +110,21 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
     public void onClick(View view) {
         if (view.getTag() instanceof LanguageSetting) {
             final LanguageSetting setting = (LanguageSetting) view.getTag();
-            final String string = getString(setting.getTitle());
+            String string = "";
+            switch (setting.ordinal()) {
+                case 0:
+                case 1:
+                    string = getString(setting.getTitle());
+                    break;
+                case 2:
+                    string = getString(R.string.language_setting_english);
+                    break;
+                case 3:
+                    string = getString(R.string.language_setting_japanese);
+                    break;
+            }
 
+            final String finalString = string;
             new AlertDialog.Builder(getContext())
                     .setTitle(R.string.note)
                     .setMessage(getString(R.string.language_setting_select_dialog, string))
@@ -121,7 +134,7 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
                             Preferences.saveLocaleSetting(getContext(), setting.getLocale().toString());
                             new AlertDialog.Builder(getContext())
                                     .setTitle(R.string.note)
-                                    .setMessage(getString(R.string.language_setting_select_confirm_dialog, string))
+                                    .setMessage(getString(R.string.language_setting_select_confirm_dialog, finalString))
                                     .setPositiveButton(R.string.alert_btn_ok, null)
                                     .show();
 //                            mAdapter.setData();

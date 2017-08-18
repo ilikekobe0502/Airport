@@ -100,7 +100,7 @@
     <string name="title_parking">停车场</string>
     <string name="title_restroom">公共厕所</string>
     <string name="title_parking_infomation">停车资讯</string>
-    <string name="title_road_rescue">道路救援服务</string>
+    <string name="title_road_rescue">道路救援</string>
     <string name="title_tourist_bus">巡回巴士</string>
     <string name="title_tram_car">电车</string>
     <string name="title_airport_bus">机场巴士</string>
@@ -144,7 +144,7 @@
     <string name="flight_state_on_time">准时</string>
     <string name="flight_state_departed">已飞</string>
 
-    <string name="marquee_parking_info">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！%s</string>
+    <string name="marquee_parking_info">开车到机场的朋友有福了～ 第1、2航厦内的停车场除了享有前30分钟免费停车，现在也可以在机场官网上查询剩余车位，随时掌握车位动态，接送机的朋友可以多多利用喔！%s</string>
     <string name="marquee_my_flight_emprt">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          您尚未储存任何航班资讯，请透过航班资讯，将你欲搭乘的航班新增至我的航班。          </string>
     <string name="marquee_my_flight_arrival">          飞自     预计时间：        状态：     实际时间：        航厦：     行李转盘：  </string>
     <string name="marquee_my_flight_takeoff">          飞往     预计时间：        状态：     实际时间：        航厦：     登机门：     报到柜台：  </string>
@@ -213,10 +213,10 @@
     <string name="city">城市</string>
 
     <!--  foreignLanguage  -->
-    <string name="zhtw">繁體中文</string>
+    <string name="zhtw">繁体中文</string>
     <string name="zhcn">简体中文</string>
-    <string name="ja">日本語</string>
-    <string name="en">English</string>
+    <string name="ja">日语</string>
+    <string name="en">英语</string>
 
     <string name="app_name">台湾智慧机场</string>
 
@@ -574,6 +574,7 @@
     <string name="roaming_service_title">漫游行动上网</string>
     <string name="roaming_service_des">请参考各家漫游服务，选择最适合您的资费方案：</string>
     <string name="roaming_detail_query">漫游方案查询</string>
+    <string name="communication_time">服务时间</string>
 
     <!-- Store Offers -->
     <string name="store_offers_info">"商店资讯"</string>
@@ -600,23 +601,26 @@
     <!-- Restaurant & Store search -->
     <string name="restaurant_search_subtitle">餐厅查询</string>
     <string name="restaurant_store_search_subtitle">商店查询</string>
-    <string name="restaurant_store_search_select_terminal">选择航厦</string>
+    <string name="restaurant_store_search_select_terminal">请选择航厦</string>
     <string name="restaurant_store_search_non_select_terminal">不分航厦</string>
     <string name="restaurant_store_search_select_terminal_title">请选择航厦</string>
-    <string name="restaurant_store_search_select_area">选择区域</string>
+    <string name="restaurant_store_search_select_area">请选择区域</string>
     <string name="restaurant_store_search_non_select_area">不分区域</string>
     <string name="restaurant_store_search_select_area_title">请选择区域</string>
-    <string name="restaurant_store_search_select_floor">选择楼层</string>
+    <string name="restaurant_store_search_select_floor">请选择楼层</string>
     <string name="restaurant_store_search_non_select_floor">不分楼层</string>
     <string name="restaurant_store_search_select_floor_title">请选择楼层</string>
-    <string name="restaurant_store_search_select_kind_of_restaurant">选择餐厅种类</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐厅种类</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">请选择餐厅种类</string>
     <string name="restaurant_store_search_select_kind_of_store_title">请选择商店类型</string>
-    <string name="restaurant_store_search_non_select_kind_of_store_title">不分择商店类型</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">不分商店种类</string>
+    <string name="restaurant_store_search_not_found">查无符合的餐厅</string>
+    <string name="restaurant_store_search_not_found_store">查无符合的商店</string>
 
     <!-- My Flights -->
-    <string name="my_flights_delete_message">确定删除航班吗？</string>
+    <string name="my_flights_delete_message">确定要删除我的航班？</string>
+    <string name="my_flights_delete">删除航班</string>
+    <string name="my_flights_expired">航班已过期</string>
 
     <!-- Flights search -->
     <string name="flights_search_footer_hint">请输入欲查询之航班代号、航空公司或城市关键字</string>
@@ -644,7 +648,7 @@
     <string name="home_store_offers_title">商店优惠</string>
     <string name="home_language_setting_title">语言设定</string>
     <string name="home_airport_secretary_title">机场秘书</string>
-    <string name="home_indoor_map_title">室内地图导航</string>
+    <string name="home_indoor_map_title">室內指引</string>
     <string name="home_airport_achievement_title">机场成就</string>
 
     <!-- Parking info -->
@@ -658,6 +662,9 @@
     <string name="parking_info_parking_space_P4">"P4"</string>
     <string name="parking_info_parking_space_1F">"(1F)"</string>
     <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+    <string name="parking_info_plenty">"充足"</string>
+    <string name="parking_info_full">"已满"</string>
+    <string name="parking_info_still_available">"尚有"</string>
 
     <!-- Flights search result -->
     <string name="flights_search_result_terminal_text">航</string>
@@ -700,6 +707,8 @@
     <!-- Language setting -->
     <string name="language_setting_select_dialog">"确定要切换成%s吗?"</string>
     <string name="language_setting_select_confirm_dialog">"已经语言设定为%s"</string>
+    <string name="language_setting_japanese">"日语"</string>
+    <string name="language_setting_english">"英语"</string>
 
     <string name="store_terminal_1">1航</string>
     <string name="store_terminal_2">2航</string>
