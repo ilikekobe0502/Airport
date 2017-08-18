@@ -660,6 +660,7 @@
     <string name="useful_quest_number">問題</string>
     <string name="useful_quest_send">送出</string>
     <string name="useful_quest_send_message">問卷結果已成功送出，感謝您的填寫！</string>
+    <string name="useful_quest_no_finish">尚有題目未填寫</string>
 
     <!-- Timezone -->
     <string name="timezone_other_area">"其他地區"</string>
@@ -746,6 +747,8 @@
     <string name="my_flights_notify_message">"%1$s,%2$s班機於%3$s飛往%4$s"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
+    <string name="my_flights_notify_delete_check_message">"確定要刪除提醒?"</string>
+    <string name="my_flights_notify_delete_button">"刪除提醒"</string>
 
     <!-- Currency conversion -->
     <string name="currency_conversion_aud">"AUD"</string>
@@ -785,4 +788,16 @@
     <string name="souvenir_detail_address">地址：</string>
     <string name="souvenir_detail_time">營業時間：</string>
     <string name="souvenir_detail_phone">電話：</string>
+
+    <!-- Other -->
+    <string name="controlled_area">管制區</string>
+    <string name="uncontrolled_area">非管制區</string>
+    <string name="floor_1">1樓</string>
+    <string name="floor_2">2樓</string>
+    <string name="floor_3">3樓</string>
+    <string name="floor_4">4樓</string>
+    <string name="floor_b1">B1</string>
+    <string name="floor_b2">B2</string>
+    <string name="satisfaction_with_taoyuan_airport">對桃園機場的整體滿意度?</string>
+    <string name="sign_at_taoyuan_airport">對桃園機場方向的指示滿意度?</string>
 </resources>

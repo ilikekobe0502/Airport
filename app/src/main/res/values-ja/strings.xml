@@ -570,7 +570,7 @@
     </string-array>
 
     <!-- communication -->
-    <string name="internation_title">国際電話は道を呼び出します</string>
+    <string name="internation_title">国際電話のかけ方</string>
     <string name="roaming_service_title">ローミングによるネット接続サービス</string>
     <string name="roaming_service_des">各社のサービス案を参考に、最適のパッケージ案をお選びください：</string>
     <string name="roaming_detail_query">ローミングサービス検索</string>
@@ -593,9 +593,10 @@
     <string name="useful_quest_number">問題</string>
     <string name="useful_quest_send">アウト</string>
     <string name="useful_quest_send_message">アンケートの結果は、正常に送信されてきた、あなたの塗りつぶしをありがとう！</string>
+    <string name="useful_quest_no_finish">タイトル未記入です</string>
 
     <!-- Timezone -->
-    <string name="timezone_other_area">"その他の地域"</string>
+    <string name="timezone_other_area">"その他の区域"</string>
     <string name="timezone_other_area_dialog_title">"地域を選択してください"</string>
 
     <!-- Restaurant & Store search -->
@@ -680,6 +681,8 @@
     <string name="my_flights_notify_message">"％1$sを,％2$sの％4$sに％3$sの飛行中"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
+    <string name="my_flights_notify_delete_check_message">"「削除前に確認」をオンにしますか"</string>
+    <string name="my_flights_notify_delete_button">"削除前に確認"</string>
 
     <!-- Currency conversion -->
     <string name="currency_conversion_aud">"AUD"</string>
@@ -719,4 +722,16 @@
     <string name="souvenir_detail_address">アドレス：</string>
     <string name="souvenir_detail_time">営業時間：</string>
     <string name="souvenir_detail_phone">電話番号：</string>
+
+    <!-- Other -->
+    <string name="controlled_area">管制区</string>
+    <string name="uncontrolled_area">非管制区</string>
+    <string name="floor_1">1F</string>
+    <string name="floor_2">2F</string>
+    <string name="floor_3">3F</string>
+    <string name="floor_4">4F</string>
+    <string name="floor_b1">B1</string>
+    <string name="floor_b2">B2</string>
+    <string name="satisfaction_with_taoyuan_airport">桃園国際空港に対する全般的な満足度</string>
+    <string name="sign_at_taoyuan_airport">空港の案内標識に対する満足度</string>
 </resources>
