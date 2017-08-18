@@ -800,4 +800,23 @@
     <string name="floor_b2">B2</string>
     <string name="satisfaction_with_taoyuan_airport">對桃園機場的整體滿意度?</string>
     <string name="sign_at_taoyuan_airport">對桃園機場方向的指示滿意度?</string>
+    <string name="Transportation_at_taoyuan_airport">對往來機場的交通工具滿意度?</string>
+    <string name="wc_at_taoyuan_airport">對桃園機場洗手間整潔滿意度?</string>
+    <string name="service_at_taoyuan_airport">對桃園機場服務人員滿意度?</string>
+    <string name="food_at_taoyuan_airport">對桃園機場飲食滿意度?</string>
+    <string name="restaurant_asia">亞洲風味餐廳(含穆斯林)</string>
+    <string name="restaurant_sweet">甜品店</string>
+    <string name="restaurant_cake">蛋糕、麵包店</string>
+    <string name="restaurant_taiwan">台灣特色餐廳</string>
+    <string name="restaurant_japan">日式料理餐廳</string>
+    <string name="restaurant_fast">快餐、便利商店</string>
+    <string name="restaurant_west">西式料理餐廳</string>
+    <string name="restaurant_cafe">咖啡廳</string>
+    <string name="telecommunications_uc">遠傳電信</string>
+    <string name="telecommunications_cw">中華電信</string>
+    <string name="telecommunications_tw">台灣大哥大</string>
+    <string name="telecommunications_star">台灣之星</string>
+    <string name="telecommunications_yt">亞太電信</string>
+    <string name="store_terminal_1_long">第一航廈</string>
+    <string name="store_terminal_2_long">第二航廈</string>
 </resources>

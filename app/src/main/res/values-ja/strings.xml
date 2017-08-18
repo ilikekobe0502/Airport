@@ -734,4 +734,23 @@
     <string name="floor_b2">B2</string>
     <string name="satisfaction_with_taoyuan_airport">桃園国際空港に対する全般的な満足度</string>
     <string name="sign_at_taoyuan_airport">空港の案内標識に対する満足度</string>
+    <string name="Transportation_at_taoyuan_airport">空港までのアクセスに対する満 足度</string>
+    <string name="wc_at_taoyuan_airport">空港のトイレに対する満足度</string>
+    <string name="service_at_taoyuan_airport">空港スタッフに対する満足度</string>
+    <string name="food_at_taoyuan_airport">空港の飲食に対する満足度</string>
+    <string name="restaurant_asia">アジア料理レストラン(ムスリム フードを含む)</string>
+    <string name="restaurant_sweet">デザート店</string>
+    <string name="restaurant_cake">ケーキ・パン店</string>
+    <string name="restaurant_taiwan">台湾料理レストラン</string>
+    <string name="restaurant_japan">日本料理レストラン</string>
+    <string name="restaurant_fast">ファーストフード、コンビニ</string>
+    <string name="restaurant_west">西洋料理レストラン</string>
+    <string name="restaurant_cafe">コーヒーショップ</string>
+    <string name="telecommunications_uc">遠傳電信(Far Eas Tone)</string>
+    <string name="telecommunications_cw">中華電信(Chunghwa Telecom)</string>
+    <string name="telecommunications_tw">台湾大哥大(Taiwan Mobile)</string>
+    <string name="telecommunications_star">台湾之星(T-STAR)</string>
+    <string name="telecommunications_yt">亜太電信(Asia Pacific Telecom)</string>
+    <string name="store_terminal_1_long">第1ターミナル</string>
+    <string name="store_terminal_2_long">第2ターミナル</string>
 </resources>
