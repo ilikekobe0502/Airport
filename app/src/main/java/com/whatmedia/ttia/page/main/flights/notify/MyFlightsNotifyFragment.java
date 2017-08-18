@@ -2,9 +2,11 @@ package com.whatmedia.ttia.page.main.flights.notify;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -178,8 +180,18 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
         switch (v.getId()) {
             case R.id.layout_delete:
                 if (mDataList.size() > 0) {
-                    mDataList = Util.deleteNotification(getContext(), mDataList);
-                    mAdapter.setData(mDataList);
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.note)
+                            .setMessage(R.string.my_flights_notify_delete_check_message)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mAdapter.setData(null);
+                                    mDataList = Util.deleteNotification(getContext(), mDataList);
+                                    mAdapter.setData(mDataList);
+                                }
+                            })
+                            .show();
                 }
                 break;
         }

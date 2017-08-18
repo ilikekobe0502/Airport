@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.splunk.mint.Mint;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
@@ -102,6 +103,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Mint.initAndStartSession(this.getApplication(), "95cdb302");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
