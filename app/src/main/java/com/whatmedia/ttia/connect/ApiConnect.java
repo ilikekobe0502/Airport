@@ -44,7 +44,7 @@ public class ApiConnect extends StateCode {
 
     public static String TAG_DEVICE_ID;
 
-    private static String mLocale;
+    private static String mLocale = "tw";
 
     private static OkHttpClient mClient;
     private static ApiConnect mApiConnect;
@@ -82,16 +82,17 @@ public class ApiConnect extends StateCode {
      * Switch locale
      */
     private static void switchLocale() {
-        String localeCache = Preferences.getLocaleSetting(mContext);
-        if (TextUtils.equals(localeCache, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString())) {
-            mLocale = "tw";
-        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_SIMPLIFIED_CHINESE.getLocale().toString())) {
-            mLocale = "cn";
-        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_JAPANESE.getLocale().toString())) {
-            mLocale = "ja";
-        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
-            mLocale = "en";
-        }
+        // TODO: 2017/8/18 等到語言可以用的時候改回來
+//        String localeCache = Preferences.getLocaleSetting(mContext);
+//        if (TextUtils.equals(localeCache, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString())) {
+//            mLocale = "tw";
+//        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_SIMPLIFIED_CHINESE.getLocale().toString())) {
+//            mLocale = "cn";
+//        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_JAPANESE.getLocale().toString())) {
+//            mLocale = "ja";
+//        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
+//            mLocale = "en";
+//        }
     }
 
     /**
