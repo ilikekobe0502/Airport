@@ -34,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ParkingInfoFragment extends BaseFragment implements ParkingInfoContract.View, OnMapReadyCallback, GoogleMap.OnMapClickListener {
+public class ParkingInfoFragment extends BaseFragment implements ParkingInfoContract.View, GoogleMap.OnMapClickListener {
     private static final String TAG = ParkingInfoFragment.class.getSimpleName();
     @BindView(R.id.mapView)
     MapView mMapView;
@@ -76,13 +76,11 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
         View view = inflater.inflate(R.layout.fragment_parking_info, container, false);
         ButterKnife.bind(this, view);
 
-        mMapView.onCreate(savedInstanceState);
         MapsInitializer.initialize(getContext());
-
+        mMapView.onCreate(savedInstanceState);
         mPresenter = ParkingInfoPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getParkingDetailAPI();
-        mMapView.getMapAsync(this);
         return view;
     }
 
@@ -156,63 +154,10 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     public void getParkingInfoSucceed(final List<HomeParkingInfoData> response) {
         mLoadingView.goneLoadingView();
         mParkingList = response;
-
         mMainActivity.runOnUI(new Runnable() {
             @Override
             public void run() {
-                MarkerOptions P1 = new MarkerOptions();
-                MarkerOptions P2 = new MarkerOptions();
-                MarkerOptions P4_B1 = new MarkerOptions();
-                MarkerOptions P4_1F = new MarkerOptions();
-                String parkingId;
-                for (int i = 0; i < response.size(); i++) {
-                    parkingId = response.get(i).getId();
-                    HomeParkingInfoData homeParkDetailData = mParkingDetailList.get(i);
-                    int pin;
-                    int available = Integer.valueOf(homeParkDetailData.getAvailableCar());
-                    if (available == 0) {
-                        pin = R.drawable.parking_info_04_01_03_1;
-                    } else if (available <= 30) {
-                        pin = R.drawable.parking_info_04_01_01;
-                    } else {
-                        pin = R.drawable.parking_info_04_01_02_1;
-                    }
-                    switch (parkingId) {
-                        case HomeParkingInfoData.TAG_ID_P1:
-                            P1.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
-                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
-
-                            mMap.addMarker(P1).setTag(mParkingDetailList.get(i));
-                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-                            break;
-                        case HomeParkingInfoData.TAG_ID_P2:
-                            P2.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
-                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
-                            mMap.addMarker(P2).setTag(mParkingDetailList.get(i));
-                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-                            break;
-                        case HomeParkingInfoData.TAG_ID_P3:
-                            P4_B1.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
-                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
-                            mMap.addMarker(P4_B1).setTag(mParkingDetailList.get(i));
-                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-                            break;
-                        case HomeParkingInfoData.TAG_ID_P4:
-                            P4_1F.position(new LatLng(Double.valueOf(response.get(i).getGisY()), Double.valueOf(response.get(i).getGisX()))).title(parkingId)
-                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
-                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
-                            mMap.addMarker(P4_1F).setTag(mParkingDetailList.get(i));
-                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-                            break;
-                    }
-                }
+                whenMapReadyDo();
             }
         });
     }
@@ -236,17 +181,6 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     public void getParkingDetailFailed(String message) {
         showMessage(message);
         Log.e(TAG, "getParkingDetailFailed() :" + message);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        if (mMap == null)
-            mMap = googleMap;
-        mMap.clear();
-        //init camera location
-        LatLng initLocation = new LatLng(25.082382, 121.236331);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(initLocation, 15));
-
     }
 
     public Bitmap resizeMapIcons(int drawable, int width, int height) {
@@ -321,5 +255,74 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
         }
     }
 
+    /**
+     * 當Map Ready Do
+     */
+    private void whenMapReadyDo() {
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                if (mMap == null)
+                    mMap = googleMap;
+                mMap.clear();
+                //init camera location
+                LatLng initLocation = new LatLng(25.082382, 121.236331);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(initLocation, 15));
 
+                MarkerOptions P1 = new MarkerOptions();
+                MarkerOptions P2 = new MarkerOptions();
+                MarkerOptions P4_B1 = new MarkerOptions();
+                MarkerOptions P4_1F = new MarkerOptions();
+                String parkingId;
+                for (int i = 0; i < mParkingList.size(); i++) {
+                    parkingId = mParkingList.get(i).getId();
+                    HomeParkingInfoData homeParkDetailData = mParkingDetailList.get(i);
+                    int pin;
+                    int available = Integer.valueOf(homeParkDetailData.getAvailableCar());
+                    if (available == 0) {
+                        pin = R.drawable.parking_info_04_01_03_1;
+                    } else if (available <= 30) {
+                        pin = R.drawable.parking_info_04_01_01;
+                    } else {
+                        pin = R.drawable.parking_info_04_01_02_1;
+                    }
+                    switch (parkingId) {
+                        case HomeParkingInfoData.TAG_ID_P1:
+                            P1.position(new LatLng(Double.valueOf(mParkingList.get(i).getGisY()), Double.valueOf(mParkingList.get(i).getGisX()))).title(parkingId)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
+
+                            mMap.addMarker(P1).setTag(mParkingDetailList.get(i));
+                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+                            break;
+                        case HomeParkingInfoData.TAG_ID_P2:
+                            P2.position(new LatLng(Double.valueOf(mParkingList.get(i).getGisY()), Double.valueOf(mParkingList.get(i).getGisX()))).title(parkingId)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
+                            mMap.addMarker(P2).setTag(mParkingDetailList.get(i));
+                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+                            break;
+                        case HomeParkingInfoData.TAG_ID_P3:
+                            P4_B1.position(new LatLng(Double.valueOf(mParkingList.get(i).getGisY()), Double.valueOf(mParkingList.get(i).getGisX()))).title(parkingId)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
+                            mMap.addMarker(P4_B1).setTag(mParkingDetailList.get(i));
+                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+                            break;
+                        case HomeParkingInfoData.TAG_ID_P4:
+                            P4_1F.position(new LatLng(Double.valueOf(mParkingList.get(i).getGisY()), Double.valueOf(mParkingList.get(i).getGisX()))).title(parkingId)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pin
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_30)
+                                            , getResources().getDimensionPixelSize(R.dimen.dp_pixel_37))));
+                            mMap.addMarker(P4_1F).setTag(mParkingDetailList.get(i));
+                            mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+                            break;
+                    }
+                }
+            }
+        });
+    }
 }
