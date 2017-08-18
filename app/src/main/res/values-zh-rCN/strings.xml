@@ -733,4 +733,23 @@
     <string name="floor_b2">B2</string>
     <string name="satisfaction_with_taoyuan_airport">对桃园机场的整体满意度?</string>
     <string name="sign_at_taoyuan_airport">对桃园机场方向的指示满意度?</string>
+    <string name="Transportation_at_taoyuan_airport">对往来机场的交通工具满意度?</string>
+    <string name="wc_at_taoyuan_airport">对桃园机场洗手间整洁满意度?</string>
+    <string name="service_at_taoyuan_airport">对桃园机场服务人员满意度?</string>
+    <string name="food_at_taoyuan_airport">对桃园机场饮食满意度?</string>
+    <string name="restaurant_asia">亚洲风味餐厅(含穆斯林)</string>
+    <string name="restaurant_sweet">甜品店</string>
+    <string name="restaurant_cake">蛋糕、面包店</string>
+    <string name="restaurant_taiwan">台湾特色餐厅</string>
+    <string name="restaurant_japan">日式料理餐厅</string>
+    <string name="restaurant_fast">快餐、便利商店</string>
+    <string name="restaurant_west">西式料理餐厅</string>
+    <string name="restaurant_cafe">咖啡厅</string>
+    <string name="telecommunications_uc">远传电信</string>
+    <string name="telecommunications_cw">中华电信</string>
+    <string name="telecommunications_tw">台湾大哥大</string>
+    <string name="telecommunications_star">台湾之星</string>
+    <string name="telecommunications_yt">亚太电信</string>
+    <string name="store_terminal_1_long">第一航廈</string>
+    <string name="store_terminal_2_long">第二航廈</string>
 </resources>

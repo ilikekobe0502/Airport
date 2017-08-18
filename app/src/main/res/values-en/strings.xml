@@ -735,4 +735,23 @@
     <string name="floor_b2">B2</string>
     <string name="satisfaction_with_taoyuan_airport">Overall satisfaction with Taoyuan Airport?</string>
     <string name="sign_at_taoyuan_airport">Satisfaction with direction signs at Taoyuan Airport?</string>
+    <string name="Transportation_at_taoyuan_airport">Satisfaction with transportation to and from the airport?</string>
+    <string name="wc_at_taoyuan_airport">Satisfaction with the cleanliness of restrooms at Taoyuan Airport?</string>
+    <string name="service_at_taoyuan_airport">Satisfaction with service personnel at Taoyuan Airport?</string>
+    <string name="food_at_taoyuan_airport">Satisfaction with dining at Taoyuan Airport?</string>
+    <string name="restaurant_asia">Asian-style restaurants (including Halal)</string>
+    <string name="restaurant_sweet">Sweets shops</string>
+    <string name="restaurant_cake">Cake and bread shops</string>
+    <string name="restaurant_taiwan">Taiwan-style restaurants</string>
+    <string name="restaurant_japan">Japanese-style restaurants</string>
+    <string name="restaurant_fast">Fast food and convenience stores</string>
+    <string name="restaurant_west">Western-style restaurants</string>
+    <string name="restaurant_cafe">Coffee shops</string>
+    <string name="telecommunications_uc">FarEasTone</string>
+    <string name="telecommunications_cw">Chunghwa Telecom</string>
+    <string name="telecommunications_tw">Taiwan Mobile</string>
+    <string name="telecommunications_star">Taiwan Star</string>
+    <string name="telecommunications_yt">Asia Pacific</string>
+    <string name="store_terminal_1_long">Terminal 1</string>
+    <string name="store_terminal_2_long">Terminal 2</string>
 </resources>
