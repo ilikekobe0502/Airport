@@ -24,6 +24,53 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+/*
+
+
+                                 |~~~~~~~|
+                                 |       |
+                                 |       |
+                                 |       |
+                                 |       |
+                                 |       |
+      |~.\\\_\~~~~~~~~~~~~~~xx~~~         ~~~~~~~~~~~~~~~~~~~~~/_//;~|
+      |  \  o \_         ,XXXXX),                         _..-~ o /  |
+      |    ~~\  ~-.     XXXXX`)))),                 _.--~~   .-~~~   |
+       ~~~~~~~`\   ~\~~~XXX' _/ ';))     |~~~~~~..-~     _.-~ ~~~~~~~
+                `\   ~~--`_\~\, ;;;\)__.---.~~~      _.-~
+                  ~-.       `:;;/;; \          _..-~~
+                     ~-._      `''        /-~-~
+                         `\              /  /
+                           |         ,   | |
+                            |  '        /  |
+                             \/;          |
+                              ;;          |
+                              `;   .       |
+                              |~~~-----.....|
+                             | \             \
+                            | /\~~--...__    |
+                            (|  `\       __-\|
+                            ||    \_   /~    |
+                            |)     \~-'      |
+                             |      | \      '
+                             |      |  \    :
+                              \     |  |    |
+                               |    )  (    )
+                                \  /;  /\  |
+                                |    |/   |
+                                |    |   |
+                                 \  .'  ||
+                                 |  |  | |
+                                 (  | |  |
+                                 |   \ \ |
+                                 || o `.)|
+                                 |`\\\\) |
+                                 |       |
+                                 |       |
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                      耶穌保佑                永無 BUG
+*/
 public class IBeacon extends Service implements BeaconConsumer {
     public static final String BEACON_UUID_1 = "A0000000-0000-0000-0000-000000000000";
     public static final String BEACON_UUID_2 = "B0000000-0000-0000-0000-000000000000";
@@ -32,12 +79,13 @@ public class IBeacon extends Service implements BeaconConsumer {
     private ApiConnect mApiConnect;
     private BeaconManager mBeaconManager;
     private Region mRegion;
-    private HashMap<String,Integer> mMap = new HashMap<>();
-//    private List<String> mAlreadySendMinorID = new ArrayList<>();
+    private HashMap<String, Integer> mMap = new HashMap<>();
+    //    private List<String> mAlreadySendMinorID = new ArrayList<>();
     private int mTempCount;
 
     public IBeacon() {
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -53,11 +101,13 @@ public class IBeacon extends Service implements BeaconConsumer {
         mRegion = new Region("NeoIdentifier", null, null, null);
         mApiConnect = ApiConnect.getInstance(this);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mBeaconManager.unbind(this);
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
@@ -69,41 +119,41 @@ public class IBeacon extends Service implements BeaconConsumer {
         mBeaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                for(Beacon beacon: beacons){
-                    Log.e("IBeacon",beacon.toString() +", RSSI:"+beacon.getRssi()+", TxPower:"+beacon.getTxPower());
+                for (Beacon beacon : beacons) {
+                    Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
 //                    Log.e("IBeacon","beacon.getId1().equals(mBeacon):"+beacon.getId1().equals(mBeacon));
 //                    Log.e("IBeacon","beacon.getRssi() > -70:"+(beacon.getRssi() > -70));
                     //若該beacon的UUID == 公司所設定的那兩組UUID 且 RSSI > -70 才做以下動作
-                    if((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -70){
+                    if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -70) {
                         String minorID = beacon.getId3().toString();
-                        if(mMap.containsKey(minorID)){
-                            Log.e("IBeacon","mMap.containsKey(minorID) true");
+                        if (mMap.containsKey(minorID)) {
+                            Log.e("IBeacon", "mMap.containsKey(minorID) true");
                             mTempCount = mMap.get(minorID);
                             mTempCount++;
-                            mMap.put(minorID,mTempCount);
-                            if(mTempCount == 10){
-                                Log.e("IBeacon","saveAchievement(minorID) call.");
-                                mMap.put(minorID,0);
+                            mMap.put(minorID, mTempCount);
+                            if (mTempCount == 10) {
+                                Log.e("IBeacon", "saveAchievement(minorID) call.");
+                                mMap.put(minorID, 0);
 
                                 //入境 若minorID == 1,2,34,35則進行新增使用者的動作
-                                if(minorID.equals("1") || minorID.equals("2") || minorID.equals("34") || minorID.equals("35")){
+                                if (minorID.equals("1") || minorID.equals("2") || minorID.equals("34") || minorID.equals("35")) {
                                     changeUserStatus(true);
                                     //出境 若minorID == 32,33則進行刪除使用者的動作
-                                }else if(minorID.equals("32") || minorID.equals("33")){
+                                } else if (minorID.equals("32") || minorID.equals("33")) {
                                     changeUserStatus(false);
-                                }else{
+                                } else {
                                     //其餘的minorID歸類為 新增使用者抵達Beacon的動作
                                     saveAchievement(minorID);
                                 }
-                            }else{
-                                Log.e("IBeacon","saveAchievement(minorID) no call. mTempCount:"+mTempCount);
+                            } else {
+                                Log.e("IBeacon", "saveAchievement(minorID) no call. mTempCount:" + mTempCount);
                             }
-                        }else{
-                            Log.e("IBeacon","mMap.containsKey(minorID) false");
-                            mMap.put(minorID,1);
+                        } else {
+                            Log.e("IBeacon", "mMap.containsKey(minorID) false");
+                            mMap.put(minorID, 1);
                         }
-                    }else{
-                        Log.e("IBeacon","!beacon.getId1().equals(beacon) && beacon.getRssi() <= -70");
+                    } else {
+                        Log.e("IBeacon", "!beacon.getId1().equals(beacon) && beacon.getRssi() <= -70");
                     }
                 }
             }
@@ -116,8 +166,8 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     }
 
-    public void saveAchievement(final String minorID){
-        mApiConnect.saveAchievement(minorID,new Callback() {
+    public void saveAchievement(final String minorID) {
+        mApiConnect.saveAchievement(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -126,7 +176,7 @@ public class IBeacon extends Service implements BeaconConsumer {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.code() == 200) {
                     //success
-                    Log.e("IBeacon","saveAchievement() success, minorID:"+minorID);
+                    Log.e("IBeacon", "saveAchievement() success, minorID:" + minorID);
                 } else {
                     //fail
                 }
@@ -134,8 +184,8 @@ public class IBeacon extends Service implements BeaconConsumer {
         });
     }
 
-    public void changeUserStatus(final boolean isAdd){
-        mApiConnect.registerUser(isAdd,new Callback() {
+    public void changeUserStatus(final boolean isAdd) {
+        mApiConnect.registerUser(isAdd, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -144,7 +194,7 @@ public class IBeacon extends Service implements BeaconConsumer {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.code() == 200) {
                     //success
-                    Log.e("IBeacon","saveAchievement() success, isAdd:"+isAdd);
+                    Log.e("IBeacon", "saveAchievement() success, isAdd:" + isAdd);
                 } else {
                     //fail
                 }

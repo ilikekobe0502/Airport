@@ -48,7 +48,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         AirportFacilityData item;
         if (mIsFirst) {
             if (mFirstItems == null)
@@ -71,7 +71,17 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
             String imageUrl = ApiConnect.TAG_IMAGE_HOST + item.getMainImgPath();
             Log.d(TAG, imageUrl);
-            Picasso.with(mContext).load(imageUrl).placeholder(R.drawable.ic_loop_white_48dp).into(holder.mImageViewPicture);
+            Picasso.with(mContext).load(imageUrl).into(holder.mImageViewPicture, new Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.mTextViewLoading.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+                    holder.mTextViewLoading.setText("ERROR");
+                }
+            });
         } else
             holder.mImageViewPicture.setVisibility(View.INVISIBLE);
 
@@ -128,6 +138,8 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textView_title)
         TextView mTextViewTitle;
+        @BindView(R.id.textView_loading)
+        TextView mTextViewLoading;
         @BindView(R.id.imageView_picture)
         ImageView mImageViewPicture;
 

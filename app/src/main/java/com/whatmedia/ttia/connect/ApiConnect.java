@@ -458,7 +458,7 @@ public class ApiConnect extends StateCode {
     public static void getUserNews(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_NewsUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("UserID", "A123456789")
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
@@ -476,7 +476,7 @@ public class ApiConnect extends StateCode {
     public static void getUserEmergency(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("UserID", "A123456789")
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
@@ -494,7 +494,7 @@ public class ApiConnect extends StateCode {
     public static void getUserSweetNotify(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_IntimateReminderUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("UserID", "A123456789")
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
