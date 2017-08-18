@@ -201,9 +201,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
      * Get api
      */
     private void getTransAPI() {
-        if (!TextUtils.isEmpty(mEditTextSourceAmount.getText().toString()) &&
-                !TextUtils.isEmpty(mTextViewSourceCode.getText().toString()) &&
-                !TextUtils.isEmpty(mTextViewTargetCode.getText().toString())) {
+        if (!TextUtils.isEmpty(mTextViewSourceCode.getText().toString()) && !TextUtils.isEmpty(mTextViewTargetCode.getText().toString())) {
 
             mLoadingView.showLoadingView();
 
@@ -211,11 +209,11 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
             if (!mIsClickBottom) {
                 data.setSource(mTextViewSourceCode.getText().toString());
                 data.setTarget(mTextViewTargetCode.getText().toString());
-                data.setAmount(mEditTextSourceAmount.getText().toString());
+                data.setAmount(!TextUtils.isEmpty(mEditTextSourceAmount.getText().toString()) ? mEditTextSourceAmount.getText().toString() : "0");
             } else {
                 data.setSource(mTextViewTargetCode.getText().toString());
                 data.setTarget(mTextViewSourceCode.getText().toString());
-                data.setAmount(mEditTextTargetAmount.getText().toString());
+                data.setAmount(!TextUtils.isEmpty(mEditTextTargetAmount.getText().toString()) ? mEditTextTargetAmount.getText().toString() : "0");
             }
             mPresenter.getExchangeRate(data);
         } else {
