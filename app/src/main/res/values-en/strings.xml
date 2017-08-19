@@ -670,7 +670,7 @@
     <string name="parking_info_still_available">"Still available"</string>
 
     <!-- Flights search result -->
-    <string name="flights_search_result_terminal_text">Terminal</string>
+    <string name="flights_search_result_terminal_text">T</string>
 
     <!-- Restaurant & Store search info-->
     <string name="restaurant_store_search_info_location">address：%1$s-%2$s</string>
