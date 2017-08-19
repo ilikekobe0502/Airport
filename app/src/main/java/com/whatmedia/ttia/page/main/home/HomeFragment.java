@@ -1,5 +1,6 @@
 package com.whatmedia.ttia.page.main.home;
 
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -134,11 +135,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
                 case TAG_INDOOR_MAP://室內地圖導航
-
-                    Intent i = null;
-                    i = new Intent();
-                    i.setComponent(new ComponentName("com.point_consulting.testindoormap", "com.point_consulting.testindoormap.MapsActivity"));
-                    getActivity().startActivity(i);
+                    // TODO: 2017/8/19 某些版本會crash不知道為何要查
+                    try {
+                        Intent i =new Intent();
+                        i.setComponent(new ComponentName("com.point_consulting.testindoormap", "com.point_consulting.testindoormap.MapsActivity"));
+                        getActivity().startActivity(i);
+                    } catch (ActivityNotFoundException e) {
+                        e.printStackTrace();
+                        showMessage(getString(R.string.data_error));
+                    }
                     break;
                 case TAG_AIRPORT_ACHIEVEMENT://機場成就
                     mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);
