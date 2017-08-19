@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -28,7 +29,12 @@ public class MyContextWrapper extends ContextWrapper {
             sysLocale = getSystemLocaleLegacy(config);
         }
         if (!language.equals("") && !sysLocale.getLanguage().equals(language)) {
-            Locale locale = new Locale(language);
+            Locale locale;
+            if(language.equals(Locale.CHINA.toString())){
+                locale = Locale.SIMPLIFIED_CHINESE;
+            }else{
+                locale = new Locale(language);
+            }
             Locale.setDefault(locale);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 setSystemLocale(config, locale);
