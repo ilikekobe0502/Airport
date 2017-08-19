@@ -27,8 +27,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/cell_btn_delete"
+                android:gravity="center"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
+                android:textSize="@dimen/sp_pixel_13" />
         </RelativeLayout>
     </RelativeLayout>
 

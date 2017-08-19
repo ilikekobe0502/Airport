@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_120"
         android:layout_alignParentBottom="true"
@@ -19,12 +19,11 @@
 
         <LinearLayout
             android:id="@+id/layout_enough"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp_pixel_40"
-            android:paddingRight="@dimen/dp_pixel_40">
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_pixel_20"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="@dimen/dp_pixel_30"
@@ -40,15 +39,18 @@
                 android:layout_gravity="center"
                 android:text="@string/parking_info_parking_space_enough"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
+                android:gravity="center"
+                android:maxEms="6"
+                android:maxLines="2"
+                android:textSize="@dimen/sp_pixel_13" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_much"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/layout_enough"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_pixel_20"
             android:orientation="vertical">
 
             <ImageView
@@ -65,15 +67,18 @@
                 android:layout_gravity="center"
                 android:text="@string/parking_info_parking_space_much"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
+                android:gravity="center"
+                android:maxEms="8"
+                android:maxLines="2"
+                android:textSize="@dimen/sp_pixel_13" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_full"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/layout_enough"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_pixel_20"
             android:orientation="vertical">
 
             <ImageView
@@ -90,7 +95,10 @@
                 android:layout_gravity="center"
                 android:text="@string/parking_info_parking_space_full"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
+                android:gravity="center"
+                android:maxEms="6"
+                android:maxLines="2"
+                android:textSize="@dimen/sp_pixel_13" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

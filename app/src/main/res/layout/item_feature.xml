@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:maxEms="8"
-        android:maxLines="3"
+        android:maxLines="2"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_13" />
 </RelativeLayout>
