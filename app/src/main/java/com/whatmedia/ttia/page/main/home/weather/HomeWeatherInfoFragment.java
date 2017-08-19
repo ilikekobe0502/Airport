@@ -64,7 +64,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 
         mPresenter = HomeWeatherInfoPresenter.getInstance(getContext(), this);
 //        mLoadingView.showLoadingView();
-        if (TextUtils.isEmpty(mLocale))
+//        if (TextUtils.isEmpty(mLocale))
             mLocale = Preferences.getLocaleSetting(getContext());
 
         WebSettings webSettings = mWebView.getSettings();
@@ -72,7 +72,26 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.loadUrl(String.format(mWeatherUrl, mLocale));
+
+        //因為語系的字串跟查天氣送的字串不相同，所以我在此轉換一下(bug82)
+        switch (mLocale){
+            case "zh_TW":
+                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
+                break;
+            case "zh_CN":
+                mWebView.loadUrl(String.format(mWeatherUrl, "cn"));
+                break;
+            case "en":
+                mWebView.loadUrl(String.format(mWeatherUrl, "en"));
+                break;
+            case "ja":
+                mWebView.loadUrl(String.format(mWeatherUrl, "jp"));
+                break;
+            default:
+                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
+                break;
+        }
+//        mWebView.loadUrl(String.format(mWeatherUrl, mLocale));
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

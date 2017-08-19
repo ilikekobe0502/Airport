@@ -17,8 +17,8 @@
         android:layout_below="@+id/imageView_icon"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:maxEms="4"
-        android:maxLines="2"
+        android:maxEms="6"
+        android:maxLines="3"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_13" />
 </RelativeLayout>

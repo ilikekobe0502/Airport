@@ -626,7 +626,7 @@
 
     <!-- Flights search -->
     <string name="flights_search_footer_hint">Please enter the desired flight code, airline, or city keyword</string>
-    <string name="flights_search_search">search</string>
+    <string name="flights_search_search">Search</string>
     <string name="flights_search_edit_text_hint">Please enter keyword</string>
     <string name="flights_search_not_found_flights_message">Can not find flight</string>
 
@@ -635,7 +635,7 @@
     <string name="server_error">Server error</string>
     <string name="data_error">Data wrong</string>
     <string name="data_not_found">No information found</string>
-    <string name="ok">determine</string>
+    <string name="ok">OK</string>
     <string name="note">remind</string>
     <string name="no_search_store">Check the store</string>
 
@@ -670,7 +670,7 @@
     <string name="parking_info_still_available">"Still available"</string>
 
     <!-- Flights search result -->
-    <string name="flights_search_result_terminal_text">Terminal</string>
+    <string name="flights_search_result_terminal_text">T</string>
 
     <!-- Restaurant & Store search info-->
     <string name="restaurant_store_search_info_location">address：%1$s-%2$s</string>

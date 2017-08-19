@@ -33,6 +33,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
     private TravelLanguageResultContract.Presenter mPresenter;
     private TravelLanguageResultRecyclerViewAdapter mTravelLanguageResultRecyclerViewAdapter;
     private int mQueryId=0;
+    private String mTitle = "";
 
     public TravelLanguageResultFragment() {
         // Required empty public constructor
@@ -54,6 +55,10 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
         if (getArguments().containsKey("key")) {
             mQueryId = getArguments().getInt("key");
         }
+        if(getArguments().containsKey("title")){
+            mTitle = getArguments().getString("title");
+        }
+
     }
 
     @Override
@@ -69,6 +74,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
         mTravelLanguageResultRecyclerViewAdapter = new TravelLanguageResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mTravelLanguageResultRecyclerViewAdapter);
+        mMainActivity.getMyToolbar().setTitleText(mTitle);
 
         return view;
     }

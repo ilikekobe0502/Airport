@@ -57,7 +57,7 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
             return;
         }
 
-        holder.mTextTitle.setText(mContext.getString(R.string.useful_quest_number)+item.getQuestId());
+        holder.mTextTitle.setText(mContext.getString(R.string.useful_quest_number)+(position+1));
         holder.mTextQuest.setText(item.getQuestContent());
         switch (item.getScore()){
             case 0:
