@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -55,6 +56,7 @@ import com.whatmedia.ttia.page.main.store.StoreOffersFragment;
 import com.whatmedia.ttia.page.main.store.souvenir.SouvenirAreaFragment;
 import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityFragment;
 import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoFragment;
+import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultContract;
 import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultFragment;
 import com.whatmedia.ttia.page.main.terminals.store.search.StoreSearchContract;
 import com.whatmedia.ttia.page.main.terminals.store.search.StoreSearchFragment;
@@ -371,7 +373,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
             } else if (fragment instanceof StoreSearchResultFragment) {//餐廳與商店搜尋結果
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.restaurant_store_search_result_subtitle))
+                        .setTitleText(!TextUtils.isEmpty(fragment.getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT)) ? getString(R.string.restaurant_store_search_restaurant_result_subtitle) : getString(R.string.restaurant_store_search_result_subtitle))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
