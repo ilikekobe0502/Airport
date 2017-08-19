@@ -28,7 +28,8 @@
                 android:layout_centerInParent="true"
                 android:text="@string/my_flights_notify_delete_button"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
+                android:gravity="center"
+                android:textSize="@dimen/sp_pixel_13" />
         </RelativeLayout>
     </RelativeLayout>
 

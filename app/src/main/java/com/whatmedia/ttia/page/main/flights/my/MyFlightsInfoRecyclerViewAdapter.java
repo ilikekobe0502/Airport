@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.HashMap;
@@ -38,14 +39,17 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
     private IOnItemClickListener mListener;
     //    private List<FlightsInfoData> mSelectItems = new ArrayList<>();
     private Map<String, FlightsInfoData> mSelectItems = new HashMap<>();
+    private String mLocale;
 
     public MyFlightsInfoRecyclerViewAdapter(Context context, List<FlightsInfoData> list) {
         mContext = context;
         mItems = list;
+        mLocale = Preferences.getLocaleSetting(context);
     }
 
     public MyFlightsInfoRecyclerViewAdapter(Context context) {
         mContext = context;
+        mLocale = Preferences.getLocaleSetting(context);
     }
 
     @Override
@@ -68,7 +72,20 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
         if (!TextUtils.isEmpty(item.getTerminals())) {
             StringBuilder builder = new StringBuilder();
-            builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
+            switch (mLocale){
+                case "zh_TW":
+                case "zh_CN":
+                    builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
+                    break;
+                case "en":
+                case "ja":
+                    builder.append(mContext.getString(R.string.flights_search_result_terminal_text)).append(item.getTerminals());
+                    break;
+                default:
+                    builder.append(mContext.getString(R.string.flights_search_result_terminal_text)).append(item.getTerminals());
+                    break;
+            }
+//            builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
             holder.mTextViewTerminal.setText(builder);
         } else
             holder.mTextViewTerminal.setText("");

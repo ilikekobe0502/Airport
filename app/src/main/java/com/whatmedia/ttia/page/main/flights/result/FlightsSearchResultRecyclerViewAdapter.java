@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -31,14 +32,17 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     private List<FlightsInfoData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
+    private String mLocale;
 
     public FlightsSearchResultRecyclerViewAdapter(Context context, List<FlightsInfoData> data) {
         mContext = context;
         mItems = data;
+        mLocale = Preferences.getLocaleSetting(context);
     }
 
     public FlightsSearchResultRecyclerViewAdapter(Context context) {
         mContext = context;
+        mLocale = Preferences.getLocaleSetting(context);
     }
 
     @Override
@@ -57,11 +61,41 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
         holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
-        holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+        switch (mLocale){
+            case "zh_TW":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+                break;
+            case "zh_CN":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+                break;
+            case "en":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationEng()) ? item.getContactsLocationEng().trim() : "");
+                break;
+            case "ja":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationEng()) ? item.getContactsLocationEng().trim() : "");
+                break;
+            default:
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+                break;
+        }
         holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
         if (!TextUtils.isEmpty(item.getTerminals())) {
+
             StringBuilder builder = new StringBuilder();
-            builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
+            switch (mLocale){
+                case "zh_TW":
+                case "zh_CN":
+                    builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
+                    break;
+                case "en":
+                case "ja":
+                    builder.append(mContext.getString(R.string.flights_search_result_terminal_text)).append(item.getTerminals());
+                    break;
+                default:
+                    builder.append(mContext.getString(R.string.flights_search_result_terminal_text)).append(item.getTerminals());
+                    break;
+            }
+//            builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
             holder.mTextViewTerminal.setText(builder);
         } else
             holder.mTextViewTerminal.setText("");

@@ -81,6 +81,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",1);
+                bundle.putString("title",getString(R.string.travel_item1));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -89,6 +90,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",2);
+                bundle.putString("title",getString(R.string.travel_item2));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -97,6 +99,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",3);
+                bundle.putString("title",getString(R.string.travel_item3));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -105,6 +108,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",4);
+                bundle.putString("title",getString(R.string.travel_item4));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -113,6 +117,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",5);
+                bundle.putString("title",getString(R.string.travel_item5));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -121,6 +126,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",6);
+                bundle.putString("title",getString(R.string.travel_item6));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -129,6 +135,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",7);
+                bundle.putString("title",getString(R.string.travel_item7));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });
@@ -137,6 +144,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("key",8);
+                bundle.putString("title",getString(R.string.travel_item8));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
         });

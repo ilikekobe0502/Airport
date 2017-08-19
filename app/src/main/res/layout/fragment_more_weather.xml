@@ -21,20 +21,24 @@
 
         <RelativeLayout
             android:id="@+id/layout_ok"
-            android:layout_width="@dimen/dp_pixel_60"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp_pixel_40"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_pixel_10"
             android:layout_marginTop="@dimen/dp_pixel_10"
-            android:background="@drawable/but_bg_mdpi">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:text="@string/ok"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
+                android:textSize="@dimen/sp_pixel_14"
+                android:background="@drawable/but_bg_mdpi"
+                android:gravity="center"
+                android:padding="@dimen/dp_pixel_10"/>
         </RelativeLayout>
 
         <LinearLayout

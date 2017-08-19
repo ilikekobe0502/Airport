@@ -87,7 +87,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 
         mLoadingView.showLoadingView();
 
-        if (TextUtils.isEmpty(mLocale))
+//        if (TextUtils.isEmpty(mLocale))
             mLocale = Preferences.getLocaleSetting(getContext());
 
         settingWebView();
@@ -224,11 +224,28 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
      */
     private void showWebView() {
         if (mCodeArray.length > mCountry) {
-            if (TextUtils.equals(mLocale, Locale.TRADITIONAL_CHINESE.toString()))
-                mLocale = "tw";
-            else if (TextUtils.equals(mLocale, Locale.SIMPLIFIED_CHINESE.toString()))
-                mLocale = "cn";
-            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], mLocale));
+//            if (TextUtils.equals(mLocale, Locale.TRADITIONAL_CHINESE.toString()))
+//                mLocale = "tw";
+//            else if (TextUtils.equals(mLocale, Locale.SIMPLIFIED_CHINESE.toString()))
+//                mLocale = "cn";
+//            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], mLocale));
+            switch (mLocale){
+                case "zh_TW":
+                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "tw"));
+                    break;
+                case "zh_CN":
+                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "cn"));
+                    break;
+                case "en":
+                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "en"));
+                    break;
+                case "ja":
+                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "jp"));
+                    break;
+                default:
+                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "tw"));
+                    break;
+            }
         } else {
             Log.e(TAG, "mCodeArray.length <= mCountry");
             showMessage(getString(R.string.data_error));
@@ -273,6 +290,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         mNumberPickerRight.setMaxValue(data.length - 1);
         mNumberPickerRight.setWrapSelectorWheel(false);
         mNumberPickerRight.setValue(0);
+        mCountry = 0;
         mNumberPickerRight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
