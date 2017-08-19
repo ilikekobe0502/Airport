@@ -213,8 +213,8 @@
     <string name="city">City</string>
 
     <!--  foreignLanguage  -->
-    <string name="zhtw">traditional Chinese</string>
-    <string name="zhcn">simplified Chinese</string>
+    <string name="zhtw">Traditional Chinese</string>
+    <string name="zhcn">Simplified Chinese</string>
     <string name="ja">Japanese</string>
     <string name="en">English</string>
 
