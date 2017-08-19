@@ -645,7 +645,7 @@
     <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
 
     <!-- Home -->
-    <string name="home_weather_title">Weather information</string>
+    <string name="home_weather_title">Weather</string>
     <string name="home_more">More</string>
     <string name="home_more_flights">More flights</string>
     <string name="home_terminal_info_title">Terminal Information</string>
@@ -657,7 +657,7 @@
 
     <!-- Parking info -->
     <string name="parking_info_parking_space_much">"Plenty of parking \navailable"</string>
-    <string name="parking_info_parking_space_enough">"Parking still available"</string>
+    <string name="parking_info_parking_space_enough">"Parking still \navailable"</string>
     <string name="parking_info_parking_space_full">"Parking full"</string>
     <string name="parking_info_parking_space_number_of">"%s\nSpaces\nleft"</string>
     <string name="parking_info_parking_space_full_state">"Is full"</string>
