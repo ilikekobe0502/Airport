@@ -35,7 +35,7 @@
                 android:layout_alignTop="@+id/img_l1"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="基本會話"
+                android:text="@string/travel_item1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -65,7 +65,7 @@
                 android:layout_alignTop="@+id/img_l2"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="問路"
+                android:text="@string/travel_item2"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -95,7 +95,7 @@
                 android:layout_alignTop="@+id/img_l3"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="交通機關"
+                android:text="@string/travel_item3"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
         </RelativeLayout>
@@ -124,7 +124,7 @@
                 android:layout_alignTop="@+id/img_l4"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="旅行社櫃台"
+                android:text="@string/travel_item4"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -163,7 +163,7 @@
                 android:layout_alignTop="@+id/img_r1"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="租車"
+                android:text="@string/travel_item5"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -193,7 +193,7 @@
                 android:layout_alignTop="@+id/img_r2"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="餐飲設施"
+                android:text="@string/travel_item6"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
         </RelativeLayout>
@@ -222,7 +222,7 @@
                 android:layout_alignTop="@+id/img_r3"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="住宿設施"
+                android:text="@string/travel_item7"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -252,7 +252,7 @@
                 android:layout_alignTop="@+id/img_r4"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="購物"
+                android:text="@string/travel_item8"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
