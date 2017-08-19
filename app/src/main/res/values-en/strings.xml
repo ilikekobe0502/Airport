@@ -626,7 +626,7 @@
 
     <!-- Flights search -->
     <string name="flights_search_footer_hint">Please enter the desired flight code, airline, or city keyword</string>
-    <string name="flights_search_search">search</string>
+    <string name="flights_search_search">Search</string>
     <string name="flights_search_edit_text_hint">Please enter keyword</string>
     <string name="flights_search_not_found_flights_message">Can not find flight</string>
 
