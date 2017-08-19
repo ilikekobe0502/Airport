@@ -635,7 +635,7 @@
     <string name="server_error">Server error</string>
     <string name="data_error">Data wrong</string>
     <string name="data_not_found">No information found</string>
-    <string name="ok">Determine</string>
+    <string name="ok">OK</string>
     <string name="note">remind</string>
     <string name="no_search_store">Check the store</string>
 
