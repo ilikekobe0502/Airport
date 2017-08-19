@@ -655,7 +655,7 @@
     <string name="home_airport_achievement_title">Airport achievements</string>
 
     <!-- Parking info -->
-    <string name="parking_info_parking_space_much">"Plenty of parking available"</string>
+    <string name="parking_info_parking_space_much">"Plenty of parking \navailable"</string>
     <string name="parking_info_parking_space_enough">"Parking still available"</string>
     <string name="parking_info_parking_space_full">"Parking full"</string>
     <string name="parking_info_parking_space_number_of">"There are still%s"</string>
