@@ -321,9 +321,13 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getRestaurantInfo(String terminalsID, String areaID, String restaurantTypeID, String floorID, Callback callback) {
+        //TODO 幹 只有cn無資料 所以這邊做個排除動作
+        if(mLocale.equals("cn")){
+            mLocale = "tw";
+        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "seach_restaurant")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .addQueryParameter("TerminalsID", terminalsID)
                 .addQueryParameter("AreaID", areaID)
                 .addQueryParameter("RestaurantTypeID", restaurantTypeID)
@@ -657,7 +661,7 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
