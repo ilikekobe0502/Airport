@@ -586,6 +586,7 @@
 
     <!-- Restaurant & Store search result-->
     <string name="restaurant_store_search_result_subtitle">商店讯息</string>
+    <string name="restaurant_store_search_restaurant_result_subtitle">餐厅讯息</string>
 
     <!-- Useful questionnaire -->
     <string name="useful_quest_title">填写问卷</string>

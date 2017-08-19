@@ -651,6 +651,7 @@
 
     <!-- Restaurant & Store search result-->
     <string name="restaurant_store_search_result_subtitle">商店訊息</string>
+    <string name="restaurant_store_search_restaurant_result_subtitle">餐廳訊息</string>
 
     <!-- Useful questionnaire -->
     <string name="useful_quest_title">填寫問卷</string>

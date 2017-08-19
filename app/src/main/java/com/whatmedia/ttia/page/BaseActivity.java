@@ -11,6 +11,8 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.utility.MyContextWrapper;
 import com.whatmedia.ttia.utility.Preferences;
 
+import java.util.Locale;
+
 /**
  * Created by neo_mac on 2017/6/18.
  */
