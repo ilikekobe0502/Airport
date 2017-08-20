@@ -14,7 +14,6 @@
             android:background="@drawable/but_bg_mdpi"
             android:layout_marginLeft="@dimen/dp_pixel_110"
             android:layout_marginRight="@dimen/dp_pixel_110"
-            android:layout_marginTop="@dimen/dp_pixel_10"
             android:padding="@dimen/dp_pixel_22"
             android:layout_centerInParent="true"/>
 
@@ -22,7 +21,7 @@
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_pixel_15"
+            android:textSize="@dimen/sp_pixel_10"
             android:textColor="@android:color/white"
             android:text="遠傳電信"
             android:gravity="center"
@@ -50,7 +49,9 @@
             android:layout_toLeftOf="@+id/image_icon"
             android:layout_alignTop="@+id/image_bg"
             android:layout_alignBottom="@+id/image_bg"
+            android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/dp_pixel_8"
+
             />
 
     </RelativeLayout>
