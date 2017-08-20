@@ -19,6 +19,10 @@ public class RestaurantInfoData implements Serializable{
     private String areaId;
     @SerializedName("FloorID")
     private String floorId;
+    @SerializedName("FloorName")
+    private String floorName;
+    @SerializedName("FloorCode")
+    private String floorCode;
     @SerializedName("RestaurantTypeID")
     private String restaurantTypeId;
     @SerializedName("Contenct")
@@ -138,5 +142,21 @@ public class RestaurantInfoData implements Serializable{
 
     public void setImgPath(String imgPath) {
         ImgPath = imgPath;
+    }
+
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
+    public String getFloorCode() {
+        return floorCode;
+    }
+
+    public void setFloorCode(String floorCode) {
+        this.floorCode = floorCode;
     }
 }

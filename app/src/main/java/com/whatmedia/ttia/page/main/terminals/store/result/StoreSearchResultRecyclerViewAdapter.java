@@ -58,7 +58,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
             holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsId()) ?
                     item.getTerminalsId().equals("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
-            holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorId()) ? item.getFloorId() : "");
+            holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorCode()) ? item.getFloorCode() : "");
             holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
             String pictureUrl;
