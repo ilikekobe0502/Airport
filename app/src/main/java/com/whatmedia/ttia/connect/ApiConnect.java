@@ -605,7 +605,7 @@ public class ApiConnect extends StateCode {
     public static void getEmergencyCall(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyCall")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
