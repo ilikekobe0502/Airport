@@ -618,7 +618,7 @@ public class ApiConnect extends StateCode {
     public static void getRoamingService(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_TelecommunicationsIndustryCode")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
