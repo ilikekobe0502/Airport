@@ -245,7 +245,7 @@ public class ApiConnect extends StateCode {
     public static void getAirportFacility(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_airport_facility_info")
                 .newBuilder()
-                .addQueryParameter("lan", mLocale)
+                .addQueryParameter("lan", mLocaleApiError)
                 .build();
         getApi(url, callback);
     }
