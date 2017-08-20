@@ -14,5 +14,843 @@
     <string name="directions_route">Route</string>
     <string name="current_location">Current location</string>
     <string name="route_string">Route to %1$s</string>
-<!--    <string name="current_location">Current location</string> -->
+    <!--    <string name="current_location">Current location</string> -->
+
+    <!--//Alert-->
+    <string name="alert_btn_cancel">取消</string>
+    <string name="alert_btn_ok">確定</string>
+    <string name="alert_btn_add">加入</string>
+    <string name="alert_leave">關閉程式</string>
+
+    <string name="news">最新消息</string>
+    <string name="processwait">處理中,請稍候...</string>
+
+    <string name="navi_btn_back">返回</string>
+    <string name="navi_title_menu">主選單</string>
+    <string name="tableview_header_takeoff">%s出發航班</string>
+    <string name="tableview_header_arrival">%s抵達航班</string>
+
+    <string name="cell_terminal">航廈</string>
+    <string name="cell_time">時間</string>
+    <string name="cell_flight_number">航班編號</string>
+    <string name="cell_destination">  抵達地：  </string>
+    <string name="cell_destination_formenu">  抵達地</string>
+    <string name="cell_origin">  出發地：  </string>
+    <string name="cell_origin_formenu">  出發地</string>
+    <string name="cell_status">狀態</string>
+
+    <string name="flight_takeoff_detail_dialog">  航空公司：    班機號碼：    抵達地：    狀態：    預計起飛時間：       實際起飛時間：       航廈：    登機門：    報到櫃檯：    </string>
+    <string name="flight_arrival_detail_dialog">  航空公司：    班機號碼：    出發地：    狀態：    預計抵達時間：       實際抵達時間：       航廈：    行李轉盤：    </string>
+
+    <string name="flight_takeoff_detail_dialog_airname">  航空公司：  </string>
+    <string name="flight_takeoff_detail_dialog_airnumber">  班機號碼：  </string>
+    <string name="flight_takeoff_detail_dialog_arrivelocation">  抵達地：  </string>
+    <string name="flight_takeoff_detail_dialog_status">  狀態：  </string>
+    <string name="flight_takeoff_detail_dialog_exceptime">  預計起飛時間：  </string>
+    <string name="flight_takeoff_detail_dialog_actualtime">  實際起飛時間：  </string>
+    <string name="flight_takeoff_detail_dialog_terminal">  航廈：  </string>
+    <string name="flight_takeoff_detail_dialog_gate">  登機門：  </string>
+    <string name="flight_takeoff_detail_dialog_checkincount">  報到櫃檯：  </string>
+
+    <string name="flight_arrival_detail_dialog_airname">  航空公司：  </string>
+    <string name="flight_arrival_detail_dialog_airnumber">  班機號碼：  </string>
+    <string name="flight_arrival_detail_dialog_arrivelocation">  出發地：  </string>
+    <string name="flight_arrival_detail_dialog_status">  狀態：  </string>
+    <string name="flight_arrival_detail_dialog_exceptime">  預計抵達時間：  </string>
+    <string name="flight_arrival_detail_dialog_actualtime">  實際抵達時間：  </string>
+    <string name="flight_arrival_detail_dialog_terminal">  航廈：  </string>
+    <string name="flight_arrival_detail_dialog_package">  行李轉盤：  </string>
+
+    <string name="flight_add_to_my_flight_dialog">加入該航班至我的航班？</string>
+    <string name="flight_add_to_my_flight_result_dialog">已成功加入我的航班！</string>
+    <string name="flight_add_to_my_flight_error_dialog">該航班已存在於您的航班中</string>
+    <string name="need_login_dialog">如欲使用「我的航班」功能，請先登入！</string>
+
+    <string name="navi_title_flight_search">航班搜尋</string>
+    <string name="navi_btn_flight_search_mode">搜尋模式</string>
+    <string name="btn_flight_search">搜尋</string>
+    <string name="text_field_place_holder_search_by_name">請輸入航班代號</string>
+    <string name="text_field_place_holder_search_by_city">請輸入城市名稱</string>
+    <string name="navi_title_flight_search_result">搜尋結果</string>
+
+    <string name="action_sheet_title">請選擇搜尋方式</string>
+    <string name="action_sheet_btn_search_by_name">航空公司/航班代號搜尋</string>
+    <string name="action_sheet_btn_search_by_city">城市搜尋</string>
+    <string name="action_sheet_btn_search_by_date">日期搜尋</string>
+    <string name="action_sheet_btn_cancel">取消</string>
+
+    <string name="login_success">登入成功</string>
+    <string name="login_fail">登入失敗</string>
+    <string name="login_label_hint">請選擇登入方式</string>
+    <string name="login_cancel">暫時不要登入</string>
+
+    <string name="navi_title_my_flight">我的航班</string>
+    <string name="cell_btn_delete">刪除</string>
+    <string name="flight_dialog_title">詳細資訊</string>
+
+    <string name="navi_title_flight_notify">航班提醒</string>
+    <string name="notify_label_hint">於航班起飛前多久時間提醒？</string>
+    <string name="notify_hour">小時</string>
+    <string name="notify_minute">分鐘</string>
+    <string name="notify_alerm_info">航班：    </string>
+    <string name="notify_alerm_info2">時間：  </string>
+    <string name="notify_alerm_title">航班提醒通知</string>
+
+    <string name="title_flight">航班資訊</string>
+    <string name="title_nearby">附近資訊</string>
+    <string name="title_traffic">機場交通</string>
+    <string name="title_utility">實用資訊</string>
+    <string name="title_shopping">購物優惠</string>
+    <string name="title_communication">通訊服務</string>
+    <string name="title_option">設定</string>
+    <string name="title_home">首頁</string>
+    <string name="title_flight_search">搜尋航班</string>
+    <string name="title_my_flight">我的航班</string>
+    <string name="title_flight_notify">航班提醒</string>
+    <string name="title_airport_facility">機場設施</string>
+    <string name="title_restaurant">餐廳商店</string>
+    <string name="title_attraction">觀光景點</string>
+    <string name="title_hotel">飯店住宿</string>
+    <string name="title_gus_station">加油站</string>
+    <string name="title_parking">停車場</string>
+    <string name="title_restroom">公共廁所</string>
+    <string name="title_parking_infomation">停車資訊</string>
+    <string name="title_road_rescue">道路救援</string>
+    <string name="title_tourist_bus">巡迴巴士</string>
+    <string name="title_tram_car">電車</string>
+    <string name="title_airport_bus">機場巴士</string>
+    <string name="title_taxi">計程車</string>
+    <string name="title_mrt_hsr">機場捷運/高鐵</string>
+    <string name="title_road_network">即時路況</string>
+    <string name="title_weather">天氣</string>
+    <string name="title_currency">匯率換算</string>
+    <string name="title_conversation">旅行外文</string>
+    <string name="title_timezone">時區查詢</string>
+    <string name="title_lost_found">失物協尋</string>
+    <string name="title_feedback">問卷調查</string>
+    <string name="title_souvenirs">紀念品專區</string>
+    <string name="title_discount">免稅店優惠</string>
+    <string name="title_international_call">國際電話</string>
+    <string name="title_emergency_phone">緊急電話</string>
+    <string name="title_roaming_service">漫遊服務</string>
+
+    <string name="nearby_food_category">美食分類</string>
+    <string name="nearby_food_store">美食清單</string>
+
+    <string name="navi_btn_edit">編輯</string>
+    <string name="navi_btn_region">地區</string>
+    <string name="picker_btn_done">完成</string>
+    <string name="navi_btn_submit">送出</string>
+    <string name="utility_feedback_submit_ok_result">問卷結果已成功送出，感謝您的建議！</string>
+    <string name="utility_feedback_submit_already">您最近已填寫過問卷，請過一段時間後再填寫問卷，感謝！</string>
+
+    <string name="option_btn_switch_language">切換語系</string>
+    <string name="option_btn_login">登入</string>
+    <string name="option_btn_logout">登出</string>
+    <string name="option_dilog_language_warning_title">注意！</string>
+    <string name="option_dilog_language_warning">切換語系需重新啟動此APP後後，才可成功套用選擇的語系！  按下確定後將立即關閉App。</string>
+    <string name="option_picker_title">請選擇語系：</string>
+    <string name="option_logout_dialog">您已成功登出！</string>
+
+    <string name="flight_state_arrived">已到</string>
+    <string name="flight_state_cancelled">取消</string>
+    <string name="flight_state_schedule_change">時間更改</string>
+    <string name="flight_state_delay">延遲</string>
+    <string name="flight_state_on_time">準時</string>
+    <string name="flight_state_departed">已飛</string>
+
+    <string name="marquee_parking_info">開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！%s</string>
+    <string name="marquee_my_flight_emprt">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。          </string>
+    <string name="marquee_my_flight_arrival">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          飛自     預計時間：        狀態：     實際時間：        航廈：     行李轉盤：  </string>
+    <string name="marquee_my_flight_takeoff">          開車到機場的朋友有福了～ 第1、2航廈內的停車場除了享有前30分鐘免費停車，現在也可以在機場官網上查詢剩餘車位，隨時掌握車位動態，接送機的朋友可以多多利用喔！          飛往     預計時間：        狀態：     實際時間：        航廈：     登機門：     報到櫃檯：  </string>
+
+    <string name="flight_notify_warning_detail">無法新增    的航班提醒，因提醒時間已過，請重新設定該航班的提醒時間</string>
+    <string name="flight_notify_warning_detail_1">無法新增</string>
+    <string name="flight_notify_warning_detail_2">的航班提醒，因提醒時間已過，請重新設定該航班的提醒時間</string>
+    <string name="flight_notify_warning_title">提醒時間已過</string>
+
+    <string name="conversation_general">基本會話</string>
+    <string name="conversation_ask">問路</string>
+    <string name="conversation_traffic">交通機關</string>
+    <string name="conversation_travel">旅行社櫃檯</string>
+    <string name="conversation_car">租車</string>
+    <string name="conversation_dining">餐飲設施</string>
+    <string name="conversation_lodging">住宿設施</string>
+    <string name="conversation_shopping">購物</string>
+
+    <string name="cannot_retrived_the_flight_information_due_to_network_issue">網路異常，暫時無法獲取航班資訊</string>
+    <string name="cannot_retrived_the_information_due_to_network_issue">網路異常，暫時無法取得資訊</string>
+    <string name="no_flight_information_found">查無符合的航班</string>
+
+    <string name="terminal_1">第一航廈</string>
+    <string name="terminal_2">第二航廈</string>
+
+    <string name="loading_update_flight_date">航班資訊更新中...</string>
+    <string name="loading_sending_feedback">問卷結果傳送中...</string>
+
+    <string name="copyright_label_1">桃園國際機場版權所有 © 2014</string>
+    <string name="copyright_label_2">本系統由遠傳電信、蝦米創意媒體設計</string>
+
+    <string name="convert">轉換</string>
+    <string name="currency_convery_description">點擊國旗或是文字輸入框來轉換匯率</string>
+
+    <string name="sails_map_load_fail">讀取遠端地圖失敗，請檢查網路連線是否正常。</string>
+    <string name="sails_cannot_detect_postion">無法偵測您目前的位置。</string>
+    <string name="sails_dialog_retry">重試</string>
+    <string name="sails_start_detect_location">正在尋找您目前的位置...</string>
+
+    <string name="ttia"><u>桃園機場官方網站</u></string>
+    <string name="name"><u>內部員工通訊功能</u></string>
+
+    <string name="installwechat">請先安裝WeChat</string>
+    <string name="WXAppisInstalled">如果您尚未在微信App中登入您的帳號，按下確定後，將跳轉至微信App中執行登入驗證。登入完畢後，請按返回鍵返回此App。</string>
+    <string name="gotoquestion">為了向您提供更好的服務，是否願意協助我們做個問卷調查呢？</string>
+    <string name="This_version_not_supported">目前版本暫時無法支援</string>
+
+    <string name="start">開始導航</string>
+    <string name="stop">結束導航</string>
+    <string name="start_noset_position">因為無法偵測您目前的所在位置，所以無法導航</string>
+
+    <!--  parkingListFragment  -->
+    <string name="parking">車位</string>
+    <string name="available">尚有</string>
+    <string name="full">車位已滿</string>
+
+    <string name="setup_emma_title">您尚未安裝內部員工通訊軟體</string>
+    <string name="setup_emma">按下確定後將跳轉至「內部員工通訊軟體」下載頁面</string>
+
+    <string name="cannot_obtain_information">無法獲取資料</string>
+    <string name="getactivity">您隨時可以在「實用資訊」->「問卷調查」頁面中參加此抽獎活動</string>
+    <string name="activity_title">送你智慧手機</string>
+
+    <string name="join_now">立即參加</string>
+    <string name="next_time">下次再說</string>
+    <string name="city">城市</string>
+
+    <!--  foreignLanguage  -->
+    <string name="zhtw">繁體中文</string>
+    <string name="zhcn">簡體中文</string>
+    <string name="ja">日語</string>
+    <string name="en">英語</string>
+
+    <string-array name="drawable_array">
+        <item>share</item>
+        <item>profile</item>
+        <item>contacts</item>
+        <item>feeds</item>
+        <item>image</item>
+        <item>albums</item>
+        <item>notepad</item>
+        <item>close</item>
+    </string-array>
+    <string-array name="facebook_array">
+        <item>User Profile</item>
+        <item>Post Message</item>
+        <item>Friends</item>
+        <item>Get Feeds</item>
+        <item>Upload Image</item>
+        <item>Get Albums</item>
+        <item>Update Story</item>
+        <item>Close Dialog</item>
+    </string-array>
+    <string-array name="twitter_array">
+        <item>User Profile</item>
+        <item>Send Tweet</item>
+        <item>Friends</item>
+        <item>Get Feeds</item>
+        <item>Upload Image</item>
+        <item>Get Albums</item>
+        <item>Close Dialog</item>
+    </string-array>
+    <string-array name="googleplus_array">
+        <item>User Profile</item>
+        <item>Friends</item>
+        <item>Get Feeds</item>
+        <item>Get Albums</item>
+        <item>Close Dialog</item>
+    </string-array>
+    <string-array name="google_array">
+        <item>User Profile</item>
+        <item>Friends</item>
+        <item>Close Dialog</item>
+    </string-array>
+
+    <string-array name="continent_array">
+        <item>亞洲</item>
+        <item>大洋洲</item>
+        <item>美洲</item>
+        <item>歐洲</item>
+    </string-array>
+    <string-array name="oceania_city_array">
+        <item>布里斯本</item>
+        <item>帛琉</item>
+        <item>雪梨</item>
+        <item>奧克蘭</item>
+    </string-array>
+    <string-array name="asia_city_array">
+        <item>三亞</item>
+        <item>上海</item>
+        <item>大阪/關西</item>
+        <item>大連</item>
+        <item>小松</item>
+        <item>太原</item>
+        <item>仙台</item>
+        <item>北京</item>
+        <item>札幌</item>
+        <item>石垣島</item>
+        <item>石家莊</item>
+        <item>仰光</item>
+        <item>吉隆坡</item>
+        <item>名古屋</item>
+        <item>合肥</item>
+        <item>成都</item>
+        <item>旭川</item>
+        <item>西安</item>
+        <item>吳哥窟</item>
+        <item>杜拜</item>
+        <item>亞庇</item>
+        <item>函館</item>
+        <item>呼和浩特</item>
+        <item>岡山</item>
+        <item>昆明</item>
+        <item>杭州</item>
+        <item>東京</item>
+        <item>武漢</item>
+        <item>河內</item>
+        <item>泗水</item>
+        <item>金邊</item>
+        <item>長沙</item>
+        <item>長春</item>
+        <item>長灘島</item>
+        <item>青島</item>
+        <item>南京</item>
+        <item>南寧</item>
+        <item>哈爾濱</item>
+        <item>泉州</item>
+        <item>胡志明</item>
+        <item>重慶</item>
+        <item>首爾/仁川</item>
+        <item>香港</item>
+        <item>峇里島</item>
+        <item>宮崎</item>
+        <item>徐州</item>
+        <item>桂林</item>
+        <item>海口</item>
+        <item>烏魯木齊</item>
+        <item>琉球</item>
+        <item>釜山</item>
+        <item>馬尼拉</item>
+        <item>高松</item>
+        <item>高雄</item>
+        <item>曼谷</item>
+        <item>張家界</item>
+        <item>清邁</item>
+        <item>深圳</item>
+        <item>鹿兒島</item>
+        <item>富山</item>
+        <item>無錫</item>
+        <item>貴陽</item>
+        <item>雅加達</item>
+        <item>黃山</item>
+        <item>廈門</item>
+        <item>新加坡</item>
+        <item>溫州</item>
+        <item>煙臺</item>
+        <item>寧波</item>
+        <item>福州</item>
+        <item>福岡</item>
+        <item>廣州</item>
+        <item>廣島</item>
+        <item>德里</item>
+        <item>鄭州</item>
+        <item>澳門</item>
+        <item>靜岡</item>
+        <item>濟州</item>
+        <item>濟南/遙牆</item>
+        <item>檳城</item>
+        <item>瀋陽</item>
+        <item>關島</item>
+        <item>麗江</item>
+        <item>蘭州</item>
+        <item>鹽城</item>
+    </string-array>
+    <string-array name="americas_city_array">
+        <item>檀香山</item>
+        <item>多倫多</item>
+        <item>西雅圖</item>
+        <item>洛杉磯</item>
+        <item>紐約</item>
+        <item>溫哥華</item>
+        <item>舊金山</item>
+    </string-array>
+    <string-array name="europe_city_array">
+        <item>巴黎</item>
+        <item>法蘭克福</item>
+        <item>阿姆斯特丹</item>
+        <item>倫敦</item>
+        <item>維也納</item>
+        <item>羅馬</item>
+    </string-array>
+
+    <string-array name="airlines_array">
+        <item>韓亞航空</item>
+        <item>聯合航空</item>
+        <item>澳洲航空</item>
+        <item>澳門航空</item>
+        <item>樂桃航空</item>
+        <item>酷航</item>
+        <item>遠東航空</item>
+        <item>達美航空</item>
+        <item>新加坡航空</item>
+        <item>廈門航空</item>
+        <item>越南航空</item>
+        <item>菲律賓航空</item>
+        <item>華信航空</item>
+        <item>港龍航空</item>
+        <item>復興航空</item>
+        <item>荷蘭航空</item>
+        <item>深圳航空</item>
+        <item>捷星航空</item>
+        <item>宿霧航空</item>
+        <item>國泰航空</item>
+        <item>馬來西亞</item>
+        <item>馬亞洲航空</item>
+        <item>釜山航空</item>
+        <item>海南航空</item>
+        <item>泰國航空</item>
+        <item>香港航空</item>
+        <item>香草航空</item>
+        <item>春秋航空</item>
+        <item>阿聯酋航空</item>
+        <item>虎航</item>
+        <item>印尼航空</item>
+        <item>全祿航空</item>
+        <item>全亞洲航空</item>
+        <item>全日本空輸</item>
+        <item>立榮航空</item>
+        <item>四川航空</item>
+        <item>日本航空</item>
+        <item>天文航空</item>
+        <item>中華航空</item>
+        <item>中國國際</item>
+        <item>南方航空</item>
+        <item>東方航空</item>
+        <item>山東航空</item>
+        <item>大韓航空</item>
+        <item>上海航空</item>
+        <item>吉祥航空</item>
+    </string-array>
+
+    <string-array name="asia_weather_array">
+        <item>中壢(桃園) </item>
+        <item>東京</item>
+        <item>大阪</item>
+        <item>首爾</item>
+        <item>關島</item>
+        <item>曼谷</item>
+        <item>雅加達</item>
+        <item>吉隆坡</item>
+        <item>新加坡</item>
+        <item>馬尼拉</item>
+        <item>加德滿都</item>
+        <item>胡志明市</item>
+        <item>河內</item>
+        <item>新德里</item>
+        <item>伊斯坦堡</item>
+        <item>莫斯科</item>
+        <item>海參威</item>
+        <item>伯斯</item>
+        <item>廣州</item>
+        <item>香港</item>
+        <item>福州</item>
+        <item>昆明</item>
+        <item>重慶</item>
+        <item>武漢</item>
+        <item>南昌</item>
+        <item>杭州</item>
+        <item>上海</item>
+        <item>南京</item>
+        <item>青島</item>
+        <item>北京</item>
+        <item>開封</item>
+        <item>西安</item>
+        <item>瀋陽</item>
+        <item>蘭州</item>
+        <item>海口</item>
+        <item>台北</item>
+        <item>雲林</item>
+        <item>台東</item>
+        <item>台南</item>
+        <item>台中</item>
+        <item>屏東</item>
+    </string-array>
+    <string-array name="oceania_weather_array">
+        <item>威靈頓</item>
+        <item>奧克蘭</item>
+        <item>墨爾本</item>
+        <item>雪梨</item>
+        <item>伯斯</item>
+        <item>布里斯班</item>
+    </string-array>
+    <string-array name="europe_weather_array">
+        <item>奧斯陸</item>
+        <item>馬德里</item>
+        <item>哥本哈根</item>
+        <item>赫爾辛基</item>
+        <item>法蘭克福</item>
+        <item>柏林</item>
+        <item>日內瓦</item>
+        <item>布魯塞爾</item>
+        <item>倫敦</item>
+        <item>巴黎</item>
+        <item>維也納</item>
+        <item>羅馬</item>
+        <item>威尼斯</item>
+        <item>布達佩斯</item>
+        <item>雅典</item>
+        <item>華沙</item>
+        <item>布拉格</item>
+        <item>阿姆斯特丹</item>
+        <item>斯德哥爾摩</item>
+        <item>里斯本</item>
+    </string-array>
+    <string-array name="americas_weather_array">
+        <item>檀香山</item>
+        <item>洛杉磯</item>
+        <item>拉斯維加斯</item>
+        <item>舊金山</item>
+        <item>西雅圖</item>
+        <item>紐約</item>
+        <item>華盛頓特區</item>
+        <item>芝加哥</item>
+        <item>邁阿密</item>
+        <item>多倫多</item>
+        <item>溫哥華</item>
+        <item>蒙特婁</item>
+        <item>墨西哥城</item>
+        <item>里約</item>
+        <item>聖地牙哥(智利) </item>
+        <item>利瑪</item>
+        <item>布宜諾斯艾利斯</item>
+    </string-array>
+
+    <string-array name="rateexchange_array">
+        <item>USD 美金</item>
+        <item>HKD 港幣</item>
+        <item>GBP 英鎊</item>
+        <item>AUD 澳幣</item>
+        <item>CAD 加拿大幣</item>
+        <item>SGD 新加坡幣</item>
+        <item>CHF 瑞士法郎</item>
+        <item>JPY 日圓</item>
+        <item>ZAR 南非幣</item>
+        <item>SEK 瑞典幣</item>
+        <item>NZD 紐元</item>
+        <item>THB 泰銖</item>
+        <item>PHP 菲國比索</item>
+        <item>IDR 印尼幣</item>
+        <item>EUR 歐元</item>
+        <item>KRW 韓元</item>
+        <item>VND 越南盾</item>
+        <item>MYR 馬來幣</item>
+        <item>CNY 人民幣</item>
+        <item>TWD 台幣</item>
+    </string-array>
+
+    <!--  FlightRemind Hour  -->
+    <string-array name="flightremind_array_hour">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
+
+    <!--  FlightRemind Hour  -->
+    <string-array name="flightremind_array_minute">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+    </string-array>
+
+    <!-- communication -->
+    <string name="internation_title">國際電話撥打方式</string>
+    <string name="roaming_service_title">漫遊行動上網</string>
+    <string name="roaming_service_des">請參考各家漫遊服務，選擇最適合您的資費方案：</string>
+    <string name="roaming_detail_query">漫遊方案查詢</string>
+    <string name="communication_time">服務時間</string>
+
+    <!-- Store Offers -->
+    <string name="store_offers_info">"商店資訊"</string>
+
+    <!-- Airport secretary -->
+    <string name="airport_secretary_news">"最新消息"</string>
+    <string name="airport_secretary_emergency">"緊急事件"</string>
+    <string name="airport_secretary_notify">"貼心提醒"</string>
+
+    <!-- Restaurant & Store search result-->
+    <string name="restaurant_store_search_result_subtitle">商店訊息</string>
+    <string name="restaurant_store_search_restaurant_result_subtitle">餐廳訊息</string>
+
+    <!-- Useful questionnaire -->
+    <string name="useful_quest_title">填寫問卷</string>
+    <string name="useful_quest_des">說明:非常不滿意1分、不滿意2分、普通3分、\n滿意4分、非常滿意5分。</string>
+    <string name="useful_quest_number">問題</string>
+    <string name="useful_quest_send">送出</string>
+    <string name="useful_quest_send_message">問卷結果已成功送出，感謝您的填寫！</string>
+    <string name="useful_quest_no_finish">尚有題目未填寫</string>
+
+    <!-- Timezone -->
+    <string name="timezone_other_area">"其他地區"</string>
+    <string name="timezone_other_area_dialog_title">"請選擇地區"</string>
+
+    <!-- Restaurant & Store search -->
+    <string name="restaurant_search_subtitle">餐廳查詢</string>
+    <string name="restaurant_store_search_subtitle">商店查詢</string>
+    <string name="restaurant_store_search_select_terminal">請選擇航廈</string>
+    <string name="restaurant_store_search_non_select_terminal">不分航廈</string>
+    <string name="restaurant_store_search_select_terminal_title">請選擇航廈</string>
+    <string name="restaurant_store_search_select_area">請選擇區域</string>
+    <string name="restaurant_store_search_non_select_area">不分區域</string>
+    <string name="restaurant_store_search_select_area_title">請選擇區域</string>
+    <string name="restaurant_store_search_select_floor">請選擇樓層</string>
+    <string name="restaurant_store_search_non_select_floor">不分樓層</string>
+    <string name="restaurant_store_search_select_floor_title">請選擇樓層</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐廳種類</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">請選擇餐廳總類</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">請選擇商店種類</string>
+    <string name="restaurant_store_search_non_select_kind_of_store_title">不分商店種類</string>
+    <string name="restaurant_store_search_not_found">查無符合的餐廳</string>
+    <string name="restaurant_store_search_not_found_store">查無符合的商店</string>
+
+    <!-- My Flights -->
+    <string name="my_flights_delete_message">確定要刪除我的航班？</string>
+    <string name="my_flights_delete">刪除航班</string>
+    <string name="my_flights_expired">航班已過期</string>
+
+    <!-- Flights search -->
+    <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司或城市關鍵字</string>
+    <string name="flights_search_search">搜尋</string>
+    <string name="flights_search_edit_text_hint">請輸入關鍵字</string>
+    <string name="flights_search_not_found_flights_message">找不到航班</string>
+
+    <!-- Comment -->
+    <string name="press_again_left">再點一次離開app</string>
+    <string name="server_error">伺服器錯誤</string>
+    <string name="data_error">資料錯誤</string>
+    <string name="data_not_found">找不到資料</string>
+    <string name="ok">確定</string>
+    <string name="note">提醒</string>
+    <string name="no_search_store">查無符合商店</string>
+
+    <!-- Marquee -->
+    <string name="marquee_default_end_message">您尚未儲存任何航班資訊，請透過航班資訊，將你欲搭乘的航班新增至我的航班。</string>
+
+    <!-- Home -->
+    <string name="home_weather_title">天氣資訊</string>
+    <string name="home_more">更多</string>
+    <string name="home_more_flights">更多班機</string>
+    <string name="home_terminal_info_title">航廈資訊</string>
+    <string name="home_store_offers_title">商店優惠</string>
+    <string name="home_language_setting_title">語言設定</string>
+    <string name="home_airport_secretary_title">機場秘書</string>
+    <string name="home_indoor_map_title">室內指引</string>
+    <string name="home_airport_achievement_title">機場成就</string>
+
+    <!-- Parking info -->
+    <string name="parking_info_parking_space_much">"車位充足"</string>
+    <string name="parking_info_parking_space_enough">"尚有車位"</string>
+    <string name="parking_info_parking_space_full">"車位已滿"</string>
+    <string name="parking_info_parking_space_number_of">"尚有%s"</string>
+    <string name="parking_info_parking_space_full_state">"已滿"</string>
+    <string name="parking_info_parking_space_P1">"P1"</string>
+    <string name="parking_info_parking_space_P2">"P2"</string>
+    <string name="parking_info_parking_space_P4">"P4"</string>
+    <string name="parking_info_parking_space_1F">"(1F)"</string>
+    <string name="parking_info_parking_space_B1_B2">"(B1,B2)"</string>
+    <string name="parking_info_plenty">"充足"</string>
+    <string name="parking_info_full">"已滿"</string>
+    <string name="parking_info_still_available">"尚有"</string>
+
+    <!-- Flights search result -->
+    <string name="flights_search_result_terminal_text">航</string>
+
+    <!-- Restaurant & Store search info-->
+    <string name="restaurant_store_search_info_location">地址：%1$s-%2$s</string>
+    <string name="restaurant_store_search_info_time">營業時間：%1$s~%2$s</string>
+    <string name="restaurant_store_search_info_phone">電話：%s</string>
+
+    <!-- My flights notify -->
+    <string name="my_flights_notify">"%1$d小時%2$d分鐘"</string>
+    <string name="my_flights_notify_message">"%1$s,%2$s班機於%3$s飛往%4$s"</string>
+    <string name="my_flights_notify_on">"On"</string>
+    <string name="my_flights_notify_off">"Off"</string>
+    <string name="my_flights_notify_delete_check_message">"確定要刪除提醒?"</string>
+    <string name="my_flights_notify_delete_button">"刪除提醒"</string>
+
+    <!-- Currency conversion -->
+    <string name="currency_conversion_aud">"AUD"</string>
+    <string name="currency_conversion_cad">"CAD"</string>
+    <string name="currency_conversion_chf">"CHF"</string>
+    <string name="currency_conversion_cny">"CNY"</string>
+    <string name="currency_conversion_eur">"EUR"</string>
+    <string name="currency_conversion_gbp">"GBP"</string>
+    <string name="currency_conversion_hkd">"HKD"</string>
+    <string name="currency_conversion_idr">"IDR"</string>
+    <string name="currency_conversion_jpy">"JPY"</string>
+    <string name="currency_conversion_krw">"KRW"</string>
+    <string name="currency_conversion_myr">"MYR"</string>
+    <string name="currency_conversion_nzd">"NZD"</string>
+    <string name="currency_conversion_php">"PHP"</string>
+    <string name="currency_conversion_sek">"SEK"</string>
+    <string name="currency_conversion_sgd">"SGD"</string>
+    <string name="currency_conversion_thb">"THB"</string>
+    <string name="currency_conversion_twd">"TWD"</string>
+    <string name="currency_conversion_usd">"USD"</string>
+    <string name="currency_conversion_vnd">"VND"</string>
+    <string name="currency_conversion_zar">"ZAR"</string>
+    <string name="currency_conversion_translate">"換算"</string>
+    <string name="currency_conversion_dialog_title">"請選擇國家"</string>
+
+    <!-- Language setting -->
+    <string name="language_setting_select_dialog">"確定要切換成%s嗎?"</string>
+    <string name="language_setting_select_confirm_dialog">"已經語言設定為%s"</string>
+    <string name="language_setting_japanese">"日語"</string>
+    <string name="language_setting_english">"英語"</string>
+
+    <string name="marquee_arrive">飛自</string>
+    <string name="marquee_dexxxxx">飛往</string>
+    <string name="marquee_ecpected_time">預計時間：</string>
+    <string name="marquee_status">狀態：</string>
+    <string name="marquee_ecpress_time">實際時間：</string>
+    <string name="marquee_terminal">航廈：</string>
+    <string name="marquee_gate">登機門：</string>
+    <string name="marquee_gt">報告櫃檯：</string>
+    <string name="marquee_luggage">行李轉盤：</string>
+
+    <string name="store_terminal_1">1航</string>
+    <string name="store_terminal_2">2航</string>
+
+    <!-- SouvenirArea -->
+    <string name="souvenir_button_des">商品說明</string>
+    <string name="souvenir_detail_address">地址：</string>
+    <string name="souvenir_detail_time">營業時間：</string>
+    <string name="souvenir_detail_phone">電話：</string>
+
+    <!-- Other -->
+    <string name="controlled_area">管制區</string>
+    <string name="uncontrolled_area">非管制區</string>
+    <string name="floor_1">1樓</string>
+    <string name="floor_2">2樓</string>
+    <string name="floor_3">3樓</string>
+    <string name="floor_4">4樓</string>
+    <string name="floor_b1">B1</string>
+    <string name="floor_b2">B2</string>
+    <string name="satisfaction_with_taoyuan_airport">對桃園機場的整體滿意度?</string>
+    <string name="sign_at_taoyuan_airport">對桃園機場方向的指示滿意度?</string>
+    <string name="Transportation_at_taoyuan_airport">對往來機場的交通工具滿意度?</string>
+    <string name="wc_at_taoyuan_airport">對桃園機場洗手間整潔滿意度?</string>
+    <string name="service_at_taoyuan_airport">對桃園機場服務人員滿意度?</string>
+    <string name="food_at_taoyuan_airport">對桃園機場飲食滿意度?</string>
+    <string name="restaurant_asia">亞洲風味餐廳(含穆斯林)</string>
+    <string name="restaurant_sweet">甜品店</string>
+    <string name="restaurant_cake">蛋糕、麵包店</string>
+    <string name="restaurant_taiwan">台灣特色餐廳</string>
+    <string name="restaurant_japan">日式料理餐廳</string>
+    <string name="restaurant_fast">快餐、便利商店</string>
+    <string name="restaurant_west">西式料理餐廳</string>
+    <string name="restaurant_cafe">咖啡廳</string>
+    <string name="telecommunications_uc">遠傳電信</string>
+    <string name="telecommunications_cw">中華電信</string>
+    <string name="telecommunications_tw">台灣大哥大</string>
+    <string name="telecommunications_star">台灣之星</string>
+    <string name="telecommunications_yt">亞太電信</string>
+    <string name="store_terminal_1_long">第一航廈</string>
+    <string name="store_terminal_2_long">第二航廈</string>
+
+    <string name="travel_item1">基本會話</string>
+    <string name="travel_item2">問路</string>
+    <string name="travel_item3">交通機關</string>
+    <string name="travel_item4">旅行社櫃台</string>
+    <string name="travel_item5">租車</string>
+    <string name="travel_item6">餐飲設施</string>
+    <string name="travel_item7">住宿設施</string>
+    <string name="travel_item8">購物</string>
+
 </resources>

@@ -89,7 +89,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 //        final int height = getResources().getDimensionPixelSize(R.dimen.dp_pixel_100);
 
         if (getArguments() != null && getArguments().getSerializable(FacilityDetailContract.TAG_DATA) != null) {
-            AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
+            final AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
             mTextViewSubTitle.setText(facilityData.getFloorName());
             final List<String> imageList = new ArrayList<>();
             imageList.add(facilityData.getMainImgPath());
@@ -100,45 +100,51 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                 @Override
                 public void run() {
                     try {
-                        mBitmaps[0] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(0))
-                                .config(Bitmap.Config.ARGB_4444)
-                                .resize(width,height)
+                        Log.e("Ian","img path:"+ApiConnect.TAG_IMAGE_HOST + facilityData.getLegendImgPath());
+                        mBitmaps[0] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + facilityData.getLegendImgPath())
+                                .config(Bitmap.Config.ARGB_8888)
                                 .priority(Picasso.Priority.HIGH)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
                                 .get();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    for (int i = 1; i < imageList.size(); i++) {
-                        try {
-                            mBitmaps[i] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i))
-                                    .config(Bitmap.Config.ARGB_4444)
-//                                    .resize(width,height)
-                                    .priority(Picasso.Priority.HIGH)
-                                    .get();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    // 這就是那個解 在高解析的情況下 會進行放大的動作(低解析也有可能 只是比較少)
-                    if(mBitmaps[1].getWidth()<mBitmaps[0].getWidth()/2 || mBitmaps[2].getWidth()<mBitmaps[0].getWidth()/2){
-                        mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[1].getWidth()*3/2);
-                        mBitmaps[2] = Util.setBitmapScale(mBitmaps[2],mBitmaps[2].getHeight(),mBitmaps[2].getWidth()*3/2);
-                    }
-
-                    //在最後combine前 將超過Ａ圖寬的通通進行縮小的動作
-                    if(mBitmaps[1].getWidth()>mBitmaps[0].getWidth()){
-                        mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[0].getWidth());
-                    }
-                    //在最後combine前 將超過Ａ圖寬的通通進行縮小的動作
-                    if(mBitmaps[2].getWidth()>mBitmaps[0].getWidth()){
-                        mBitmaps[2] = Util.setBitmapScale(mBitmaps[2],mBitmaps[2].getHeight(),mBitmaps[0].getWidth());
-                    }
-
+//                    for (int i = 1; i < imageList.size(); i++) {
+//                        try {
+//                            mBitmaps[i] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + imageList.get(i))
+//                                    .config(Bitmap.Config.ARGB_4444)
+////                                    .resize(width,height)
+//                                    .priority(Picasso.Priority.HIGH)
+//                                    .get();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    // 這就是那個解 在高解析的情況下 會進行放大的動作(低解析也有可能 只是比較少)
+//                    if(mBitmaps[1].getWidth()<mBitmaps[0].getWidth()/2){
+//                        mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[1].getWidth()*3/2);
+//                    }
+//
+//                    //在最後combine前 將超過Ａ圖寬的通通進行縮小的動作
+//                    if(mBitmaps[1].getWidth()>mBitmaps[0].getWidth()){
+//                        mBitmaps[1] = Util.setBitmapScale(mBitmaps[1],mBitmaps[1].getHeight(),mBitmaps[0].getWidth());
+//                    }
+//                    //在最後combine前 將超過Ａ圖寬的通通進行縮小的動作
+//                    if(mBitmaps[2].getWidth()>mBitmaps[0].getWidth()){
+//                        mBitmaps[2] = Util.setBitmapScale(mBitmaps[2],mBitmaps[2].getHeight(),mBitmaps[0].getWidth());
+//                    }
+//
+//                    mMainActivity.runOnUI(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
+//                        }
+//                    });
                     mMainActivity.runOnUI(new Runnable() {
                         @Override
                         public void run() {
-                            mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
+                            mImagePicture.setImage(ImageSource.bitmap(mBitmaps[0]));
                         }
                     });
                 }
