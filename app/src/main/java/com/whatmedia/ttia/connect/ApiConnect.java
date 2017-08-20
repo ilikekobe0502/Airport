@@ -367,10 +367,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getAirportBus(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Buses")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -384,10 +380,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getRoadsideAssistance(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_RoadsideAssistance")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -401,10 +393,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getTaxi(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Taxi")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -418,10 +406,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getTourBus(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Shuttles")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -448,10 +432,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getSkyTrain(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Skytrain")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
