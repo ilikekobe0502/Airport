@@ -629,6 +629,12 @@
     <string name="flights_search_search">搜寻</string>
     <string name="flights_search_edit_text_hint">请输入关键字</string>
     <string name="flights_search_not_found_flights_message">找不到航班</string>
+    <string name="flights_search_tag_on_time_show_text">准时</string>
+    <string name="flights_search_tag_delay_show_text">延迟\nDelay</string>
+    <string name="flights_search_tag_arrived_show_text">已到\nArrive</string>
+    <string name="flights_search_tag_cancelled_show_text">取消\nCancelled</string>
+    <string name="flights_search_tag_schedule_change_show_text">时间更改\nSchedule change</string>
+    <string name="flights_search_tag_departed_show_text">出发\nDeparture</string>
 
     <!-- Comment -->
     <string name="press_again_left">再点一次离开app</string>

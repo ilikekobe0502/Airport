@@ -630,6 +630,12 @@
     <string name="flights_search_search">Search</string>
     <string name="flights_search_edit_text_hint">Please enter keyword</string>
     <string name="flights_search_not_found_flights_message">Can not find flight</string>
+    <string name="flights_search_tag_on_time_show_text">On time</string>
+    <string name="flights_search_tag_delay_show_text">Delay</string>
+    <string name="flights_search_tag_arrived_show_text">Arrive</string>
+    <string name="flights_search_tag_cancelled_show_text">Cancelled</string>
+    <string name="flights_search_tag_schedule_change_show_text">Schedule change</string>
+    <string name="flights_search_tag_departed_show_text">Departure</string>
 
     <!-- Comment -->
     <string name="press_again_left">And then leave the app again</string>

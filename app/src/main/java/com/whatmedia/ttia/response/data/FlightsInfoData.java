@@ -1,17 +1,21 @@
 package com.whatmedia.ttia.response.data;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
+import com.whatmedia.ttia.R;
 
 import java.io.Serializable;
 
 /**
  * Created by neo on 2017/8/4.
  */
-public class FlightsInfoData implements Serializable{
+public class FlightsInfoData implements Serializable {
     public final static String TAG_KIND_ARRIVE = "A";
     public final static String TAG_KIND_DEPARTURE = "D";
     public final static String TAG_KIND_TOP4_ARRIVE = "TOP4A";
     public final static String TAG_KIND_TOP4_DEPARTURE = "TOP4D";
+    public final static String TAG_KIND_TOP4 = "TOP4";
     public final static String TAG_ON_TIME = "準時";
     public final static String TAG_DELAY = "延遲";
     public final static String TAG_ARRIVED = "已到";
@@ -374,5 +378,29 @@ public class FlightsInfoData implements Serializable{
 
     public void setNotificationTime(ClockTimeData notificationTime) {
         this.notificationTime = notificationTime;
+    }
+
+    /**
+     * check flights show text
+     *
+     * @param context
+     * @param data
+     * @return
+     */
+    public static String checkFlightShowText(Context context, String data) {
+        String text = context.getString(R.string.flights_search_tag_on_time_show_text);
+        if (data.contains(FlightsInfoData.TAG_ON_TIME))
+            text = context.getString(R.string.flights_search_tag_on_time_show_text);
+        else if (data.contains(FlightsInfoData.TAG_DELAY))
+            text = context.getString(R.string.flights_search_tag_delay_show_text);
+        else if (data.contains(FlightsInfoData.TAG_ARRIVED))
+            text = context.getString(R.string.flights_search_tag_arrived_show_text);
+        else if (data.contains(FlightsInfoData.TAG_CANCELLED))
+            text = context.getString(R.string.flights_search_tag_cancelled_show_text);
+        else if (data.contains(FlightsInfoData.TAG_SCHEDULE_CHANGE))
+            text = context.getString(R.string.flights_search_tag_schedule_change_show_text);
+        else if (data.contains(FlightsInfoData.TAG_DEPARTED))
+            text = context.getString(R.string.flights_search_tag_departed_show_text);
+        return text;
     }
 }

@@ -630,6 +630,12 @@
     <string name="flights_search_search">検索</string>
     <string name="flights_search_edit_text_hint">キーワード入力</string>
     <string name="flights_search_not_found_flights_message">いいえ飛行ん</string>
+    <string name="flights_search_tag_on_time_show_text">オンタイム</string>
+    <string name="flights_search_tag_delay_show_text">遅延\nDelay</string>
+    <string name="flights_search_tag_arrived_show_text">到着しました\nArrive</string>
+    <string name="flights_search_tag_cancelled_show_text">キャンセル\nCancelled</string>
+    <string name="flights_search_tag_schedule_change_show_text">スケジュール変更\nSchedule change</string>
+    <string name="flights_search_tag_departed_show_text">出発する\nDeparture</string>
 
     <!-- Comment -->
     <string name="press_again_left">もう一度アプリを残してポイント</string>

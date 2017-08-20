@@ -65,7 +65,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         if (item == null)
             return;
 
-        holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getFloorId()) ? item.getFloorId() : "");
+        holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getFloorName()) ? item.getFloorName() : "");
 
         if (!TextUtils.isEmpty(item.getMainImgPath())) {
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
