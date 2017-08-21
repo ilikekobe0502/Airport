@@ -734,10 +734,10 @@
     <!-- Other -->
     <string name="controlled_area">Controlled area</string>
     <string name="uncontrolled_area">Uncontrolled area</string>
-    <string name="floor_1">1st floor</string>
-    <string name="floor_2">2nd floor</string>
-    <string name="floor_3">3rd floor</string>
-    <string name="floor_4">4th floor</string>
+    <string name="floor_1">1F</string>
+    <string name="floor_2">2F</string>
+    <string name="floor_3">3F</string>
+    <string name="floor_4">4F</string>
     <string name="floor_b1">B1</string>
     <string name="floor_b2">B2</string>
     <string name="satisfaction_with_taoyuan_airport">Overall satisfaction with Taoyuan Airport?</string>

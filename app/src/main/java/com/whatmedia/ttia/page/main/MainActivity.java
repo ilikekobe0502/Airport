@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             e.printStackTrace();
         }
 
-        Mint.logEvent("VersionName = " + versionName + " , VersionCode = " + versionCode + " , DeviceName = " + TAG_DEVICE_NAME);
+        Mint.logEvent("VersionName=" + versionName + " ,VersionCode=" + versionCode + " ,DeviceName=" + TAG_DEVICE_NAME);
 
         setMarqueeHomeState();
 
