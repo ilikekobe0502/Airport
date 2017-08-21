@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".page.IndoorMap.IndoorMapActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAHJtzFEGDNUxz8O43JJN4NnKpcRFeADEM" />
