@@ -66,7 +66,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private String mNowDate = Util.getNowDate();
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
-    private String mQueryType = FlightsInfoData.TAG_KIND_TOP4_DEPARTURE;
+    private String mQueryType = FlightsInfoData.TAG_KIND_DEPARTURE;
 
 
     public FlightsSearchResultFragment() {

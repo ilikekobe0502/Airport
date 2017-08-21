@@ -94,7 +94,7 @@ public class ApiConnect extends StateCode {
             mLocale = "jp";
         } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
             mLocale = "en";
-        }else{
+        } else {
             mLocale = "tw";
         }
     }
@@ -322,7 +322,7 @@ public class ApiConnect extends StateCode {
      */
     public static void getRestaurantInfo(String terminalsID, String areaID, String restaurantTypeID, String floorID, Callback callback) {
         //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
+        if (mLocale.equals("cn")) {
             mLocale = "tw";
         }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "seach_restaurant")
@@ -519,10 +519,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getLostAndFound(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Lost")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -594,10 +590,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getInternationCall(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalCall")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
