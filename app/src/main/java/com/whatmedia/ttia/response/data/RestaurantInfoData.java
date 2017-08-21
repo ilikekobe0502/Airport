@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.response.data;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.whatmedia.ttia.R;
@@ -190,5 +191,35 @@ public class RestaurantInfoData implements Serializable {
         }
 
         return floorText;
+    }
+
+    public static String getTerminalText(Context context, String terminalsName) {
+        String terminal = "";
+        if (!TextUtils.isEmpty(terminalsName)) {
+            if (terminalsName.contains("一"))
+                terminal =context.getString(R.string.terminal_1);
+            else if (terminalsName.contains("二"))
+                terminal =context.getString(R.string.terminal_2);
+            else if (terminalsName.contains("1"))
+                terminal =context.getString(R.string.terminal_1);
+            else if (terminalsName.contains("2"))
+                terminal =context.getString(R.string.terminal_2);
+        }
+        return terminal;
+    }
+
+    public static String getSimpleTerminalText(Context context, String terminalsName) {
+        String terminal = "";
+        if (!TextUtils.isEmpty(terminalsName)) {
+            if (terminalsName.contains("一"))
+                terminal =context.getString(R.string.store_terminal_1);
+            else if (terminalsName.contains("二"))
+                terminal =context.getString(R.string.store_terminal_2);
+            else if (terminalsName.contains("1"))
+                terminal =context.getString(R.string.store_terminal_1);
+            else if (terminalsName.contains("2"))
+                terminal =context.getString(R.string.store_terminal_2);
+        }
+        return terminal;
     }
 }

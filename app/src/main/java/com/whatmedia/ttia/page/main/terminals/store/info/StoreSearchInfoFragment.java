@@ -20,6 +20,7 @@ import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.response.data.StoreInfoData;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,19 +72,15 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
 
         mPresenter = StoreSearchInfoPresenter.getInstance(getContext(), this);
         mRadius = getContext().getResources().getDimensionPixelSize(R.dimen.dp_pixel_7);
-        RestaurantInfoData data;
-        StoreInfoData storeData;
+        RestaurantInfoData data;//for搜尋餐廳
+        StoreInfoData storeData;//for搜尋商店
         if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT) != null) {
             data = (RestaurantInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT);
             Log.d(TAG, data.toString());
 
             mTextViewTitle.setText(!TextUtils.isEmpty(data.getRestaurantName()) ? data.getRestaurantName() : "");
 
-            String terminal = "";
-            if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST)) {
-                terminal = getString(R.string.terminal_1);
-            } else if (TextUtils.equals(data.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_SECOND))
-                terminal = getString(R.string.terminal_2);
+            String terminal = RestaurantInfoData.getTerminalText(getContext(), data.getTerminalsName());
 
             if (!TextUtils.isEmpty(data.getImgPath())) {
                 String image = ApiConnect.TAG_IMAGE_HOST + data.getImgPath();
@@ -95,7 +92,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
                         .into(mImageViewPicture);
             }
 
-            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, !TextUtils.isEmpty(terminal) ? terminal : "", !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
             mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
                     !TextUtils.isEmpty(data.getOpenStime()) ? data.getOpenStime() : "",
                     !TextUtils.isEmpty(data.getOpenEtime()) ? data.getOpenEtime() : ""));
@@ -107,11 +104,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
 
             mTextViewTitle.setText(!TextUtils.isEmpty(storeData.getStoreName()) ? storeData.getStoreName() : "");
 
-            String terminal = "";
-            if (TextUtils.equals(storeData.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST)) {
-                terminal = getString(R.string.terminal_1);
-            } else if (TextUtils.equals(storeData.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_SECOND))
-                terminal = getString(R.string.terminal_2);
+            String terminal = StoreInfoData.getTerminalText(getContext(), storeData.getTerminalsName());
 
             if (!TextUtils.isEmpty(storeData.getStoreIMGPath())) {
                 String image = ApiConnect.TAG_IMAGE_HOST + storeData.getStoreIMGPath();

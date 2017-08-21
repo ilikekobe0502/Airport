@@ -140,7 +140,14 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
     }
 
     @Override
-    public void querySouvenirListFail(String message) {
-
+    public void querySouvenirListFail(final String message) {
+        mLoadingView.goneLoadingView();
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                Log.e(TAG, "querySouvenirListFail : " + message);
+                showMessage(message);
+            }
+        });
     }
 }

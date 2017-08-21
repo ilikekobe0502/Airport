@@ -56,8 +56,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             if (item == null)
                 return;
 
-            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsName()) ?
-                    item.getFloorName().contains("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
+            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, item.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, item.getFloorName()) : "");
             holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
@@ -77,8 +76,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             if (storeItem == null)
                 return;
 
-            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsName()) ?
-                    storeItem.getTerminalsName().contains("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
+            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, storeItem.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(storeItem.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, storeItem.getFloorName()) : "");
             holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getStoreName()) ? storeItem.getStoreName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getConetnt()) ? storeItem.getConetnt() : "");
