@@ -56,9 +56,8 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             if (item == null)
                 return;
 
-            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsId()) ?
-                    item.getTerminalsId().equals("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
-            holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorCode()) ? item.getFloorCode() : "");
+            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, item.getTerminalsName()) : "");
+            holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, item.getFloorName()) : "");
             holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
             String pictureUrl;
@@ -71,15 +70,14 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
             Log.d(TAG, "Store image url = " + pictureUrl);
             holder.mLayoutFrame.setTag(item);
-        }else if (mStoreItems!=null){
+        } else if (mStoreItems != null) {
 
             StoreInfoData storeItem = mStoreItems.get(position);
             if (storeItem == null)
                 return;
 
-            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsId()) ?
-                    storeItem.getTerminalsId().equals("1") ? mContext.getString(R.string.store_terminal_1) : mContext.getString(R.string.store_terminal_2) : "");
-            holder.mTextViewFloor.setText(!TextUtils.isEmpty(storeItem.getFloorId()) ? storeItem.getFloorId() : "");
+            holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, storeItem.getTerminalsName()) : "");
+            holder.mTextViewFloor.setText(!TextUtils.isEmpty(storeItem.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, storeItem.getFloorName()) : "");
             holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getStoreName()) ? storeItem.getStoreName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getConetnt()) ? storeItem.getConetnt() : "");
             String pictureUrl;

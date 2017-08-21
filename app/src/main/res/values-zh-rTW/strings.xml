@@ -826,4 +826,6 @@
     <string name="telecommunications_yt">亞太電信</string>
     <string name="store_terminal_1_long">第一航廈</string>
     <string name="store_terminal_2_long">第二航廈</string>
+
+    <string name="timezone_taipei">台北</string>
 </resources>

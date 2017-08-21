@@ -103,10 +103,16 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         mSecondItems = new ArrayList<>();
 
         for (AirportFacilityData item : data) {
-            if (TextUtils.equals(item.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST))
-                mFirstItems.add(item);
-            else
-                mSecondItems.add(item);
+            if (!TextUtils.isEmpty(item.getTerminalsName())) {
+                if (item.getTerminalsName().contains("一"))
+                    mFirstItems.add(item);
+                else if (item.getTerminalsName().contains("二"))
+                    mSecondItems.add(item);
+                else if (item.getTerminalsName().contains("1"))
+                    mFirstItems.add(item);
+                else if (item.getTerminalsName().contains("2"))
+                    mSecondItems.add(item);
+            }
         }
 
         notifyDataSetChanged();

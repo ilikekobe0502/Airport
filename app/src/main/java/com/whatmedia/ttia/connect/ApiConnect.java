@@ -48,6 +48,8 @@ public class ApiConnect extends StateCode {
     //無提供全語言的API，請使用下面這個
     private static String mLocaleApiError = "tw";
 
+    private static String mToken;
+
     private static OkHttpClient mClient;
     private static ApiConnect mApiConnect;
     private static Context mContext;
@@ -75,6 +77,9 @@ public class ApiConnect extends StateCode {
             TAG_DEVICE_ID = Util.getDeviceId(context);
         }
 
+        if (TextUtils.isEmpty(mToken)) {
+            mToken = Preferences.getFCMToken(context);
+        }
         switchLocale();
 
         return mApiConnect;
@@ -94,7 +99,7 @@ public class ApiConnect extends StateCode {
             mLocale = "jp";
         } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
             mLocale = "en";
-        }else{
+        } else {
             mLocale = "tw";
         }
     }
@@ -226,10 +231,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getPublicToilet(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_PublicToilet")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -245,7 +246,7 @@ public class ApiConnect extends StateCode {
     public static void getAirportFacility(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_airport_facility_info")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -310,7 +311,7 @@ public class ApiConnect extends StateCode {
     public static void getStoreCode(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_StoreCode")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -326,7 +327,7 @@ public class ApiConnect extends StateCode {
      */
     public static void getRestaurantInfo(String terminalsID, String areaID, String restaurantTypeID, String floorID, Callback callback) {
         //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
+        if (mLocale.equals("cn")) {
             mLocale = "tw";
         }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "seach_restaurant")
@@ -352,7 +353,7 @@ public class ApiConnect extends StateCode {
     public static void getStoreInfo(String terminalsID, String areaID, String StoreTypeID, String floorID, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Store")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .addQueryParameter("TerminalsID", terminalsID)
                 .addQueryParameter("AreaID", areaID)
                 .addQueryParameter("Store_type", StoreTypeID)
@@ -494,7 +495,7 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
                 .addQueryParameter("DeviceType", "1")
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -512,7 +513,7 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
                 .addQueryParameter("DeviceType", "1")
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }
@@ -523,10 +524,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getLostAndFound(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_C_Lost")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -598,10 +595,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getInternationCall(Callback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if(mLocale.equals("cn")){
-            mLocale = "tw";
-        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalCall")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -643,7 +636,7 @@ public class ApiConnect extends StateCode {
     public static void getRoamingDetail(String id, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_InternationalRoaming")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .addQueryParameter("TIID", id)
                 .build();
         getApi(url, callback);
@@ -657,7 +650,7 @@ public class ApiConnect extends StateCode {
     public static void getSouvenirList(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Souvenir")
                 .newBuilder()
-                .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
     }

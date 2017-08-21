@@ -239,7 +239,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
 
     @OnClick({R.id.layout_search, R.id.textView_terminal, R.id.textView_area, R.id.textView_floor, R.id.textView_restaurant})
     public void onClick(View view) {
-        MyStoreDialog dialog;
+        MyStoreDialog dialog = null;
         switch (view.getId()) {
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
@@ -274,7 +274,10 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             }
                         })
                         .setTerminalCodeData(mTerminalCodeList);
-                dialog.show(getActivity().getFragmentManager(), "dialog");
+                if (dialog.isAdded()) {
+                    dialog.clearData().dismiss();
+                } else
+                    dialog.show(getActivity().getFragmentManager(), "dialog");
                 break;
             case R.id.textView_area:
                 dialog = MyStoreDialog.newInstance()
@@ -297,7 +300,10 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             }
                         })
                         .setAreaCodeData(mAreaCodeList);
-                dialog.show(getActivity().getFragmentManager(), "dialog");
+                if (dialog.isAdded()) {
+                    dialog.clearData().dismiss();
+                } else
+                    dialog.show(getActivity().getFragmentManager(), "dialog");
                 break;
             case R.id.textView_floor:
                 dialog = MyStoreDialog.newInstance()
@@ -320,7 +326,10 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             }
                         })
                         .setFloorCodeData(mFloorCodeList);
-                dialog.show(getActivity().getFragmentManager(), "dialog");
+                if (dialog.isAdded()) {
+                    dialog.clearData().dismiss();
+                } else
+                    dialog.show(getActivity().getFragmentManager(), "dialog");
                 break;
             case R.id.textView_restaurant:
                 if (mFromPage == Page.TAG_STORE_OFFERS) {
@@ -344,7 +353,10 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                 }
                             })
                             .setStoreCodeData(mStoreCodeList);
-                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                    if (dialog.isAdded()) {
+                        dialog.clearData().dismiss();
+                    } else
+                        dialog.show(getActivity().getFragmentManager(), "dialog");
                 } else {
 
                     dialog = MyStoreDialog.newInstance()
@@ -367,7 +379,10 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                 }
                             })
                             .setRestaurantCodeData(mRestaurantCodeList);
-                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                    if (dialog.isAdded()) {
+                        dialog.clearData().dismiss();
+                    } else
+                        dialog.show(getActivity().getFragmentManager(), "dialog");
                 }
                 break;
         }

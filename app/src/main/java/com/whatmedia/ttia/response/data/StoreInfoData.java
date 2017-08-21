@@ -1,6 +1,10 @@
 package com.whatmedia.ttia.response.data;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
+import com.whatmedia.ttia.R;
 
 import java.io.Serializable;
 
@@ -33,6 +37,8 @@ public class StoreInfoData implements Serializable {
     private String areaId;
     @SerializedName("FloorID")
     private String floorId;
+    @SerializedName("FloorCode")
+    private String floorCode;
     @SerializedName("FloorName")
     private String floorName;
     @SerializedName("TerminalsName")
@@ -158,5 +164,61 @@ public class StoreInfoData implements Serializable {
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;
+    }
+
+    public String getFloorCode() {
+        return floorCode;
+    }
+
+    public void setFloorCode(String floorCode) {
+        this.floorCode = floorCode;
+    }
+
+    public static String getFloorShowText(Context context, String floor) {
+        String floorText = context.getString(R.string.floor_1);
+        if (floor.contains("B1")) {
+            floorText = context.getString(R.string.floor_b1);
+        } else if (floor.contains("B2")) {
+            floorText = context.getString(R.string.floor_b2);
+        } else if (floor.contains("1")) {
+            floorText = context.getString(R.string.floor_1);
+        } else if (floor.contains("2")) {
+            floorText = context.getString(R.string.floor_2);
+        } else if (floor.contains("3")) {
+            floorText = context.getString(R.string.floor_3);
+        } else if (floor.contains("4"))
+            floorText = context.getString(R.string.floor_4);
+
+        return floorText;
+    }
+
+    public static String getTerminalText(Context context, String terminalsName) {
+        String terminal = "";
+        if (!TextUtils.isEmpty(terminalsName)) {
+            if (terminalsName.contains("一"))
+                terminal =context.getString(R.string.terminal_1);
+            else if (terminalsName.contains("二"))
+                terminal =context.getString(R.string.terminal_2);
+            else if (terminalsName.contains("1"))
+                terminal =context.getString(R.string.terminal_1);
+            else if (terminalsName.contains("2"))
+                terminal =context.getString(R.string.terminal_2);
+        }
+        return terminal;
+    }
+
+    public static String getSimpleTerminalText(Context context, String terminalsName) {
+        String terminal = "";
+        if (!TextUtils.isEmpty(terminalsName)) {
+            if (terminalsName.contains("一"))
+                terminal =context.getString(R.string.store_terminal_1);
+            else if (terminalsName.contains("二"))
+                terminal =context.getString(R.string.store_terminal_2);
+            else if (terminalsName.contains("1"))
+                terminal =context.getString(R.string.store_terminal_1);
+            else if (terminalsName.contains("2"))
+                terminal =context.getString(R.string.store_terminal_2);
+        }
+        return terminal;
     }
 }

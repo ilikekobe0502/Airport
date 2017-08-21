@@ -115,7 +115,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         } else {
             Log.e(TAG, "arrive response is null");
         }
-        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_DEPARTURE);
+        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
         mPresenter.getFlightsInfoAPI(mSearchData);
     }
 
@@ -123,7 +123,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     public void getFlightsArriveFailed(String message) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getFlightsArriveFailed : " + message);
-        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_DEPARTURE);
+        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
         mPresenter.getFlightsInfoAPI(mSearchData);
     }
 
@@ -153,7 +153,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
             mSearchData.setKeyWord(keyword);
-            mSearchData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_ARRIVE);
+            mSearchData.setQueryType(FlightsInfoData.TAG_KIND_ARRIVE);
             mPresenter.getFlightsInfoAPI(mSearchData);
         }
     }

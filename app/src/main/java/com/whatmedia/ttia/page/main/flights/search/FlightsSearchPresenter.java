@@ -38,7 +38,7 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
         mApiConnect.getSearchFlightsInfoByKeyWord(searchData, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_TOP4_ARRIVE))
+                if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
                     mView.getFlightsArriveFailed(e.toString());
                 else
                     mView.getFlightsDepartureFailed(e.toString());
@@ -46,18 +46,18 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.code()==200) {
+                if (response.code() == 200) {
                     String result = response.body().string();
                     Log.d(TAG, result);
-                    if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_TOP4_ARRIVE))
+                    if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
                         mView.getFlightsArriveSucceed(result);
                     else
                         mView.getFlightsDepartureSucceed(result);
-                }else {
-                    if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_TOP4_ARRIVE))
-                        mView.getFlightsArriveFailed(!TextUtils.isEmpty(response.message())?response.message():"");
+                } else {
+                    if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
+                        mView.getFlightsArriveFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
                     else
-                        mView.getFlightsDepartureFailed(!TextUtils.isEmpty(response.message())?response.message():"");
+                        mView.getFlightsDepartureFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
                 }
             }
         });

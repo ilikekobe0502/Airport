@@ -86,6 +86,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements IActivityTools.ILoadingView, IActivityTools.IMainActivity, FragmentManager.OnBackStackChangedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
+    private final static String TAG_DEVICE_NAME = android.os.Build.MODEL;
 
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     public final static String TAG_DATA = "data";
@@ -108,12 +109,17 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         Mint.initAndStartSession(this.getApplication(), "95cdb302");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        String versionName = "Error";
+        int versionCode = -1;
         try {
-            Mint.logEvent("Version name = " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
-            Mint.logEvent("Version code = " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        Mint.logEvent(TAG_DEVICE_NAME + "(" + versionName + " ," + versionCode + ")");
 
         setMarqueeHomeState();
 
