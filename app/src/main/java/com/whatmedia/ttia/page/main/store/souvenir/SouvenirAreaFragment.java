@@ -117,7 +117,7 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
         Bundle bundle = new Bundle();
         bundle.putString(SouvenirDetailContract.IMG_PATH, data.getImgPath());
         bundle.putString(SouvenirDetailContract.TEXT_PRICE, "NT$" + data.getPrice());
-        bundle.putString(SouvenirDetailContract.TEXT_ADDRESS, getString(R.string.souvenir_detail_address) + data.getTerminalsName() + "-" + data.getFloorId());
+        bundle.putString(SouvenirDetailContract.TEXT_ADDRESS, getString(R.string.souvenir_detail_address) + data.getTerminalsName() + "-" + data.getFloorName());
         bundle.putString(SouvenirDetailContract.TEXT_TIME, getString(R.string.souvenir_detail_time) + data.getOpenTime() + "-" + data.getCloseTime());
         bundle.putString(SouvenirDetailContract.TEXT_PHONE, getString(R.string.souvenir_detail_phone) + data.getTel());
         bundle.putString(SouvenirDetailContract.TEXT_DES, data.getContent());
