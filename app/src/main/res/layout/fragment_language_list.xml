@@ -35,7 +35,7 @@
                 android:layout_alignTop="@+id/img_l1"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item1"
+                android:text="@string/conversation_general"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -65,7 +65,7 @@
                 android:layout_alignTop="@+id/img_l2"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item2"
+                android:text="@string/conversation_ask"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -95,7 +95,7 @@
                 android:layout_alignTop="@+id/img_l3"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item3"
+                android:text="@string/conversation_traffic"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
         </RelativeLayout>
@@ -124,7 +124,7 @@
                 android:layout_alignTop="@+id/img_l4"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item4"
+                android:text="@string/conversation_travel"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -163,7 +163,7 @@
                 android:layout_alignTop="@+id/img_r1"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item5"
+                android:text="@string/conversation_car"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -193,7 +193,7 @@
                 android:layout_alignTop="@+id/img_r2"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item6"
+                android:text="@string/conversation_dining"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
         </RelativeLayout>
@@ -222,7 +222,7 @@
                 android:layout_alignTop="@+id/img_r3"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item7"
+                android:text="@string/conversation_lodging"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 
@@ -252,7 +252,7 @@
                 android:layout_alignTop="@+id/img_r4"
                 android:layout_marginBottom="@dimen/dp_pixel_10"
                 android:gravity="center"
-                android:text="@string/travel_item8"
+                android:text="@string/conversation_shopping"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_16" />
 

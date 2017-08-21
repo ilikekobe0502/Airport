@@ -761,4 +761,6 @@
     <string name="telecommunications_yt">Asia Pacific</string>
     <string name="store_terminal_1_long">Terminal 1</string>
     <string name="store_terminal_2_long">Terminal 2</string>
+
+    <string name="timezone_taipei">Taipei</string>
 </resources>

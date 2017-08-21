@@ -630,12 +630,12 @@
     <string name="flights_search_search">検索</string>
     <string name="flights_search_edit_text_hint">キーワード入力</string>
     <string name="flights_search_not_found_flights_message">いいえ飛行ん</string>
-    <string name="flights_search_tag_on_time_show_text">オンタイム</string>
-    <string name="flights_search_tag_delay_show_text">遅延\nDelay</string>
-    <string name="flights_search_tag_arrived_show_text">到着しました\nArrive</string>
-    <string name="flights_search_tag_cancelled_show_text">キャンセル\nCancelled</string>
-    <string name="flights_search_tag_schedule_change_show_text">スケジュール変更\nSchedule change</string>
-    <string name="flights_search_tag_departed_show_text">出発する\nDeparture</string>
+    <string name="flights_search_tag_on_time_show_text">On time</string>
+    <string name="flights_search_tag_delay_show_text">Delay</string>
+    <string name="flights_search_tag_arrived_show_text">Arrive</string>
+    <string name="flights_search_tag_cancelled_show_text">Cancelled</string>
+    <string name="flights_search_tag_schedule_change_show_text">Schedule change</string>
+    <string name="flights_search_tag_departed_show_text">Departure</string>
 
     <!-- Comment -->
     <string name="press_again_left">もう一度アプリを残してポイント</string>
@@ -760,4 +760,6 @@
     <string name="telecommunications_yt">亜太電信(Asia Pacific Telecom)</string>
     <string name="store_terminal_1_long">第1ターミナル</string>
     <string name="store_terminal_2_long">第2ターミナル</string>
+
+    <string name="timezone_taipei">台北</string>
 </resources>

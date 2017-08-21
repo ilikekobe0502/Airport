@@ -45,3 +45,4 @@ dependencies {
     compile 'org.altbeacon:android-beacon-library:2.10'
     compile files('libs/mint-5.2.1.jar')
 }
+apply plugin: 'com.google.gms.google-services'

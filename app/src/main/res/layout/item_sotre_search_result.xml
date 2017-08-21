@@ -16,7 +16,7 @@
             android:id="@+id/imageView_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,27 +29,29 @@
                 android:id="@+id/temId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/dp_pixel_5"
                 android:gravity="center"
+                android:text="1航"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_21"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"
-                android:text="1航"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_floor"
                 android:layout_width="@dimen/dp_pixel_35"
                 android:layout_height="@dimen/dp_pixel_35"
-                android:layout_marginTop="@dimen/sp_pixel_15"
                 android:layout_marginBottom="@dimen/sp_pixel_15"
                 android:layout_marginRight="@dimen/sp_pixel_15"
+                android:layout_marginTop="@dimen/sp_pixel_15"
+                android:layout_toRightOf="@+id/temId"
                 android:background="@drawable/frame_dialog_button"
                 android:gravity="center"
+                android:maxEms="4"
+                android:maxLines="1"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_21"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/temId"/>
+                android:textSize="@dimen/sp_pixel_18"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_title"

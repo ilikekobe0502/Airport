@@ -32,17 +32,23 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAHJtzFEGDNUxz8O43JJN4NnKpcRFeADEM" />
 
+        <service android:name=".services.FCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
         <receiver
             android:name=".services.FlightClockBroadcast"
             android:enabled="true"
             android:exported="false" />
+
         <service
             android:name=".services.FlightClockIntentService"
             android:exported="false" />
         <service
             android:name=".services.IBeacon"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
     </application>
 

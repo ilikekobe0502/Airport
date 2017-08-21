@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_pixel_70"
         android:gravity="center|bottom"
-        android:text="台北"
+        android:text="@string/timezone_taipei"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_24" />
 

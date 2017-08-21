@@ -13,9 +13,11 @@ import com.whatmedia.ttia.enums.LanguageSetting;
 public class Preferences {
     private final static String TAG = Preferences.class.getSimpleName();
 
+    private final static String TAG_ERROR = "error";
     private final static String TAG_CLOCK_DATA = "clock";
     private final static String TAG_MY_FLIGHT_INFO = "my_flight";
     private final static String TAG_LOCALE_Setting = "locale";
+    private final static String TAG_FCM_TOKEN = "fcm_token";
 
     private static SharedPreferences preferences;
 
@@ -94,4 +96,27 @@ public class Preferences {
         return preferences.getString(TAG_LOCALE_Setting, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString());
     }
 
+    /**
+     * Save fcm token
+     * @param context
+     * @param token
+     */
+    public static void saveFCMToken(Context context, String token) {
+        Log.d(TAG, "FCM token = " + token);
+
+        preferences = context.getSharedPreferences(TAG_FCM_TOKEN, 0);
+        preferences.edit()
+                .putString(TAG_FCM_TOKEN, token)
+                .commit();
+    }
+
+    /**
+     * Get fcm token
+     * @param context
+     * @return
+     */
+    public static String getFCMToken(Context context) {
+        preferences = context.getSharedPreferences(TAG_FCM_TOKEN, 0);
+        return preferences.getString(TAG_FCM_TOKEN, TAG_ERROR);
+    }
 }

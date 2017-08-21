@@ -835,13 +835,6 @@
     <string name="store_terminal_1_long">第一航廈</string>
     <string name="store_terminal_2_long">第二航廈</string>
 
-    <string name="travel_item1">基本會話</string>
-    <string name="travel_item2">問路</string>
-    <string name="travel_item3">交通機關</string>
-    <string name="travel_item4">旅行社櫃台</string>
-    <string name="travel_item5">租車</string>
-    <string name="travel_item6">餐飲設施</string>
-    <string name="travel_item7">住宿設施</string>
-    <string name="travel_item8">購物</string>
+    <string name="timezone_taipei">台北</string>
 
 </resources>
