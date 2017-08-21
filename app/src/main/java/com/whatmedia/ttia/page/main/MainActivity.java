@@ -108,12 +108,12 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         Mint.initAndStartSession(this.getApplication(), "95cdb302");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        try {
-            Mint.logEvent("Version name = " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
-            Mint.logEvent("Version code = " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Mint.logEvent("Version name = " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+//            Mint.logEvent("Version code = " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         setMarqueeHomeState();
 

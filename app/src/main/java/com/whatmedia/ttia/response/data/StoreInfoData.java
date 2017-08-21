@@ -1,6 +1,9 @@
 package com.whatmedia.ttia.response.data;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
+import com.whatmedia.ttia.R;
 
 import java.io.Serializable;
 
@@ -33,6 +36,8 @@ public class StoreInfoData implements Serializable {
     private String areaId;
     @SerializedName("FloorID")
     private String floorId;
+    @SerializedName("FloorCode")
+    private String floorCode;
     @SerializedName("FloorName")
     private String floorName;
     @SerializedName("TerminalsName")
@@ -158,5 +163,32 @@ public class StoreInfoData implements Serializable {
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;
+    }
+
+    public String getFloorCode() {
+        return floorCode;
+    }
+
+    public void setFloorCode(String floorCode) {
+        this.floorCode = floorCode;
+    }
+
+    public static String getFloorShowText(Context context, String floor) {
+        String floorText = context.getString(R.string.floor_1);
+        if (floor.equals("1樓")) {
+            floorText = context.getString(R.string.floor_1);
+        } else if (floor.equals("2樓")) {
+            floorText = context.getString(R.string.floor_2);
+        } else if (floor.equals("3樓")) {
+            floorText = context.getString(R.string.floor_3);
+        } else if (floor.equals("4樓")) {
+            floorText = context.getString(R.string.floor_4);
+        } else if (floor.equals("B1")) {
+            floorText = context.getString(R.string.floor_b1);
+        } else if (floor.equals("B2")) {
+            floorText = context.getString(R.string.floor_b2);
+        }
+
+        return floorText;
     }
 }

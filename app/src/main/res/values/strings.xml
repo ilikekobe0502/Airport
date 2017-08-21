@@ -699,7 +699,7 @@
     <string name="flights_search_tag_arrived_show_text">已到\nArrive</string>
     <string name="flights_search_tag_cancelled_show_text">取消\nCancelled</string>
     <string name="flights_search_tag_schedule_change_show_text">時間更改\nSchedule change</string>
-    <string name="flights_search_tag_departed_show_text">已飞\nDeparture</string>
+    <string name="flights_search_tag_departed_show_text">已飛\nDeparture</string>
 
     <!-- Comment -->
     <string name="press_again_left">再點一次離開app</string>

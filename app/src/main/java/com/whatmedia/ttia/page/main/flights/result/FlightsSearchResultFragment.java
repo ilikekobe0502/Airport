@@ -153,14 +153,14 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_up:
-                mQueryType = FlightsInfoData.TAG_KIND_TOP4_DEPARTURE;
+                mQueryType = FlightsInfoData.TAG_KIND_DEPARTURE;
                 mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_on));
                 mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_off));
 //                mAdapter.setData(mDepartureList);
                 getFlight();
                 break;
             case R.id.imageView_down:
-                mQueryType = FlightsInfoData.TAG_KIND_TOP4_ARRIVE;
+                mQueryType = FlightsInfoData.TAG_KIND_ARRIVE;
                 mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_off));
                 mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
 //                mAdapter.setData(mArriveList);
@@ -303,7 +303,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     }
 
     private void getFlight() {
-        if (TextUtils.equals(mQueryType, FlightsInfoData.TAG_KIND_TOP4_DEPARTURE))
+        if (TextUtils.equals(mQueryType, FlightsInfoData.TAG_KIND_DEPARTURE))
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_takeoff, mShowDate));
         else
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_arrival, mShowDate));
