@@ -10,7 +10,7 @@ import com.whatmedia.ttia.utility.Preferences;
  * Created by neo_mac on 2017/8/21.
  */
 
-public class FCMService extends FirebaseInstanceIdService {
+public class FCMTokenService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         String token = FirebaseInstanceId.getInstance().getToken();
