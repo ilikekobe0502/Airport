@@ -95,7 +95,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
                         .into(mImageViewPicture);
             }
 
-            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(data.getFloorId()) ? data.getFloorId() : ""));
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
             mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
                     !TextUtils.isEmpty(data.getOpenStime()) ? data.getOpenStime() : "",
                     !TextUtils.isEmpty(data.getOpenEtime()) ? data.getOpenEtime() : ""));
@@ -123,7 +123,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
                         .into(mImageViewPicture);
             }
 
-            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(storeData.getFloorId()) ? storeData.getFloorId() : ""));
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(storeData.getFloorName()) ? storeData.getFloorName() : ""));
             mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
                     !TextUtils.isEmpty(storeData.getOpenStime()) ? storeData.getOpenStime() : "",
                     !TextUtils.isEmpty(storeData.getOpenEtime()) ? storeData.getOpenEtime() : ""));
