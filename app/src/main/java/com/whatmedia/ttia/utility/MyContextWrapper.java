@@ -28,11 +28,11 @@ public class MyContextWrapper extends ContextWrapper {
         } else {
             sysLocale = getSystemLocaleLegacy(config);
         }
-        if (!language.equals("") && !sysLocale.getLanguage().equals(language)) {
+        if (!language.equals("")) {
             Locale locale;
-            if(language.equals(Locale.CHINA.toString())){
+            if (language.equals(Locale.CHINA.toString())) {
                 locale = Locale.SIMPLIFIED_CHINESE;
-            }else{
+            } else {
                 locale = new Locale(language);
             }
             Locale.setDefault(locale);
@@ -51,27 +51,27 @@ public class MyContextWrapper extends ContextWrapper {
     }
 
     @SuppressWarnings("deprecation")
-    public static Locale getSystemLocaleLegacy(Configuration config){
+    public static Locale getSystemLocaleLegacy(Configuration config) {
         return config.locale;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    public static Locale getSystemLocale(Configuration config){
+    public static Locale getSystemLocale(Configuration config) {
         return config.getLocales().get(0);
     }
 
     @SuppressWarnings("deprecation")
-    public static void setSystemLocaleLegacy(Configuration config, Locale locale){
+    public static void setSystemLocaleLegacy(Configuration config, Locale locale) {
         config.locale = locale;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    public static void setSystemLocale(Configuration config, Locale locale){
+    public static void setSystemLocale(Configuration config, Locale locale) {
         config.setLocale(locale);
     }
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(MyContextWrapper.wrap(base,"ja"));
+        super.attachBaseContext(MyContextWrapper.wrap(base, "ja"));
     }
 }
