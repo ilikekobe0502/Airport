@@ -20,5 +20,5 @@
         android:maxEms="7"
         android:maxLines="2"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_10" />
+        android:textSize="@dimen/sp_pixel_8" />
 </RelativeLayout>
