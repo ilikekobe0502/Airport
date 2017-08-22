@@ -128,28 +128,31 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     @Override
     public void getMyFlightsInfoSucceed(final List<FlightsInfoData> response) {
 
-        if (response == null) {
-            Log.e(TAG, "getMyFlightsInfoSucceed response is null");
+        if (isAdded() && !isDetached()) {
+            if (response == null) {
+                Log.e(TAG, "getMyFlightsInfoSucceed response is null");
 //            showNoDataDialog();
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setData(response);
+                    }
+                });
+
+                Gson gson = new Gson();
+                String json = gson.toJson(response);
+                Preferences.saveMyFlightsData(getContext(), json);
+                if (mIsInsert)
+                    Util.resetNotification(getContext(), response);
+
+                mMainActivity.setMarqueeMessage(Util.getMarqueeSubMessage(getContext()));
+
+                mLoadingView.goneLoadingView();
+            }
         } else {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.setData(response);
-                }
-            });
-
-            Gson gson = new Gson();
-            String json = gson.toJson(response);
-            Preferences.saveMyFlightsData(getContext(), json);
-            if (mIsInsert)
-                Util.resetNotification(getContext(), response);
-
-            mMainActivity.setMarqueeMessage(Util.getMarqueeSubMessage(getContext()));
-
-            mLoadingView.goneLoadingView();
+            Log.d(TAG, "Fragment is not add");
         }
-
     }
 
     @Override
@@ -162,23 +165,28 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     @Override
     public void deleteMyFlightsInfoSucceed(final String response) {
 
-        mDeletePosition++;
-        if (mSelectSize == mDeletePosition) {//代表佇列中的資料已刪完
-            // TODO: 2017/8/15 Delete Notification
-            mSelectSize = 0;
-            mDeletePosition = 0;
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(response);
-                    mPresenter.getMyFlightsInfoAPI();
-                    mAdapter.setData(null);
-                }
-            });
-        } else {
-            deleteData();
-        }
+        if (isAdded() && !isDetached()) {
+            mDeletePosition++;
+            if (mSelectSize == mDeletePosition) {//代表佇列中的資料已刪完
+                // TODO: 2017/8/15 Delete Notification
+                mSelectSize = 0;
+                mDeletePosition = 0;
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(response);
+                        mPresenter.getMyFlightsInfoAPI();
+                        mAdapter.setData(null);
+                    }
+                });
+            } else {
+                deleteData();
+            }
 
+        } else {
+            mLoadingView.goneLoadingView();
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
@@ -268,16 +276,20 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
      * Show no Data dialog
      */
     private void showNoDataDialog() {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(getContext())
-                        .setTitle(R.string.note)
-                        .setMessage(R.string.data_not_found)
-                        .setPositiveButton(R.string.ok, null)
-                        .show();
-                mAdapter.setData(null);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.note)
+                            .setMessage(R.string.data_not_found)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                    mAdapter.setData(null);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

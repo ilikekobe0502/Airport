@@ -154,12 +154,16 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     public void getParkingInfoSucceed(final List<HomeParkingInfoData> response) {
         mLoadingView.goneLoadingView();
         mParkingList = response;
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                whenMapReadyDo();
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    whenMapReadyDo();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override

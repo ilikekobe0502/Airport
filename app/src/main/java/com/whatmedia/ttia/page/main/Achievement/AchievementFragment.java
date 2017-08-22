@@ -115,28 +115,32 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
     public void onClick(View view) {
         AchievementsData data = mList.get(Integer.valueOf(view.getTag().toString()));
         Bundle bundle = new Bundle();
-        bundle.putString(AchievementDetailContract.IMAGE_PATH,data.getImgPath());
-        bundle.putString(AchievementDetailContract.TEXT_DATE,data.getDate());
-        bundle.putString(AchievementDetailContract.TEXT_TITLE,data.getTitle());
-        bundle.putString(AchievementDetailContract.TEXT_CONTENT,data.getContent());
-        mMainActivity.addFragment(Page.TAG_ACHIEVEMENT_DETAIL,bundle,true);
+        bundle.putString(AchievementDetailContract.IMAGE_PATH, data.getImgPath());
+        bundle.putString(AchievementDetailContract.TEXT_DATE, data.getDate());
+        bundle.putString(AchievementDetailContract.TEXT_TITLE, data.getTitle());
+        bundle.putString(AchievementDetailContract.TEXT_CONTENT, data.getContent());
+        mMainActivity.addFragment(Page.TAG_ACHIEVEMENT_DETAIL, bundle, true);
     }
 
     @Override
     public void queryAchievementListSuccess(final List<AchievementsData> list) {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mList = list;
-                mLoadingView.goneLoadingView();
-                mAdapter.setmItems(list);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mList = list;
+                    mAdapter.setmItems(list);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void queryAchievementListFail(String message) {
-
+        mLoadingView.goneLoadingView();
     }
 }

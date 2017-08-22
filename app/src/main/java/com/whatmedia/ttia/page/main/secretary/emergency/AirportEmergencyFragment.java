@@ -111,24 +111,32 @@ public class AirportEmergencyFragment extends BaseFragment implements AirportEme
     @Override
     public void getEmergencySucceed(final List<UserNewsData> list) {
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setData(list);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setData(list);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getEmergencyFailed(final String message) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getEmergencyFailed error : " + message);
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override

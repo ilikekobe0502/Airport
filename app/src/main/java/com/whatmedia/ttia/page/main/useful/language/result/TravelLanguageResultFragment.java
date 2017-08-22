@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TravelLanguageResultFragment extends BaseFragment implements TravelLanguageResultContract.View{
+public class TravelLanguageResultFragment extends BaseFragment implements TravelLanguageResultContract.View {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -32,7 +32,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
     private IActivityTools.IMainActivity mMainActivity;
     private TravelLanguageResultContract.Presenter mPresenter;
     private TravelLanguageResultRecyclerViewAdapter mTravelLanguageResultRecyclerViewAdapter;
-    private int mQueryId=0;
+    private int mQueryId = 0;
     private String mTitle = "";
 
     public TravelLanguageResultFragment() {
@@ -55,7 +55,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
         if (getArguments().containsKey("key")) {
             mQueryId = getArguments().getInt("key");
         }
-        if(getArguments().containsKey("title")){
+        if (getArguments().containsKey("title")) {
             mTitle = getArguments().getString("title");
         }
 
@@ -100,13 +100,17 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
     @Override
     public void getLanguageSucceed(final List<LanguageData> response) {
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mTravelLanguageResultRecyclerViewAdapter.setData(response);
-                mTravelLanguageResultRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mTravelLanguageResultRecyclerViewAdapter.setData(response);
+                    mTravelLanguageResultRecyclerViewAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override

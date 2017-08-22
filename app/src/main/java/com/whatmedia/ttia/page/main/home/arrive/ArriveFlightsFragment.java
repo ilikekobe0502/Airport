@@ -119,54 +119,70 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     @Override
     public void getArriveFlightSucceed(final String list) {
 
-        mArrivetureList = list;
-        final List<FlightsInfoData> flightsList = GetFlightsInfoResponse.newInstance(list);
+        if (isAdded() && !isDetached()) {
+            mArrivetureList = list;
+            final List<FlightsInfoData> flightsList = GetFlightsInfoResponse.newInstance(list);
 
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setData(flightsList);
-            }
-        });
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setData(flightsList);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getArriveFlightFailed(String message) {
         Log.d(TAG, "getArriveFlightFailed : " + message);
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(getString(R.string.server_error));
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(getString(R.string.server_error));
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void saveMyFlightSucceed(final String message) {
 
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(!TextUtils.isEmpty(message) ? message : "");
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
-                mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(!TextUtils.isEmpty(message) ? message : "");
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
+                    mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void saveMyFlightFailed(final String message) {
 
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                Log.e(TAG, message);
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, message);
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
