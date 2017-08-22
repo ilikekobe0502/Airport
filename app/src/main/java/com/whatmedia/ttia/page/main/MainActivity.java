@@ -231,12 +231,6 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     }
 
     @Override
-    public boolean getUserVisibility() {
-        // TODO: 2017/8/10
-        return false;
-    }
-
-    @Override
     public void runOnUI(Runnable runnable) {
         runOnUiThread(runnable);
     }
