@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.whatmedia.ttia.component.MyToolbar
+        android:id="@+id/myToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_45"
+        android:layout_below="@+id/myToolbar"
+        android:background="@color/colorMapSearchBg">
+
+        <ImageView
+            android:id="@+id/imageView_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:background="@drawable/indoor_10_07" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_pixel_8"
+            android:layout_toRightOf="@+id/imageView_back"
+            android:text="BACK"
+            android:textColor="@color/colorTextResultHint"
+            android:textSize="@dimen/sp_pixel_15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/indoor_search_sub_title"
+            android:textColor="@color/colorTextResultHint"
+            android:textSize="@dimen/sp_pixel_18" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:text="確定"
+            android:textColor="@color/colorTextResultHint"
+            android:textSize="@dimen/sp_pixel_15" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/myMarquee"
+        android:layout_below="@+id/layout_search">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:layout_marginTop="@dimen/dp_pixel_10">
+
+            <ImageView
+                android:id="@+id/imageView_exchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="@dimen/dp_pixel_10"
+                android:background="@drawable/indoor_10_08" />
+
+            <TextView
+                android:id="@+id/textView_start"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_pixel_25"
+                android:layout_marginBottom="@dimen/dp_pixel_10"
+                android:layout_toRightOf="@+id/imageView_exchange"
+                android:background="@drawable/frame_search_edit_text"
+                android:gravity="center_vertical"
+                android:hint="@string/indoor_search_start_text"
+                android:paddingLeft="@dimen/dp_pixel_8"
+                android:textColor="@color/colorTextResultHint"
+                android:textColorHint="@color/colorTextResultHint"
+                android:textSize="@dimen/sp_pixel_13" />
+
+            <TextView
+                android:id="@+id/textView_end"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_pixel_25"
+                android:layout_below="@+id/textView_start"
+                android:layout_toRightOf="@+id/imageView_exchange"
+                android:background="@drawable/frame_search_edit_text"
+                android:gravity="center_vertical"
+                android:hint="@string/indoor_search_end_text"
+                android:paddingLeft="@dimen/dp_pixel_8"
+                android:textColor="@color/colorTextResultHint"
+                android:textColorHint="@color/colorTextResultHint"
+                android:textSize="@dimen/sp_pixel_13" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.whatmedia.ttia.component.MyMarquee
+        android:id="@+id/myMarquee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:id="@+id/imageView_home"
+        android:layout_width="@dimen/dp_pixel_50"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/home" />
+
+    <FrameLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</RelativeLayout>

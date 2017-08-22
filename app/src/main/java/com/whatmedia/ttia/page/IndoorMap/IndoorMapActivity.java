@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.IndoorMap;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -377,7 +378,9 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 mEditTextSearch.setText("");
                 break;
             case R.id.imageView_search:
-                // TODO: 2017/8/22  
+                // TODO: 2017/8/22
+                Intent i = new Intent(this, IndoorSearchActivity.class);
+                startActivity(i);
                 break;
             case R.id.imageView_location:
                 // TODO: 2017/8/22

@@ -837,4 +837,9 @@
 
     <string name="timezone_taipei">台北</string>
 
+    <!-- indoor -->
+    <string name="indoor_search_sub_title">路線圖</string>
+    <string name="indoor_search_start_text">起始：%d</string>
+    <string name="indoor_search_end_text">終點：%d</string>
+
 </resources>

@@ -763,4 +763,9 @@
     <string name="store_terminal_2_long">Terminal 2</string>
 
     <string name="timezone_taipei">Taipei</string>
+
+    <!-- indoor -->
+    <string name="indoor_search_sub_title">Road map</string>
+    <string name="indoor_search_start_text">Start：%d</string>
+    <string name="indoor_search_end_text">End：%d</string>
 </resources>
