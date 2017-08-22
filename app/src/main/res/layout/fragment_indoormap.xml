@@ -2,9 +2,91 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <fragment
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/map"
+
+    <com.whatmedia.ttia.component.MyToolbar
+        android:id="@+id/myToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_45"
+        android:layout_below="@+id/myToolbar"
+        android:background="@color/colorMapSearchBg">
+
+        <EditText
+            android:id="@+id/editText_search"
+            android:layout_width="@dimen/dp_pixel_179"
+            android:layout_height="@dimen/dp_pixel_25"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:background="@drawable/frame_edit_text"
+            android:drawableLeft="@drawable/indoor_10_01"
+            android:hint="@string/flights_search_edit_text_hint"
+            android:paddingLeft="@dimen/dp_pixel_4"
+            android:textColorHint="@color/colorTextResultHint"
+            android:textSize="@dimen/sp_pixel_13" />
+
+        <ImageView
+            android:id="@+id/imageView_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/editText_search"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_4"
+            android:background="@drawable/indoor_10_02" />
+
+        <ImageView
+            android:id="@+id/imageView_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_pixel_6"
+            android:layout_toRightOf="@+id/editText_search"
+            android:background="@drawable/indoor_10_03" />
+
+        <ImageView
+            android:id="@+id/imageView_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:background="@drawable/indoor_10_04" />
+    </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/myMarquee"
+        android:layout_below="@+id/layout_search" />
+
+    <com.whatmedia.ttia.component.MyMarquee
+        android:id="@+id/myMarquee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:id="@+id/imageView_home"
+        android:layout_width="@dimen/dp_pixel_50"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/home" />
+
+    <FrameLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 </RelativeLayout>

@@ -162,19 +162,24 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
      * 檢查資料進下一頁
      */
     private void checkToNextPage() {
-        if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS)) && TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(R.string.note)
-                            .setMessage(R.string.flights_search_not_found_flights_message)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS)) && TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
+
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.note)
+                                .setMessage(R.string.flights_search_not_found_flights_message)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            } else {
+                mMainActivity.addFragment(Page.TAG_FIGHTS_SEARCH_RESULT, mBundle, true);
+            }
         } else {
-            mMainActivity.addFragment(Page.TAG_FIGHTS_SEARCH_RESULT, mBundle, true);
+            Log.d(TAG, "Fragment is not add");
         }
     }
 }

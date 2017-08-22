@@ -127,27 +127,37 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
 
     @Override
     public void querySouvenirListSuccess(final List<SouvenirData> list) {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mList = list;
-                mLoadingView.goneLoadingView();
-                mAdapter.setmItems(list);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
 
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mList = list;
+                    mAdapter.setmItems(list);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void querySouvenirListFail(final String message) {
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                Log.e(TAG, "querySouvenirListFail : " + message);
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, "querySouvenirListFail : " + message);
+                    showMessage(message);
+                }
+            });
+        } else
+
+        {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

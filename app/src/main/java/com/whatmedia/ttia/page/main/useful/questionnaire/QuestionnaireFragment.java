@@ -101,16 +101,20 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     @Override
     public void getQuestionnaireSucceed(final List<QuestionnaireData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null && response.size() > 0) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mQuestionnaireRecyclerViewAdapter.setData(response);
-                    mQuestionnaireRecyclerViewAdapter.notifyDataSetChanged();
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mQuestionnaireRecyclerViewAdapter.setData(response);
+                        mQuestionnaireRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                });
+            } else {
+                Log.e(TAG, "Response is error");
+            }
         } else {
-            Log.e(TAG, "Response is error");
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -121,13 +125,17 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
 
     @Override
     public void sendQuestionnaireSucceed(final String response) {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mLoadingView.goneLoadingView();
-                showNoDataDialog();
-            }
-        });
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showNoDataDialog();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
@@ -142,20 +150,24 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     }
 
     private void showNoDataDialog() {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(getContext())
-                        .setTitle(R.string.note)
-                        .setMessage(R.string.useful_quest_send_message )
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mMainActivity.backPress();
-                            }
-                        })
-                        .show();
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.note)
+                            .setMessage(R.string.useful_quest_send_message)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mMainActivity.backPress();
+                                }
+                            })
+                            .show();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

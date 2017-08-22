@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EmergencyCallFragment extends BaseFragment implements EmergencyCallContract.View{
+public class EmergencyCallFragment extends BaseFragment implements EmergencyCallContract.View {
 
     private static final String TAG = EmergencyCallFragment.class.getSimpleName();
 
@@ -78,18 +78,22 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
     @Override
     public void getEmergencyCallSucceed(final List<EmergenctCallData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getEcHtml())) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mLoadingView.goneLoadingView();
-                    mWebView.loadData(response.get(0).getEcHtml(), "text/html; charset=utf-8", "UTF-8");
-                    mWebView.setBackgroundColor(0);
-                }
-            });
-        } else {
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getEcHtml())) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLoadingView.goneLoadingView();
+                        mWebView.loadData(response.get(0).getEcHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.setBackgroundColor(0);
+                    }
+                });
+            } else {
 //            mLoadingView.goneLoadingView();
-            Log.e(TAG, "Response is error");
+                Log.e(TAG, "Response is error");
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -97,11 +101,15 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
     public void getEmergencyCallFailed(final String message) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

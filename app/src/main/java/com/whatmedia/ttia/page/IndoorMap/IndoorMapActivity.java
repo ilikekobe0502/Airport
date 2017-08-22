@@ -1,17 +1,21 @@
 package com.whatmedia.ttia.page.IndoorMap;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.point_consulting.pc_indoormapoverlaylib.AbstractFolder;
 import com.point_consulting.pc_indoormapoverlaylib.AssetsFolder;
@@ -27,6 +31,11 @@ import com.point_consulting.pc_indoormapoverlaylib.Mathe;
 import com.point_consulting.pc_indoormapoverlaylib.TextOptions;
 import com.point_consulting.pc_indoormapoverlaylib.Utils;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyMarquee;
+import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.page.BaseActivity;
+import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,24 +44,51 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IndoorMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class IndoorMapActivity extends BaseActivity implements IActivityTools.IIndoorMapActivity, OnMapReadyCallback {
+
+    @BindView(R.id.myToolbar)
+    MyToolbar mMyToolbar;
+    @BindView(R.id.myMarquee)
+    MyMarquee mMyMarquee;
+    @BindView(R.id.imageView_home)
+    ImageView mImageViewHome;
+    @BindView(R.id.loadingView)
+    FrameLayout mLoadingView;
+    @BindView(R.id.editText_search)
+    EditText mEditTextSearch;
+    @BindView(R.id.imageView_clear)
+    ImageView mImageViewClear;
+    @BindView(R.id.imageView_search)
+    ImageView mImageViewSearch;
+    @BindView(R.id.imageView_location)
+    ImageView mImageViewLocation;
 
     private IMap m_map;
     private Manager m_manager;
+    private String mMarqueeMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_indoormap);
-        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        ButterKnife.bind(this);
+
+        initAppbar();
+        initMarquee();
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.e("Ian","onMapReady call");
-        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment)getFragmentManager().findFragmentById(R.id.map);
-        start(new MapImplGoogle(googleMap, mapFragment.getView(),1.0f));
+        Log.e("Ian", "onMapReady call");
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        start(new MapImplGoogle(googleMap, mapFragment.getView(), 1.0f));
     }
 
     private void start(IMap map) {
@@ -104,8 +140,9 @@ public class IndoorMapActivity extends AppCompatActivity implements OnMapReadyCa
                 }
 
 //                Log.e("Ian","s:"+s+", category:"+category.toString());
-                if (mapLayer.equals("Units") && category.equals("Walkway") ) {
-                    return new IndoorPolygonOptions().fillColor(0xffffffff); }
+                if (mapLayer.equals("Units") && category.equals("Walkway")) {
+                    return new IndoorPolygonOptions().fillColor(0xffffffff);
+                }
                 return new IndoorPolygonOptions().fillColor(0);
 
 //                if (mapLayer.equals("Levels")) {
@@ -166,7 +203,7 @@ public class IndoorMapActivity extends AppCompatActivity implements OnMapReadyCa
 
             @Override
             public TextOptions getTextOptions(String s, JSONObject jsonObject) {
-                TextOptions textOptions = new TextOptions(30.0F, -16777216, 0, -1.0F, 200.0F, 0, 0, 0, (Typeface)null);
+                TextOptions textOptions = new TextOptions(30.0F, -16777216, 0, -1.0F, 200.0F, 0, 0, 0, (Typeface) null);
                 return textOptions;
             }
 
@@ -261,10 +298,11 @@ public class IndoorMapActivity extends AppCompatActivity implements OnMapReadyCa
                 Mathe.IndoorLatLng center = Mathe.LatLngFromMapPoint(mapCenter);
                 final IndoorCameraPosition cameraPosition = new IndoorCameraPosition(center, 21.f, 0.f, 0.f);
                 m_map.setCameraPosition(cameraPosition, false);
-                m_manager.showOrdinal(0); }
+                m_manager.showOrdinal(0);
+            }
         };
         final Map<String, String[]> titleFieldsForMapLayer = new HashMap<>();
-        titleFieldsForMapLayer.put("Units", new String[]{"SUITE","CATEGORY"});
+        titleFieldsForMapLayer.put("Units", new String[]{"SUITE", "CATEGORY"});
         titleFieldsForMapLayer.put("Points", new String[]{"NAME", "CATEGORY"});
         titleFieldsForMapLayer.put("Occupants", new String[]{"NAME", "CATEGORY"});
         titleFieldsForMapLayer.put("Zones", new String[]{"NAME"});
@@ -275,5 +313,81 @@ public class IndoorMapActivity extends AppCompatActivity implements OnMapReadyCa
         Drawable dr = ContextCompat.getDrawable(this, id);
         BitmapDrawable bdr = (BitmapDrawable) dr;
         return bdr.getBitmap();
+    }
+
+    @Override
+    public MyToolbar getMyToolbar() {
+        return null;
+    }
+
+    @Override
+    public MyMarquee getMyMarquee() {
+        return null;
+    }
+
+    @Override
+    public void setMarqueeMessage(String subMessage) {
+
+    }
+
+    @Override
+    public void backPress() {
+
+    }
+
+    @Override
+    public void runOnUI(Runnable runnable) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    /**
+     * init App bar
+     */
+    private void initAppbar() {
+        mMyToolbar.clearState()
+                .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorMarquee))
+                .setBackIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.back))
+                .setTitleText(getString(R.string.home_indoor_map_title))
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+    }
+
+    /**
+     * init marquee
+     */
+    private void initMarquee() {
+        mMarqueeMessage = getString(R.string.marquee_parking_info, Util.getMarqueeSubMessage(getApplicationContext()));
+        mMyMarquee.clearState()
+                .setMessage(mMarqueeMessage)
+                .setIconVisibility(View.GONE);
+    }
+
+    @OnClick({R.id.imageView_clear, R.id.imageView_search, R.id.imageView_location, R.id.imageView_home})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageView_clear:
+                mEditTextSearch.setText("");
+                break;
+            case R.id.imageView_search:
+                // TODO: 2017/8/22
+                Intent i = new Intent(this, IndoorSearchActivity.class);
+                startActivity(i);
+                break;
+            case R.id.imageView_location:
+                // TODO: 2017/8/22
+                break;
+            case R.id.imageView_home:
+                onBackPressed();
+                break;
+        }
     }
 }

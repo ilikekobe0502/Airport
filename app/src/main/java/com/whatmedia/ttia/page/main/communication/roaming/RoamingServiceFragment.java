@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RoamingServiceFragment extends BaseFragment implements RoamingServiceContract.View{
+public class RoamingServiceFragment extends BaseFragment implements RoamingServiceContract.View {
     private static final String TAG = RoamingServiceFragment.class.getSimpleName();
 
     private IActivityTools.ILoadingView mLoadingView;
@@ -45,7 +45,7 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                          Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_roaming_service, container, false);
         ButterKnife.bind(this, view);
@@ -62,8 +62,8 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("key",mRoamingServiceRecyclerAdapter.getId((int)view.getTag())+"");
-                mMainActivity.addFragment(Page.TAG_COMMUNICATION_ROAMING_DETAIL,bundle,true);
+                bundle.putString("key", mRoamingServiceRecyclerAdapter.getId((int) view.getTag()) + "");
+                mMainActivity.addFragment(Page.TAG_COMMUNICATION_ROAMING_DETAIL, bundle, true);
             }
         });
 
@@ -91,16 +91,20 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
     @Override
     public void getRoamingServiceSucceed(final List<RoamingServiceData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null && response.size() > 0) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mRoamingServiceRecyclerAdapter.setData(response);
-                    mRoamingServiceRecyclerAdapter.notifyDataSetChanged();
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRoamingServiceRecyclerAdapter.setData(response);
+                        mRoamingServiceRecyclerAdapter.notifyDataSetChanged();
+                    }
+                });
+            } else {
+                Log.e(TAG, "Response is error");
+            }
         } else {
-            Log.e(TAG, "Response is error");
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -108,11 +112,15 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
     public void getRoamingServiceFailed(final String message) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

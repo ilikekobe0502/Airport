@@ -231,12 +231,6 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     }
 
     @Override
-    public boolean getUserVisibility() {
-        // TODO: 2017/8/10
-        return false;
-    }
-
-    @Override
     public void runOnUI(Runnable runnable) {
         runOnUiThread(runnable);
     }
@@ -929,5 +923,14 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
      */
     private void getMarqueeString() {
         mMarqueeMessage = getString(R.string.marquee_parking_info, Util.getMarqueeSubMessage(getApplicationContext()));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mLoadingView != null) {
+            if (!mLoadingView.isShown())
+                super.onBackPressed();
+        } else
+            super.onBackPressed();
     }
 }

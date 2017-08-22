@@ -126,14 +126,15 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     @Override
     public void getPublicToiletSucceed(final List<AirportFacilityData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null) {
-            mTerminalOne = response.size() > 0 ? response.get(0) : new AirportFacilityData();
-            mTerminalTwo = response.size() >= 1 ? response.get(1) : new AirportFacilityData();
+        if (isAdded() && !isDetached()) {
+            if (response != null) {
+                mTerminalOne = response.size() > 0 ? response.get(0) : new AirportFacilityData();
+                mTerminalTwo = response.size() >= 1 ? response.get(1) : new AirportFacilityData();
 
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.setData(response);
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setData(response);
 
 //                    if (!TextUtils.isEmpty(mTerminalOne.getContent())) {
 //                        mWebView.loadData(mTerminalOne.getContent(), "text/html; charset=utf-8", "UTF-8");
@@ -148,11 +149,14 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
 //                        Log.e(TAG, "mTerminalTwo.getContent() is error");
 //                        showMessage(getString(R.string.data_error));
 //                    }
-                }
-            });
+                    }
+                });
+            } else {
+                Log.e(TAG, "GetPublicToilet response is error");
+                showMessage(getString(R.string.data_error));
+            }
         } else {
-            Log.e(TAG, "GetPublicToilet response is error");
-            showMessage(getString(R.string.data_error));
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -160,12 +164,16 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     public void getPublicFailed(final String message) {
         Log.e(TAG, "message: " + message);
         mLoadingView.showLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @OnClick({R.id.imageView_left, R.id.imageView_right})

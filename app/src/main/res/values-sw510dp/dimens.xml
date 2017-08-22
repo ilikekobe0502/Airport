@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- sp -->
+    <dimen name="sp_pixel_7">10sp</dimen>
+    <dimen name="sp_pixel_8">11sp</dimen>
+    <dimen name="sp_pixel_9">12sp</dimen>
     <dimen name="sp_pixel_10">14sp</dimen>
     <dimen name="sp_pixel_12">16sp</dimen>
     <dimen name="sp_pixel_13">18sp</dimen>
@@ -105,37 +108,37 @@
     <dimen name="dp_pixel_n25">-34dp</dimen>
 
     <!-- percent -->
-    <dimen name="dp_percent_2">10dp</dimen>
-    <dimen name="dp_percent_2.67">14dp</dimen>
-    <dimen name="dp_percent_3.33">17dp</dimen> <!-- 1/30 -->
-    <dimen name="dp_percent_4">20dp</dimen>
-    <dimen name="dp_percent_5">26dp</dimen>
-    <dimen name="dp_percent_5.33">27dp</dimen>
-    <dimen name="dp_percent_6.67">34dp</dimen> <!-- 1/15 -->
-    <dimen name="dp_percent_8">41dp</dimen>
-    <dimen name="dp_percent_10">51dp</dimen>
-    <dimen name="dp_percent_13.3">68dp</dimen> <!-- 2/15 -->
-    <dimen name="dp_percent_15">77dp</dimen>
-    <dimen name="dp_percent_16">82dp</dimen>
-    <dimen name="dp_percent_20">102dp</dimen>
-    <dimen name="dp_percent_25">128dp</dimen>
-    <dimen name="dp_percent_26.67">136dp</dimen>
-    <dimen name="dp_percent_30">153dp</dimen>
-    <dimen name="dp_percent_32">163dp</dimen>
-    <dimen name="dp_percent_33.33">170dp</dimen> <!-- 1/3 -->
-    <dimen name="dp_percent_36.67">187dp</dimen> <!-- 11/30 -->
-    <dimen name="dp_percent_40">204dp</dimen>
-    <dimen name="dp_percent_41.67">213dp</dimen> <!-- 5/12 -->
-    <dimen name="dp_percent_50">255dp</dimen>
-    <dimen name="dp_percent_55">281dp</dimen>
-    <dimen name="dp_percent_60">306dp</dimen>
-    <dimen name="dp_percent_63.33">323dp</dimen> <!-- 70% - 1/15 -->
-    <dimen name="dp_percent_66">337dp</dimen>
-    <dimen name="dp_percent_66.67">340dp</dimen> <!-- 2/3 -->
-    <dimen name="dp_percent_70">357dp</dimen>
-    <dimen name="dp_percent_75">383dp</dimen>
-    <dimen name="dp_percent_80">408dp</dimen>
-    <dimen name="dp_percent_83.33">425dp</dimen>
-    <dimen name="dp_percent_86.67">442dp</dimen> <!-- 13/15 -->
+    <dimen name="dp_percent_2">3dp</dimen>
+    <dimen name="dp_percent_2.67">10dp</dimen>
+    <dimen name="dp_percent_3.33">12dp</dimen> <!-- 1/30 -->
+    <dimen name="dp_percent_4">5dp</dimen>
+    <dimen name="dp_percent_5">7dp</dimen>
+    <dimen name="dp_percent_5.33">20dp</dimen>
+    <dimen name="dp_percent_6.67">25dp</dimen> <!-- 1/15 -->
+    <dimen name="dp_percent_8">11dp</dimen>
+    <dimen name="dp_percent_10">14dp</dimen>
+    <dimen name="dp_percent_13.3">50dp</dimen> <!-- 2/15 -->
+    <dimen name="dp_percent_15">20dp</dimen>
+    <dimen name="dp_percent_16">22dp</dimen>
+    <dimen name="dp_percent_20">27dp</dimen>
+    <dimen name="dp_percent_25">34dp</dimen>
+    <dimen name="dp_percent_26.67">100dp</dimen>
+    <dimen name="dp_percent_30">41dp</dimen>
+    <dimen name="dp_percent_32">44dp</dimen>
+    <dimen name="dp_percent_33.33">125dp</dimen> <!-- 1/3 -->
+    <dimen name="dp_percent_36.67">138dp</dimen> <!-- 11/30 -->
+    <dimen name="dp_percent_40">54dp</dimen>
+    <dimen name="dp_percent_41.67">156dp</dimen> <!-- 5/12 -->
+    <dimen name="dp_percent_50">68dp</dimen>
+    <dimen name="dp_percent_55">75dp</dimen>
+    <dimen name="dp_percent_60">82dp</dimen>
+    <dimen name="dp_percent_63.33">237dp</dimen> <!-- 70% - 1/15 -->
+    <dimen name="dp_percent_66">90dp</dimen>
+    <dimen name="dp_percent_66.67">250dp</dimen> <!-- 2/3 -->
+    <dimen name="dp_percent_70">95dp</dimen>
+    <dimen name="dp_percent_75">102dp</dimen>
+    <dimen name="dp_percent_80">109dp</dimen>
+    <dimen name="dp_percent_83.33">312dp</dimen>
+    <dimen name="dp_percent_86.67">325dp</dimen> <!-- 13/15 -->
 
 </resources>

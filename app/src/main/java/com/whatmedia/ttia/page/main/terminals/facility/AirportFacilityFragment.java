@@ -129,13 +129,17 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     @Override
     public void getAirportFacilitySucceed(final List<AirportFacilityData> response) {
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mViewPagerAdapter.setData(response);
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mViewPagerAdapter.setData(response);
 //                mTextViewSubtitle.setText(mAdapter.setData(response));
-            }
-        });
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override

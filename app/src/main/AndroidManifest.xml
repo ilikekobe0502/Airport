@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.whatmedia.ttia.page.main.MainActivity"
+            android:name=".page.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".page.IndoorMap.IndoorMapActivity" />
 
         <meta-data
@@ -39,7 +38,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".services.FCMMessageService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -59,6 +57,7 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".page.IndoorMap.IndoorSearchActivity"></activity>
     </application>
 
 </manifest>
