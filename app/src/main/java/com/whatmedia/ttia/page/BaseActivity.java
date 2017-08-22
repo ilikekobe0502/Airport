@@ -21,29 +21,6 @@ public class BaseActivity extends AppCompatActivity implements IActivityTools {
     private boolean mDoubleBackToExitPressedOnce;
 
     @Override
-    public void showLoadingView(final ViewStub viewStub) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (viewStub == null)
-                    viewStub.inflate();
-                viewStub.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    @Override
-    public void goneLoadingView(final ViewStub viewStub) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                viewStub.setVisibility(View.GONE);
-            }
-        });
-    }
-
-
-    @Override
     public void onBackPressed() {
 
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {

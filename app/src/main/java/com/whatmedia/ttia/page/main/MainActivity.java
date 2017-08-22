@@ -930,4 +930,13 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     private void getMarqueeString() {
         mMarqueeMessage = getString(R.string.marquee_parking_info, Util.getMarqueeSubMessage(getApplicationContext()));
     }
+
+    @Override
+    public void onBackPressed() {
+        if (mLoadingView != null) {
+            if (!mLoadingView.isShown())
+                super.onBackPressed();
+        } else
+            super.onBackPressed();
+    }
 }

@@ -10,11 +10,6 @@ import com.whatmedia.ttia.component.MyToolbar;
  */
 
 public interface IActivityTools {
-
-    void showLoadingView(ViewStub viewStub);
-
-    void goneLoadingView(ViewStub viewStub);
-
     interface ILoadingView {
         void showLoadingView();
 
