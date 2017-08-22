@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RoamingDetailFragment extends BaseFragment implements RoamingDetailContract.View{
+public class RoamingDetailFragment extends BaseFragment implements RoamingDetailContract.View {
     private static final String TAG = RoamingDetailFragment.class.getSimpleName();
 
     private IActivityTools.ILoadingView mLoadingView;
@@ -86,24 +86,28 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     @Override
     public void getRoamingDetailSucceed(final List<RoamingDetailData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null && response.size() > 0) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mWebView.loadUrl(response.get(0).getIrHtml());
-                    mTextQuery.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Uri uri = Uri.parse(response.get(0).getIrUrl());
-                            Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(it);
-                        }
-                    });
-                    tool(response.get(0).getTiName());
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(response.get(0).getIrHtml());
+                        mTextQuery.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Uri uri = Uri.parse(response.get(0).getIrUrl());
+                                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(it);
+                            }
+                        });
+                        tool(response.get(0).getTiName());
+                    }
+                });
+            } else {
+                Log.e(TAG, "Response is error");
+            }
         } else {
-            Log.e(TAG, "Response is error");
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -111,15 +115,19 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     public void getRoamingDetailFailed(final String message) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
-    public void tool(String name){
+    public void tool(String name) {
         mMainActivity.getMyToolbar().clearState()
                 .setTitleText(name)
                 .setBackVisibility(View.VISIBLE)

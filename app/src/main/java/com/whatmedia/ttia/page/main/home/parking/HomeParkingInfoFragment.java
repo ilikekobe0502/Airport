@@ -104,21 +104,29 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
 
     @Override
     public void getParkingInfoSucceed(final List<HomeParkingInfoData> result) {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setData(result);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setData(result);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getParkingInfoFailed(final String message) {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(!TextUtils.isEmpty(message) ? message : getString(R.string.server_error));
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(!TextUtils.isEmpty(message) ? message : getString(R.string.server_error));
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

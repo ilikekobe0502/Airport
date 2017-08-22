@@ -147,17 +147,22 @@ public class LostAndFoundFragment extends BaseFragment implements LostAndFoundCo
 
     @Override
     public void getLostAndFoundSucceed(final List<LostAndFoundData> response) {
-        if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getLostHtml())) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mWebView.loadData(response.get(0).getLostHtml(), "text/html; charset=utf-8", "UTF-8");
-                    mWebView.setBackgroundColor(0);
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getLostHtml())) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadData(response.get(0).getLostHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.setBackgroundColor(0);
+                    }
+                });
+            } else {
+                mLoadingView.goneLoadingView();
+                Log.e(TAG, "Response is error");
+            }
         } else {
             mLoadingView.goneLoadingView();
-            Log.e(TAG, "Response is error");
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -165,11 +170,15 @@ public class LostAndFoundFragment extends BaseFragment implements LostAndFoundCo
     public void getLostAndFoundFailed(final String message) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

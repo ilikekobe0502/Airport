@@ -82,7 +82,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         final int width = dm.widthPixels;
-        final int height = dm.heightPixels/5;
+        final int height = dm.heightPixels / 5;
 
         final float space = getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
 //        final int width = getResources().getDimensionPixelSize(R.dimen.dp_pixel_250);
@@ -100,11 +100,11 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                 @Override
                 public void run() {
                     try {
-                        Log.e("Ian","img path:"+ApiConnect.TAG_IMAGE_HOST + facilityData.getLegendImgPath());
+                        Log.e("Ian", "img path:" + ApiConnect.TAG_IMAGE_HOST + facilityData.getLegendImgPath());
                         mBitmaps[0] = Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + facilityData.getLegendImgPath())
                                 .config(Bitmap.Config.ARGB_8888)
                                 .priority(Picasso.Priority.HIGH)
-                                .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                                 .get();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -141,17 +141,20 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
 //                            mImagePicture.setImage(ImageSource.bitmap(Util.combineBitmap(mBitmaps,(int)space)));
 //                        }
 //                    });
-                    mMainActivity.runOnUI(new Runnable() {
-                        @Override
-                        public void run() {
-                            mImagePicture.setImage(ImageSource.bitmap(mBitmaps[0]));
-                        }
-                    });
+                    if (isAdded() && !isDetached()) {
+                        mMainActivity.runOnUI(new Runnable() {
+                            @Override
+                            public void run() {
+                                mImagePicture.setImage(ImageSource.bitmap(mBitmaps[0]));
+                            }
+                        });
+                    } else {
+                        Log.d(TAG, "Fragment is not add");
+                    }
                 }
             });
 
             t.start();
-
 
 
         } else {
