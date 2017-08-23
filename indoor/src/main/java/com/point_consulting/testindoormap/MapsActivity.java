@@ -25,6 +25,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -227,7 +228,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback, Downlo
 
         if (abstractFolder == null) {
             final AssetManager assets = getAssets();
-            abstractFolder = new AssetsFolder(assets, "TPE");
+            abstractFolder = new AssetsFolder(assets, "JAX");
         }
         startMap(abstractFolder);
     }
@@ -297,7 +298,8 @@ public class MapsActivity extends Activity implements OnMapReadyCallback, Downlo
         } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // handles a search query
             String query = intent.getStringExtra(SearchManager.QUERY);
-            //showResults(query);
+//            showResults(query);
+            Log.e("SearchManager","query:"+query);
         }
     }
 

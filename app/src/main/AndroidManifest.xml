@@ -9,8 +9,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="com.whatmedia.ttia.utility.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,7 +29,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".page.IndoorMap.IndoorMapActivity" />
+        <activity android:name=".page.IndoorMap.IndoorMapActivity">
+            <!-- Receives the search request. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <!-- No category needed, because the Intent will specify this class component-->
+            </intent-filter>
+
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -58,6 +69,12 @@
             android:exported="true" />
 
         <activity android:name=".page.IndoorMap.IndoorSearchActivity"></activity>
+
+        <provider android:name=".utility.MyCustomSuggestionProvider"
+            android:authorities="com.whatmedia.ttia.utility.MyCustomSuggestionProvider"
+            android:exported="true"
+            android:readPermission="com.whatmedia.ttia.utility.MyCustomSuggestionProvider.READ_DATABASE"
+            android:writePermission="com.whatmedia.ttia.utility.MyCustomSuggestionProvider.WRITE_DATABASE"/>
     </application>
 
 </manifest>
