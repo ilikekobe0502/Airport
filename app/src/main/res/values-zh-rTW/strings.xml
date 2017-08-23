@@ -697,11 +697,11 @@
     <string name="flights_search_edit_text_hint">請輸入關鍵字</string>
     <string name="flights_search_not_found_flights_message">找不到航班</string>
     <string name="flights_search_tag_on_time_show_text">準時</string>
-    <string name="flights_search_tag_delay_show_text">延遲\nDelay</string>
-    <string name="flights_search_tag_arrived_show_text">已到\nArrive</string>
-    <string name="flights_search_tag_cancelled_show_text">取消\nCancelled</string>
-    <string name="flights_search_tag_schedule_change_show_text">時間更改\nSchedule change</string>
-    <string name="flights_search_tag_departed_show_text">出發\nDeparture</string>
+    <string name="flights_search_tag_delay_show_text">延遲</string>
+    <string name="flights_search_tag_arrived_show_text">已到</string>
+    <string name="flights_search_tag_cancelled_show_text">取消</string>
+    <string name="flights_search_tag_schedule_change_show_text">時間更改</string>
+    <string name="flights_search_tag_departed_show_text">出發</string>
 
     <!-- Comment -->
     <string name="press_again_left">再點一次離開app</string>
