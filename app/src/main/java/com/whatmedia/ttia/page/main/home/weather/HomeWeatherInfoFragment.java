@@ -79,7 +79,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
                 mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
                 break;
             case "zh_CN":
-                mWebView.loadUrl(String.format(mWeatherUrl, "cn"));
+                mWebView.loadUrl(String.format(mWeatherUrl, "ch"));
                 break;
             case "en":
                 mWebView.loadUrl(String.format(mWeatherUrl, "en"));
