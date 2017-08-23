@@ -126,25 +126,33 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     @Override
     public void getExchangeRateSucceed(final ExchangeRateData response) {
         mLoadingView.goneLoadingView();
-        if (response != null && !TextUtils.isEmpty(response.getAmount())) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    if (!mIsClickBottom)
-                        mEditTextTargetAmount.setText(response.getAmount());
-                    else
-                        mEditTextSourceAmount.setText(response.getAmount());
+        if (isAdded() && !isDetached()) {
+            if (response != null && !TextUtils.isEmpty(response.getAmount())) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!mIsClickBottom)
+                            mEditTextTargetAmount.setText(response.getAmount());
+                        else
+                            mEditTextSourceAmount.setText(response.getAmount());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getExchangeRateSucceed response error");
+                if (isAdded() && !isDetached()) {
+                    mMainActivity.runOnUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            mEditTextTargetAmount.setText("");
+                            showMessage(getString(R.string.data_error));
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "Fragment is not add");
                 }
-            });
+            }
         } else {
-            Log.e(TAG, "getExchangeRateSucceed response error");
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mEditTextTargetAmount.setText("");
-                    showMessage(getString(R.string.data_error));
-                }
-            });
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -152,13 +160,17 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     public void getExchangeRateFailed(String result) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getExchangeRateFailed : " + (!TextUtils.isEmpty(result) ? result : ""));
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                mEditTextTargetAmount.setText("");
-                showMessage(getString(R.string.data_error));
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mEditTextTargetAmount.setText("");
+                    showMessage(getString(R.string.data_error));
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @OnClick({R.id.imageView_source_icon, R.id.editText_source_amount, R.id.imageView_target_icon, R.id.layout_ok, R.id.editText_target_amount})

@@ -146,69 +146,93 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
 
     @Override
     public void getTerminalSucceed(final List<TerminalCodeData> response) {
-        mTerminalCodeList = response;
-        TerminalCodeData nonSelect = new TerminalCodeData();
-        nonSelect.setTerminalsName(getString(R.string.restaurant_store_search_non_select_terminal));
-        mTerminalCodeList.add(0, nonSelect);
+        if (isAdded() && !isDetached()) {
+            mTerminalCodeList = response;
+            TerminalCodeData nonSelect = new TerminalCodeData();
+            nonSelect.setTerminalsName(getString(R.string.restaurant_store_search_non_select_terminal));
+            mTerminalCodeList.add(0, nonSelect);
 
-        mPresenter.getAreaCodeAPI();
+            mPresenter.getAreaCodeAPI();
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getTerminalFailed(String message) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, message);
-        showMessage(message);
+        if (isAdded() && !isDetached()) {
+            Log.e(TAG, message);
+            showMessage(message);
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getAreaSucceed(List<AreaCodeData> response) {
-        mAreaCodeList = response;
-        AreaCodeData nonSelect = new AreaCodeData();
-        nonSelect.setAreaName(getString(R.string.restaurant_store_search_non_select_area));
-        mAreaCodeList.add(0, nonSelect);
-        mPresenter.getFloorCodeAPI();
+        if (isAdded() && !isDetached()) {
+            mAreaCodeList = response;
+            AreaCodeData nonSelect = new AreaCodeData();
+            nonSelect.setAreaName(getString(R.string.restaurant_store_search_non_select_area));
+            mAreaCodeList.add(0, nonSelect);
+            mPresenter.getFloorCodeAPI();
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getFloorSucceed(List<FloorCodeData> response) {
-        mFloorCodeList = response;
-        FloorCodeData nonSelect = new FloorCodeData();
-        nonSelect.setFloorName(getString(R.string.restaurant_store_search_non_select_floor));
-        mFloorCodeList.add(0, nonSelect);
+        if (isAdded() && !isDetached()) {
+            mFloorCodeList = response;
+            FloorCodeData nonSelect = new FloorCodeData();
+            nonSelect.setFloorName(getString(R.string.restaurant_store_search_non_select_floor));
+            mFloorCodeList.add(0, nonSelect);
 
-        if (mFromPage == Page.TAG_STORE_OFFERS)
-            mPresenter.getStoreCodeAPI();
-        else
-            mPresenter.getKindOfRestaurantCodeAPI();
+            if (mFromPage == Page.TAG_STORE_OFFERS)
+                mPresenter.getStoreCodeAPI();
+            else
+                mPresenter.getKindOfRestaurantCodeAPI();
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getKindOfRestaurantCodeSucceed(List<RestaurantCodeData> response) {
-        mRestaurantCodeList = response;
-        RestaurantCodeData nonSelect = new RestaurantCodeData();
-        nonSelect.setRestaurantTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_restaurant));
-        mRestaurantCodeList.add(0, nonSelect);
-        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            mRestaurantCodeList = response;
+            RestaurantCodeData nonSelect = new RestaurantCodeData();
+            nonSelect.setRestaurantTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_restaurant));
+            mRestaurantCodeList.add(0, nonSelect);
+            mLoadingView.goneLoadingView();
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getRestaurantInfoSucceed(String response) {
-        if (!TextUtils.isEmpty(response)) {
-            mLoadingView.goneLoadingView();
-            Bundle bundle = new Bundle();
-            bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
-            mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+        if (isAdded() && !isDetached()) {
+            if (!TextUtils.isEmpty(response)) {
+                mLoadingView.goneLoadingView();
+                Bundle bundle = new Bundle();
+                bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
+                mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+            } else {
+                Log.e(TAG, "getRestaurantInfoSucceed response is null");
+                showNoDataDialog();
+            }
         } else {
-            Log.e(TAG, "getRestaurantInfoSucceed response is null");
-            showNoDataDialog();
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
     @Override
     public void getRestaurantInfoFailed(final String message) {
         mLoadingView.goneLoadingView();
-        if (isAdded()) {
+        if (isAdded() && !isDetached()) {
             Log.e(TAG, "getRestaurantInfoFailed() :" + message);
             showNoDataDialog();
         }
@@ -216,25 +240,32 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
 
     @Override
     public void getStoreCodeSuccess(List<StoreCodeData> response) {
-        mStoreCodeList = response;
-        StoreCodeData nonSelect = new StoreCodeData();
-        nonSelect.setStoreTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_store_title));
-        mStoreCodeList.add(0, nonSelect);
         mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            mStoreCodeList = response;
+            StoreCodeData nonSelect = new StoreCodeData();
+            nonSelect.setStoreTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_store_title));
+            mStoreCodeList.add(0, nonSelect);
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
     public void getStoreSuccess(String response) {
-        if (!TextUtils.isEmpty(response)) {
-            mLoadingView.goneLoadingView();
-            Bundle bundle = new Bundle();
-            bundle.putString(StoreSearchResultContract.TAG_STORE_RESULT, response);
-            mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+        if (isAdded() && !isDetached()) {
+            if (!TextUtils.isEmpty(response)) {
+                mLoadingView.goneLoadingView();
+                Bundle bundle = new Bundle();
+                bundle.putString(StoreSearchResultContract.TAG_STORE_RESULT, response);
+                mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+            } else {
+                Log.e(TAG, "getRestaurantInfoSucceed response is null");
+                showNoDataDialog();
+            }
         } else {
-            Log.e(TAG, "getRestaurantInfoSucceed response is null");
-            showNoDataDialog();
+            Log.d(TAG, "Fragment is not add");
         }
-
     }
 
     @OnClick({R.id.layout_search, R.id.textView_terminal, R.id.textView_area, R.id.textView_floor, R.id.textView_restaurant})
@@ -391,16 +422,21 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     /**
      * Show no Data dialog
      */
+
     private void showNoDataDialog() {
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(getContext())
-                        .setTitle(R.string.note)
-                        .setMessage(mFromPage == Page.TAG_STORE_OFFERS ? R.string.restaurant_store_search_not_found_store : R.string.restaurant_store_search_not_found)
-                        .setPositiveButton(R.string.ok, null)
-                        .show();
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.note)
+                            .setMessage(mFromPage == Page.TAG_STORE_OFFERS ? R.string.restaurant_store_search_not_found_store : R.string.restaurant_store_search_not_found)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

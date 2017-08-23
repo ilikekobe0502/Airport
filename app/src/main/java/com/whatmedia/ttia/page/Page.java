@@ -122,8 +122,8 @@ public class Page {
 
     public static final int TAG_COMMUNICATION_INTERNATIONAL_CALL = 3001;
     public static final int TAG_COMMUNICATION_EMERGENCY_CALL = 3002;
-    public static final int TAG_COMMUNICATION_ROAMING_SERVICE =3003;
-    public static final int TAG_COMMUNICATION_ROAMING_DETAIL =3004;
+    public static final int TAG_COMMUNICATION_ROAMING_SERVICE = 3003;
+    public static final int TAG_COMMUNICATION_ROAMING_DETAIL = 3004;
 
     public static final int TAG_ACHIEVEMENT = 4000;
     public static final int TAG_ACHIEVEMENT_DETAIL = 4001;
@@ -147,7 +147,7 @@ public class Page {
         fragmentTransaction.replace(R.id.layout_container, fragment, fragmentName);
         if (backStack)
             fragmentTransaction.addToBackStack(fragmentName);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     /**
@@ -169,7 +169,7 @@ public class Page {
         fragmentTransaction.add(R.id.layout_container, fragment, fragmentName);
         if (backStack)
             fragmentTransaction.addToBackStack(fragmentName);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     /**

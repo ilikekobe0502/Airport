@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class InternationalCallFragment extends BaseFragment implements InternationalCallContract.View {
 
-//    @BindView(R.id.text_title1)
+    //    @BindView(R.id.text_title1)
 //    TextView mTextTitle1;
 //    @BindView(R.id.text_title2)
 //    TextView mTextTitle2;
@@ -92,21 +92,25 @@ public class InternationalCallFragment extends BaseFragment implements Internati
     @Override
     public void getInternationalCallSucceed(final List<InternationCallData> response) {
         mLoadingView.goneLoadingView();
-        if (response != null && response.size() > 0) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
 //                    mTextTitle1.setText(response.get(0).getIcTitle().trim());
-                    mWebView.loadData(response.get(0).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
-                    mWebView.setBackgroundColor(Color.TRANSPARENT);
+                        mWebView.loadData(response.get(0).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.setBackgroundColor(Color.TRANSPARENT);
 //                    mTextTitle2.setText(response.get(1).getIcTitle().trim());
 //                    mWebView2.loadData(response.get(1).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
 //                    mWebView2.setBackgroundColor(Color.TRANSPARENT);
-                }
-            });
-        } else {
+                    }
+                });
+            } else {
 //            mLoadingView.goneLoadingView();
-            Log.e(TAG, "Response is error");
+                Log.e(TAG, "Response is error");
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -114,11 +118,15 @@ public class InternationalCallFragment extends BaseFragment implements Internati
     public void getInternationalCallFailed(final String message) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

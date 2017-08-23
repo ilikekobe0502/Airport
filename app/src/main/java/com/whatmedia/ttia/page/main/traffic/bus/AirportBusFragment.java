@@ -116,17 +116,22 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
 
     @Override
     public void getAirportBusSucceed(final List<AirportBusData> response) {
-        if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getBusesHtml())) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mWebView.loadData(response.get(0).getBusesHtml(), "text/html; charset=utf-8", "UTF-8");
-                    mWebView.setBackgroundColor(0);
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getBusesHtml())) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadData(response.get(0).getBusesHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.setBackgroundColor(0);
+                    }
+                });
+            } else {
+                mLoadingView.goneLoadingView();
+                Log.e(TAG, "Response is error");
+            }
         } else {
             mLoadingView.goneLoadingView();
-            Log.e(TAG, "Response is error");
+            Log.d(TAG, "Fragment is not add");
         }
     }
 
@@ -134,11 +139,15 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     public void getAirportBusFailed(final String message) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
-        mMainActivity.runOnUI(new Runnable() {
-            @Override
-            public void run() {
-                showMessage(message);
-            }
-        });
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    showMessage(message);
+                }
+            });
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }
