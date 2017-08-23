@@ -15,7 +15,7 @@
         android:layout_below="@+id/myToolbar"
         android:background="@color/colorMapSearchBg">
 
-        <EditText
+        <SearchView
             android:id="@+id/editText_search"
             android:layout_width="@dimen/dp_pixel_179"
             android:layout_height="@dimen/dp_pixel_25"
@@ -26,7 +26,12 @@
             android:hint="@string/flights_search_edit_text_hint"
             android:paddingLeft="@dimen/dp_pixel_4"
             android:textColorHint="@color/colorTextResultHint"
-            android:textSize="@dimen/sp_pixel_13" />
+            android:textSize="@dimen/sp_pixel_13"
+            android:title="Search"
+            android:icon="@android:drawable/ic_search_category_default"
+            android:showAsAction="always"
+            android:orderInCategory="2"
+            android:actionViewClass="android.widget.SearchView"/>
 
         <ImageView
             android:id="@+id/imageView_clear"
@@ -58,7 +63,7 @@
 
     <fragment
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.MapFragment"
+        android:name="com.point_consulting.pc_indoormapoverlaylib.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/myMarquee"
@@ -89,4 +94,38 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/levelLabel"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp_pixel_40"
+        android:layout_marginRight="@dimen/dp_pixel_10"
+        android:layout_width="@dimen/dp_pixel_35"
+        android:layout_height="@dimen/dp_pixel_35" />
+
+    <Button
+        android:onClick="onButton"
+        android:id="@+id/levelsButton"
+        android:background="@drawable/levels"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/levelLabel"
+        android:layout_marginRight="10dp"
+        android:layout_width="@dimen/dp_pixel_35"
+        android:layout_height="@dimen/dp_pixel_35" />
+
+    <com.aigestudio.wheelpicker.WheelPicker
+        android:background="#ffffff"
+        android:visibility="invisible"
+        android:id="@+id/levelsPicker"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/levelLabel"
+        android:layout_marginBottom="@dimen/dp_pixel_6"
+        android:paddingRight="@dimen/dp_pixel_10"
+        android:layout_width="@dimen/dp_pixel_48"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
