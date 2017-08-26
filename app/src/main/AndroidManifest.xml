@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".page.IndoorMap.IndoorMapActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:label="@string/app_name">
             <!-- Receives the search request. -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -43,7 +44,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAHJtzFEGDNUxz8O43JJN4NnKpcRFeADEM" />
+            android:value="AIzaSyBdBh9myYsneG6P-FDkbYlB2OD4Bw9sQn0" />
 
         <service android:name=".services.FCMTokenService">
             <intent-filter>

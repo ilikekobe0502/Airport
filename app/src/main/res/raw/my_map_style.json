@@ -1,5 +1,6 @@
-[[
+[
   {
+    "elementType": "labels",
     "stylers": [
       {
         "visibility": "off"
@@ -7,39 +8,26 @@
     ]
   },
   {
-    "featureType": "water",
+    "featureType": "administrative.land_parcel",
     "stylers": [
       {
-        "visibility": "on"
-      },
-      {
-        "color": "#2f343b"
+        "visibility": "off"
       }
     ]
   },
   {
-    "featureType": "landscape",
+    "featureType": "administrative.neighborhood",
     "stylers": [
       {
-        "visibility": "on"
-      },
-      {
-        "color": "#ffffff"
+        "visibility": "off"
       }
     ]
   },
   {
-    "featureType": "administrative",
-    "elementType": "geometry.stroke",
+    "featureType": "road",
     "stylers": [
       {
         "visibility": "on"
-      },
-      {
-        "color": "#2f343b"
-      },
-      {
-        "weight": 1
       }
     ]
   }

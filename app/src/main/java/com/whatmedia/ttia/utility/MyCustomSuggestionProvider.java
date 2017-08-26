@@ -12,9 +12,8 @@ import android.provider.BaseColumns;
 
 import com.point_consulting.pc_indoormapoverlaylib.Manager;
 
-import org.json.JSONObject;
-
 import java.util.List;
+import java.util.Map;
 
 public class MyCustomSuggestionProvider extends ContentProvider {
 
@@ -37,7 +36,8 @@ public class MyCustomSuggestionProvider extends ContentProvider {
             return null;
         }
 
-        final List<Manager.FeatureDesc> fdl = manager.search(q, MyAppUtils.s_searchField);
+        final Manager.Location userLocation = app.getUserLocation(null);
+        final List<Manager.FeatureDesc> fdl = manager.search(q, MyAppUtils.s_searchField, userLocation != null ? userLocation.m_coord3D : null);
         List<MyApplication.OutdoorFeature> ofdl = app.searchOutdoorSync(q);
 
         if (fdl == null && ofdl == null)
@@ -61,12 +61,14 @@ public class MyCustomSuggestionProvider extends ContentProvider {
         int k = 0;
         if (fdl != null) {
             for (Manager.FeatureDesc fd : fdl) {
-                final JSONObject props = manager.propsForFeature(fd.m_featureIndex);
-                final String subtitle = props.optString(MyAppUtils.SUBTITLE_FIELD);
+                final Map<String, String> props = manager.propsForFeature(fd.m_featureIndex);
+                final String category = MyAppUtils.OptString(props, MyAppUtils.SUBTITLE_FIELD);
+                final String levelId = MyAppUtils.OptString(props, "LEVEL_ID");
+                final String levelName = app.nameForLevelId(levelId);
 
                 obj[0] = String.valueOf(k);
                 obj[1] = fd.m_name;
-                obj[2] = subtitle;
+                obj[2] = String.format("%s - %s", category, levelName);
                 obj[3] = String.valueOf(fd.m_featureIndex);
                 obj[4] = null;
                 mq.addRow(obj);

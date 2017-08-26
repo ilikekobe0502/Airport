@@ -842,5 +842,6 @@
     <string name="indoor_search_start_text">起始：%d</string>
     <string name="indoor_search_end_text">終點：%d</string>
     <string name="route_string">Route to %1$s</string>
+    <string name="current_location">Current location</string>
 
 </resources>

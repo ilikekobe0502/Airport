@@ -7,7 +7,6 @@ android {
         applicationId "com.whatmedia.ttia"
         minSdkVersion 19
         targetSdkVersion 25
-        multiDexEnabled true
         versionCode 20180825
         versionName "1.0.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -51,5 +50,7 @@ dependencies {
     compile files('libs/mint-5.2.1.jar')
     compile files('libs/pc_indoormapoverlaylib.jar')
     compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
+    compile 'com.google.maps.android:android-maps-utils:0.4.4'
+    compile 'xmlwise:xmlwise:1.2.11'
     compile 'com.android.support:multidex:1.0.1'
 }

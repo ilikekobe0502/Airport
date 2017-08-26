@@ -320,6 +320,7 @@ public class IndoorSearchActivity extends AppCompatActivity {
         }
 
         if (m_featureDescList != null) {
+            final MyApplication app = (MyApplication)getApplication();
             for (Manager.FeatureDesc fd : m_featureDescList) {
                 final Manager.Location location = new Manager.Location(m_manager, fd.m_featureIndex, null, null, null);
                 m_locations.add(location);
@@ -328,9 +329,11 @@ public class IndoorSearchActivity extends AppCompatActivity {
                 map.put(s_titleStr, fd.m_name);
 
                 if (m_manager != null) {
-                    final JSONObject props = m_manager.propsForFeature(fd.m_featureIndex);
-                    final String subtitle = props.optString(MyAppUtils.SUBTITLE_FIELD);
-                    map.put(s_subtitleStr, subtitle);
+                    final Map<String, String> props = m_manager.propsForFeature(fd.m_featureIndex);
+                    final String category = MyAppUtils.OptString(props, MyAppUtils.SUBTITLE_FIELD);
+                    final String levelId = MyAppUtils.OptString(props, "LEVEL_ID");
+                    final String levelName = app.nameForLevelId(levelId);
+                    map.put(s_subtitleStr, String.format("%s - %s", category, levelName));
                 }
 
                 m_list.add(map);
@@ -368,6 +371,20 @@ public class IndoorSearchActivity extends AppCompatActivity {
 
         }
 
+        private Coordinate3D c3dForSearch()
+        {
+            if (m_selectedStart != null && m_selectedStart.m_location != null)
+            {
+                return m_selectedStart.m_location.m_coord3D;
+            }
+            if (m_selectedEnd != null && m_selectedEnd.m_location != null)
+            {
+                return m_selectedEnd.m_location.m_coord3D;
+            }
+            final Manager.Location userLocation = ((MyApplication)getApplication()).getUserLocation(null);
+            return userLocation != null ? userLocation.m_coord3D : null;
+        }
+
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             final int len = charSequence.length();
@@ -383,7 +400,7 @@ public class IndoorSearchActivity extends AppCompatActivity {
                 final String s = charSequence.toString();
                 if (m_manager != null)
                 {
-                    m_manager.searchAsync(s, MyAppUtils.s_searchField, new Manager.SearchCallback() {
+                    m_manager.searchAsync(s, MyAppUtils.s_searchField, c3dForSearch(), new Manager.SearchCallback() {
                         @Override
                         public void onSearchDone(List<Manager.FeatureDesc> list) {
                             m_featureDescList = list;
