@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +26,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -99,12 +103,6 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     FrameLayout mLoadingView;
     @BindView(R.id.editText_search)
     SearchView mEditTextSearch;
-    @BindView(R.id.imageView_clear)
-    ImageView mImageViewClear;
-    @BindView(R.id.imageView_search)
-    ImageView mImageViewSearch;
-    @BindView(R.id.imageView_location)
-    ImageView mImageViewLocation;
     @BindView(R.id.routeBar)
     ViewGroup m_routeBar;
     @BindView(R.id.descLabel)
@@ -1345,14 +1343,11 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         });
     }
 
-    @OnClick({R.id.imageView_clear, R.id.imageView_search, R.id.imageView_location, R.id.imageView_home, R.id.levelsButton})
+    @OnClick({R.id.action_route, R.id.action_cancel, R.id.imageView_home, R.id.levelsButton})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageView_clear:
+            case R.id.action_route:
                 //TODO searchview clear
-                break;
-            case R.id.imageView_search:
-                // TODO: 2017/8/22
                 Intent intent = new Intent(this, IndoorSearchActivity.class);
                 intent.putExtra(MyAppUtils.s_extra_start, m_manager.markLocation(s_startPinId));
                 Manager.Location locEnd = m_manager.markLocation(s_endPinId);
@@ -1362,8 +1357,9 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 intent.putExtra(MyAppUtils.s_extra_end, locEnd);
                 startActivityForResult(intent, s_requestCodeDirections);
                 break;
-            case R.id.imageView_location:
+            case R.id.action_cancel:
                 // TODO: 2017/8/22
+                cancelAll();
                 break;
             case R.id.imageView_home:
                 onBackPressed();

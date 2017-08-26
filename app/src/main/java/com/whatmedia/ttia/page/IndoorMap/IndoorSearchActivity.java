@@ -50,26 +50,24 @@ public class IndoorSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.myToolbar)
     MyToolbar mMyToolbar;
-    @BindView(R.id.imageView_back)
-    ImageView mImageViewBack;
-    @BindView(R.id.layout_search)
-    RelativeLayout mLayoutSearch;
-    @BindView(R.id.imageView_exchange)
-    ImageView mImageViewExchange;
+    @BindView(R.id.myMarquee)
+    MyMarquee mMyMarquee;
+    @BindView(R.id.loadingView)
+    FrameLayout mLoadingView;
+    @BindView(R.id.imageView_home)
+    ImageView mImageViewHome;
+
+    @BindView(R.id.directions_table)
+    ListView mTable;
+    @BindView(R.id.directions_route)
+    Button mButton_route;
     @BindView(R.id.directions_from)
     EditText m_fromEditText;
     @BindView(R.id.directions_to)
     EditText m_toEditText;
-    @BindView(R.id.myMarquee)
-    MyMarquee mMyMarquee;
-    @BindView(R.id.imageView_home)
-    ImageView mImageViewHome;
-    @BindView(R.id.loadingView)
-    FrameLayout mLoadingView;
-    @BindView(R.id.directions_route)
-    TextView mButton_route;
-    @BindView(R.id.directions_table)
-    ListView mTable;
+
+
+
 
     private String mMarqueeMessage;
 
