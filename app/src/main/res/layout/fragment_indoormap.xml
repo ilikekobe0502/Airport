@@ -22,13 +22,12 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_pixel_10"
             android:background="@drawable/frame_edit_text"
-            android:drawableLeft="@drawable/indoor_10_01"
             android:hint="@string/flights_search_edit_text_hint"
             android:paddingLeft="@dimen/dp_pixel_4"
             android:textColorHint="@color/colorTextResultHint"
             android:textSize="@dimen/sp_pixel_13"
             android:title="Search"
-            android:icon="@android:drawable/ic_search_category_default"
+            android:icon="@drawable/indoor_10_01"
             android:showAsAction="always"
             android:orderInCategory="2"
             android:actionViewClass="android.widget.SearchView"/>
@@ -61,6 +60,8 @@
             android:background="@drawable/indoor_10_04" />
     </RelativeLayout>
 
+
+
     <fragment
         android:id="@+id/map"
         android:name="com.point_consulting.pc_indoormapoverlaylib.MapFragment"
@@ -68,6 +69,95 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/myMarquee"
         android:layout_below="@+id/layout_search" />
+
+    <LinearLayout
+        android:id="@+id/routeBar"
+        android:visibility="invisible"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_search">
+
+        <!-- Blue bar -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="#0070c0"
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <ImageButton
+                android:id="@+id/route_prev"
+                android:onClick="onButton"
+                android:adjustViewBounds="true"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:onClick="onButton"
+                android:id="@+id/stepLabel"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_pixel_15"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/route_next"
+                android:scaleX="-1"
+                android:onClick="onButton"
+                android:adjustViewBounds="true"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- White bar -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+
+            <TextView
+                android:id="@+id/descLabel"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp_pixel_15"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/routeTime"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp_pixel_15"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dp"
+                android:paddingRight="8dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Thin line -->
+        <View
+            android:background="#0070c0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
 
     <com.whatmedia.ttia.component.MyMarquee
         android:id="@+id/myMarquee"

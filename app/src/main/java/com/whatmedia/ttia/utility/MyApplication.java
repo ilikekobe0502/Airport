@@ -71,9 +71,9 @@ public final class MyApplication extends MultiDexApplication implements GoogleAp
             m_subtitle = subtitle;
             m_placeId = placeId;
         }
-        String m_title;
-        String m_subtitle;
-        String m_placeId;
+        public String m_title;
+        public String m_subtitle;
+        public String m_placeId;
     }
 
     public interface SearchCallback
@@ -107,7 +107,7 @@ public final class MyApplication extends MultiDexApplication implements GoogleAp
         return null;
     }
 
-    boolean searchOutdoorAsync(final String s, final SearchCallback callback)
+    public boolean searchOutdoorAsync(final String s, final SearchCallback callback)
     {
         if ( m_needOutdoorSearch && m_googleApiClient != null)
         {
