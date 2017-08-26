@@ -194,12 +194,11 @@ public class ApiConnect extends StateCode {
     public static void getMyFlightsInfo(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_myflight")
                 .newBuilder()
-                .addQueryParameter("UserID", "123")
-                .addQueryParameter("Devicetoken", "123")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("lan", "tw")
-                .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocaleApiError)
+                .addQueryParameter("DeviceType", "1")
                 .build();
         getApi(url, callback);
     }
@@ -213,8 +212,8 @@ public class ApiConnect extends StateCode {
     public static void doMyFlights(FlightsInfoData data, Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_flight")
                 .newBuilder()
-                .addQueryParameter("UserID", "123")
-                .addQueryParameter("Devicetoken", "123")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("AirlineCode", data.getAirlineCode())
                 .addQueryParameter("Shifts", data.getShift())//需要補滿四位數
@@ -475,8 +474,6 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("UserID", "A123456789")
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("lan", "tw")
-                .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocaleApiError)
                 .build();
         getApi(url, callback);
@@ -569,7 +566,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Answers")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("answer", answer)
                 .build();
@@ -664,7 +661,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Achievement")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
+                .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", mLocale)
                 .build();
@@ -679,7 +676,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
+                .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("Beacon_ID", minorID)
                 .build();
@@ -693,7 +690,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", TAG_DEVICE_ID + "50")
+                .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("type", isAdd ? "0" : "1")
                 .build();

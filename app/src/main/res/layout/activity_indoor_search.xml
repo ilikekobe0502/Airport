@@ -8,100 +8,135 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@+id/layout_search"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_pixel_45"
+    <LinearLayout
         android:layout_below="@+id/myToolbar"
-        android:background="@color/colorMapSearchBg">
-
-        <ImageView
-            android:id="@+id/imageView_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_pixel_10"
-            android:background="@drawable/indoor_10_07" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_pixel_8"
-            android:layout_toRightOf="@+id/imageView_back"
-            android:text="BACK"
-            android:textColor="@color/colorTextResultHint"
-            android:textSize="@dimen/sp_pixel_15" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/indoor_search_sub_title"
-            android:textColor="@color/colorTextResultHint"
-            android:textSize="@dimen/sp_pixel_18" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_pixel_10"
-            android:text="確定"
-            android:textColor="@color/colorTextResultHint"
-            android:textSize="@dimen/sp_pixel_15" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/myMarquee"
-        android:layout_below="@+id/layout_search">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_pixel_10"
-            android:layout_marginTop="@dimen/dp_pixel_10">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView_exchange"
+            <TextView
+                android:text="@string/directions"
+                android:textSize="24dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/directions_route"
+                android:onClick="onRoute"
+                android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textColor="@drawable/mybutton_color"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="@dimen/dp_pixel_10"
-                android:background="@drawable/indoor_10_08" />
+                android:layout_marginRight="10dp"
+                android:text="@string/directions_route"/>
 
-            <TextView
-                android:id="@+id/textView_start"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_pixel_25"
-                android:layout_marginBottom="@dimen/dp_pixel_10"
-                android:layout_toRightOf="@+id/imageView_exchange"
-                android:background="@drawable/frame_search_edit_text"
-                android:gravity="center_vertical"
-                android:hint="@string/indoor_search_start_text"
-                android:paddingLeft="@dimen/dp_pixel_8"
-                android:textColor="@color/colorTextResultHint"
-                android:textColorHint="@color/colorTextResultHint"
-                android:textSize="@dimen/sp_pixel_13" />
-
-            <TextView
-                android:id="@+id/textView_end"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_pixel_25"
-                android:layout_below="@+id/textView_start"
-                android:layout_toRightOf="@+id/imageView_exchange"
-                android:background="@drawable/frame_search_edit_text"
-                android:gravity="center_vertical"
-                android:hint="@string/indoor_search_end_text"
-                android:paddingLeft="@dimen/dp_pixel_8"
-                android:textColor="@color/colorTextResultHint"
-                android:textColorHint="@color/colorTextResultHint"
-                android:textSize="@dimen/sp_pixel_13" />
         </RelativeLayout>
-    </RelativeLayout>
+
+        <!-- swap button & start, end bars -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- swap button -->
+            <ImageButton
+                android:onClick="onSwap"
+                android:background="@null"
+                android:src="@drawable/swap"
+                android:layout_marginLeft="@dimen/dp_pixel_12"
+                android:layout_gravity="center_vertical"
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
+
+            <!-- start, end bars -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0px"
+                android:layout_height="wrap_content">
+
+                <!-- Start -->
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="@string/directions_from"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/dp_pixel_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/directions_from"
+                        android:inputType="text"
+                        android:imeOptions="actionSearch"
+                        android:textSize="@dimen/dp_pixel_18"
+                        android:layout_weight="1"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <!-- End -->
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="@string/directions_to"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/dp_pixel_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:id="@+id/directions_to"
+                        android:inputType="text"
+                        android:imeOptions="actionSearch"
+                        android:textSize="@dimen/dp_pixel_18"
+                        android:layout_weight="1"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Table -->
+        <ListView
+            android:id="@+id/directions_table"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0px">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+
+
+
 
     <com.whatmedia.ttia.component.MyMarquee
         android:id="@+id/myMarquee"

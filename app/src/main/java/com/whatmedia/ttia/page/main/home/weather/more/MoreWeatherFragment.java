@@ -234,7 +234,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
                     mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "tw"));
                     break;
                 case "zh_CN":
-                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "cn"));
+                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "ch"));
                     break;
                 case "en":
                     mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "en"));

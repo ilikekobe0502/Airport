@@ -1,39 +1,42 @@
 package com.whatmedia.ttia.page.IndoorMap;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.google.android.gms.common.api.PendingResult;
@@ -41,17 +44,17 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.maps.android.SphericalUtil;
 import com.point_consulting.pc_indoormapoverlaylib.AbstractFolder;
 import com.point_consulting.pc_indoormapoverlaylib.AssetsFolder;
-import com.point_consulting.pc_indoormapoverlaylib.BuildConfig;
 import com.point_consulting.pc_indoormapoverlaylib.Coordinate3D;
+import com.point_consulting.pc_indoormapoverlaylib.ExternalFolder;
 import com.point_consulting.pc_indoormapoverlaylib.FeatureOptions;
 import com.point_consulting.pc_indoormapoverlaylib.IMap;
 import com.point_consulting.pc_indoormapoverlaylib.IMarker;
@@ -65,7 +68,6 @@ import com.point_consulting.pc_indoormapoverlaylib.MapImplGoogle;
 import com.point_consulting.pc_indoormapoverlaylib.MapImplIndoor;
 import com.point_consulting.pc_indoormapoverlaylib.Mathe;
 import com.point_consulting.pc_indoormapoverlaylib.TextOptions;
-import com.point_consulting.pc_indoormapoverlaylib.Utils;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
@@ -78,9 +80,7 @@ import com.whatmedia.ttia.utility.Util;
 
 import junit.framework.Assert;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +91,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class IndoorMapActivity extends BaseActivity implements IActivityTools.IIndoorMapActivity, OnMapReadyCallback ,MyApplication.GoogleLocationCallback {
+public class IndoorMapActivity extends BaseActivity implements IActivityTools.IIndoorMapActivity, OnMapReadyCallback, DownloadMaps.Delegate, MyApplication.GoogleLocationCallback  {
 
     @BindView(R.id.myToolbar)
     MyToolbar mMyToolbar;
@@ -103,12 +103,18 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     FrameLayout mLoadingView;
     @BindView(R.id.editText_search)
     SearchView mEditTextSearch;
-    @BindView(R.id.imageView_clear)
-    ImageView mImageViewClear;
-    @BindView(R.id.imageView_search)
-    ImageView mImageViewSearch;
-    @BindView(R.id.imageView_location)
-    ImageView mImageViewLocation;
+    @BindView(R.id.routeBar)
+    ViewGroup m_routeBar;
+    @BindView(R.id.descLabel)
+    TextView m_descLabel;
+    @BindView(R.id.routeTime)
+    TextView m_distLabel;
+    @BindView(R.id.stepLabel)
+    TextView m_labelStep;
+    @BindView(R.id.route_prev)
+    ImageButton m_buttonPrev;
+    @BindView(R.id.route_next)
+    ImageButton m_buttonNext;
 
     private static Mathe.IndoorLatLng s_center = new Mathe.IndoorLatLng(25.081723343293813, 121.2408936708626);
     private static Mathe.IndoorLatLng s_hackedCenter = new Mathe.IndoorLatLng(60.040291238122467, 30.392644503671253);
@@ -137,6 +143,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     private String mMarqueeMessage;
     private float mDensity;
 
+    private List<MyAppUtils.PropDesc> m_propDesc = new ArrayList<>();
     private IMap m_map;
     private IMarker m_selectedMarker;
     private Manager m_manager;
@@ -144,17 +151,12 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     private final String m_routeIdOutdoor = "routeOutdoor";
     private IndoorCameraPosition m_cameraPosition;
     private WheelPicker m_levelsPicker;
+    private WheelPicker m_venuesPicker;
     private boolean m_initialized;
     private List<Manager.IndoorMapStep> m_routeSteps;
     private int m_routeStepsIndex;
     private boolean m_isWheelchairMode;
-
-    private ViewGroup m_routeBar;
-    private TextView m_labelStep;
-    private ImageButton m_buttonPrev;
-    private ImageButton m_buttonNext;
-    private TextView m_descLabel;
-    private TextView m_distLabel;
+    private int m_toSelectFeatureIndex = -1;
 
     private ProgressDialog m_progressDialog;
 
@@ -163,387 +165,142 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
 
     private Typeface m_typeface;
 
+    private static final boolean s_showVenuePicker = false;
     private static final boolean s_useServer = false;
+    private static final boolean s_showUserTrackingModeButton = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_indoormap);
-        ButterKnife.bind(this);
+    private void startMap(AbstractFolder abstractFolder) {
+      Log.e("Android Maps", "startMap");
 
-        mDensity = getResources().getDisplayMetrics().density;
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        mEditTextSearch.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        mEditTextSearch.setIconifiedByDefault(false);
-
-        initAppbar();
-        initMarquee();
-        initLevelSwitch();
-
-        com.point_consulting.pc_indoormapoverlaylib.MapFragment mapFragment = (com.point_consulting.pc_indoormapoverlaylib.MapFragment) getFragmentManager().findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-        final IndoorMap indoorMap = mapFragment.getMap();
-
-        start(new MapImplIndoor(indoorMap));
-
-        handleIntent(getIntent());
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        googleMap.setIndoorEnabled(false);
-        final UiSettings settings = googleMap.getUiSettings();
-        settings.setIndoorLevelPickerEnabled(false);
-        settings.setMapToolbarEnabled(false);
-        settings.setCompassEnabled(false);
-        Log.e("Ian","onMapReady call");
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.my_map_style));
-
-        com.point_consulting.pc_indoormapoverlaylib.MapFragment mapFragment = (com.point_consulting.pc_indoormapoverlaylib.MapFragment)getFragmentManager().findFragmentById(R.id.map);
-        start(new MapImplGoogle(googleMap, mapFragment.getView(),getResources().getDisplayMetrics().density));
-    }
-
-    private void start(IMap map) {
-        m_initialized = true;
-        m_map = map;
-        m_map.setCalloutListener(new IMap.CalloutListener() {
-            @Override
-            public View createCalloutView(Context context, IMarker marker) {
-                // illustrate custom callout
-
-                final Manager.Location location = marker.getLocation();
-                JSONObject obj = m_manager.propsForFeature(location.m_featureIndex);
-                final String title = Utils.OptString(obj, "NAME");
-                final String subtitle = Utils.OptString(obj, "CATEGORY");
-
-                LinearLayout layout = new LinearLayout(context);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setBackground(ContextCompat.getDrawable(getBaseContext(),R.drawable.indoor_10_05));
-                RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layout.setLayoutParams(llp);
-                layout.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                TextView tvTitle = new TextView(context);
-                tvTitle.setText(title);
-                LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                tvTitle.setLayoutParams(llp1);
-                layout.addView(tvTitle);
-
-                if (subtitle.length() > 0) {
-                    TextView tvSubtitle = new TextView(context);
-                    tvSubtitle.setText(subtitle);
-                    LinearLayout.LayoutParams llp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    tvSubtitle.setLayoutParams(llp2);
-                    layout.addView(tvSubtitle);
-                }
-
-                layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //TODO 點擊後進入IndoorSearchActivity 進行路由的動作
-//                        m_map.deselectMarker(m_selectedMarker);
-//                        MapsActivity.this.onCalloutDetailTapped(location);
-                    }
-                });
-
-                return layout;
-            }
-
-            @Override
-            public void onSelectedMarker(IMarker marker) {
-                m_selectedMarker = marker;
-            }
-
-            @Override
-            public void onDeselectedMarker(IMarker marker) {
-                m_selectedMarker = null;
-            }
-
-            @Override
-            public void onCalloutClick(IMarker marker) {
-//                MapsActivity.this.onCalloutDetailTapped(marker.getLocation());
-            }
-        });
-
-
-
-
-        m_manager = new Manager(m_map);
-
-        MyApplication app = (MyApplication) getApplication();
-        app.m_manager = m_manager;
-
-        m_manager.m_delegate =new Manager.Delegate() {
-
-            @Override
-            public FeatureOptions getFeatureOptions(String mapLayer, JSONObject props) {
-                final String category = Utils.OptString(props, "CATEGORY");
-                final boolean selectable = mapLayer.equals("Units") && (category.equals("Elevator") || category.equals("Stairs") || category.equals("Escalator") || category.equals("Room") || category.contains("Restroom"));
-                int priority = 9;
-                if (mapLayer.equals("Occupants")) {
-                    if (category.equals("Name")) {
-                        priority = 58;
-                    } else {
-                        priority = 3;
-                    }
-                } else if (mapLayer.equals("Openings")) {
-                    priority = 7;
-                } else if (mapLayer.equals("Units")) {
-                    priority = 100;
-                } else if (mapLayer.equals("Fixtures")) {
-                    priority = 101;
-                }
-                return new FeatureOptions(selectable, priority);
-            }
-
-            @Override
-            public void onLevelLoaded(int ordinal) {
-                TextView tv = (TextView) findViewById(R.id.levelLabel);
-                tv.setText(String.valueOf(ordinal));
-            }
-
-            @Override
-            public IndoorPolylineOptions getPolylineOptions(String mapLayer, JSONObject jsonObject) {
-                if (mapLayer.equals("Openings")) {
-                    final float w = getResources().getDimension(R.dimen.dp_pixel_2);
-                    return new IndoorPolylineOptions().width(w).color(0xffffffff);
-                }
-                return null;
-            }
-
-            @Override
-            public IndoorPolygonOptions getPolygonOptions(String mapLayer, JSONObject props) {
-                if (mapLayer.equals("Fixtures")) {
-                    return null;
-                }
-
-                if (mapLayer.equals("Levels")) {
-                    final String category = Utils.OptString(props, "CATEGORY");
-                    if (category.equals("Indoor")) {
-                        final float w = getResources().getDimension(R.dimen.dp_pixel_3);
-                        return new IndoorPolygonOptions().fillColor(0xffbbb8af).strokeColor(0xff4066e2).strokeWidth(w);
-                    }
-                    return null;
-                } else if (mapLayer.equals("Units")) {
-                    final String category = Utils.OptString(props, "CATEGORY");
-                    final float w = getResources().getDimension(R.dimen.dp_pixel_1);
-                    IndoorPolygonOptions polygonOptions = new IndoorPolygonOptions().strokeColor(0xffffffff).strokeWidth(w);
-
-                    switch (category) {
-                        case "Walkway":
-                            polygonOptions.strokeColor(0xfffffdfd).fillColor(0xfffffdfd);
-                            break;
-                        case "Elevator":
-                        case "Stairs":
-                        case "Escalator":
-                            polygonOptions.fillColor(0xff99cbff);
-                            break;
-                        case "Room":
-                            polygonOptions.fillColor(0xffe0e0e0);
-                            break;
-                        case "Non-Public":
-                            polygonOptions.fillColor(0xffd0caca);
-                            break;
-                        case "Transit Platform":
-                            polygonOptions.fillColor(0xffbebeff);
-                            break;
-                        case "Ramp":
-                            polygonOptions.fillColor(0xffe0e0e0);
-                            break;
-                        case "Open to Below":
-                            polygonOptions.fillColor(0xffcccaca);
-                            break;
-                    }
-                    if (category.contains("Restroom")) {
-                        polygonOptions.fillColor(0xffe0e0e0);
-                    }
-
-                    return polygonOptions;
-                }
-                return null;
-
-            }
-
-            @Override
-            public void onLongPress(Manager.Location location) {
-//                createMark(location, s_purplePinColor, true, s_droppedPinId);
-            }
-
-            @Override
-            public void onShortClick(Mathe.MapPoint mapPoint) {
-                m_levelsPicker.setVisibility(View.INVISIBLE);
-                findViewById(R.id.levelsButton).setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public TextOptions getTextOptions(String mapLayer, JSONObject props) {
-//                TextOptions textOptions = new TextOptions(30.0F, -16777216, 0, -1.0F, 200.0F, 0, 0, 0, (Typeface) null);
-//                return textOptions;
-                final float density = getResources().getDisplayMetrics().density;
-
-                float minZoomLevel, maxZoomLevel;
-
-                final String category = Utils.OptString(props, "CATEGORY");
-                if (mapLayer.equals("Occupants")) {
-                    minZoomLevel = 18.f;
-                    maxZoomLevel = 22.f;
-                } else if (mapLayer.equals("Points") & category.contains("Gate")) {
-                    minZoomLevel = 18.f;
-                    maxZoomLevel = 22.f;
-                    final int padding = Math.round(density * 4);
-                    return new TextOptions(10.f * density, 0xffffffff, 1, minZoomLevel, maxZoomLevel, 0xff4066e2, padding, padding, Typeface.DEFAULT_BOLD);
-                } else {
-                    minZoomLevel = 1;
-                    maxZoomLevel = 1;
-                }
-                if (mapLayer.equals("Units")) {
-                    minZoomLevel = 1.f;
-                    maxZoomLevel = 1.f;
-                }
-                return new TextOptions(10.f * density, 0xff363840, 1, minZoomLevel, maxZoomLevel, 0, 0, 0, Typeface.DEFAULT_BOLD);
-            }
-
-            @Override
-            public IconOptions getIconOptions(String mapLayer, JSONObject props) {
-                int bmId = 0;
-                final String name = Utils.OptString(props, "NAME");
-                final String category = Utils.OptString(props, "CATEGORY");
-                if (mapLayer.equals("Points")) {
-                    if (name.contains("Baggage")) {
-                        bmId = R.drawable.icon_small_baggage;
-                    } else if (name.contains("Security")) {
-                        bmId = R.drawable.icon_small_security;
-                    } else if (name.contains("ATM")) {
-                        bmId = R.drawable.icon_small_atm;
-                    } else if (category.equals("Boarding Gate")) {
-                        bmId = R.drawable.icon_small_gate;
-                    }
-                } else if (mapLayer.equals("Occupants")) {
-                    if (name.contains("Conference")) {
-                        bmId = R.drawable.icon_small_conference;
-                    } else if (name.contains("Pet")) {
-                        bmId = R.drawable.icon_small_pet;
-                    } else if (name.contains("Lost")) {
-                        bmId = R.drawable.icon_small_lost_and_found;
-                    } else if (category.equals("Shopping") || category.equals("Fashion") || category.equals("Accessories") || category.equals("Appliances") || category.equals("Art Galleries") || category.equals("Auto Parts & Supplies") || category.equals("Automotive") || category.equals("Beer, Wine & Spirits") || category.equals("Books, Mags, Music & Video") || category.equals("Cards & Stationery") || category.equals("Children's Clothing") || category.equals("Cosmetics & Beauty Supply") || category.equals("Department Stores") || category.equals("Dry Cleaning & Laundry") || category.equals("Eyewear & Opticians") || category.equals("Fashion") || category.equals("Florists") || category.equals("Furniture Stores") || category.equals("Grocery") || category.equals("Health & Medical") || category.equals("Hobby Shops") || category.equals("Home & Garden") || category.equals("Jewelry") || category.equals("Lingerie") || category.equals("Luggage") || category.equals("Men's Clothing") || category.equals("Nurseries & Gardening") || category.equals("Pet Stores") || category.equals("Photography Stores & Services") || category.equals("Sewing & Alterations") || category.equals("Shoe Stores") || category.equals("Shopping") || category.equals("Sporting Goods") || category.equals("Toy Stores") || category.equals("Watches") || category.equals("Women's Clothing")) {
-                        bmId = R.drawable.o;
-                    } else if (category.equals("Cafes") || category.equals("Coffee & Tea")) {
-                        bmId = R.drawable.icon_small_coffee;
-                    } else if (category.equals("Specialty Food") || category.equals("Restaurants")) {
-                        bmId = R.drawable.icon_small_restaurant;
-                    } else if (category.equals("Banks & Credit Unions") || category.equals("Financial Services")) {
-                        //bmId = R.drawable.icon_bank_small; kma
-                    } else if (category.equals("Travel Services")) {
-                        bmId = R.drawable.icon_small_checkin;
-                    } else if (category.equals("Car Rental")) {
-                        bmId = R.drawable.icon_small_car;
-                    }
-                }
-
-                switch (category) {
-                    case "Entry":
-                        bmId = R.drawable.entry;
-                        break;
-                    case "Elevator":
-                        bmId = R.drawable.icon_small_lift;
-                        break;
-                    case "Escalator":
-                        bmId = R.drawable.icon_small_escalator;
-                        break;
-                    case "Stairs":
-                        //bmId = R.drawable.icon_stairs_small; kma
-                        break;
-                    case "Restroom":
-                        bmId = R.drawable.icon_small_toilets;
-                        break;
-                    case "Restroom (Female)":
-                        bmId = R.drawable.icon_small_toilets_female;
-                        break;
-                    case "Restroom (Male)":
-                        bmId = R.drawable.icon_small_toilets_male;
-                        break;
-                }
-                if (bmId != 0) {
-                    return new IconOptions(getBitmap(bmId), 2, 18.f, 22.f);
-                }
-                return null;
-            }
-
-            @Override
-            public Manager.PinInfo getPinInfo(int color) {
-                int bmId;
-                switch (color) {
-                    case 0: {
-                        // this is blue dot
-                        final Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.blue_dot);
-                        return new Manager.PinInfo(bm, 0, 0, 0, 0);
-                    }
-                    case s_redPinColor:
-                        bmId = R.drawable.pin_red;
-                        break;
-                    case s_greenPinColor:
-                        bmId = R.drawable.pin_green;
-                        break;
-                    default:
-                        Assert.assertEquals(color, s_purplePinColor);
-                        bmId = R.drawable.pin_purple;
-                }
-
-                final Bitmap bm = BitmapFactory.decodeResource(getResources(), bmId);
-                final int h = bm.getHeight();
-                final float nW = 48.f;
-                final float nH = 64.f;
-                final float scale = (float) h / nH;
-                return new Manager.PinInfo(bm, scale * (nW * 0.5f - 12.f), scale * (nH * 0.5f - 58.f), scale * 12.f, scale * 0.f);
-            }
-
-            @Override
-            public String elevatorNameForFeatures(List<Manager.FeatureParams> features) {
-                if (features.size() == 1) {
-                    Manager.FeatureParams p = features.get(0);
-                    final String category = Utils.OptString(p.m_props, "CATEGORY");
-                    return category;
-                }
-                return "Unknown transport";
-            }
-
-            @Override
-            public boolean isPointInsideVenue(Manager.Location location, boolean b, boolean b1) {
-                return b1;
-            }
-        };
-        AbstractFolder abstractFolder = new AssetsFolder(getResources().getAssets(), "JAX");
+        m_progressDialog.setTitle("Preparing maps...");
+        m_progressDialog.show();
         Manager.InitializationCallback initializationCallback = new Manager.InitializationCallback() {
-            @Override
             public void onIndoorMapManagerInitialized() {
-                final Mathe.MapPoint mapCenter = new Mathe.MapPoint(0);
-                final Mathe.MapRect mapRect = m_manager.getMapBounds();
-                mapRect.getCenter(mapCenter);
-                Mathe.IndoorLatLng center = Mathe.LatLngFromMapPoint(mapCenter);
-                final IndoorCameraPosition cameraPosition = new IndoorCameraPosition(center, 21.f, 0.f, 0.f);
-                m_map.setCameraPosition(cameraPosition, false);
-                m_manager.showOrdinal(0);
+              final MyApplication app = (MyApplication)getApplication();
+
+//                if (s_showVenuePicker) {
+//                    TextView tv = (TextView) findViewById(R.id.venueLabel);
+//                    tv.setText(app.getCurrentVenueName());
+//                }
+
+                m_progressDialog.dismiss();
+                m_progressDialog = null;
+                m_initialized = true;
+                app.m_manager = m_manager;
+
+                app.dropLevelNames();
+
+                final List<Integer> ordinals = m_manager.getLevelOrdinals();
+                if (ordinals != null) {
+                    for (int ord: ordinals) {
+                        // illustrate enumerateFeatures
+                        final int ordinal1 = ord;
+                        m_manager.enumerateFeatures(ord, new Manager.EnumerateFeaturesCallback() {
+                            @Override
+                            public boolean onEnumeratingFeature(int featureIndex, String mapLayer, Map<String, String> props) {
+                                if (mapLayer.equals("Levels"))
+                                {
+                                    final String name = MyAppUtils.OptString(props, "SHORT_NAME");
+                                    final String levelId = MyAppUtils.OptString(props, "LEVEL_ID");
+                                    app.setLevelName(levelId, name);
+                                    app.setOrdinalShortName(ordinal1, name);
+                                }
+                                else if (mapLayer.equals("Occupants")) {
+                                    final String name = MyAppUtils.OptString(props, "NAME");
+                                    if (name.equals("Enterprise Rent-A-Car")) {
+                                        m_toSelectFeatureIndex = featureIndex;
+                                    }
+                                }
+                                return false;
+                            }
+                        });
+                    }
+
+                    final int n = ordinals.size();
+                    if (n > 0) {
+                        int ordinal = ordinals.get(0);
+                        for (Integer ordN : ordinals) {
+                            if (ordN == 0) {
+                                ordinal = 0;
+                                break;
+                            }
+                        }
+
+                        final LatLng center = app.getCurrentVenueCenter();
+                        m_cameraPosition = new IndoorCameraPosition(new Mathe.IndoorLatLng(center.latitude, center.longitude), 16.5f, 0.f, 0.f);
+
+                        m_map.setCameraPosition(m_cameraPosition, false);
+                        m_manager.showOrdinal(ordinal);
+                    }
+                }
             }
         };
 
         final Map<String, String[]> titleFieldsForMapLayer = new HashMap<>();
-        titleFieldsForMapLayer.put("Units", new String[]{"SUITE", "CATEGORY"});
+        titleFieldsForMapLayer.put("Units", new String[]{"CATEGORY"});
         titleFieldsForMapLayer.put("Points", new String[]{"NAME", "CATEGORY"});
         titleFieldsForMapLayer.put("Occupants", new String[]{"NAME", "CATEGORY"});
         titleFieldsForMapLayer.put("Zones", new String[]{"NAME"});
-        m_manager.initializeAsync(abstractFolder, titleFieldsForMapLayer, 0, initializationCallback);
+
+        m_manager.initializeAsync(abstractFolder, titleFieldsForMapLayer, m_isWheelchairMode ? 1 : 0, initializationCallback);
     }
 
-    private Bitmap getBitmap(int id) {
-        Drawable dr = ContextCompat.getDrawable(this, id);
-        BitmapDrawable bdr = (BitmapDrawable) dr;
-        return bdr.getBitmap();
+    private void onFinishedDownload() {
+        MyApplication app = (MyApplication)getApplication();
+
+        AbstractFolder abstractFolder = null;
+
+        if (s_useServer) {
+            final String venueId = app.getCurrentVenueId();
+            if (venueId != null) {
+                File dir = DownloadMaps.GetDir(this, venueId);
+                final File[] list = dir.listFiles();
+
+                if (list != null && list.length > 0) {
+                    abstractFolder = new ExternalFolder(dir);
+                }
+            }
+        }
+
+        if (abstractFolder == null)
+        {
+            final AssetManager assets = getAssets();
+            abstractFolder = new AssetsFolder(assets, app.getCurrentVenueName());
+        }
+
+        // set bounds for outdoor search
+        final LatLng center = app.getCurrentVenueCenter();
+        final double radius = 20000;
+        final LatLng southwest = SphericalUtil.computeOffset(center, radius * Math.sqrt(2.0), 225);
+        final LatLng northeast = SphericalUtil.computeOffset(center, radius * Math.sqrt(2.0), 45);
+        app.m_bounds = new LatLngBounds(southwest, northeast);
+
+        startMap(abstractFolder);
     }
 
-    private void createMark(Manager.Location location, int pinColor, boolean needSelect, String userId) {
-        final float w = getResources().getDimension(R.dimen.dp_pixel_3);
-        m_manager.createMark(location, 0xff0000ff, w, pinColor, needSelect, userId);
+    @Override
+    public void onCheckMapUpdatesFinishedWithResult(int checkResult)
+    {
+        switch (checkResult)
+        {
+            case DownloadMaps.DOWNLOAD_MAPS_CHECK_RESULT_ERROR:
+                onFinishedDownload();
+                break;
+            case DownloadMaps.DOWNLOAD_MAPS_CHECK_RESULT_READY:
+                onFinishedDownload();
+                break;
+            default:
+                Assert.assertEquals(checkResult, DownloadMaps.DOWNLOAD_MAPS_CHECK_RESULT_DOWNLOADING);
+                m_progressDialog.setTitle("Downloading maps...");
+                m_progressDialog.show();
+                //self.m_downloadView.hidden = NO;
+        }
+    }
+
+    @Override
+    public void onDownloadMapsFinishedWithError(String error)
+    {
+        onFinishedDownload();
     }
 
     private void proceed(Manager.Location location) {
@@ -590,12 +347,12 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // handles a search query
             String query = intent.getStringExtra(SearchManager.QUERY);
-            //showResults(query);
-            Log.e("SearchManager","query:"+query);
+//            showResults(query);
         }
     }
 
-    private void setRouteStepButtonEnabled(ImageButton button, boolean enabled) {
+    private void setRouteStepButtonEnabled(ImageButton button, boolean enabled)
+    {
         final Resources resources = getResources();
         final Drawable drArrow = resources.getDrawable(R.drawable.arrow);
         drArrow.mutate();
@@ -604,31 +361,104 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         if (enabled) {
             final MyStateDrawable msd = new MyStateDrawable(new Drawable[]{drArrow});
             button.setImageDrawable(msd);
-        } else {
+        }
+        else
+        {
             drArrow.setColorFilter(0xff7fb7df, PorterDuff.Mode.SRC_ATOP);
             button.setImageDrawable(drArrow);
         }
     }
 
+    private void updateNavModeButton()
+    {
+//        View navModeButton = findViewById(R.id.navModeButton);
+//        int bgId = m_isWheelchairMode ? R.drawable.icon_wheelchair_small : R.drawable.icon_small_escalator;
+//        navModeButton.setBackgroundResource(bgId);
+    }
+
+    private void updateUserTrackingModeButton(int userTrackingMode)
+    {
+//        if (!s_showUserTrackingModeButton)
+//        {
+//            return;
+//        }
+//
+//        final View button = findViewById(R.id.userTrackingModeButton);
+//        if (button != null) {
+//            int id;
+//            switch (userTrackingMode)
+//            {
+//                case IMap.USER_TRACKING_MODE_NONE:
+//                    id = R.drawable.target;
+//                    break;
+//                case IMap.USER_TRACKING_MODE_FOLLOW:
+//                    id = R.drawable.target_follow;
+//                    break;
+//                default:
+//                    Assert.assertEquals(userTrackingMode, IMap.USER_TRACKING_MODE_FOLLOW_WITH_HEADING);
+//                    id = R.drawable.target_follow_with_heading;
+//                    break;
+//            }
+//            button.setBackgroundResource(id);
+//        }
+    }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case R.id.action_cancel:
-                cancelAll();
-                return true;
-            case R.id.action_route:
-                Intent intent = new Intent(this, IndoorSearchActivity.class);
-                intent.putExtra(MyAppUtils.s_extra_start, m_manager.markLocation(s_startPinId));
-                Manager.Location locEnd = m_manager.markLocation(s_endPinId);
-                if (locEnd == null) {
-                    locEnd = m_manager.markLocation(s_droppedPinId);
-                }
-                intent.putExtra(MyAppUtils.s_extra_end, locEnd);
-                startActivityForResult(intent, s_requestCodeDirections);
-                return true;
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.e("Android Maps", "onCreate");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_indoormap);
+        ButterKnife.bind(this);
+
+        /*Mathe.MapPoint mpCenter = new Mathe.MapPoint(0);
+        Mathe.MapPointFromLatLng(s_center.latitude, s_center.longitude, mpCenter);
+
+        Mathe.MapPoint mpHackedCenter = new Mathe.MapPoint(0);
+        Mathe.MapPointFromLatLng(s_hackedCenter.latitude, s_hackedCenter.longitude, mpHackedCenter);
+
+        Utils.SetHack(mpHackedCenter.x - mpCenter.x, mpHackedCenter.y - mpCenter.y);
+        s_center = s_hackedCenter;*/
+
+        mDensity = getResources().getDisplayMetrics().density;
+
+//        getActionBar().setDisplayShowHomeEnabled(false);
+//        getActionBar().setDisplayShowTitleEnabled(false);
+//        getActionBar().setIcon(new ColorDrawable(0));
+
+        m_propDesc.add(new MyAppUtils.PropDesc(R.drawable.clock, "HOURS"));
+        m_propDesc.add(new MyAppUtils.PropDesc(R.drawable.phone, "PHONE"));
+        m_propDesc.add(new MyAppUtils.PropDesc(R.drawable.web, "WEBSITE"));
+
+        if (savedInstanceState != null)
+        {
+            final double lat = savedInstanceState.getDouble(s_camPosLat);
+            final double lon = savedInstanceState.getDouble(s_camPosLon);
+            final float zoom = savedInstanceState.getFloat(s_camPosZoom);
+            final float bearing = savedInstanceState.getFloat(s_camPosBearing);
+            m_cameraPosition = new IndoorCameraPosition(new Mathe.IndoorLatLng(lat, lon), zoom, 0.f, bearing);
         }
-        return super.onOptionsItemSelected(item);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        mEditTextSearch.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mEditTextSearch.setIconifiedByDefault(false);
+
+        initAppbar();
+        initMarquee();
+        initLevelSwitch();
+
+        com.point_consulting.pc_indoormapoverlaylib.MapFragment mapFragment = (com.point_consulting.pc_indoormapoverlaylib.MapFragment)
+                getFragmentManager().findFragmentById(R.id.map);
+        final IndoorMap indoorMap = mapFragment.getMap();
+        indoorMap.setMaxZoom(23.0);
+        indoorMap.setCalloutFontSize(mDensity * 12.f, mDensity * 10.f);
+        indoorMap.setArrowParams(16, 20, s_routeColorIndoor, 30.f, 120.f);
+        start(new MapImplIndoor(indoorMap));
+
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        m_isWheelchairMode = pref.getBoolean(s_navModeKey, false);
+        updateNavModeButton();
+
+        handleIntent(getIntent());
     }
 
     @Override
@@ -640,153 +470,6 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         handleIntent(intent);
     }
 
-    @Override
-    public MyToolbar getMyToolbar() {
-        return null;
-    }
-
-    @Override
-    public MyMarquee getMyMarquee() {
-        return null;
-    }
-
-    @Override
-    public void setMarqueeMessage(String subMessage) {
-
-    }
-
-    @Override
-    public void backPress() {
-
-    }
-
-    @Override
-    public void runOnUI(Runnable runnable) {
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    /**
-     * init App bar
-     */
-    private void initAppbar() {
-        mMyToolbar.clearState()
-                .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorMarquee))
-                .setBackIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.back))
-                .setTitleText(getString(R.string.home_indoor_map_title))
-                .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-    }
-
-    /**
-     * init marquee
-     */
-    private void initMarquee() {
-        mMarqueeMessage = getString(R.string.marquee_parking_info, Util.getMarqueeSubMessage(getApplicationContext()));
-        mMyMarquee.clearState()
-                .setMessage(mMarqueeMessage)
-                .setIconVisibility(View.GONE);
-    }
-
-    private void initLevelSwitch() {
-
-        m_levelsPicker = (WheelPicker) findViewById(R.id.levelsPicker);
-        m_levelsPicker.setAtmospheric(true);
-        m_levelsPicker.setCurved(true);
-        m_levelsPicker.setIndicator(true);
-        m_levelsPicker.setIndicatorColor(0xff000000);
-        m_levelsPicker.setIndicatorSize(Math.round(1 * mDensity));
-        m_levelsPicker.setItemTextColor(0xff000000);
-        m_levelsPicker.setItemTextSize(Math.round(14 * mDensity));
-        m_levelsPicker.setVisibleItemCount(5);
-        m_levelsPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(WheelPicker picker, Object data, int position) {
-                m_levelsPicker.setVisibility(View.INVISIBLE);
-                findViewById(R.id.levelsButton).setVisibility(View.VISIBLE);
-                final List<Integer> ordinals = m_manager.getLevelOrdinals();
-                m_manager.showOrdinal(ordinals.get(ordinals.size() - 1 - position));
-                // illustrate setZoomLevels
-                /*m_manager.setZoomLevels(new Manager.SetZoomLevelsCallback() {
-                    @Override
-                    public void onMarker(String mapLayer, JSONObject props, boolean isIcon, float[] zoomLevels) {
-                        final String category = Utils.OptString(props, "CATEGORY");
-                        if (category.equals("Restaurants"))
-                        {
-                            zoomLevels[0] = 10000.f;
-                        }
-                    }
-                });*/
-            }
-        });
-    }
-
-    @OnClick({R.id.imageView_clear, R.id.imageView_search, R.id.imageView_location, R.id.imageView_home, R.id.levelsButton})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.imageView_clear:
-
-                break;
-            case R.id.imageView_search:
-                // TODO: 2017/8/22
-                Intent i = new Intent(this, IndoorSearchActivity.class);
-                startActivity(i);
-                break;
-            case R.id.imageView_location:
-                // TODO: 2017/8/22
-                break;
-            case R.id.imageView_home:
-                onBackPressed();
-                break;
-            case R.id.levelsButton:
-                if (m_initialized) {
-                    final List<Integer> ordinals = m_manager.getLevelOrdinals();
-                    if (ordinals != null) {
-                        final List<String> ordinalsStrRev = new ArrayList<>();
-                        final ListIterator<Integer> li = ordinals.listIterator(ordinals.size());
-                        while (li.hasPrevious()) {
-                            final Integer val = li.previous();
-                            ordinalsStrRev.add(String.valueOf(val));
-                        }
-                        m_levelsPicker.setData(ordinalsStrRev);
-
-                        final int curOrdinal = m_manager.getOrdinal();
-                        final int indexOf = ordinals.indexOf(curOrdinal);
-                        view.setVisibility(View.INVISIBLE);
-                        m_levelsPicker.setSelectedItemPosition(ordinals.size() - 1 - indexOf);
-                        m_levelsPicker.setVisibility(View.VISIBLE);
-                    }
-                }
-                break;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-
-        //final Point p = new Point();
-        //getWindowManager().getDefaultDisplay().getSize(p);
-        //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(p.x, ViewGroup.LayoutParams.MATCH_PARENT);
-        //searchView.setLayoutParams(params);
-
-        return true;
-    }
-
     private void cancelAll() {
         m_wantHaveRoute = false;
         m_manager.dropRoute(m_routeIdIndoor);
@@ -796,6 +479,21 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         m_manager.dropMark(s_endPinId);
 
         m_routeBar.setVisibility(View.INVISIBLE);
+    }
+
+    private static String GetTimeString_(int timeSec) {
+        timeSec = ((timeSec + 2) / 5) * 5;
+        final int hours = timeSec / 3600;
+        timeSec -= hours * 3600;
+        final int minutes = timeSec / 60;
+        timeSec -= minutes * 60;
+
+        if (hours > 0) {
+            return String.format("%dh %dmin", hours, minutes);
+        } else if (minutes > 0) {
+            return String.format("%dmin %ds", minutes, timeSec);
+        }
+        return String.format("%ds", timeSec);
     }
 
     void gotoRouteStep(int stepIndex, boolean needCenter) {
@@ -899,34 +597,6 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         });
     }
 
-    private static String GetTimeString_(int timeSec) {
-        timeSec = ((timeSec + 2) / 5) * 5;
-        final int hours = timeSec / 3600;
-        timeSec -= hours * 3600;
-        final int minutes = timeSec / 60;
-        timeSec -= minutes * 60;
-
-        if (hours > 0) {
-            return String.format("%dh %dmin", hours, minutes);
-        } else if (minutes > 0) {
-            return String.format("%dmin %ds", minutes, timeSec);
-        }
-        return String.format("%ds", timeSec);
-    }
-
-    @Override
-    public void onLocation(Location aLocation) {
-        if (m_wantHaveRoute && (m_manager.markLocation(s_startPinId) == null || m_manager.markLocation(s_endPinId) == null)) {
-            recalcRoute(false);
-        }
-        final MyApplication app = (MyApplication) getApplication();
-        float[] bearing = {0};
-        final Manager.Location location = app.getUserLocation(bearing);
-//        if (!BuildConfig.isOverlay) {
-//            m_manager.setUserLocation(location, bearing[0]);
-//        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == s_requestCodeInfo || requestCode == s_requestCodeDirections) && resultCode == RESULT_OK) {
@@ -950,5 +620,804 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         }
     }
 
+    private Bitmap getBitmap(int id) {
+        Drawable dr = ContextCompat.getDrawable(this, id);
+        BitmapDrawable bdr = (BitmapDrawable) dr;
+        return bdr.getBitmap();
+    }
 
+    private static final int MY_REQUEST_PERMISSIONS = 1;
+
+    private void retryLoadMaps() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION}, MY_REQUEST_PERMISSIONS);
+//            return;
+//        }
+
+        m_map.setMyLocationEnabled(true);
+
+        MyApplication app = (MyApplication) getApplication();
+        app.setHaveAccessLocationPermission();
+
+        m_progressDialog = new ProgressDialog(this);
+        m_progressDialog.setCancelable(false);
+
+        if (s_useServer) {
+            final String venueId = app.getCurrentVenueId();
+            if (venueId != null) {
+                final DownloadMaps downloadMaps = new DownloadMaps(this, this);
+                m_progressDialog.setTitle("Check for map updates...");
+                m_progressDialog.show();
+                downloadMaps.downloadMapId(venueId);
+            }
+        } else {
+            onFinishedDownload();
+        }
+    }
+
+    private void createMark(Manager.Location location, int pinColor, boolean needSelect, String userId) {
+        final float w = getResources().getDimension(R.dimen.dp_pixel_3);
+        m_manager.createMark(location, 0xff0000ff, w, pinColor, needSelect, userId, Manager.kIgnoreIntersectionsZIndex);
+    }
+
+    private void onCalloutDetailTapped(Manager.Location location) {
+        final int featureIndex = location.m_featureIndex;
+        Map<String, String> obj;
+        ArrayList<MyAppUtils.PropDesc> props = new ArrayList<>();
+        int headerColor = 0xffffffff;
+        int logoId = 0;
+        if (featureIndex != -1) {
+            obj = m_manager.propsForFeature(featureIndex);
+            for (MyAppUtils.PropDesc pd : m_propDesc) {
+                final String text = MyAppUtils.OptString(obj, pd.m_string);
+                if (!text.isEmpty()) {
+                    props.add(new MyAppUtils.PropDesc(pd.m_id, text));
+                }
+            }
+            final String category = MyAppUtils.OptString(obj, "CATEGORY");
+            if (category.equals("Accessories") || category.equals("Applicances") || category.equals("Art Galleries") || category.equals("Auto Parts & Supplies") || category.equals("Automotive") || category.equals("Beer, Wine & Spirits") || category.equals("Books, Mags, Music & Video") || category.equals("Cards & Stationery") || category.equals("Children's Clothing") || category.equals("Cosmetics & Beauty Supply") || category.equals("Department Stores") || category.equals("Dry Cleaning & Laundry") || category.equals("Eyewear & Opticians") || category.equals("Fashion") || category.equals("Florists") || category.equals("Shopping") || category.equals("Furniture Stores") || category.equals("Grocery") || category.equals("Shopping") || category.equals("Home & Garden") || category.equals("Jewelry") || category.equals("Shopping") || category.equals("Lingerie") || category.equals("Luggage") || category.equals("Shopping") || category.equals("Men's Clothin") || category.equals("Nurseries & Gardening") || category.equals("Pet Stores") || category.equals("Photography Stores & Services") || category.equals("Sewing & Alterations") || category.equals("Shoe Stores") || category.equals("Shopping") || category.equals("Sporting Goods") || category.equals("Toy Stores") || category.equals("Watches") || category.equals("Sporting Goods") || category.equals("Women's Clothing")) {
+                headerColor = 0xffcce5ff;
+            } else if (category.equals("Cafes") || category.equals("Coffee & Tea") || category.equals("Specialty Food") || category.equals("Restaurants")) {
+                headerColor = 0xffa2dcb3;
+            } else if (category.equals("Health & Medical") || category.equals("Pharmacy")) {
+                headerColor = 0xfffccccf;
+            } else if (category.equals("Banks & Credit Unions") || category.equals("Financial Services")) {
+                headerColor = 0xffffe4c4;
+            } else if (category.equals("Arts & Entertainment") || category.equals("Cinema") || category.equals("Landmarks & Historical") || category.equals("Buildings") || category.equals("Opera & Ballet") || category.equals("Performing Arts")) {
+                headerColor = 0xffd45c5c;
+            } else if (category.equals("Beauty & Spas") || category.equals("Car Rental") || category.equals("Education") || category.equals("Hotels") || category.equals("Libraries") || category.equals("Local Services") || category.equals("Post Offices") || category.equals("Professional Services") || category.equals("Property Management") || category.equals("Public Services & Government") || category.equals("Real Estate Agents") || category.equals("Real Estate Services") || category.equals("Travel Services") || category.equals("Veterinarians")) {
+                headerColor = 0xff5ecfd2;
+            }
+            final String name = MyAppUtils.OptString(obj, "NAME");
+            switch (name) {
+                /*case "American Airlines":
+                    logoId = R.drawable.aa;
+                    break;
+                case "Brighton":
+                    logoId = R.drawable.brighton;
+                    break;
+                case "Brooks Brothers":
+                    logoId = R.drawable.brooks;
+                    break;*/
+                case "Burger King":
+                    logoId = R.drawable.burgerking;
+                    break;
+                /*case "Chili's Too":
+                    logoId = R.drawable.chillis;
+                    break;
+                case "Ciao":
+                    logoId = R.drawable.ciao;
+                    break;
+                case "CNBC":
+                    logoId = R.drawable.cnbc;
+                    break;
+                case "Delta Air Lines":
+                    logoId = R.drawable.delta;
+                    break;
+                case "Freshens":
+                    logoId = R.drawable.freshens;
+                    break;
+                case "InMotion Entertainment":
+                    logoId = R.drawable.inmotion;
+                    break;
+                case "Insight":
+                    logoId = R.drawable.insight;
+                    break;
+                case "JetBlue":
+                    logoId = R.drawable.jetblue;
+                    break;
+                case "Nathan's Famous":
+                    logoId = R.drawable.nathans;
+                    break;
+                case "PGA TOUR Superstore":
+                    logoId = R.drawable.pga;
+                    break;
+                case "Quiznos":
+                    logoId = R.drawable.quiznos;
+                    break;
+                case "River City Travel Mart":
+                    logoId = R.drawable.river_city_travel;
+                    break;
+                case "Sam Snead's Tavern":
+                    logoId = R.drawable.samsneads;
+                    break;
+                case "SBARRO":
+                    logoId = R.drawable.sbarros;
+                    break;
+                case "Shula's Bar & Grill":
+                    logoId = R.drawable.shula;
+                    break;
+                case "Silver Airways":
+                    logoId = R.drawable.silver;
+                    break;
+                case "Southwest Airlines":
+                    logoId = R.drawable.southwest;
+                    break;*/
+                case "Starbucks":
+                    logoId = R.drawable.starbucks;
+                    break;
+                /*case "United Airlines":
+                    logoId = R.drawable.united;
+                    break;
+                case "Vino Volo":
+                    logoId = R.drawable.vino_volo;
+                    break;
+                case "Alamo Rent a Car":
+                    logoId = R.drawable.alamo;
+                    break;
+                case "Avis Rent a Car System":
+                    logoId = R.drawable.avis;
+                    break;
+                case "Budget Rent a Car":
+                    logoId = R.drawable.budget;
+                    break;
+                case "Enterprise Rent-A-Car":
+                    logoId = R.drawable.enterprise;
+                    break;
+                case "The Hertz Corporation":
+                    logoId = R.drawable.hertz;
+                    break;
+                case "National Car Rental":
+                    logoId = R.drawable.nationalcar;
+                    break;
+                case "Dollar Rent A Car":
+                    logoId = R.drawable.dollar;
+                    break;*/
+                case "Executive Conference Room":
+                    logoId = R.drawable.conference;
+                    break;
+                /*case "Made-in-JAX":
+                    logoId = R.drawable.made_in_jax;
+                    break;*/
+            }
+        }
+
+        final Intent intent = new Intent(IndoorMapActivity.this, IndoorSearchActivity.class);
+        intent.putExtra(MyAppUtils.s_extra_location, location);
+        intent.putExtra(MyAppUtils.s_extra_color, headerColor);
+        intent.putExtra(MyAppUtils.s_extra_logo, logoId);
+        intent.putParcelableArrayListExtra(MyAppUtils.s_extra_propsMap, props);
+        startActivityForResult(intent, s_requestCodeInfo);
+    }
+
+    public void start(IMap map) {
+        m_initialized = true;
+        m_map = map;
+
+        m_map.setCalloutListener(new IMap.CalloutListener() {
+            @Override
+            public View createCalloutView(Context context, IMarker marker) {
+                // illustrate custom callout
+/*
+                final Manager.Location location = marker.getLocation();
+                Map<String, String> obj = m_manager.propsForFeature(location.m_featureIndex);
+                final String title = MyAppUtils.OptString(obj, "NAME");
+                final String subtitle = MyAppUtils.OptString(obj, "CATEGORY");
+
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setBackground(ContextCompat.getDrawable(getBaseContext(),R.drawable.indoor_10_05));
+                RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layout.setLayoutParams(llp);
+                layout.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                TextView tvTitle = new TextView(context);
+                tvTitle.setText(title);
+                LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                tvTitle.setLayoutParams(llp1);
+                layout.addView(tvTitle);
+
+                if (subtitle.length() > 0) {
+                    TextView tvSubtitle = new TextView(context);
+                    tvSubtitle.setText(subtitle);
+                    LinearLayout.LayoutParams llp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    tvSubtitle.setLayoutParams(llp2);
+                    layout.addView(tvSubtitle);
+                }
+
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO 點擊後進入IndoorSearchActivity 進行路由的動作
+//                        m_map.deselectMarker(m_selectedMarker);
+//                        MapsActivity.this.onCalloutDetailTapped(location);
+                    }
+                });
+
+                return layout;*/
+                return null;
+            }
+
+            @Override
+            public void onSelectedMarker(IMarker marker) {
+                m_selectedMarker = marker;
+            }
+
+            @Override
+            public void onDeselectedMarker(IMarker marker) {
+                m_selectedMarker = null;
+            }
+
+            @Override
+            public void onCalloutClick(IMarker marker) {
+                IndoorMapActivity.this.onCalloutDetailTapped(marker.getLocation());
+            }
+        });
+
+//        updateUserTrackingModeButton(m_map.getUserTrackingMode());
+        m_manager = new Manager(map);
+//        m_manager.setOnChangedUserTrackingModeListener(new IMap.OnChangedUserTrackingModeListener() {
+//            @Override
+//            public void onChangedUserTrackingMode(int userTrackingMode) {
+//                updateUserTrackingModeButton(userTrackingMode);
+//            }
+//        });
+        MyApplication app = (MyApplication) getApplication();
+//        app.m_manager = m_manager;
+        if (false) {
+            m_manager.setGoogleApiKey(getString(R.string.google_maps_key));
+        }
+        m_manager.m_delegate = new Manager.Delegate() {
+            public FeatureOptions getFeatureOptions(String mapLayer, Map<String, String> props) {
+                //Log.e("Android Maps", "getFeatureOptions");
+
+                final String category = MyAppUtils.OptString(props, "CATEGORY");
+                final boolean selectable = mapLayer.equals("Units") && (category.equals("Elevator") || category.equals("Stairs") || category.equals("Escalator") || category.equals("Room") || category.contains("Restroom"));
+                int priority = 9;
+                switch (mapLayer) {
+                    case "Occupants":
+                        if (category.equals("Name")) {
+                            priority = 58;
+                        } else {
+                            priority = 3;
+                        }
+                        break;
+                    case "Openings":
+                        priority = 7;
+                        break;
+                    case "Units":
+                        priority = 100;
+                        break;
+                    case "Fixtures":
+                        priority = 101;
+                        break;
+                    case "Zones":
+                        priority = 102;
+                        break;
+                }
+                return new FeatureOptions(selectable, priority);
+            }
+
+            public void onLevelLoaded(int ordinal) {
+                Log.e("Android Maps", "onLevelLoaded");
+                TextView tv = (TextView)findViewById(R.id.levelLabel);
+                MyApplication app = (MyApplication)getApplication();
+                final String levelShortName = app.shortNameForOrdinal(ordinal);
+                tv.setText(levelShortName);
+            }
+
+            public IndoorPolylineOptions getPolylineOptions(String mapLayer, Map<String, String> props) {
+                if (mapLayer.equals("Openings")) {
+                    final float w = getResources().getDimension(R.dimen.dp_pixel_2);
+                    return new IndoorPolylineOptions().width(w).color(0xffffffff);
+                }
+                return null;
+            }
+
+            public TextOptions getTextOptions(String mapLayer, Map<String, String> props) {
+                final float density = getResources().getDisplayMetrics().density;
+
+                float minZoomLevel, maxZoomLevel;
+                int padding = 0;
+
+                final String name = MyAppUtils.OptString(props, "CATEGORY");
+                if (mapLayer.equals("Zones") && name.contains("Terminal"))
+                {
+                    minZoomLevel = 14.f;
+                    maxZoomLevel = 18.f;
+                    padding = Math.round(density * 4);
+                    return new TextOptions(10.f * density, 0xffffffff, 1, minZoomLevel, maxZoomLevel, 0xff4066e2, padding, padding, m_typeface);
+                }
+
+                final String category = MyAppUtils.OptString(props, "CATEGORY");
+                if (mapLayer.equals("Occupants"))
+                {
+                    minZoomLevel = 18.f;
+                    maxZoomLevel = 25.f;
+                }
+                else if (mapLayer.equals("Points"))
+                {
+                    if (category.contains("Gate")) {
+                        minZoomLevel = 18.f;
+                        maxZoomLevel = 25.f;
+                        padding = Math.round(density * 4);
+                        return new TextOptions(10.f * density, 0xffffffff, 1, minZoomLevel, maxZoomLevel, 0xff4066e2, padding, padding, m_typeface);
+                    }
+                    minZoomLevel = 1.f;
+                    maxZoomLevel = 1.f;
+                }
+                else
+                {
+                    minZoomLevel = 18.f;
+                    maxZoomLevel = 25.f;
+                }
+                if (mapLayer.equals("Units"))
+                {
+                    minZoomLevel = 1.f;
+                    maxZoomLevel = 1.f;
+                }
+                return new TextOptions(10.f * density, 0xff363840, 1, minZoomLevel, maxZoomLevel, 0, padding, padding, m_typeface);
+            }
+
+            public IconOptions getIconOptions(String mapLayer, Map<String, String> props) {
+                int bmId = 0;
+                final String name = MyAppUtils.OptString(props, "NAME");
+                final String category = MyAppUtils.OptString(props, "CATEGORY");
+//                if (mapLayer.equals("Points")) {
+//                    if (name.contains("Baggage")) {
+//                        bmId = R.drawable.icon_small_baggage;
+//                    } else if (name.contains("Security")) {
+//                        bmId = R.drawable.icon_small_security;
+//                    } else if (name.contains("ATM")) {
+//                        bmId = R.drawable.icon_small_atm;
+//                    } else if (category.equals("Boarding Gate")) {
+//                        bmId = R.drawable.icon_small_gate;
+//                    }
+//                } else if (mapLayer.equals("Occupants")) {
+//                    if (name.contains("Conference")) {
+//                        bmId = R.drawable.icon_small_conference;
+//                    } else if (name.contains("Pet")) {
+//                        bmId = R.drawable.icon_small_pet;
+//                    } else if (name.contains("Lost")) {
+//                        bmId = R.drawable.icon_small_lost_and_found;
+//                    } else if (category.equals("Shopping") || category.equals("Fashion") || category.equals("Accessories") || category.equals("Appliances") || category.equals("Art Galleries") || category.equals("Auto Parts & Supplies") || category.equals("Automotive") || category.equals("Beer, Wine & Spirits") || category.equals("Books, Mags, Music & Video") || category.equals("Cards & Stationery") || category.equals("Children's Clothing") || category.equals("Cosmetics & Beauty Supply") || category.equals("Department Stores") || category.equals("Dry Cleaning & Laundry") || category.equals("Eyewear & Opticians") || category.equals("Fashion") || category.equals("Florists") || category.equals("Furniture Stores") || category.equals("Grocery") || category.equals("Health & Medical") || category.equals("Hobby Shops") || category.equals("Home & Garden") || category.equals("Jewelry") || category.equals("Lingerie") || category.equals("Luggage") || category.equals("Men's Clothing") || category.equals("Nurseries & Gardening") || category.equals("Pet Stores") || category.equals("Photography Stores & Services") || category.equals("Sewing & Alterations") || category.equals("Shoe Stores") || category.equals("Shopping") || category.equals("Sporting Goods") || category.equals("Toy Stores") || category.equals("Watches") || category.equals("Women's Clothing")) {
+//                        bmId = R.drawable.o;
+//                    } else if (category.equals("Cafes") || category.equals("Coffee & Tea")) {
+//                        bmId = R.drawable.icon_small_coffee;
+//                    } else if (category.equals("Specialty Food") || category.equals("Restaurants")) {
+//                        bmId = R.drawable.icon_small_restaurant;
+//                    } else if (category.equals("Banks & Credit Unions") || category.equals("Financial Services")) {
+//                        //bmId = R.drawable.icon_bank_small; kma
+//                    } else if (category.equals("Travel Services")) {
+//                        bmId = R.drawable.icon_small_checkin;
+//                    } else if (category.equals("Car Rental")) {
+//                        bmId = R.drawable.icon_small_car;
+//                    }
+//                }
+
+                switch (category) {
+                    case "Entry":
+                        bmId = R.drawable.entry;
+                        break;
+                    case "Elevator":
+                        bmId = R.drawable.icon_small_lift;
+                        break;
+                    case "Information":
+                        bmId = R.drawable.m;
+                        break;
+                    case "Retail Store":
+                        bmId = R.drawable.icon_small_shopping;
+                        break;
+                    case "Restaurant":
+                        bmId = R.drawable.icon_small_restaurant;
+                        break;
+                    case "Gate":
+                        bmId = R.drawable.l;
+                        break;
+                    case "Escalator":
+                        bmId = R.drawable.escalator;
+                        break;
+                    case "Stairs":
+                        bmId = R.drawable.stairs;
+                        break;
+                    case "Restroom":
+                        bmId = R.drawable.icon_small_toilets;
+                        break;
+                }
+                if (bmId != 0) {
+                    return new IconOptions(getBitmap(bmId), 2, 18.f, 22.f);
+                }
+                return null;
+            }
+
+            public Manager.PinInfo getPinInfo(int color) {
+                int bmId;
+                switch (color) {
+                    case 0: {
+                        // this is blue dot
+                        final Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.blue_dot);
+                        return new Manager.PinInfo(bm, 0, 0, 0, 0);
+                    }
+                    case s_redPinColor:
+                        bmId = R.drawable.pin_red;
+                        break;
+                    case s_greenPinColor:
+                        bmId = R.drawable.pin_green;
+                        break;
+                    default:
+                        Assert.assertEquals(color, s_purplePinColor);
+                        bmId = R.drawable.pin_purple;
+                }
+
+                final Bitmap bm = BitmapFactory.decodeResource(getResources(), bmId);
+                final int h = bm.getHeight();
+                final float nW = 48.f;
+                final float nH = 64.f;
+                final float scale = (float) h / nH;
+                return new Manager.PinInfo(bm, scale * (nW * 0.5f - 12.f), scale * (nH * 0.5f - 58.f), scale * 12.f, scale * 0.f);
+            }
+
+            public String getInstruction(List<Manager.FeatureParams> features, int ordinal)
+            {
+                MyApplication app = (MyApplication)getApplication();
+                final String levelShortName = app.shortNameForOrdinal(ordinal);
+
+                if (features != null && features.size() >= 1)
+                {
+                    Manager.FeatureParams p = features.get(0);
+                    final String category = MyAppUtils.OptString(p.m_props, "CATEGORY");
+                    return String.format("Take %1$s to level %2$s", category, levelShortName);
+                }
+                return String.format("Go to level %1$s", levelShortName);
+            }
+
+//            public String elevatorNameForFeatures(List<Manager.FeatureParams> features) {
+//                if (features.size() == 1) {
+//                    Manager.FeatureParams p = features.get(0);
+//                    final String category = MyAppUtils.OptString(p.m_props, "CATEGORY");
+//                    return category;
+//                }
+//                return "Unknown transport";
+//            }
+
+            public String getInstruction(Manager.Location destination)
+            {
+                String [] titles = new String[2];
+                m_manager.getTitleForLocation(destination, titles);
+                return String.format("Follow the route to %1$s", titles[0]);
+            }
+
+            public boolean isPointInsideVenue(Manager.Location location, boolean isDestination, boolean hint) {
+                return hint;
+            }
+
+            public IndoorPolygonOptions getPolygonOptions(String mapLayer, Map<String, String> props) {
+                if (mapLayer.equals("Levels")) {
+                    final String category = MyAppUtils.OptString(props, "CATEGORY");
+                    if (category.equals("Indoor")) {
+                        final float w = getResources().getDimension(R.dimen.dp_pixel_3);
+                        return new IndoorPolygonOptions().fillColor(0xffbbb8af).strokeColor(0xff4066e2).strokeWidth(w);
+                    }
+                    return null;
+                }else if (mapLayer.equals("Fixtures")){
+                    return new IndoorPolygonOptions().fillColor(0xfffcf0c2).strokeColor(0);
+                } else if (mapLayer.equals("Units")) {
+                    final String category = MyAppUtils.OptString(props, "CATEGORY");
+                    final float w = getResources().getDimension(R.dimen.dp_pixel_1);
+                    IndoorPolygonOptions polygonOptions = new IndoorPolygonOptions().strokeColor(0xffffffff).strokeWidth(w);
+
+                    switch (category) {
+                        case "Walkway":
+                            polygonOptions.strokeColor(0xfffffdfd).fillColor(0xfffffdfd);
+                            break;
+                        case "Elevator":
+                        case "Stairs":
+                        case "Escalator":
+                        case "Moving Walkway":
+                        case "Ramp":
+                            polygonOptions.fillColor(0xff99cbff);
+                            break;
+                        case "Room":
+                        case "Retail Store":
+                        case "Restaurant":
+                        case "Finance":
+                        case "Services":
+                        case "Airline":
+                            polygonOptions.fillColor(0xffe0e0e0);
+                            break;
+                        case "Non-Public":
+                            polygonOptions.fillColor(0xffd7d7d7);
+                            break;
+                        case "Open to Below":
+                            polygonOptions.fillColor(0xfffafafa);
+                            break;
+                    }
+                    if (category.contains("Restroom")) {
+                        polygonOptions.fillColor(0xfffffadc);
+                    }
+
+                    return polygonOptions;
+                }
+                return null;
+            }
+
+            public void onLongPress(Manager.Location location) {
+                createMark(location, s_purplePinColor, true, s_droppedPinId);
+            }
+
+            public void onShortClick(Mathe.MapPoint coordinate) {
+                m_levelsPicker.setVisibility(View.INVISIBLE);
+                findViewById(R.id.levelsButton).setVisibility(View.VISIBLE);
+
+//                if (s_showVenuePicker) {
+//                    m_venuesPicker.setVisibility(View.INVISIBLE);
+//                    findViewById(R.id.venuesButton).setVisibility(View.VISIBLE);
+//                }
+            }
+        };
+
+//        final String state = Environment.getExternalStorageState();
+//        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+//            Toast t = Toast.makeText(this, "Bad state = " + state, Toast.LENGTH_LONG);
+//            t.show();
+//
+//            onFinishedDownload();
+//
+//            return;
+//        }
+
+        retryLoadMaps();
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.setIndoorEnabled(false);
+        final UiSettings settings = googleMap.getUiSettings();
+        settings.setIndoorLevelPickerEnabled(false);
+        settings.setMapToolbarEnabled(false);
+        settings.setCompassEnabled(false);
+        //settings.setMyLocationButtonEnabled(false);
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.my_map_style));
+
+        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+
+        start(new MapImplGoogle(googleMap, mapFragment.getView(), getResources().getDisplayMetrics().density));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        if (m_map != null) {
+            final IndoorCameraPosition cp = m_map.getCameraPosition();
+            bundle.putDouble(s_camPosLat, cp.target.latitude);
+            bundle.putDouble(s_camPosLon, cp.target.longitude);
+            bundle.putFloat(s_camPosZoom, cp.zoom);
+            bundle.putFloat(s_camPosBearing, cp.bearing);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (m_progressDialog != null) {
+            m_progressDialog.dismiss();
+            m_progressDialog = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication app = (MyApplication) getApplication();
+        app.m_googleLocationCallback = this;
+    }
+
+    @Override
+    protected void onPause() {
+        MyApplication app = (MyApplication) getApplication();
+        app.m_googleLocationCallback = null;
+        super.onPause();
+    }
+
+    @Override
+    public void onLocation()
+    {
+        if (m_wantHaveRoute && (m_manager.markLocation(s_startPinId) == null || m_manager.markLocation(s_endPinId) == null))
+        {
+            recalcRoute(false);
+        }
+        final MyApplication app = (MyApplication)getApplication();
+        float[] bearing = {0};
+        final Manager.Location location = app.getUserLocation(bearing);
+        if (true)
+        {
+            m_manager.setUserLocation(location, bearing[0]);
+        }
+    }
+
+    @Override
+    public MyToolbar getMyToolbar() {
+        return null;
+    }
+
+    @Override
+    public MyMarquee getMyMarquee() {
+        return null;
+    }
+
+    @Override
+    public void setMarqueeMessage(String subMessage) {
+
+    }
+
+    @Override
+    public void backPress() {
+
+    }
+
+    @Override
+    public void runOnUI(Runnable runnable) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    /**
+     * init App bar
+     */
+    private void initAppbar() {
+        mMyToolbar.clearState()
+                .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorMarquee))
+                .setBackIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.back))
+                .setTitleText(getString(R.string.home_indoor_map_title))
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+    }
+//
+    /**
+     * init marquee
+     */
+    private void initMarquee() {
+        mMarqueeMessage = getString(R.string.marquee_parking_info, Util.getMarqueeSubMessage(getApplicationContext()));
+        mMyMarquee.clearState()
+                .setMessage(mMarqueeMessage)
+                .setIconVisibility(View.GONE);
+    }
+
+    private void initLevelSwitch() {
+
+        m_levelsPicker = (WheelPicker) findViewById(R.id.levelsPicker);
+        m_levelsPicker.setAtmospheric(true);
+        m_levelsPicker.setCurved(true);
+        m_levelsPicker.setIndicator(true);
+        m_levelsPicker.setIndicatorColor(0xff000000);
+        m_levelsPicker.setIndicatorSize(Math.round(1 * mDensity));
+        m_levelsPicker.setItemTextColor(0xff000000);
+        m_levelsPicker.setItemTextSize(Math.round(14 * mDensity));
+        m_levelsPicker.setVisibleItemCount(5);
+        m_levelsPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(WheelPicker picker, Object data, int position) {
+                m_levelsPicker.setVisibility(View.INVISIBLE);
+                findViewById(R.id.levelsButton).setVisibility(View.VISIBLE);
+                final List<Integer> ordinals = m_manager.getLevelOrdinals();
+                m_manager.showOrdinal(ordinals.get(ordinals.size() - 1 - position));
+                // illustrate setZoomLevels
+                /*m_manager.setZoomLevels(new Manager.SetZoomLevelsCallback() {
+                    @Override
+                    public void onMarker(String mapLayer, JSONObject props, boolean isIcon, float[] zoomLevels) {
+                        final String category = Utils.OptString(props, "CATEGORY");
+                        if (category.equals("Restaurants"))
+                        {
+                            zoomLevels[0] = 10000.f;
+                        }
+                    }
+                });*/
+            }
+        });
+    }
+
+    @OnClick({R.id.action_route, R.id.action_cancel, R.id.imageView_home, R.id.levelsButton})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.action_route:
+                //TODO searchview clear
+                Intent intent = new Intent(this, IndoorSearchActivity.class);
+                intent.putExtra(MyAppUtils.s_extra_start, m_manager.markLocation(s_startPinId));
+                Manager.Location locEnd = m_manager.markLocation(s_endPinId);
+                if (locEnd == null) {
+                    locEnd = m_manager.markLocation(s_droppedPinId);
+                }
+                intent.putExtra(MyAppUtils.s_extra_end, locEnd);
+                startActivityForResult(intent, s_requestCodeDirections);
+                break;
+            case R.id.action_cancel:
+                // TODO: 2017/8/22
+                cancelAll();
+                break;
+            case R.id.imageView_home:
+                onBackPressed();
+                break;
+            case R.id.levelsButton:
+                if (m_initialized) {
+                    final List<Integer> ordinals = m_manager.getLevelOrdinals();
+                    if (ordinals != null) {
+                        final List<String> ordinalsStrRev = new ArrayList<>();
+                        final ListIterator<Integer> li = ordinals.listIterator(ordinals.size());
+                        while (li.hasPrevious()) {
+                            final Integer val = li.previous();
+                            ordinalsStrRev.add(String.valueOf(val));
+                        }
+                        m_levelsPicker.setData(ordinalsStrRev);
+
+                        final int curOrdinal = m_manager.getOrdinal();
+                        final int indexOf = ordinals.indexOf(curOrdinal);
+                        view.setVisibility(View.INVISIBLE);
+                        m_levelsPicker.setSelectedItemPosition(ordinals.size() - 1 - indexOf);
+                        m_levelsPicker.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+        }
+    }
+
+    public void onButton(View view) {
+        final int id = view.getId();
+        if (id == R.id.stepLabel) {
+            gotoRouteStep(m_routeStepsIndex, true);
+        } else if (id == R.id.levelsButton) {
+            if (m_initialized) {
+                final List<Integer> ordinals = m_manager.getLevelOrdinals();
+                if (ordinals != null) {
+                    final List<String> ordinalsStrRev = new ArrayList<>();
+                    final ListIterator<Integer> li = ordinals.listIterator(ordinals.size());
+                    while (li.hasPrevious()) {
+                        final Integer val = li.previous();
+                        ordinalsStrRev.add(String.valueOf(val));
+                    }
+                    m_levelsPicker.setData(ordinalsStrRev);
+
+                    final int curOrdinal = m_manager.getOrdinal();
+                    final int indexOf = ordinals.indexOf(curOrdinal);
+                    view.setVisibility(View.INVISIBLE);
+                    m_levelsPicker.setSelectedItemPosition(ordinals.size() - 1 - indexOf);
+                    m_levelsPicker.setVisibility(View.VISIBLE);
+                }
+            }
+        } else if (id == R.id.route_next) {
+            if (m_routeStepsIndex + 1 < m_routeSteps.size()) {
+                gotoRouteStep(m_routeStepsIndex + 1, true);
+            }
+        } else if (id == R.id.route_prev) {
+            if (m_routeStepsIndex > 0) {
+                gotoRouteStep(m_routeStepsIndex - 1, true);
+            }
+        }
+    }
 }

@@ -4,8 +4,10 @@ package com.whatmedia.ttia.utility;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 public final class MyAppUtils {
-    final static String s_searchField = "CATEGORY";
+    public final static String s_searchField = "CATEGORY";
 
     public final static String s_extra_featuresSet = "s_extra_featuresSet";
     public final static String s_extra_location = "s_extra_location";
@@ -19,12 +21,22 @@ public final class MyAppUtils {
 
     public final static String SUBTITLE_FIELD = "CATEGORY";
 
+    public final static String OptString(Map<String, String> map, String key)
+    {
+        final String value = map.get(key);
+        if (null == value)
+        {
+            return "";
+        }
+        return value;
+    }
+
     public final static class PropDesc implements Parcelable
     {
-        int m_id;
-        String m_string;
+        public int m_id;
+        public String m_string;
 
-        PropDesc(int id, String string)
+        public PropDesc(int id, String string)
         {
             m_id = id;
             m_string = string;
