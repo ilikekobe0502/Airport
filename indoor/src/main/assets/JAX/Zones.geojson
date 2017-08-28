@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "OCCU_ID": "Z1", "LINK_ID": null, "NAME": "Terminal 1", "CATEGORY": "TPE", "TAXONOMY": "AVF version 1.3", "LEVEL_ID": "002", "PHONE": null, "WEBSITE": null, "HOURS": null, "ADDRESS_ID": null, "SOURCE": null, "SUITE": null, "NAME_zh-Ha": null, "NAME_ja": null }, "geometry": { "type": "Point", "coordinates": [ 121.23755094947488, 25.081486860370468 ] } },
-{ "type": "Feature", "properties": { "OCCU_ID": "Z2", "LINK_ID": null, "NAME": "Terminal 2", "CATEGORY": "TPE", "TAXONOMY": "AVF version 1.3", "LEVEL_ID": "002", "PHONE": null, "WEBSITE": null, "HOURS": null, "ADDRESS_ID": null, "SOURCE": null, "SUITE": null, "NAME_zh-Ha": null, "NAME_ja": null }, "geometry": { "type": "Point", "coordinates": [ 121.23230523841782, 25.07735365897522 ] } }
-]
-}

@@ -82,10 +82,11 @@ public class EmergencyDetailFragment extends BaseFragment implements EmergencyDe
             mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
             if (!TextUtils.isEmpty(item.getImageUrl())) {
                 mImageViewPicture.setVisibility(View.VISIBLE);
-                Picasso.with(getContext()).load(ApiConnect.TAG_IMAGE_HOST + item.getImageUrl())
-                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_152))
-                        .transform(new CornorTransform(mRadius, 0))
-                        .into(mImageViewPicture);
+                Util.setPicassoRetry(getContext()
+                        , mImageViewPicture, ApiConnect.TAG_IMAGE_HOST + item.getImageUrl()
+                        , mRadius, getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
+                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_152)
+                        , 0);
             } else
                 mImageViewPicture.setVisibility(View.GONE);
         } else {

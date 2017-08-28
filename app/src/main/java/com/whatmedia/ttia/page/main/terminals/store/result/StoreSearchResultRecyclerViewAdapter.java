@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.connect.ApiConnect;
@@ -18,6 +19,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.response.data.StoreInfoData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -63,8 +65,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             String pictureUrl;
             if (!TextUtils.isEmpty(item.getImgPath())) {
                 pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
-                // TODO: 2017/8/6 corner mot work
-                Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
+                Util.setPicassoRetry(mContext, holder.mImageViewPicture, pictureUrl, mRadius, 0);
             } else
                 pictureUrl = "";
 

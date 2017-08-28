@@ -85,11 +85,13 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             if (!TextUtils.isEmpty(data.getImgPath())) {
                 String image = ApiConnect.TAG_IMAGE_HOST + data.getImgPath();
                 Log.d(TAG, "image url = " + image);
-                Picasso.with(getContext())
-                        .load(image)
-                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
-                        .transform(new CornorTransform(mRadius, 0))
-                        .into(mImageViewPicture);
+                Util.setPicassoRetry(getContext()
+                        , mImageViewPicture
+                        , image
+                        , mRadius
+                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
+                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_145)
+                        , 0);
             }
 
             mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, !TextUtils.isEmpty(terminal) ? terminal : "", !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
@@ -109,11 +111,13 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             if (!TextUtils.isEmpty(storeData.getStoreIMGPath())) {
                 String image = ApiConnect.TAG_IMAGE_HOST + storeData.getStoreIMGPath();
                 Log.d(TAG, "image url = " + image);
-                Picasso.with(getContext())
-                        .load(image)
-                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
-                        .transform(new CornorTransform(mRadius, 0))
-                        .into(mImageViewPicture);
+                Util.setPicassoRetry(getContext()
+                        , mImageViewPicture
+                        , image
+                        , mRadius
+                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
+                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_145)
+                        , 0);
             }
 
             mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(storeData.getFloorName()) ? storeData.getFloorName() : ""));

@@ -18,13 +18,14 @@ import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.whatmedia.ttia.connect.ApiConnect.TAG_IMAGE_HOST;
 
-public class SouvenirDetailFragment extends BaseFragment implements SouvenirDetailContract.View{
+public class SouvenirDetailFragment extends BaseFragment implements SouvenirDetailContract.View {
     private static final String TAG = SouvenirDetailFragment.class.getSimpleName();
 
     @BindView(R.id.image_icon)
@@ -70,22 +71,22 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imagePath = getArguments().containsKey(SouvenirDetailContract.IMG_PATH)?
-                    getArguments().get(SouvenirDetailContract.IMG_PATH).toString():"";
-            textPrice = getArguments().containsKey(SouvenirDetailContract.TEXT_PRICE)?
-                    getArguments().get(SouvenirDetailContract.TEXT_PRICE).toString():"";
-            textAddress = getArguments().containsKey(SouvenirDetailContract.TEXT_ADDRESS)?
-                    getArguments().get(SouvenirDetailContract.TEXT_ADDRESS).toString():"";
-            textTime = getArguments().containsKey(SouvenirDetailContract.TEXT_TIME)?
-                    getArguments().get(SouvenirDetailContract.TEXT_TIME).toString():"";
-            textPhone = getArguments().containsKey(SouvenirDetailContract.TEXT_PHONE)?
-                    getArguments().get(SouvenirDetailContract.TEXT_PHONE).toString():"";
-            textDes = getArguments().containsKey(SouvenirDetailContract.TEXT_DES)?
-                    getArguments().get(SouvenirDetailContract.TEXT_DES).toString():"";
-            textName = getArguments().containsKey(SouvenirDetailContract.TEXT_NAME)?
-                    getArguments().get(SouvenirDetailContract.TEXT_NAME).toString():"";
-            textPhone = getArguments().containsKey(SouvenirDetailContract.TEXT_PHONE)?
-                    getArguments().get(SouvenirDetailContract.TEXT_PHONE).toString():"";
+            imagePath = getArguments().containsKey(SouvenirDetailContract.IMG_PATH) ?
+                    getArguments().getString(SouvenirDetailContract.IMG_PATH, "") : "";
+            textPrice = getArguments().containsKey(SouvenirDetailContract.TEXT_PRICE) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_PRICE, "") : "";
+            textAddress = getArguments().containsKey(SouvenirDetailContract.TEXT_ADDRESS) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_ADDRESS, "") : "";
+            textTime = getArguments().containsKey(SouvenirDetailContract.TEXT_TIME) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_TIME, "") : "";
+            textPhone = getArguments().containsKey(SouvenirDetailContract.TEXT_PHONE) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_PHONE, "") : "";
+            textDes = getArguments().containsKey(SouvenirDetailContract.TEXT_DES) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_DES, "") : "";
+            textName = getArguments().containsKey(SouvenirDetailContract.TEXT_NAME) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_NAME, "") : "";
+            textPhone = getArguments().containsKey(SouvenirDetailContract.TEXT_PHONE) ?
+                    getArguments().getString(SouvenirDetailContract.TEXT_PHONE, "") : "";
         }
         mRadius = getResources().getDimensionPixelSize(R.dimen.dp_pixel_8);
     }
@@ -100,7 +101,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         mPresenter = SouvenirDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
 
-        Picasso.with(getContext()).load(TAG_IMAGE_HOST+imagePath).transform(new CornorTransform(mRadius,0)).into(mImageIcon);
+        Util.setPicassoRetry(getContext(), mImageIcon, TAG_IMAGE_HOST + imagePath, mRadius, 0);
         mTextPrice.setText(textPrice);
         mTextAddress.setText(textAddress);
         mTextTime.setText(textTime);
@@ -146,7 +147,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         super.onDetach();
     }
 
-    public void init(){
+    public void init() {
         mMainActivity.getMyToolbar().clearState()
                 .setTitleText(textName)
                 .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
