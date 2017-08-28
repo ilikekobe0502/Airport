@@ -18,6 +18,7 @@ import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,7 +101,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         mPresenter = SouvenirDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
 
-        Picasso.with(getContext()).load(TAG_IMAGE_HOST + imagePath).transform(new CornorTransform(mRadius, 0)).into(mImageIcon);
+        Util.setPicassoRetry(getContext(), mImageIcon, TAG_IMAGE_HOST + imagePath, mRadius, 0);
         mTextPrice.setText(textPrice);
         mTextAddress.setText(textAddress);
         mTextTime.setText(textTime);

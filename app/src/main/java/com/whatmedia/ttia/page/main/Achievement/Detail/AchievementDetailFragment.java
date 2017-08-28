@@ -18,13 +18,14 @@ import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.whatmedia.ttia.connect.ApiConnect.TAG_IMAGE_HOST;
 
-public class AchievementDetailFragment extends BaseFragment implements AchievementDetailContract.View{
+public class AchievementDetailFragment extends BaseFragment implements AchievementDetailContract.View {
     private static final String TAG = AchievementDetailFragment.class.getSimpleName();
 
     @BindView(R.id.image_icon)
@@ -63,14 +64,14 @@ public class AchievementDetailFragment extends BaseFragment implements Achieveme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imagePath = getArguments().containsKey(AchievementDetailContract.IMAGE_PATH)?
-                    getArguments().get(AchievementDetailContract.IMAGE_PATH).toString():"";
-            textDate = getArguments().containsKey(AchievementDetailContract.TEXT_DATE)?
-                    getArguments().get(AchievementDetailContract.TEXT_DATE).toString():"";
-            textTitle = getArguments().containsKey(AchievementDetailContract.TEXT_TITLE)?
-                    getArguments().get(AchievementDetailContract.TEXT_TITLE).toString():"";
-            textContent = getArguments().containsKey(AchievementDetailContract.TEXT_CONTENT)?
-                    getArguments().get(AchievementDetailContract.TEXT_CONTENT).toString():"";
+            imagePath = getArguments().containsKey(AchievementDetailContract.IMAGE_PATH) ?
+                    getArguments().get(AchievementDetailContract.IMAGE_PATH).toString() : "";
+            textDate = getArguments().containsKey(AchievementDetailContract.TEXT_DATE) ?
+                    getArguments().get(AchievementDetailContract.TEXT_DATE).toString() : "";
+            textTitle = getArguments().containsKey(AchievementDetailContract.TEXT_TITLE) ?
+                    getArguments().get(AchievementDetailContract.TEXT_TITLE).toString() : "";
+            textContent = getArguments().containsKey(AchievementDetailContract.TEXT_CONTENT) ?
+                    getArguments().get(AchievementDetailContract.TEXT_CONTENT).toString() : "";
         }
         mRadius = getResources().getDimensionPixelSize(R.dimen.dp_pixel_8);
     }
@@ -84,8 +85,8 @@ public class AchievementDetailFragment extends BaseFragment implements Achieveme
 
         mPresenter = AchievementDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
-        Log.e("Ian",TAG_IMAGE_HOST+imagePath);
-        Picasso.with(getContext()).load(TAG_IMAGE_HOST+imagePath).transform(new CornorTransform(mRadius,0)).into(mImageIcon);
+        Log.e("Ian", TAG_IMAGE_HOST + imagePath);
+        Util.setPicassoRetry(getContext(), mImageIcon, TAG_IMAGE_HOST + imagePath, mRadius, 0);
         mTextDate.setText(textDate);
         mTextTitle.setText(textTitle);
         mTextContent.setText(textContent);

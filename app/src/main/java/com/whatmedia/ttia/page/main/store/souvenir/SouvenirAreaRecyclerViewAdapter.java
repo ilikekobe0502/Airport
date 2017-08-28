@@ -17,6 +17,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.SouvenirData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class SouvenirAreaRecyclerViewAdapter extends RecyclerView.Adapter<Souven
     public SouvenirAreaRecyclerViewAdapter(Context context) {
         mContext = context;
         mRadius = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_5);
-        mCornorTransform = new CornorTransform(mRadius,0);
+        mCornorTransform = new CornorTransform(mRadius, 0);
     }
 
     @Override
@@ -63,10 +64,10 @@ public class SouvenirAreaRecyclerViewAdapter extends RecyclerView.Adapter<Souven
             return;
         }
 
-        Picasso.with(mContext).load(TAG_IMAGE_HOST+item.getImgPath()).transform(mCornorTransform).into(holder.mImageIcon);
+        Util.setPicassoRetry(mContext, holder.mImageIcon, TAG_IMAGE_HOST + item.getImgPath(), 0, 0);
 
         holder.mTextName.setText(item.getName());
-        holder.mTextPrice.setText("NT$"+item.getPrice());
+        holder.mTextPrice.setText("NT$" + item.getPrice());
         holder.mButtonDes.setTag(position);
     }
 

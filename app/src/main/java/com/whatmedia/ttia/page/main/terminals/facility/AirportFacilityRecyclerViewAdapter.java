@@ -71,17 +71,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
             String imageUrl = ApiConnect.TAG_IMAGE_HOST + item.getMainImgPath();
             Log.d(TAG, imageUrl);
-            Picasso.with(mContext).load(imageUrl).into(holder.mImageViewPicture, new Callback() {
-                @Override
-                public void onSuccess() {
-                    holder.mTextViewLoading.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onError() {
-                    holder.mTextViewLoading.setText("ERROR");
-                }
-            });
+            setPicassoRetry(holder, imageUrl);
         } else
             holder.mImageViewPicture.setVisibility(View.INVISIBLE);
 
@@ -159,5 +149,25 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             if (mListener != null)
                 mListener.onClick(view);
         }
+    }
+
+    /**
+     * 不要改！！因為邏輯不同
+     *
+     * @param holder
+     * @param url
+     */
+    private void setPicassoRetry(final ViewHolder holder, final String url) {
+        Picasso.with(mContext).load(url).into(holder.mImageViewPicture, new Callback() {
+            @Override
+            public void onSuccess() {
+                holder.mTextViewLoading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                setPicassoRetry(holder, url);
+            }
+        });
     }
 }

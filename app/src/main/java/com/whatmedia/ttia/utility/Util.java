@@ -16,10 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.response.GetMyFlightsResponse;
@@ -610,5 +614,58 @@ public class Util {
             }
         }
         return false;
+    }
+
+    /**
+     * Set Picasso retry
+     *
+     * @param context
+     * @param imageView
+     * @param url
+     * @param radius
+     */
+    public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int count) {
+        Picasso.with(context).load(url).transform(new CornorTransform(radius, 0)).into(imageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "image load success");
+            }
+
+            @Override
+            public void onError() {
+                Log.e(TAG, "image load error :" + url);
+                String t = String.valueOf(count);
+                int i = Integer.parseInt(t);
+                Log.e(TAG, "count  :" + i);
+                if (count != 5) {
+                    i++;
+                    setPicassoRetry(context, imageView, url, radius, i);
+                }
+            }
+        });
+    }
+
+    public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int width, int height, final int count) {
+        Picasso.with(context).load(url)
+                .resize(width, height)
+                .transform(new CornorTransform(radius, 0))
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "image load success");
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e(TAG, "image load error :" + url);
+                        String t = String.valueOf(count);
+                        int i = Integer.parseInt(t);
+                        Log.e(TAG, "count  :" + i);
+                        if (count != 5) {
+                            i++;
+                            setPicassoRetry(context, imageView, url, radius, i);
+                        }
+                    }
+                });
     }
 }
