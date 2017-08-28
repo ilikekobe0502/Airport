@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <com.whatmedia.ttia.component.MyToolbar
         android:id="@+id/myToolbar"
@@ -42,6 +43,7 @@
             android:textColorHint="@color/colorTextResultHint"
             android:textSize="@dimen/sp_pixel_13"
             android:title="Search"
+            android:focusableInTouchMode="true"
             android:icon="@drawable/indoor_10_01"
             android:showAsAction="always"
             android:orderInCategory="2"

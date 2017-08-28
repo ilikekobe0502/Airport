@@ -72,6 +72,8 @@
 
         <activity android:name=".page.IndoorMap.IndoorSearchActivity"></activity>
 
+        <activity android:name=".page.IndoorMap.IndoorInfoActivity"></activity>
+
         <provider android:name=".utility.MyCustomSuggestionProvider"
             android:authorities="com.whatmedia.ttia.utility.MyCustomSuggestionProvider"
             android:exported="true"
