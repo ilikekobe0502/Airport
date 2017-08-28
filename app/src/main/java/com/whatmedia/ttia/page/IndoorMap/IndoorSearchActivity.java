@@ -30,6 +30,7 @@ import com.point_consulting.pc_indoormapoverlaylib.Mathe;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.page.IndoorBaseActivity;
 import com.whatmedia.ttia.utility.MyAppUtils;
 import com.whatmedia.ttia.utility.MyApplication;
 import com.whatmedia.ttia.utility.Util;
@@ -46,7 +47,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IndoorSearchActivity extends AppCompatActivity {
+public class IndoorSearchActivity extends IndoorBaseActivity {
 
     @BindView(R.id.myToolbar)
     MyToolbar mMyToolbar;

@@ -3,13 +3,9 @@ package com.whatmedia.ttia.utility;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.multidex.MultiDexApplication;
-import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,7 +19,6 @@ import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.point_consulting.pc_indoormapoverlaylib.BuildConfig;
 import com.point_consulting.pc_indoormapoverlaylib.Coordinate3D;
 import com.point_consulting.pc_indoormapoverlaylib.Manager;
 import com.point_consulting.pc_indoormapoverlaylib.Utils;
@@ -188,10 +183,10 @@ public final class MyApplication extends Application implements GoogleApiClient.
     private void tryRequestLocationUpdates()
     {
         if (!m_requestedLocationUpdates && m_connected) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            {
-                return;
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+//            {
+//                return;
+//            }
             try {
                 android.location.Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(m_googleApiClient);
                 synchronized (m_sync)

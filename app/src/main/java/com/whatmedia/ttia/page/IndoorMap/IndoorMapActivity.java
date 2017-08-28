@@ -15,20 +15,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -36,7 +30,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.google.android.gms.common.api.PendingResult;
@@ -71,8 +64,8 @@ import com.point_consulting.pc_indoormapoverlaylib.TextOptions;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
-import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.IndoorBaseActivity;
 import com.whatmedia.ttia.utility.MyAppUtils;
 import com.whatmedia.ttia.utility.MyApplication;
 import com.whatmedia.ttia.utility.MyStateDrawable;
@@ -91,7 +84,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class IndoorMapActivity extends BaseActivity implements IActivityTools.IIndoorMapActivity, OnMapReadyCallback, DownloadMaps.Delegate, MyApplication.GoogleLocationCallback  {
+public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTools.IIndoorMapActivity, OnMapReadyCallback, DownloadMaps.Delegate, MyApplication.GoogleLocationCallback {
 
     @BindView(R.id.myToolbar)
     MyToolbar mMyToolbar;
@@ -170,13 +163,13 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     private static final boolean s_showUserTrackingModeButton = false;
 
     private void startMap(AbstractFolder abstractFolder) {
-      Log.e("Android Maps", "startMap");
+        Log.e("Android Maps", "startMap");
 
         m_progressDialog.setTitle("Preparing maps...");
         m_progressDialog.show();
         Manager.InitializationCallback initializationCallback = new Manager.InitializationCallback() {
             public void onIndoorMapManagerInitialized() {
-              final MyApplication app = (MyApplication)getApplication();
+                final MyApplication app = (MyApplication) getApplication();
 
 //                if (s_showVenuePicker) {
 //                    TextView tv = (TextView) findViewById(R.id.venueLabel);
@@ -192,20 +185,18 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
 
                 final List<Integer> ordinals = m_manager.getLevelOrdinals();
                 if (ordinals != null) {
-                    for (int ord: ordinals) {
+                    for (int ord : ordinals) {
                         // illustrate enumerateFeatures
                         final int ordinal1 = ord;
                         m_manager.enumerateFeatures(ord, new Manager.EnumerateFeaturesCallback() {
                             @Override
                             public boolean onEnumeratingFeature(int featureIndex, String mapLayer, Map<String, String> props) {
-                                if (mapLayer.equals("Levels"))
-                                {
+                                if (mapLayer.equals("Levels")) {
                                     final String name = MyAppUtils.OptString(props, "SHORT_NAME");
                                     final String levelId = MyAppUtils.OptString(props, "LEVEL_ID");
                                     app.setLevelName(levelId, name);
                                     app.setOrdinalShortName(ordinal1, name);
-                                }
-                                else if (mapLayer.equals("Occupants")) {
+                                } else if (mapLayer.equals("Occupants")) {
                                     final String name = MyAppUtils.OptString(props, "NAME");
                                     if (name.equals("Enterprise Rent-A-Car")) {
                                         m_toSelectFeatureIndex = featureIndex;
@@ -246,7 +237,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     }
 
     private void onFinishedDownload() {
-        MyApplication app = (MyApplication)getApplication();
+        MyApplication app = (MyApplication) getApplication();
 
         AbstractFolder abstractFolder = null;
 
@@ -262,8 +253,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
             }
         }
 
-        if (abstractFolder == null)
-        {
+        if (abstractFolder == null) {
             final AssetManager assets = getAssets();
             abstractFolder = new AssetsFolder(assets, app.getCurrentVenueName());
         }
@@ -279,10 +269,8 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     }
 
     @Override
-    public void onCheckMapUpdatesFinishedWithResult(int checkResult)
-    {
-        switch (checkResult)
-        {
+    public void onCheckMapUpdatesFinishedWithResult(int checkResult) {
+        switch (checkResult) {
             case DownloadMaps.DOWNLOAD_MAPS_CHECK_RESULT_ERROR:
                 onFinishedDownload();
                 break;
@@ -298,8 +286,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
     }
 
     @Override
-    public void onDownloadMapsFinishedWithError(String error)
-    {
+    public void onDownloadMapsFinishedWithError(String error) {
         onFinishedDownload();
     }
 
@@ -351,8 +338,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         }
     }
 
-    private void setRouteStepButtonEnabled(ImageButton button, boolean enabled)
-    {
+    private void setRouteStepButtonEnabled(ImageButton button, boolean enabled) {
         final Resources resources = getResources();
         final Drawable drArrow = resources.getDrawable(R.drawable.arrow);
         drArrow.mutate();
@@ -361,23 +347,19 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         if (enabled) {
             final MyStateDrawable msd = new MyStateDrawable(new Drawable[]{drArrow});
             button.setImageDrawable(msd);
-        }
-        else
-        {
+        } else {
             drArrow.setColorFilter(0xff7fb7df, PorterDuff.Mode.SRC_ATOP);
             button.setImageDrawable(drArrow);
         }
     }
 
-    private void updateNavModeButton()
-    {
+    private void updateNavModeButton() {
 //        View navModeButton = findViewById(R.id.navModeButton);
 //        int bgId = m_isWheelchairMode ? R.drawable.icon_wheelchair_small : R.drawable.icon_small_escalator;
 //        navModeButton.setBackgroundResource(bgId);
     }
 
-    private void updateUserTrackingModeButton(int userTrackingMode)
-    {
+    private void updateUserTrackingModeButton(int userTrackingMode) {
 //        if (!s_showUserTrackingModeButton)
 //        {
 //            return;
@@ -429,8 +411,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         m_propDesc.add(new MyAppUtils.PropDesc(R.drawable.phone, "PHONE"));
         m_propDesc.add(new MyAppUtils.PropDesc(R.drawable.web, "WEBSITE"));
 
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             final double lat = savedInstanceState.getDouble(s_camPosLat);
             final double lon = savedInstanceState.getDouble(s_camPosLon);
             final float zoom = savedInstanceState.getFloat(s_camPosZoom);
@@ -540,6 +521,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         Manager.Location locFrom1 = m_manager.markLocation(s_startPinId);
         if (null == locFrom1) {
             locFrom1 = ((MyApplication) getApplication()).getUserLocation(null);
+            createMark(locFrom1, s_purplePinColor, true, s_startPinId);
             if (null == locFrom1) {
                 return;
             }
@@ -551,7 +533,6 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 return;
             }
         }
-
         final Manager.Location locFrom = locFrom1;
         final Manager.Location locTo = locTo1;
 
@@ -792,7 +773,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
             }
         }
 
-        final Intent intent = new Intent(IndoorMapActivity.this, IndoorSearchActivity.class);
+        final Intent intent = new Intent(IndoorMapActivity.this, IndoorInfoActivity.class);
         intent.putExtra(MyAppUtils.s_extra_location, location);
         intent.putExtra(MyAppUtils.s_extra_color, headerColor);
         intent.putExtra(MyAppUtils.s_extra_logo, logoId);
@@ -910,8 +891,8 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
 
             public void onLevelLoaded(int ordinal) {
                 Log.e("Android Maps", "onLevelLoaded");
-                TextView tv = (TextView)findViewById(R.id.levelLabel);
-                MyApplication app = (MyApplication)getApplication();
+                TextView tv = (TextView) findViewById(R.id.levelLabel);
+                MyApplication app = (MyApplication) getApplication();
                 final String levelShortName = app.shortNameForOrdinal(ordinal);
                 tv.setText(levelShortName);
             }
@@ -931,8 +912,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 int padding = 0;
 
                 final String name = MyAppUtils.OptString(props, "CATEGORY");
-                if (mapLayer.equals("Zones") && name.contains("Terminal"))
-                {
+                if (mapLayer.equals("Zones") && name.contains("Terminal")) {
                     minZoomLevel = 14.f;
                     maxZoomLevel = 18.f;
                     padding = Math.round(density * 4);
@@ -940,13 +920,10 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 }
 
                 final String category = MyAppUtils.OptString(props, "CATEGORY");
-                if (mapLayer.equals("Occupants"))
-                {
+                if (mapLayer.equals("Occupants")) {
                     minZoomLevel = 18.f;
                     maxZoomLevel = 25.f;
-                }
-                else if (mapLayer.equals("Points"))
-                {
+                } else if (mapLayer.equals("Points")) {
                     if (category.contains("Gate")) {
                         minZoomLevel = 18.f;
                         maxZoomLevel = 25.f;
@@ -955,14 +932,11 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                     }
                     minZoomLevel = 1.f;
                     maxZoomLevel = 1.f;
-                }
-                else
-                {
+                } else {
                     minZoomLevel = 18.f;
                     maxZoomLevel = 25.f;
                 }
-                if (mapLayer.equals("Units"))
-                {
+                if (mapLayer.equals("Units")) {
                     minZoomLevel = 1.f;
                     maxZoomLevel = 1.f;
                 }
@@ -1067,13 +1041,11 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 return new Manager.PinInfo(bm, scale * (nW * 0.5f - 12.f), scale * (nH * 0.5f - 58.f), scale * 12.f, scale * 0.f);
             }
 
-            public String getInstruction(List<Manager.FeatureParams> features, int ordinal)
-            {
-                MyApplication app = (MyApplication)getApplication();
+            public String getInstruction(List<Manager.FeatureParams> features, int ordinal) {
+                MyApplication app = (MyApplication) getApplication();
                 final String levelShortName = app.shortNameForOrdinal(ordinal);
 
-                if (features != null && features.size() >= 1)
-                {
+                if (features != null && features.size() >= 1) {
                     Manager.FeatureParams p = features.get(0);
                     final String category = MyAppUtils.OptString(p.m_props, "CATEGORY");
                     return String.format("Take %1$s to level %2$s", category, levelShortName);
@@ -1090,9 +1062,8 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
 //                return "Unknown transport";
 //            }
 
-            public String getInstruction(Manager.Location destination)
-            {
-                String [] titles = new String[2];
+            public String getInstruction(Manager.Location destination) {
+                String[] titles = new String[2];
                 m_manager.getTitleForLocation(destination, titles);
                 return String.format("Follow the route to %1$s", titles[0]);
             }
@@ -1109,7 +1080,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                         return new IndoorPolygonOptions().fillColor(0xffbbb8af).strokeColor(0xff4066e2).strokeWidth(w);
                     }
                     return null;
-                }else if (mapLayer.equals("Fixtures")){
+                } else if (mapLayer.equals("Fixtures")) {
                     return new IndoorPolygonOptions().fillColor(0xfffcf0c2).strokeColor(0);
                 } else if (mapLayer.equals("Units")) {
                     final String category = MyAppUtils.OptString(props, "CATEGORY");
@@ -1189,6 +1160,19 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            googleMap.setMyLocationEnabled(true);
+        }
+
+
         googleMap.setIndoorEnabled(false);
         final UiSettings settings = googleMap.getUiSettings();
         settings.setIndoorLevelPickerEnabled(false);
@@ -1201,6 +1185,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
                 .findFragmentById(R.id.map);
 
         start(new MapImplGoogle(googleMap, mapFragment.getView(), getResources().getDisplayMetrics().density));
+
     }
 
     @Override
@@ -1248,6 +1233,7 @@ public class IndoorMapActivity extends BaseActivity implements IActivityTools.II
         final MyApplication app = (MyApplication)getApplication();
         float[] bearing = {0};
         final Manager.Location location = app.getUserLocation(bearing);
+        createMark(location, s_purplePinColor, true, s_startPinId);
         if (true)
         {
             m_manager.setUserLocation(location, bearing[0]);
