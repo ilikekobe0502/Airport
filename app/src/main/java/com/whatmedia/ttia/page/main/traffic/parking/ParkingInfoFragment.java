@@ -189,8 +189,7 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
 
     public Bitmap resizeMapIcons(int drawable, int width, int height) {
         Bitmap imageBitmap = BitmapFactory.decodeResource(getContext().getResources(), drawable);
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, false);
     }
 
     @Override
