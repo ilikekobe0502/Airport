@@ -61,6 +61,7 @@ import com.point_consulting.pc_indoormapoverlaylib.MapImplGoogle;
 import com.point_consulting.pc_indoormapoverlaylib.MapImplIndoor;
 import com.point_consulting.pc_indoormapoverlaylib.Mathe;
 import com.point_consulting.pc_indoormapoverlaylib.TextOptions;
+import com.splunk.mint.Mint;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
@@ -85,6 +86,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTools.IIndoorMapActivity, OnMapReadyCallback, DownloadMaps.Delegate, MyApplication.GoogleLocationCallback {
+    private final static String TAG = IndoorMapActivity.class.getSimpleName();
 
     @BindView(R.id.myToolbar)
     MyToolbar mMyToolbar;
@@ -638,7 +640,17 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
 
     private void createMark(Manager.Location location, int pinColor, boolean needSelect, String userId) {
         final float w = getResources().getDimension(R.dimen.dp_pixel_3);
-        m_manager.createMark(location, 0xff0000ff, w, pinColor, needSelect, userId, Manager.kIgnoreIntersectionsZIndex);
+        if (location.m_coord3D == null) {
+            Log.e(TAG, "location.m_coord3D == null");
+            return;
+        }
+
+        try {
+            m_manager.createMark(location, 0xff0000ff, w, pinColor, needSelect, userId, Manager.kIgnoreIntersectionsZIndex);
+        } catch (RuntimeException e) {
+            String error = e.toString();
+            Mint.logEvent("Error:Indoor map :" + error);
+        }
     }
 
     private void onCalloutDetailTapped(Manager.Location location) {
@@ -1224,18 +1236,15 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
     }
 
     @Override
-    public void onLocation()
-    {
-        if (m_wantHaveRoute && (m_manager.markLocation(s_startPinId) == null || m_manager.markLocation(s_endPinId) == null))
-        {
+    public void onLocation() {
+        if (m_wantHaveRoute && (m_manager.markLocation(s_startPinId) == null || m_manager.markLocation(s_endPinId) == null)) {
             recalcRoute(false);
         }
-        final MyApplication app = (MyApplication)getApplication();
+        final MyApplication app = (MyApplication) getApplication();
         float[] bearing = {0};
         final Manager.Location location = app.getUserLocation(bearing);
         createMark(location, s_purplePinColor, true, s_startPinId);
-        if (true)
-        {
+        if (true) {
             m_manager.setUserLocation(location, bearing[0]);
         }
     }
@@ -1286,6 +1295,7 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
                 });
     }
 //
+
     /**
      * init marquee
      */
