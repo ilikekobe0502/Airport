@@ -19,10 +19,9 @@
         android:layout_height="@dimen/dp_pixel_130"
         android:layout_below="@+id/textView_title"
         android:gravity="center"
-        android:scaleType="fitXY"
         android:text="LOADING..."
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_48"
+        android:textSize="@dimen/sp_pixel_16"
         android:visibility="visible" />
 
     <ImageView

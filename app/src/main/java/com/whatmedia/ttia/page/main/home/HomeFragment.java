@@ -20,6 +20,7 @@ import com.whatmedia.ttia.enums.HomeFeature;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.IndoorMap.IndoorMapActivity;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
@@ -144,6 +145,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 //                        e.printStackTrace();
 //                        showMessage(getString(R.string.data_error));
 //                    }
+                    try {
+                        Intent i =new Intent(getContext(), IndoorMapActivity.class);
+                        getActivity().startActivity(i);
+                    } catch (ActivityNotFoundException e) {
+                        e.printStackTrace();
+                        showMessage(getString(R.string.data_error));
+                    }
                     break;
                 case TAG_AIRPORT_ACHIEVEMENT://機場成就
                     mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);

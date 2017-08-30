@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        app:showAsAction="always"
+        android:orderInCategory="2"
+        android:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/action_route"
+        android:icon="@drawable/go_route"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_cancel"
+        android:icon="@drawable/cancel"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
+
+</menu>

@@ -26,7 +26,17 @@ public interface IActivityTools {
 
         void backPress();
 
-        boolean getUserVisibility();
+        void runOnUI(Runnable runnable);
+    }
+
+    interface IIndoorMapActivity {
+        MyToolbar getMyToolbar();
+
+        MyMarquee getMyMarquee();
+
+        void setMarqueeMessage(String subMessage);
+
+        void backPress();
 
         void runOnUI(Runnable runnable);
     }

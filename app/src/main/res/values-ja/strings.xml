@@ -762,4 +762,9 @@
     <string name="store_terminal_2_long">第2ターミナル</string>
 
     <string name="timezone_taipei">台北</string>
+
+    <!-- indoor -->
+    <string name="indoor_search_sub_title">ロードマップ</string>
+    <string name="indoor_search_start_text">開始：%d</string>
+    <string name="indoor_search_end_text">終了：%d</string>
 </resources>
