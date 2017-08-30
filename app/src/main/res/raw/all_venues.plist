@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>venues</key>
+<array>
+	<dict>
+		<key>name</key>
+		<string>Amsterdam_Centraal</string>
+		<key>latitude</key>
+		<real>52.378873</real>
+		<key>longitude</key>
+		<real>4.900143</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Leiden</string>
+		<key>latitude</key>
+		<real>52.1664162820001</real>
+		<key>longitude</key>
+		<real>4.483112697000024</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Rotterdam</string>
+		<key>latitude</key>
+		<real>51.924871</real>
+		<key>longitude</key>
+		<real>4.469348</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Nijmegen</string>
+		<key>latitude</key>
+		<real>51.843224</real>
+		<key>longitude</key>
+		<real>5.852674</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Arnhem</string>
+		<key>latitude</key>
+		<real>51.983954</real>
+		<key>longitude</key>
+		<real>5.900236</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Schiphol</string>
+		<key>latitude</key>
+		<real>52.30962234400005</real>
+		<key>longitude</key>
+		<real>4.762357795000071</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Arora</string>
+		<key>latitude</key>
+		<real>39.876812</real>
+		<key>longitude</key>
+		<real>-75.243527</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>SUSS</string>
+		<key>latitude</key>
+		<real>1.329348</real>
+		<key>longitude</key>
+		<real>103.776062</real>
+		<key>id</key>
+		<string>30</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>SUSS_J</string>
+		<key>latitude</key>
+		<real>1.329348</real>
+		<key>longitude</key>
+		<real>103.776062</real>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>TPE</string>
+		<key>id</key>
+		<string>31</string>
+		<key>latitude</key>
+		<real>25.079604</real>
+		<key>longitude</key>
+		<real>121.234808</real>
+	</dict>
+</array>
+</dict>
+</plist>

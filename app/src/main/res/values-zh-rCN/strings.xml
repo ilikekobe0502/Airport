@@ -761,4 +761,9 @@
     <string name="store_terminal_2_long">第二航廈</string>
 
     <string name="timezone_taipei">台北</string>
+
+    <!-- indoor -->
+    <string name="indoor_search_sub_title">路线图</string>
+    <string name="indoor_search_start_text">起始：%d</string>
+    <string name="indoor_search_end_text">终点：%d</string>
 </resources>

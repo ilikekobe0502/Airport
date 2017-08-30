@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "OCCU_ID": "T00001", "LINK_ID": null, "NAME": "Tay Eng Soon Library", "CATEGORY": "Libraries", "TAXONOMY": "avf:1.3.1", "LEVEL_ID": "L002", "PHONE": "+6562489601", "WEBSITE": "http:\/\/library.sim.edu.sg\/", "HOURS": "Mo-Fr 08:30-21:00; Sa 09:00-17:30; Su off", "ADDRESS_ID": "A00001", "SUITE": "A.2.02C" }, "geometry": { "type": "Point", "coordinates": [ 103.77567664000009, 1.329852609000056 ] } },
+{ "type": "Feature", "properties": { "OCCU_ID": "T00002", "LINK_ID": null, "NAME": "Popular Bookshop", "CATEGORY": "Books, Mags, Music & Video", "TAXONOMY": "avf:1.3.1", "LEVEL_ID": "L003", "PHONE": "+6563146019", "WEBSITE": "https:\/\/www.popular.com.sg\/", "HOURS": "Mo-Fr 09:30-20:00; Sa 09:30-14:30; Su off", "ADDRESS_ID": "A00001", "SUITE": "A.3.02B" }, "geometry": { "type": "Point", "coordinates": [ 103.77585762200005, 1.32952287300003 ] } }
+]
+}

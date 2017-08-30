@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.whatmedia.ttia.component.MyToolbar
+        android:id="@+id/myToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_45"
+        android:layout_below="@+id/myToolbar"
+        android:background="@color/colorMapSearchBg">
+
+        <ImageView
+            android:id="@+id/action_route"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_percent_5"
+            android:src="@drawable/go_route" />
+
+        <ImageView
+            android:id="@+id/action_cancel"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_percent_5"
+            android:src="@drawable/cancel" />
+
+        <SearchView
+            android:id="@+id/editText_search"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp_percent_5"
+            android:background="@drawable/frame_edit_text"
+            android:hint="@string/flights_search_edit_text_hint"
+            android:textColorHint="@color/colorTextResultHint"
+            android:textSize="@dimen/sp_pixel_13"
+            android:title="Search"
+            android:focusableInTouchMode="true"
+            android:icon="@drawable/indoor_10_01"
+            android:showAsAction="always"
+            android:orderInCategory="2"
+            android:actionViewClass="android.widget.SearchView"/>
+    </LinearLayout>
+
+
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.point_consulting.pc_indoormapoverlaylib.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/myMarquee"
+        android:layout_below="@+id/layout_search" />
+
+    <LinearLayout
+        android:id="@+id/routeBar"
+        android:visibility="invisible"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_search">
+
+        <!-- Blue bar -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="#0070c0"
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <ImageButton
+                android:id="@+id/route_prev"
+                android:onClick="onButton"
+                android:adjustViewBounds="true"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:onClick="onButton"
+                android:id="@+id/stepLabel"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_pixel_15"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/route_next"
+                android:scaleX="-1"
+                android:onClick="onButton"
+                android:adjustViewBounds="true"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- White bar -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+
+            <TextView
+                android:id="@+id/descLabel"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp_pixel_15"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/routeTime"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp_pixel_15"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dp"
+                android:paddingRight="8dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Thin line -->
+        <View
+            android:background="#0070c0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
+
+    <com.whatmedia.ttia.component.MyMarquee
+        android:id="@+id/myMarquee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:id="@+id/imageView_home"
+        android:layout_width="@dimen/dp_pixel_50"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/home" />
+
+    <FrameLayout
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/levelLabel"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp_pixel_40"
+        android:layout_marginRight="@dimen/dp_pixel_10"
+        android:layout_width="@dimen/dp_pixel_35"
+        android:layout_height="@dimen/dp_pixel_35" />
+
+    <Button
+        android:onClick="onButton"
+        android:id="@+id/levelsButton"
+        android:background="@drawable/levels"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/levelLabel"
+        android:layout_marginRight="10dp"
+        android:layout_width="@dimen/dp_pixel_35"
+        android:layout_height="@dimen/dp_pixel_35" />
+
+    <com.aigestudio.wheelpicker.WheelPicker
+        android:background="#ffffff"
+        android:visibility="invisible"
+        android:id="@+id/levelsPicker"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/levelLabel"
+        android:layout_marginBottom="@dimen/dp_pixel_6"
+        android:paddingRight="@dimen/dp_pixel_10"
+        android:layout_width="@dimen/dp_pixel_48"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
