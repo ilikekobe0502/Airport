@@ -686,13 +686,13 @@ public class ApiConnect extends StateCode {
     /**
      * 寫入/刪除場域內使用者
      */
-    public static void registerUser(boolean isAdd, Callback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
+    public static void registerUser(String minorID, Callback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "registerUser")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("type", isAdd ? "0" : "1")
+                .addQueryParameter("Beacon_ID", minorID)
                 .build();
         getApi(url, callback);
     }
