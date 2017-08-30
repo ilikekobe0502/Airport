@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Callback;
@@ -623,6 +625,7 @@ public class Util {
      * @param imageView
      * @param url
      * @param radius
+     * @param count
      */
     public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int count) {
         Picasso.with(context).load(url).transform(new CornorTransform(radius, 0)).into(imageView, new Callback() {
@@ -645,6 +648,17 @@ public class Util {
         });
     }
 
+    /**
+     * Set picasso retry
+     *
+     * @param context
+     * @param imageView
+     * @param url
+     * @param radius
+     * @param width
+     * @param height
+     * @param count
+     */
     public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int width, int height, final int count) {
         Picasso.with(context).load(url)
                 .resize(width, height)
@@ -667,5 +681,15 @@ public class Util {
                         }
                     }
                 });
+    }
+
+    /**
+     * Set font type
+     *
+     * @param context
+     * @param view
+     */
+    public static void setTextFont(Context context, TextView view) {
+        view.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Times_New_Roman.ttf"));
     }
 }

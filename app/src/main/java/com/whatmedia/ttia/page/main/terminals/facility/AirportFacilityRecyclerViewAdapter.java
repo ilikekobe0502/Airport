@@ -16,6 +16,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,6 +143,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            Util.setTextFont(mContext, mTextViewLoading);
         }
 
         @OnClick(R.id.imageView_picture)
