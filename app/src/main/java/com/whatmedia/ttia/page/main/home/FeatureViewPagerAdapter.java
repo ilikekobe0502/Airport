@@ -60,6 +60,13 @@ public class FeatureViewPagerAdapter extends PagerAdapter implements IOnItemClic
         mListener = listener;
     }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+//        super.destroyItem(container, position, object);
+        container.removeView((View) object);
+        object=null;
+    }
+
     class ViewHolder {
         @BindView(R.id.recyclerView)
         RecyclerView mRecyclerView;
