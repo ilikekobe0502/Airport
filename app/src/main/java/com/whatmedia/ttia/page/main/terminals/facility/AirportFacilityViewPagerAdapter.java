@@ -63,6 +63,13 @@ public class AirportFacilityViewPagerAdapter extends PagerAdapter implements IOn
             mListener.onClick(view);
     }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+//        super.destroyItem(container, position, object);
+        container.removeView((View) object);
+        object=null;
+    }
+
     public void setClickListener(IOnItemClickListener listener) {
         mListener = listener;
     }

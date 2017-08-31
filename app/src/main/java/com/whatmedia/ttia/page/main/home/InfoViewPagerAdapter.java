@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.home;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,4 +62,16 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
                 return DepartureFlightsFragment.newInstance();
         }
     }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+       if (position >= getCount()) {
+            FragmentManager manager = ((Fragment) object).getFragmentManager();
+            FragmentTransaction trans = manager.beginTransaction();
+            trans.remove((Fragment) object);
+            trans.commit();
+        }
+    }
+
+
 }
