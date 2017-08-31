@@ -53,3 +53,4 @@ dependencies {
     compile 'xmlwise:xmlwise:1.2.11'
     compile 'com.android.support:multidex:1.0.1'
 }
+apply plugin: 'com.google.gms.google-services'
