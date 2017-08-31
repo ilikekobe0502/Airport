@@ -23,6 +23,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultRecyclerViewAdapter;
+import com.whatmedia.ttia.response.data.ClockTimeData;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
@@ -55,6 +56,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     private MoreFlightsContract.Presenter mPresenter;
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
+    private LinearLayoutManager mManager;
     private String mLastShowDate = Util.getCountDate(-1);
     private String mNowShowDate = Util.getNowDate(Util.TAG_FORMAT_MD);
     private String mNextShowDate = Util.getCountDate(1);
@@ -117,7 +119,8 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mTextViewNext.setText(mNextShowDate);
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
         return view;
@@ -165,6 +168,19 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 @Override
                 public void run() {
                     mAdapter.setData(list);
+                    int position = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
+                            ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
+                            if (data.getHour() > 0 | data.getMin() > 0 | data.getSec() > 0) {
+                                position = i;
+                                break;
+                            }
+                        } else {
+                            Log.e(TAG, "list.get(i).getCExpressTime() error");
+                        }
+                    }
+                    mManager.scrollToPositionWithOffset(position, 0);
                 }
             });
         } else {

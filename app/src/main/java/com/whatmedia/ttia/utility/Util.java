@@ -55,6 +55,7 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 public class Util {
     private final static String TAG = Util.class.getSimpleName();
 
+    public final static String TAG_FORMAT_ALL = "yyyy/MM/dd HH:mm";
     public final static String TAG_FORMAT_YMD = "yyyy/MM/dd";
     public final static String TAG_FORMAT_MD = "MM/dd";
     public final static String TAG_FORMAT_HM = "HH:mm";
@@ -178,6 +179,35 @@ public class Util {
         String resultT = df.format(resultD);
         Log.d("TAG", resultT);
         return resultT;
+    }
+
+    /**
+     * Get different time with now time
+     *
+     * @param time
+     * @return
+     */
+    public static HashMap<String, Long> getDifferentTimeWithNowTime(String time, String format) {
+        DateFormat df = new SimpleDateFormat(format);
+        long hours = 0;
+        long minutes = 0;
+        long diff = 0;
+        try {
+            Date d1 = df.parse(time);
+            Date d2 = df.parse(getNowDate(format));
+            diff = d1.getTime() - d2.getTime();
+            long days = diff / (1000 * 60 * 60 * 24);
+            hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Long> diffTime = new HashMap<>();
+        diffTime.put(TAG_HOUR, hours);
+        diffTime.put(TAG_MIN, minutes);
+        diffTime.put(TAG_SEC, diff / 1000);
+        return diffTime;
     }
 
     public static String getTransformTimeFormat(String formatTarget, String time) {

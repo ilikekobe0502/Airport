@@ -177,9 +177,10 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
 //                    TextView tv = (TextView) findViewById(R.id.venueLabel);
 //                    tv.setText(app.getCurrentVenueName());
 //                }
-
-                m_progressDialog.dismiss();
-                m_progressDialog = null;
+                if (m_progressDialog != null) {
+                    m_progressDialog.dismiss();
+                    m_progressDialog = null;
+                }
                 m_initialized = true;
                 app.m_manager = m_manager;
 
@@ -640,7 +641,7 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
 
     private void createMark(Manager.Location location, int pinColor, boolean needSelect, String userId) {
         final float w = getResources().getDimension(R.dimen.dp_pixel_3);
-        if (location.m_coord3D == null) {
+        if (location != null && location.m_coord3D == null) {
             Log.e(TAG, "location.m_coord3D == null");
             return;
         }

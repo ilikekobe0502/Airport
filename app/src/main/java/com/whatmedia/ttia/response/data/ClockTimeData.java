@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.response.data;
 
+import com.google.gson.Gson;
+
 /**
  * Created by neo on 2017/8/8.
  */
@@ -31,5 +33,10 @@ public class ClockTimeData {
 
     public void setSec(long sec) {
         this.sec = sec;
+    }
+
+    public static ClockTimeData getInstance(String data) {
+        Gson gson = new Gson();
+        return gson.fromJson(data, ClockTimeData.class);
     }
 }

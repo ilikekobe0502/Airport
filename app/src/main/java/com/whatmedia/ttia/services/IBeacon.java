@@ -130,7 +130,7 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
                 for (Beacon beacon : beacons) {
 //                    Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if(beacon.getRssi() > -70){
+                    if(beacon.getRssi() > -80){
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
 //                            Log.e("IBeacon", "minorID:"+minorID+", changeUserStatus(minorID) call.");
