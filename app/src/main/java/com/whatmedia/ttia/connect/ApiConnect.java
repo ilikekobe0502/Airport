@@ -40,7 +40,7 @@ public class ApiConnect extends StateCode {
 
     public final static String TAG_IMAGE_HOST = "http://210.241.14.99/";
 
-    public final static String TAG_DEVICE_TYPE = "1";
+    public final static String TAG_DEVICE_TYPE = "2";
 
     public static String TAG_DEVICE_ID;
 
@@ -198,7 +198,6 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", mLocaleApiError)
-                .addQueryParameter("DeviceType", "1")
                 .build();
         getApi(url, callback);
     }
@@ -491,7 +490,6 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
-                .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
@@ -509,7 +507,6 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("Devicetoken", "B123456789")
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", "tw")
-                .addQueryParameter("DeviceType", "1")
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
