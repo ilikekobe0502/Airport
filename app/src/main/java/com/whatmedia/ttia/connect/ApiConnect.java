@@ -35,10 +35,10 @@ import okio.BufferedSink;
 public class ApiConnect extends StateCode {
     private final static String TAG = ApiConnect.class.getSimpleName();
 
-    private final static String TAG_HOST = "http://125.227.250.187:8867/api/";
+    private final static String TAG_HOST = "http://210.241.14.99/api/";
     private final static MediaType TAG_JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public final static String TAG_IMAGE_HOST = "http://125.227.250.187:8866/";
+    public final static String TAG_IMAGE_HOST = "http://210.241.14.99/";
 
     public final static String TAG_DEVICE_TYPE = "1";
 
