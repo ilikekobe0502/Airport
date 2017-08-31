@@ -325,9 +325,10 @@ public class ApiConnect extends StateCode {
      */
     public static void getRestaurantInfo(String terminalsID, String areaID, String restaurantTypeID, String floorID, Callback callback) {
         //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        if (mLocale.equals("cn")) {
-            mLocale = "tw";
-        }
+        // TODO: 2017/9/1 他有資料了我又改回來了！不知道哪天又要改回去吧幹
+//        if (mLocale.equals("cn")) {
+//            mLocale = "tw";
+//        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "seach_restaurant")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)
@@ -488,8 +489,7 @@ public class ApiConnect extends StateCode {
                 .newBuilder()
                 .addQueryParameter("UserID", "A123456789")
                 .addQueryParameter("Devicetoken", "B123456789")
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("DeviceType", "1")// TODO: 2017/9/1 等他們Server 改好要改２
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
@@ -505,8 +505,7 @@ public class ApiConnect extends StateCode {
                 .newBuilder()
                 .addQueryParameter("UserID", "A123456789")
                 .addQueryParameter("Devicetoken", "B123456789")
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("lan", "tw")
+                .addQueryParameter("DeviceType", "1")// TODO: 2017/9/1 等他們Server 改好要改2
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
