@@ -133,11 +133,11 @@ public class IBeacon extends Service implements BeaconConsumer {
                     date = System.currentTimeMillis() / day_millseconds;
                 }
                 for (Beacon beacon : beacons) {
-//                    Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
+                    Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
                     if ((beacon.getId1().toString().equals(BEACON_UUID_3) || beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
-//                            Log.e("IBeacon", "minorID:" + minorID + ", changeUserStatus(minorID) call.");
+                            Log.e("IBeacon", "minorID:" + minorID + ", changeUserStatus(minorID) call.");
                             changeUserStatus(minorID);
                         }
                     }
@@ -207,7 +207,8 @@ public class IBeacon extends Service implements BeaconConsumer {
     }
 
     public void changeUserStatus(final String minorID) {
-        mApiConnect.registerUser(minorID, new Callback() {
+        int count = 0;
+        if (!mApiConnect.registerUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "registerUser failure");
@@ -223,6 +224,17 @@ public class IBeacon extends Service implements BeaconConsumer {
                     Log.e(TAG, "registerUser failure");
                 }
             }
-        });
+        })) {
+            Log.d(TAG, "fai;sasdasdasd");
+            count++;
+            if (count < 10) {
+                mApiConnect = null;
+                mApiConnect = ApiConnect.getInstance(getApplicationContext());
+                changeUserStatus(minorID);
+            } else {
+                count = 0;
+                // TODO: 2017/9/2 提醒重開APP
+            }
+        }
     }
 }
