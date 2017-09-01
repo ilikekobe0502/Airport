@@ -688,7 +688,7 @@ public class ApiConnect extends StateCode {
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
                 .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("Beacon_ID", minorID)
+                .addQueryParameter("BeaconID", minorID)
                 .build();
         getApi(url, callback);
     }
