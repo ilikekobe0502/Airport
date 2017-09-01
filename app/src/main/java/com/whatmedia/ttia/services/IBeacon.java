@@ -75,9 +75,11 @@ import okhttp3.Response;
                       耶穌保佑                永無 BUG
 */
 public class IBeacon extends Service implements BeaconConsumer {
+    private static final String TAG = IBeacon.class.getSimpleName();
+
     public static final String BEACON_UUID_1 = "A0000000-0000-0000-0000-000000000000";
     public static final String BEACON_UUID_2 = "B0000000-0000-0000-0000-000000000000";
-    public static final String mBeacon = "e20a39f4-73f5-4bc4-a12f-17d1ad07a9a6";
+    public static final String BEACON_UUID_3 = "e8229ba5-5ee0-4fb5-9648-366a7f97a70a";
     private final long day_millseconds = 86400000;
 
     private ApiConnect mApiConnect;
@@ -132,11 +134,10 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
                 for (Beacon beacon : beacons) {
 //                    Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
+                    if ((beacon.getId1().toString().equals(BEACON_UUID_3) || beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
-//                            Log.e("IBeacon", "minorID:"+minorID+", changeUserStatus(minorID) call.");
-                            mMap.put(minorID, 0);
+//                            Log.e("IBeacon", "minorID:" + minorID + ", changeUserStatus(minorID) call.");
                             changeUserStatus(minorID);
                         }
                     }
@@ -209,6 +210,7 @@ public class IBeacon extends Service implements BeaconConsumer {
         mApiConnect.registerUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "registerUser failure");
             }
 
             @Override
@@ -216,8 +218,9 @@ public class IBeacon extends Service implements BeaconConsumer {
                 if (response.code() == 200) {
                     //success
                     Log.e("IBeacon", "registerUser() success, minorID:" + minorID);
+                    mMap.put(minorID, 0);
                 } else {
-                    //fail
+                    Log.e(TAG, "registerUser failure");
                 }
             }
         });

@@ -77,7 +77,7 @@ public class ApiConnect extends StateCode {
             TAG_DEVICE_ID = Util.getDeviceId(context);
         }
 
-        if (TextUtils.isEmpty(mToken)) {
+        if (TextUtils.isEmpty(mToken) || TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
             mToken = Preferences.getFCMToken(context);
         }
         switchLocale();

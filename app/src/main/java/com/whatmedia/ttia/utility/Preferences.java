@@ -13,7 +13,7 @@ import com.whatmedia.ttia.enums.LanguageSetting;
 public class Preferences {
     private final static String TAG = Preferences.class.getSimpleName();
 
-    private final static String TAG_ERROR = "error";
+    public final static String TAG_ERROR = "error";
     private final static String TAG_CLOCK_DATA = "clock";
     private final static String TAG_MY_FLIGHT_INFO = "my_flight";
     private final static String TAG_LOCALE_Setting = "locale";
