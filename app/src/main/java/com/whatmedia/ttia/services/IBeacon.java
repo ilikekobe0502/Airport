@@ -225,7 +225,7 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
             }
         })) {
-            Log.d(TAG, "fai;sasdasdasd");
+            Log.e(TAG, "Token error : count = " + count);
             count++;
             if (count < 10) {
                 mApiConnect = null;
