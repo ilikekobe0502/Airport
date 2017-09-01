@@ -7,7 +7,9 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.splunk.mint.Mint;
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.utility.Preferences;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -124,17 +126,17 @@ public class IBeacon extends Service implements BeaconConsumer {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 //                Log.e("date","date:"+date+", System.currentTimeMillis()/day_millseconds:"+System.currentTimeMillis()/day_millseconds+", System.currentTimeMillis():"+System.currentTimeMillis());
-                if(System.currentTimeMillis()/day_millseconds != date ){
+                if (System.currentTimeMillis() / day_millseconds != date) {
                     mMap.clear();
-                    date = System.currentTimeMillis()/day_millseconds;
+                    date = System.currentTimeMillis() / day_millseconds;
                 }
                 for (Beacon beacon : beacons) {
 //                    Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if(beacon.getRssi() > -80){
+                    if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
 //                            Log.e("IBeacon", "minorID:"+minorID+", changeUserStatus(minorID) call.");
-                            mMap.put(minorID,0);
+                            mMap.put(minorID, 0);
                             changeUserStatus(minorID);
                         }
                     }
