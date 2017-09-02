@@ -78,6 +78,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     public static final String BEACON_UUID_2 = "B0000000-0000-0000-0000-000000000000";
     public static final String BEACON_UUID_3 = "e8229ba5-5ee0-4fb5-9648-366a7f97a70a";
     private final long day_millseconds = 86400000;
+    private static final Object mBeaconLocker = new Object();
 
     private ApiConnect mApiConnect;
     private BeaconManager mBeaconManager;
@@ -135,47 +136,12 @@ public class IBeacon extends Service implements BeaconConsumer {
                     if ((beacon.getId1().toString().equals(BEACON_UUID_3) || beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
-                            mTokenErrorCount = 0;
-                            Log.e("IBeacon", "minorID:" + minorID + ", changeUserStatus(minorID) call.");
-                            changeUserStatus(minorID);
+                            synchronized (mBeaconLocker){
+                                mTokenErrorCount = 0;
+                                changeUserStatus(minorID);
+                            }
                         }
                     }
-//                    Log.e("IBeacon","beacon.getId1().equals(mBeacon):"+beacon.getId1().equals(mBeacon));
-//                    Log.e("IBeacon","beacon.getRssi() > -70:"+(beacon.getRssi() > -70));
-                    //若該beacon的UUID == 公司所設定的那兩組UUID 且 RSSI > -70 才做以下動作
-//                    if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -70) {
-//                        String minorID = beacon.getId3().toString();
-//
-//
-//                        if (mMap.containsKey(minorID)) {
-//                            Log.e("IBeacon", "mMap.containsKey(minorID) true");
-//                            mTempCount = mMap.get(minorID);
-//                            mTempCount++;
-//                            mMap.put(minorID, mTempCount);
-//                            if (mTempCount == 10) {
-//                                Log.e("IBeacon", "saveAchievement(minorID) call.");
-//                                mMap.put(minorID, 0);
-//
-//                                //入境 若minorID == 1,2,34,35則進行新增使用者的動作
-//                                if (minorID.equals("1") || minorID.equals("2") || minorID.equals("34") || minorID.equals("35")) {
-//                                    changeUserStatus(true);
-//                                    //出境 若minorID == 32,33則進行刪除使用者的動作
-//                                } else if (minorID.equals("32") || minorID.equals("33")) {
-//                                    changeUserStatus(false);
-//                                } else {
-//                                    //其餘的minorID歸類為 新增使用者抵達Beacon的動作
-//                                    saveAchievement(minorID);
-//                                }
-//                            } else {
-//                                Log.e("IBeacon", "saveAchievement(minorID) no call. mTempCount:" + mTempCount);
-//                            }
-//                        } else {
-//                            Log.e("IBeacon", "mMap.containsKey(minorID) false");
-//                            mMap.put(minorID, 1);
-//                        }
-//                    } else {
-//                        Log.e("IBeacon", "!beacon.getId1().equals(beacon) && beacon.getRssi() <= -70");
-//                    }
                 }
             }
         });
@@ -206,6 +172,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     }
 
     public void changeUserStatus(final String minorID) {
+        Log.e("IBeacon", "mTokenErrorCount:"+mTokenErrorCount+", minorID:" + minorID + ", changeUserStatus(minorID) call.");
         if (!mApiConnect.registerUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
