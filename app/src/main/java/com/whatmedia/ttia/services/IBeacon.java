@@ -7,9 +7,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.splunk.mint.Mint;
 import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.utility.Preferences;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -19,7 +17,6 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -87,6 +84,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     private Region mRegion;
     private HashMap<String, Integer> mMap = new HashMap<>();
     private long date = System.currentTimeMillis() / day_millseconds;
+    private int mTokenErrorCount = 0;
 
     //    private List<String> mAlreadySendMinorID = new ArrayList<>();
     private int mTempCount;
@@ -137,6 +135,7 @@ public class IBeacon extends Service implements BeaconConsumer {
                     if ((beacon.getId1().toString().equals(BEACON_UUID_3) || beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
+                            mTokenErrorCount = 0;
                             Log.e("IBeacon", "minorID:" + minorID + ", changeUserStatus(minorID) call.");
                             changeUserStatus(minorID);
                         }
@@ -207,7 +206,6 @@ public class IBeacon extends Service implements BeaconConsumer {
     }
 
     public void changeUserStatus(final String minorID) {
-        int count = 0;
         if (!mApiConnect.registerUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -225,14 +223,14 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
             }
         })) {
-            Log.e(TAG, "Token error : count = " + count);
-            count++;
-            if (count < 10) {
+            Log.e(TAG, "Token error : mTokenErrorCount = " + mTokenErrorCount);
+            mTokenErrorCount++;
+            if (mTokenErrorCount < 10) {
                 mApiConnect = null;
                 mApiConnect = ApiConnect.getInstance(getApplicationContext());
                 changeUserStatus(minorID);
             } else {
-                count = 0;
+                mTokenErrorCount = 0;
                 // TODO: 2017/9/2 提醒重開APP
             }
         }
