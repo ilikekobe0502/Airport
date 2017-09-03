@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="FontFitTextView">
+        <attr name="minTextSize" format="dimension" />
+        <attr name="decreaseValue" format="dimension" />
+        <attr name="needResize" format="boolean" />
+        <attr name="needSpecielHeightResize" format="boolean" />
+    </declare-styleable>
+
+</resources>

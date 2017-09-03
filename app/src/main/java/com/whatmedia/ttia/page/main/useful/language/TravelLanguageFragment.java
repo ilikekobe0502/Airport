@@ -89,7 +89,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("key",2);
+                bundle.putInt("key",3);
                 bundle.putString("title",getString(R.string.conversation_ask));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
@@ -98,7 +98,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("key",3);
+                bundle.putInt("key",5);
                 bundle.putString("title",getString(R.string.conversation_traffic));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
@@ -107,7 +107,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("key",4);
+                bundle.putInt("key",7);
                 bundle.putString("title",getString(R.string.conversation_travel));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
@@ -116,7 +116,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("key",5);
+                bundle.putInt("key",2);
                 bundle.putString("title",getString(R.string.conversation_car));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
@@ -125,7 +125,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("key",6);
+                bundle.putInt("key",4);
                 bundle.putString("title",getString(R.string.conversation_dining));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }
@@ -134,7 +134,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("key",7);
+                bundle.putInt("key",6);
                 bundle.putString("title",getString(R.string.conversation_lodging));
                 mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
             }

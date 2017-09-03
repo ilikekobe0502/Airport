@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.FontFitTextView;
 import com.whatmedia.ttia.utility.Preferences;
 
 import java.util.List;
@@ -81,7 +82,7 @@ public class LanguageSettingRecyclerViewAdapter extends RecyclerView.Adapter<Lan
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)
-        TextView mTextViewTitle;
+        FontFitTextView mTextViewTitle;
 
         ViewHolder(View view) {
             super(view);
