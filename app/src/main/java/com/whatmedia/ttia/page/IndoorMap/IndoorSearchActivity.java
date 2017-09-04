@@ -128,7 +128,8 @@ public class IndoorSearchActivity extends IndoorBaseActivity {
 
         final Manager.Location locStart = intent.getParcelableExtra(MyAppUtils.s_extra_start);
         if (locStart == null) {
-            final String curLocStr = "Current location";
+            String curLocStr = "Current location";
+            curLocStr = "";
             if (!curLocStr.isEmpty()) {
                 m_selectedStart = new SItem(null);
                 m_fromEditText.setText(curLocStr);
