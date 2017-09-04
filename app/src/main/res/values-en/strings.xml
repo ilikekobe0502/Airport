@@ -591,7 +591,7 @@
     <!-- Useful questionnaire -->
     <string name="useful_quest_title">Fill out questionnaire</string>
     <string name="useful_quest_des">Description: very dissatisfied with 1 point, not satisfied with 2 points, ordinary 3 points, \ n satisfaction 4 points, very satisfied with 5 points.</string>
-    <string name="useful_quest_number">problem</string>
+    <string name="useful_quest_number">Question</string>
     <string name="useful_quest_send">Sent out</string>
     <string name="useful_quest_send_message">The questionnaire results have been successfully sent, thanks for your fill!</string>
     <string name="useful_quest_no_finish">Still contains uncompleted items</string>
@@ -665,7 +665,7 @@
     <string name="parking_info_parking_space_much">"Plenty of parking \navailable"</string>
     <string name="parking_info_parking_space_enough">"Parking still \navailable"</string>
     <string name="parking_info_parking_space_full">"Parking full"</string>
-    <string name="parking_info_parking_space_number_of">"%s\nSpaces\nleft"</string>
+    <string name="parking_info_parking_space_number_of">"Still\nAvailable\n%s"</string>
     <string name="parking_info_parking_space_full_state">"Is full"</string>
     <string name="parking_info_parking_space_P1">"P1"</string>
     <string name="parking_info_parking_space_P2">"P2"</string>
