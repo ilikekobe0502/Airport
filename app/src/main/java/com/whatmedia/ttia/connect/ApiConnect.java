@@ -195,7 +195,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_myflight")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", mLocaleApiError)
                 .build();
@@ -212,7 +212,7 @@ public class ApiConnect extends StateCode {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "save_flight")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("AirlineCode", data.getAirlineCode())
                 .addQueryParameter("Shifts", data.getShift())//需要補滿四位數
@@ -471,8 +471,8 @@ public class ApiConnect extends StateCode {
     public static void getUserNews(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_NewsUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
-                .addQueryParameter("Devicetoken", "B123456789")
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", mToken)
                 .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                 .addQueryParameter("lan", mLocaleApiError)
                 .build();
@@ -487,9 +487,9 @@ public class ApiConnect extends StateCode {
     public static void getUserEmergency(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
-                .addQueryParameter("Devicetoken", "B123456789")
-                .addQueryParameter("DeviceType", "1")// TODO: 2017/9/1 等他們Server 改好要改２
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", mToken)
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)// TODO: 2017/9/1 等他們Server 改好要改２
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
@@ -503,9 +503,9 @@ public class ApiConnect extends StateCode {
     public static void getUserSweetNotify(Callback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "get_IntimateReminderUserList")
                 .newBuilder()
-                .addQueryParameter("UserID", "A123456789")
-                .addQueryParameter("Devicetoken", "B123456789")
-                .addQueryParameter("DeviceType", "1")// TODO: 2017/9/1 等他們Server 改好要改2
+                .addQueryParameter("UserID", TAG_DEVICE_ID)
+                .addQueryParameter("Devicetoken", mToken)
+                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)// TODO: 2017/9/1 等他們Server 改好要改2
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
@@ -706,6 +706,7 @@ public class ApiConnect extends StateCode {
             getApi(url, callback);
             return true;
         }
+        Log.e(TAG, "mToken is error");
         return false;
     }
 }

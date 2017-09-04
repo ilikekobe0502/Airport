@@ -18,6 +18,7 @@ public class Preferences {
     private final static String TAG_MY_FLIGHT_INFO = "my_flight";
     private final static String TAG_LOCALE_Setting = "locale";
     private final static String TAG_FCM_TOKEN = "fcm_token";
+    private final static String TAG_FIRST_INIT = "first";
 
     private static SharedPreferences preferences;
 
@@ -98,6 +99,7 @@ public class Preferences {
 
     /**
      * Save fcm token
+     *
      * @param context
      * @param token
      */
@@ -112,11 +114,36 @@ public class Preferences {
 
     /**
      * Get fcm token
+     *
      * @param context
      * @return
      */
     public static String getFCMToken(Context context) {
         preferences = context.getSharedPreferences(TAG_FCM_TOKEN, 0);
         return preferences.getString(TAG_FCM_TOKEN, TAG_ERROR);
+    }
+
+    /**
+     * Save user first init
+     *
+     * @param context
+     * @param first
+     */
+    public static void saveUserFirstInit(Context context, boolean first) {
+        preferences = context.getSharedPreferences(TAG_FIRST_INIT, 0);
+        preferences.edit()
+                .putBoolean(TAG_FIRST_INIT, first)
+                .commit();
+    }
+
+    /**
+     * Get user first init
+     *
+     * @param context
+     * @return
+     */
+    public static boolean getUserFirstInit(Context context) {
+        preferences = context.getSharedPreferences(TAG_FIRST_INIT, 0);
+        return preferences.getBoolean(TAG_FIRST_INIT, false);
     }
 }
