@@ -74,8 +74,8 @@ import okhttp3.Response;
 public class IBeacon extends Service implements BeaconConsumer {
     private static final String TAG = IBeacon.class.getSimpleName();
 
-    public static final String BEACON_UUID_1 = "A0000000-0000-0000-0000-000000000000";
-    public static final String BEACON_UUID_2 = "B0000000-0000-0000-0000-000000000000";
+    public static final String BEACON_UUID_1 = "a0000000-0000-0000-0000-000000000000";
+    public static final String BEACON_UUID_2 = "b0000000-0000-0000-0000-000000000000";
     public static final String BEACON_UUID_3 = "e8229ba5-5ee0-4fb5-9648-366a7f97a70a";
     private final long day_millseconds = 86400000;
     private static final Object mBeaconLocker = new Object();
@@ -133,7 +133,7 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
                 for (Beacon beacon : beacons) {
                     Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if ((beacon.getId1().toString().equals(BEACON_UUID_3) || beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
+                    if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
                             synchronized (mBeaconLocker){
