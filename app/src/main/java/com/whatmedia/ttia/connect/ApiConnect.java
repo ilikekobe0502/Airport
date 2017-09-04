@@ -558,15 +558,19 @@ public class ApiConnect extends StateCode {
      *
      * @param callback
      */
-    public static void sendQuestionnaireResult(String answer, Callback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Answers")
-                .newBuilder()
-                .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", TAG_DEVICE_ID)
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("answer", answer)
-                .build();
-        getApi(url, callback);
+    public static boolean sendQuestionnaireResult(String answer, Callback callback) {
+        if (!TextUtils.isEmpty(mToken) && !TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
+            HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Answers")
+                    .newBuilder()
+                    .addQueryParameter("UserID", TAG_DEVICE_ID)
+                    .addQueryParameter("Devicetoken", mToken)
+                    .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                    .addQueryParameter("answer", answer)
+                    .build();
+            getApi(url, callback);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -653,30 +657,38 @@ public class ApiConnect extends StateCode {
      *
      * @param callback
      */
-    public static void getAchievementList(Callback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Achievement")
-                .newBuilder()
-                .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", mToken)
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("lan", mLocale)
-                .build();
-        getApi(url, callback);
+    public static boolean getAchievementList(Callback callback) {
+        if (!TextUtils.isEmpty(mToken) && !TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
+            HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Achievement")
+                    .newBuilder()
+                    .addQueryParameter("UserID", TAG_DEVICE_ID)
+                    .addQueryParameter("Devicetoken", mToken)
+                    .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                    .addQueryParameter("lan", mLocale)
+                    .build();
+            getApi(url, callback);
+            return true;
+        }
+        return false;
     }
 
     /**
      * @param minorID
      * @param callback
      */
-    public static void saveAchievement(String minorID, Callback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
-                .newBuilder()
-                .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", mToken)
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
-                .addQueryParameter("Beacon_ID", minorID)
-                .build();
-        getApi(url, callback);
+    public static boolean saveAchievement(String minorID, Callback callback) {
+        if (!TextUtils.isEmpty(mToken) && !TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
+            HttpUrl url = HttpUrl.parse(TAG_HOST + "save_Achievement")
+                    .newBuilder()
+                    .addQueryParameter("UserID", TAG_DEVICE_ID)
+                    .addQueryParameter("Devicetoken", mToken)
+                    .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                    .addQueryParameter("Beacon_ID", minorID)
+                    .build();
+            getApi(url, callback);
+            return true;
+        }
+        return false;
     }
 
     /**
