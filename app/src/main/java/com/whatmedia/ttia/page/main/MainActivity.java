@@ -578,8 +578,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                             }
                         });
             } else if (fragment instanceof MoreFlightsFragment) {//更多航班
+                String date = Util.getNowDate(Util.TAG_FORMAT_MD);
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
+                        .setTitleText(TextUtils.equals(fragment.getArguments().getString(MoreFlightsContract.TAG_KIND), FlightsInfoData.TAG_KIND_DEPARTURE) ?
+                                getString(R.string.tableview_header_takeoff, date) :
+                                getString(R.string.tableview_header_arrival, date))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
