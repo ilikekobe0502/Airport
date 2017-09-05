@@ -27,16 +27,16 @@ public class FCMMessageService extends FirebaseMessagingService {
         Notification.Builder builder = new Notification.Builder(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             builder.setContentTitle(remoteMessage.getNotification().getTitle())
-                    .setLargeIcon(Icon.createWithResource(this,R.mipmap.ic_launcher))
-                    .setSmallIcon(R.mipmap.icon)
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setLargeIcon(Icon.createWithResource(this, R.mipmap.ic_launcher))
+                    .setSmallIcon(R.mipmap.icon)
                     .setAutoCancel(true);
-        }else{
+        } else {
             builder.setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setSmallIcon(R.mipmap.icon)
+                    .setSmallIcon(R.mipmap.ic_launcher)
                     .setAutoCancel(true);
         }
 

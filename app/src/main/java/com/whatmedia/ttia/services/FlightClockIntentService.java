@@ -4,6 +4,8 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
@@ -53,15 +55,28 @@ public class FlightClockIntentService extends IntentService {
 
             //Notification message
             Notification.Builder builder = new Notification.Builder(this);
-            builder.setContentTitle(getString(R.string.title_flight_notify))
-                    .setContentText(getString(R.string.my_flights_notify_message,
-                            !TextUtils.isEmpty(flightsInfoData.getAirLineCName()) ? flightsInfoData.getAirLineCName().trim() : "",
-                            !TextUtils.isEmpty(flightsInfoData.getFlightCode()) ? flightsInfoData.getFlightCode().trim() : "",
-                            !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
-                            !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
-                    .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setSmallIcon(R.drawable.home_02)
-                    .setAutoCancel(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                builder.setContentTitle(getString(R.string.title_flight_notify))
+                        .setContentText(getString(R.string.my_flights_notify_message,
+                                !TextUtils.isEmpty(flightsInfoData.getAirLineCName()) ? flightsInfoData.getAirLineCName().trim() : "",
+                                !TextUtils.isEmpty(flightsInfoData.getFlightCode()) ? flightsInfoData.getFlightCode().trim() : "",
+                                !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
+                                !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
+                        .setDefaults(Notification.DEFAULT_VIBRATE)
+                        .setLargeIcon(Icon.createWithResource(this, R.mipmap.ic_launcher))
+                        .setSmallIcon(R.mipmap.icon)
+                        .setAutoCancel(true);
+            } else {
+                builder.setContentTitle(getString(R.string.title_flight_notify))
+                        .setContentText(getString(R.string.my_flights_notify_message,
+                                !TextUtils.isEmpty(flightsInfoData.getAirLineCName()) ? flightsInfoData.getAirLineCName().trim() : "",
+                                !TextUtils.isEmpty(flightsInfoData.getFlightCode()) ? flightsInfoData.getFlightCode().trim() : "",
+                                !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
+                                !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
+                        .setDefaults(Notification.DEFAULT_VIBRATE)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setAutoCancel(true);
+            }
 
             //Click intent
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
