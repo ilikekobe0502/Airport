@@ -22,12 +22,14 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
+import com.whatmedia.ttia.response.data.ClockTimeData;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.utility.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +59,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private List<FlightsInfoData> mDepartureList;
     private List<FlightsInfoData> mArriveList;
+    private List<FlightsInfoData> mFilterData = new ArrayList<>();
 
     private String mLastShowDate = Util.getCountDate(-1);
     private String mNowShowDate = Util.getNowDate(Util.TAG_FORMAT_MD);
@@ -67,6 +70,8 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
     private String mQueryType = FlightsInfoData.TAG_KIND_DEPARTURE;
+    private String mKeyWorld = "";
+    private LinearLayoutManager mManager;
 
 
     public FlightsSearchResultFragment() {
@@ -93,9 +98,11 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         mPresenter = FlightsSearchResultPresenter.getInstance(getContext(), this);
 
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS))
-                && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
+                && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))
+                && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
             mArriveList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS));
             mDepartureList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS));
+            mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD);
 
 //            if (mArriveList.size() > 0)
 //                mArriveDate = !TextUtils.isEmpty(mArriveList.get(0).getExpressDate()) ? mArriveList.get(0).getExpressDate() : "";
@@ -110,9 +117,12 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mDepartureList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
+
+        goToCurrentPosition(mDepartureList);
         return view;
     }
 
@@ -285,10 +295,20 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
+            mFilterData.clear();
+            for (FlightsInfoData item : list) {
+                if (item.getAirLineCName().contains(mKeyWorld) || item.getAirlineCode().contains(mKeyWorld)
+                        || item.getContactsLocation().contains(mKeyWorld) || item.getContactsLocationEng().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)
+                        || item.getFlightCode().contains(mKeyWorld) || item.getCTName().contains(mKeyWorld) || item.getCSName().contains(mKeyWorld) || item.getJName().contains(mKeyWorld)
+                        || item.getEName().contains(mKeyWorld)) {
+                    mFilterData.add(item);
+                }
+            }
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setData(list);
+                    mAdapter.setData(mFilterData);
+                    goToCurrentPosition(mFilterData);
                 }
             });
         } else {
@@ -329,5 +349,23 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         data.setExpressTime(mQueryDate);
         mLoadingView.showLoadingView();
         mPresenter.getFlightAPI(data);
+    }
+
+    private void goToCurrentPosition(List<FlightsInfoData> list) {
+        if (list != null) {
+            int position = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
+                    ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
+                    if (data.getHour() > 0 | data.getMin() > 0 | data.getSec() > 0) {
+                        position = i;
+                        break;
+                    }
+                } else {
+                    Log.e(TAG, "list.get(i).getCExpressTime() error");
+                }
+            }
+            mManager.scrollToPositionWithOffset(position, 0);
+        }
     }
 }

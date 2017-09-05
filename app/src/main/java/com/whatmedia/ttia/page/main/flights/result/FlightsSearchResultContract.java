@@ -9,6 +9,7 @@ import java.util.List;
 public interface FlightsSearchResultContract {
     String TAG_ARRIVE_FLIGHTS = "com.neo.taoyuanairport.page.main.flights.result.arrive_flights";
     String TAG_DEPARTURE_FLIGHTS = "com.neo.taoyuanairport.page.main.flights.result.departure_flights";
+    String TAG_KEY_WORLD = "com.whatmedia.ttia.page.main.flights.result.key_world";
 
     interface View {
         void saveMyFlightSucceed(String message);

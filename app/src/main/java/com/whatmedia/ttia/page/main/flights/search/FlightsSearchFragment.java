@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.flights.search;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -150,6 +149,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         String keyword = mEditTextSearch.getText().toString();
         if (!TextUtils.isEmpty(keyword)) {
             mBundle.clear();
+            mBundle.putString(FlightsSearchResultContract.TAG_KEY_WORLD, keyword);
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
             mSearchData.setKeyWord(keyword);
