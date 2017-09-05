@@ -9,112 +9,116 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_below="@+id/myToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true">
+        android:layout_below="@+id/myToolbar"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="@string/directions"
-                android:textSize="24dp"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/directions"
+                android:textColor="#000000"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/directions_route"
-                android:onClick="onRoute"
-                android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="@drawable/mybutton_color"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="@string/directions_route"/>
+                android:background="@null"
+                android:onClick="onRoute"
+                android:text="@string/directions_route"
+                android:textColor="@drawable/mybutton_color"
+                android:textSize="24dp" />
 
         </RelativeLayout>
 
         <!-- swap button & start, end bars -->
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <!-- swap button -->
             <ImageButton
-                android:onClick="onSwap"
-                android:background="@null"
-                android:src="@drawable/swap"
-                android:layout_marginLeft="@dimen/dp_pixel_12"
-                android:layout_gravity="center_vertical"
                 android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_pixel_12"
+                android:background="@null"
+                android:onClick="onSwap"
+                android:src="@drawable/swap" />
 
             <!-- start, end bars -->
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
                 android:layout_width="0px"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <!-- Start -->
                 <LinearLayout
-                    android:paddingTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/directions_from"
                         android:textColor="#000000"
-                        android:textSize="@dimen/dp_pixel_18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dp_pixel_18" />
+
                     <EditText
                         android:id="@+id/directions_from"
-                        android:inputType="text"
-                        android:imeOptions="actionSearch"
-                        android:textSize="@dimen/dp_pixel_18"
-                        android:layout_weight="1"
                         android:layout_width="0px"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/directions_from_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:textSize="@dimen/dp_pixel_18" />
 
                 </LinearLayout>
 
                 <!-- End -->
                 <LinearLayout
-                    android:paddingTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:paddingTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/directions_to"
                         android:textColor="#000000"
-                        android:textSize="@dimen/dp_pixel_18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="@dimen/dp_pixel_18" />
+
                     <EditText
                         android:id="@+id/directions_to"
-                        android:inputType="text"
-                        android:imeOptions="actionSearch"
-                        android:textSize="@dimen/dp_pixel_18"
-                        android:layout_weight="1"
                         android:layout_width="0px"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/directions_to_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:textSize="@dimen/dp_pixel_18" />
 
                 </LinearLayout>
 
@@ -126,16 +130,12 @@
         <ListView
             android:id="@+id/directions_table"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0px">
+            android:layout_height="0px"
+            android:layout_weight="1">
 
         </ListView>
 
     </LinearLayout>
-
-
-
-
 
 
     <com.whatmedia.ttia.component.MyMarquee

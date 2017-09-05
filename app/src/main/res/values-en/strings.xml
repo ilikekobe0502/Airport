@@ -768,4 +768,9 @@
     <string name="indoor_search_sub_title">Road map</string>
     <string name="indoor_search_start_text">Start：%d</string>
     <string name="indoor_search_end_text">End：%d</string>
+
+    <string name="directions_from">Start:</string>
+    <string name="directions_to">End:</string>
+    <string name="directions_from_hint">Please enter your location</string>
+    <string name="directions_to_hint">Please enter your destination</string>
 </resources>

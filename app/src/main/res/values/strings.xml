@@ -851,9 +851,11 @@
     <string name="menu_search">Search</string>
     <string name="directions">Directions</string>
     <string name="level_string">Level %1$d</string>
-    <string name="directions_from">Start:</string>
-    <string name="directions_to">End:</string>
+    <string name="directions_from">起:</string>
+    <string name="directions_to">迄:</string>
     <string name="directions_route">Route</string>
     <string name="current_location">Current location</string>
 
+    <string name="directions_from_hint">請以英文輸入您的地點</string>
+    <string name="directions_to_hint">請以英文輸入您的目的地</string>
 </resources>

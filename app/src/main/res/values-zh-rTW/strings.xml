@@ -833,4 +833,10 @@
     <string name="indoor_search_sub_title">路線圖</string>
     <string name="indoor_search_start_text">起始：%d</string>
     <string name="indoor_search_end_text">終點：%d</string>
+
+
+    <string name="directions_from">起:</string>
+    <string name="directions_to">迄:</string>
+    <string name="directions_from_hint">請以英文輸入您的地點</string>
+    <string name="directions_to_hint">請以英文輸入您的目的地</string>
 </resources>
