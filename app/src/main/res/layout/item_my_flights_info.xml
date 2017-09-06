@@ -15,12 +15,12 @@
         android:background="@drawable/my_flight_02_02_no" />
 
     <RelativeLayout
-        android:layout_toRightOf="@+id/imageView_check"
         android:id="@+id/layout_frame"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_60"
         android:layout_marginLeft="@dimen/dp_pixel_7"
         android:layout_marginRight="@dimen/dp_pixel_7"
+        android:layout_toRightOf="@+id/imageView_check"
         android:background="@drawable/flight_background">
 
         <TextView
@@ -29,9 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:textStyle="bold"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/sp_pixel_13" />
+            android:textSize="@dimen/sp_pixel_13"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/line1"
@@ -92,7 +92,7 @@
             android:layout_width="@dimen/dp_pixel_50"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/textView_state"
-            android:background="@drawable/flight_bg01">
+            android:background="@drawable/bg_flight_gate">
 
             <View
                 android:id="@+id/line3"
@@ -106,16 +106,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/line3"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textSize="@dimen/sp_pixel_14"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_gate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/line3"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textSize="@dimen/sp_pixel_14"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <TextView
@@ -126,8 +128,8 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:paddingRight="@dimen/dp_pixel_10"
-            android:textStyle="bold"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/sp_pixel_13" />
+            android:textSize="@dimen/sp_pixel_13"
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>
