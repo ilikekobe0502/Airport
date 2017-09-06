@@ -34,8 +34,8 @@
     <string name="flight_takeoff_detail_dialog_airnumber">  班機號碼：  </string>
     <string name="flight_takeoff_detail_dialog_arrivelocation">  抵達地：  </string>
     <string name="flight_takeoff_detail_dialog_status">  狀態：  </string>
-    <string name="flight_takeoff_detail_dialog_exceptime">  預計起飛時間：  </string>
-    <string name="flight_takeoff_detail_dialog_actualtime">  實際起飛時間：  </string>
+    <string name="flight_takeoff_detail_dialog_exceptime">預計起飛時間：</string>
+    <string name="flight_takeoff_detail_dialog_actualtime">實際起飛時間：</string>
     <string name="flight_takeoff_detail_dialog_terminal">  航廈：  </string>
     <string name="flight_takeoff_detail_dialog_gate">  登機門：  </string>
     <string name="flight_takeoff_detail_dialog_checkincount">  報到櫃檯：  </string>
@@ -44,10 +44,10 @@
     <string name="flight_arrival_detail_dialog_airnumber">  班機號碼：  </string>
     <string name="flight_arrival_detail_dialog_arrivelocation">  出發地：  </string>
     <string name="flight_arrival_detail_dialog_status">  狀態：  </string>
-    <string name="flight_arrival_detail_dialog_exceptime">  預計抵達時間：  </string>
-    <string name="flight_arrival_detail_dialog_actualtime">  實際抵達時間：  </string>
+    <string name="flight_arrival_detail_dialog_exceptime">預計抵達時間：</string>
+    <string name="flight_arrival_detail_dialog_actualtime">實際抵達時間：</string>
     <string name="flight_arrival_detail_dialog_terminal">  航廈：  </string>
-    <string name="flight_arrival_detail_dialog_package">  行李轉盤：  </string>
+    <string name="flight_arrival_detail_dialog_package">行李轉盤：</string>
 
     <string name="flight_add_to_my_flight_dialog">加入該航班至我的航班？</string>
     <string name="flight_add_to_my_flight_result_dialog">已成功加入我的航班！</string>

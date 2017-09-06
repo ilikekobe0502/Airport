@@ -86,7 +86,7 @@ public class PublicToiletViewPagerAdapter extends PagerAdapter implements IOnIte
     public void destroyItem(ViewGroup container, int position, Object object) {
 //        super.destroyItem(container, position, object);
         container.removeView((View) object);
-        object=null;
+        object = null;
     }
 
     public void setClickListener(IOnItemClickListener listener) {
@@ -108,6 +108,7 @@ public class PublicToiletViewPagerAdapter extends PagerAdapter implements IOnIte
             mWebView.getSettings().setBuiltInZoomControls(true);
             mWebView.getSettings().setDisplayZoomControls(false);
             mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+            mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() + 250);
             mWebView.setBackgroundColor(0);
             mWebView.setInitialScale(50);
         }

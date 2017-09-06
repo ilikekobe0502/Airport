@@ -29,24 +29,24 @@
     <string name="flight_takeoff_detail_dialog">  Airline：    Flight No.：    Dest.：    Status：    Schedule Takeoff Time：       Actual Takeoff Time：       Terminal：    Gate：    Checkin Counter：    </string>
     <string name="flight_arrival_detail_dialog">  Airline：    Flight No.：    Origin：    Status：    Schedule Arrival Time：       Actual Arrival Time：       Terminal：    Baggage Carousel：    </string>
 
-    <string name="flight_takeoff_detail_dialog_airname">  Airline：  </string>
-    <string name="flight_takeoff_detail_dialog_airnumber">  Flight No.：  </string>
-    <string name="flight_takeoff_detail_dialog_arrivelocation">  Dest.：  </string>
+    <string name="flight_takeoff_detail_dialog_airname">  Airline:</string>
+    <string name="flight_takeoff_detail_dialog_airnumber">  Flight No.:</string>
+    <string name="flight_takeoff_detail_dialog_arrivelocation">  Dest.:</string>
     <string name="flight_takeoff_detail_dialog_status">  Status：  </string>
-    <string name="flight_takeoff_detail_dialog_exceptime">  Schedule Takeoff Time：  </string>
-    <string name="flight_takeoff_detail_dialog_actualtime">  Actual Takeoff Time：  </string>
-    <string name="flight_takeoff_detail_dialog_terminal">  Terminal：  </string>
-    <string name="flight_takeoff_detail_dialog_gate">  Gate：  </string>
-    <string name="flight_takeoff_detail_dialog_checkincount">  Checkin Counter：  </string>
+    <string name="flight_takeoff_detail_dialog_exceptime">Schedule\nTakeoff Time:</string>
+    <string name="flight_takeoff_detail_dialog_actualtime">Actual\nTakeoff Time:</string>
+    <string name="flight_takeoff_detail_dialog_terminal">  Terminal:</string>
+    <string name="flight_takeoff_detail_dialog_gate">  Gate:</string>
+    <string name="flight_takeoff_detail_dialog_checkincount">  Checkin Counter:</string>
 
-    <string name="flight_arrival_detail_dialog_airname">  Airline：  </string>
-    <string name="flight_arrival_detail_dialog_airnumber">  Flight No.：  </string>
-    <string name="flight_arrival_detail_dialog_arrivelocation">  Origin：  </string>
-    <string name="flight_arrival_detail_dialog_status">  Status：  </string>
-    <string name="flight_arrival_detail_dialog_exceptime">  Schedule Arrival Time：  </string>
-    <string name="flight_arrival_detail_dialog_actualtime">  Actual Arrival Time：  </string>
-    <string name="flight_arrival_detail_dialog_terminal">  Terminal：  </string>
-    <string name="flight_arrival_detail_dialog_package">  Baggage Carousel：  </string>
+    <string name="flight_arrival_detail_dialog_airname">  Airline:</string>
+    <string name="flight_arrival_detail_dialog_airnumber">  Flight No.:</string>
+    <string name="flight_arrival_detail_dialog_arrivelocation">  Origin:</string>
+    <string name="flight_arrival_detail_dialog_status">  Status:</string>
+    <string name="flight_arrival_detail_dialog_exceptime">Schedule\nArrival Time:</string>
+    <string name="flight_arrival_detail_dialog_actualtime">Actual\nArrival Time:</string>
+    <string name="flight_arrival_detail_dialog_terminal">  Terminal:</string>
+    <string name="flight_arrival_detail_dialog_package">Baggage Carousel:</string>
 
     <string name="flight_add_to_my_flight_dialog">Do you want to add this flight to My Flight?</string>
     <string name="flight_add_to_my_flight_result_dialog">The flight has been add to My Flight successfully!</string>
