@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,10 +34,10 @@ public class SkyTrainPresenter implements SkyTrainContract.Presenter {
 
     @Override
     public void getSkyTrainAPI() {
-        mApiConnect.getSkyTrain(new Callback() {
+        mApiConnect.getSkyTrain(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getSkyTrainFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getSkyTrainFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +47,7 @@ public class SkyTrainPresenter implements SkyTrainContract.Presenter {
                     List<SkyTrainData> list = GetSkyTrainResponse.newInstance(result);
                     mView.getSkyTrainSucceed(list);
                 } else {
-                    mView.getSkyTrainFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getSkyTrainFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

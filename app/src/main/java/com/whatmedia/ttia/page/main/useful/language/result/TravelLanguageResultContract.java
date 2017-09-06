@@ -9,7 +9,7 @@ public interface TravelLanguageResultContract {
     interface View {
         void getLanguageSucceed(List<LanguageData> response);
 
-        void getLanguageFailed(String message);
+        void getLanguageFailed(String message, boolean timeout);
     }
 
     interface Presenter {

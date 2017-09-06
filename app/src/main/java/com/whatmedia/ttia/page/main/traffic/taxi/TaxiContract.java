@@ -8,7 +8,7 @@ public interface TaxiContract {
     interface View {
         void getTaxiSucceed(List<TaxiData> response);
 
-        void getTaxiFailed(String message);
+        void getTaxiFailed(String message, boolean timeout);
     }
 
     interface Presenter {

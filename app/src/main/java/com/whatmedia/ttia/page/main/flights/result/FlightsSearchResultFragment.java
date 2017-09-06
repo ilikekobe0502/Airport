@@ -71,6 +71,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private String mQueryDate = mNowDate;
     private String mQueryType = FlightsInfoData.TAG_KIND_DEPARTURE;
     private String mKeyWorld = "";
+    private boolean mToday = true;
     private LinearLayoutManager mManager;
 
 
@@ -102,7 +103,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
             mArriveList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS));
             mDepartureList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS));
-            mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD);
+            mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD).toLowerCase();
 
 //            if (mArriveList.size() > 0)
 //                mArriveDate = !TextUtils.isEmpty(mArriveList.get(0).getExpressDate()) ? mArriveList.get(0).getExpressDate() : "";
@@ -227,6 +228,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
+                mToday = false;
                 getFlight();
                 break;
             case R.id.textView_now:
@@ -236,8 +238,10 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
                 mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
                 mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
+                mToday = true;
                 getFlight();
                 break;
             case R.id.textView_next:
@@ -250,6 +254,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;
+                mToday = false;
                 getFlight();
                 break;
         }
@@ -275,16 +280,25 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     }
 
     @Override
-    public void saveMyFlightFailed(final String message) {
+    public void saveMyFlightFailed(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e(TAG, message);
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, message);
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -297,10 +311,10 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         if (isAdded() && !isDetached()) {
             mFilterData.clear();
             for (FlightsInfoData item : list) {
-                if (item.getAirLineCName().contains(mKeyWorld) || item.getAirlineCode().contains(mKeyWorld)
-                        || item.getContactsLocation().contains(mKeyWorld) || item.getContactsLocationEng().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)
-                        || item.getFlightCode().contains(mKeyWorld) || item.getCTName().contains(mKeyWorld) || item.getCSName().contains(mKeyWorld) || item.getJName().contains(mKeyWorld)
-                        || item.getEName().contains(mKeyWorld)) {
+                if (item.getAirLineCName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
+                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)
+                        || item.getFlightCode().toLowerCase().contains(mKeyWorld) || item.getCTName().contains(mKeyWorld) || item.getCSName().contains(mKeyWorld) || item.getJName().contains(mKeyWorld)
+                        || item.getEName().toLowerCase().contains(mKeyWorld)) {
                     mFilterData.add(item);
                 }
             }
@@ -317,24 +331,33 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     }
 
     @Override
-    public void getFlightFailed(String message) {
+    public void getFlightFailed(String message, boolean timeout) {
 
         Log.d(TAG, "getFlightFailed : " + message);
         mLoadingView.goneLoadingView();
-        if (isAdded() && !isDetached()) {
+        if (timeout) {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(R.string.note)
-                            .setMessage(R.string.data_not_found)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
-                    mAdapter.setData(null);
+                    Util.showTimeoutDialog(getContext());
                 }
             });
         } else {
-            Log.d(TAG, "Fragment is not add");
+            if (isAdded() && !isDetached()) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.note)
+                                .setMessage(R.string.data_not_found)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                        mAdapter.setData(null);
+                    }
+                });
+            } else {
+                Log.d(TAG, "Fragment is not add");
+            }
         }
     }
 
@@ -344,11 +367,17 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         else
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_arrival, mShowDate));
 
+
+        mLoadingView.showLoadingView();
         FlightSearchData data = new FlightSearchData();
         data.setQueryType(mQueryType);
-        data.setExpressTime(mQueryDate);
-        mLoadingView.showLoadingView();
-        mPresenter.getFlightAPI(data);
+        if (mToday) {
+            data.setKeyWord(mKeyWorld);
+            mPresenter.getFlightByKeywordAPI(data);
+        } else {
+            data.setExpressTime(mQueryDate);
+            mPresenter.getFlightAPI(data);
+        }
     }
 
     private void goToCurrentPosition(List<FlightsInfoData> list) {
@@ -357,7 +386,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
             for (int i = 0; i < list.size(); i++) {
                 if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
                     ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
-                    if (data.getHour() > 0 | data.getMin() > 0 | data.getSec() > 0) {
+                    if (data.getHour() >= 0 && data.getMin() >= 0 && data.getSec() >= 0) {
                         position = i;
                         break;
                     }

@@ -24,6 +24,7 @@ import com.whatmedia.ttia.response.data.FloorCodeData;
 import com.whatmedia.ttia.response.data.RestaurantCodeData;
 import com.whatmedia.ttia.response.data.StoreCodeData;
 import com.whatmedia.ttia.response.data.TerminalCodeData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -159,11 +160,20 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getTerminalFailed(String message) {
+    public void getTerminalFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            Log.e(TAG, message);
-            showMessage(message);
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, message);
+                showMessage(message);
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -230,11 +240,20 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getRestaurantInfoFailed(final String message) {
+    public void getRestaurantInfoFailed(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            Log.e(TAG, "getRestaurantInfoFailed() :" + message);
-            showNoDataDialog();
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getRestaurantInfoFailed() :" + message);
+                showNoDataDialog();
+            }
         }
     }
 

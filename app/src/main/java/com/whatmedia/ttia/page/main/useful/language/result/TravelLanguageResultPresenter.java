@@ -10,10 +10,9 @@ import com.whatmedia.ttia.response.GetLanguageResponse;
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class TravelLanguageResultPresenter implements TravelLanguageResultContract.Presenter{
+public class TravelLanguageResultPresenter implements TravelLanguageResultContract.Presenter {
     private final static String TAG = TravelLanguageResultPresenter.class.getSimpleName();
 
     private static TravelLanguageResultPresenter mTravelLanguageResultPresenter;
@@ -30,10 +29,10 @@ public class TravelLanguageResultPresenter implements TravelLanguageResultContra
 
     @Override
     public void getLanguageAPI(int id) {
-        mApiConnect.getLanguages(id+"",new Callback() {
+        mApiConnect.getLanguages(id + "", new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getLanguageFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getLanguageFailed(e.toString(), timeout);
             }
 
             @Override
@@ -42,7 +41,7 @@ public class TravelLanguageResultPresenter implements TravelLanguageResultContra
                     String result = response.body().string();
                     mView.getLanguageSucceed(GetLanguageResponse.newInstance(result));
                 } else {
-                    mView.getLanguageFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getLanguageFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

@@ -189,16 +189,25 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     }
 
     @Override
-    public void getFlightFailed(String message) {
+    public void getFlightFailed(String message, boolean timeout) {
         Log.d(TAG, "getFlightFailed : " + message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(getString(R.string.server_error));
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(getString(R.string.server_error));
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -224,17 +233,26 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     }
 
     @Override
-    public void saveMyFlightFailed(final String message) {
-
+    public void saveMyFlightFailed(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e(TAG, message);
-                    showMessage(message);
-                }
-            });
+
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, message);
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

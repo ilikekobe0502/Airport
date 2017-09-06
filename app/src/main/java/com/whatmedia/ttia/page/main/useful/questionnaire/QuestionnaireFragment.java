@@ -12,19 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.QuestionnaireData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class QuestionnaireFragment extends BaseFragment implements QuestionnaireContract.View, IOnItemClickListener {
 
@@ -119,8 +118,23 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     }
 
     @Override
-    public void getQuestionnaireFailed(String message) {
-
+    public void getQuestionnaireFailed(String message, boolean timeout) {
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getFlightsDepartureFailed: " + message);
+                showMessage(getString(R.string.server_error));
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
@@ -139,8 +153,23 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     }
 
     @Override
-    public void sendQuestionnaireFailed(String message) {
-
+    public void sendQuestionnaireFailed(String message, boolean timeout) {
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getFlightsDepartureFailed: " + message);
+                showMessage(getString(R.string.server_error));
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override

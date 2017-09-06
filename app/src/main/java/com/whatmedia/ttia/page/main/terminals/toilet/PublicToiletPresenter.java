@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,10 +34,10 @@ public class PublicToiletPresenter implements PublicToiletContract.Presenter {
 
     @Override
     public void getPublicToiletAPI() {
-        mApiConnect.getPublicToilet(new Callback() {
+        mApiConnect.getPublicToilet(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getPublicFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getPublicFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +47,7 @@ public class PublicToiletPresenter implements PublicToiletContract.Presenter {
                     List<AirportFacilityData> list = GetAirPortFacilityResponse.newInstance(result);
                     mView.getPublicToiletSucceed(list);
                 } else {
-                    mView.getPublicFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getPublicFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

@@ -14,7 +14,7 @@ public interface StoreSearchContract {
     interface View {
         void getTerminalSucceed(List<TerminalCodeData> response);
 
-        void getTerminalFailed(String message);
+        void getTerminalFailed(String message, boolean timeout);
 
         void getAreaSucceed(List<AreaCodeData> response);
 
@@ -24,7 +24,7 @@ public interface StoreSearchContract {
 
         void getRestaurantInfoSucceed(String response);
 
-        void getRestaurantInfoFailed(String message);
+        void getRestaurantInfoFailed(String message, boolean timeout);
 
         void getStoreCodeSuccess(List<StoreCodeData> response);
         void getStoreSuccess(String response);

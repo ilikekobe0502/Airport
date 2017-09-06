@@ -6,11 +6,11 @@ public interface FlightsSearchContract {
     interface View {
         void getFlightsArriveSucceed(String response);
 
-        void getFlightsArriveFailed(String message);
+        void getFlightsArriveFailed(String message, boolean timeout);
 
         void getFlightsDepartureSucceed(String response);
 
-        void getFlightsDepartureFailed(String message);
+        void getFlightsDepartureFailed(String message, boolean timeout);
     }
 
     interface Presenter {

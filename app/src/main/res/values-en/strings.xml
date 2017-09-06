@@ -773,4 +773,5 @@
     <string name="directions_to">End:</string>
     <string name="directions_from_hint">Please enter your location</string>
     <string name="directions_to_hint">Please enter your destination</string>
+    <string name="timeout_message">Cannot retrived the information due to network issue</string>
 </resources>

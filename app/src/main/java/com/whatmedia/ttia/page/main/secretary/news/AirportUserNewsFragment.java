@@ -17,6 +17,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailContract;
 import com.whatmedia.ttia.response.data.UserNewsData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -124,16 +125,25 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
     }
 
     @Override
-    public void getUserNewsFailed(final String message) {
+    public void getUserNewsFailed(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getEmergencyFailed error : " + message);
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

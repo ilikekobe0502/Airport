@@ -9,7 +9,7 @@ public interface RoamingDetailContract {
     interface View {
         void getRoamingDetailSucceed(List<RoamingDetailData> response);
 
-        void getRoamingDetailFailed(String message);
+        void getRoamingDetailFailed(String message, boolean timeout);
     }
 
     interface Presenter {

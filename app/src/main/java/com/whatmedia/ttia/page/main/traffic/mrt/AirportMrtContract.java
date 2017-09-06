@@ -8,7 +8,7 @@ public interface AirportMrtContract {
     interface View {
         void getAirportMrtSucceed(List<AirportMrtData> response);
 
-        void getAirportMrtFailed(String message);
+        void getAirportMrtFailed(String message, boolean timeout);
     }
 
     interface Presenter {

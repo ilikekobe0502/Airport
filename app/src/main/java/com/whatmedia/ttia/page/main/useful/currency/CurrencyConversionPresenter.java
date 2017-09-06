@@ -6,10 +6,10 @@ import android.util.Log;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.response.GetExangeRateResponse;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
+
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -33,10 +33,10 @@ public class CurrencyConversionPresenter implements CurrencyConversionContract.P
 
     @Override
     public void getExchangeRate(ExchangeRateData data) {
-        mApiConnect.getExchangeRate(data, new Callback() {
+        mApiConnect.getExchangeRate(data, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getExchangeRateFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getExchangeRateFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +48,7 @@ public class CurrencyConversionPresenter implements CurrencyConversionContract.P
                     mView.getExchangeRateSucceed(responseData);
                 } else {
                     Log.e(TAG, "getExchangeRate code = " + response.code() + " message = " + response.message());
-                    mView.getExchangeRateFailed(response.message());
+                    mView.getExchangeRateFailed(response.message(), false);
                 }
             }
         });

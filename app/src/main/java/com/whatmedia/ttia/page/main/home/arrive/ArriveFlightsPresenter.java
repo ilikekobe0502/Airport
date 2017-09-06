@@ -5,15 +5,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -37,9 +34,9 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
 
     @Override
     public void getArriveFlightAPI(FlightSearchData searchData) {
-        mApiConnect.getSearchFlightsInfoByDate(searchData, new Callback() {
+        mApiConnect.getSearchFlightsInfoByDate(searchData, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getArriveFlightFailed(e.toString());
             }
 
@@ -58,10 +55,10 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
 
     @Override
     public void saveMyFlightsAPI(FlightsInfoData data) {
-        mApiConnect.doMyFlights(data, new Callback() {
+        mApiConnect.doMyFlights(data, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.saveMyFlightFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.saveMyFlightFailed(e.toString(),timeout);
             }
 
             @Override
@@ -71,7 +68,7 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
                     Log.d(TAG, result);
                     mView.saveMyFlightSucceed(result);
                 } else {
-                    mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

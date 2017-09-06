@@ -15,6 +15,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.InternationCallData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -115,16 +116,25 @@ public class InternationalCallFragment extends BaseFragment implements Internati
     }
 
     @Override
-    public void getInternationalCallFailed(final String message) {
+    public void getInternationalCallFailed(final String message, boolean timeout) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

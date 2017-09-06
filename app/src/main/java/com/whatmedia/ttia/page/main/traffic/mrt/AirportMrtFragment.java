@@ -167,16 +167,25 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
     }
 
     @Override
-    public void getAirportMrtFailed(final String message) {
+    public void getAirportMrtFailed(final String message, boolean timeout) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

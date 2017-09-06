@@ -156,9 +156,19 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void getMyFlightsInfoFailed(String message) {
+    public void getMyFlightsInfoFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, message);
+        if (timeout) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    Util.showTimeoutDialog(getContext());
+                }
+            });
+        } else {
+            Log.e(TAG, message);
+        }
+
 //        showNoDataDialog();
     }
 
@@ -190,10 +200,24 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void deleteMyFlightsInfoFailed(String message) {
+    public void deleteMyFlightsInfoFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, message);
-        showMessage(message);
+
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, message);
+                showMessage(message);
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @OnClick(R.id.layout_delete)

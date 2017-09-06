@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -36,10 +35,10 @@ public class AirportUserNewsPresenter implements AirportUserNewsContract.Present
 
     @Override
     public void getUserNewsAPI() {
-        mApiConnect.getUserNews(new Callback() {
+        mApiConnect.getUserNews(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getUserNewsFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getUserNewsFailed(e.toString(), timeout);
             }
 
             @Override
@@ -50,7 +49,7 @@ public class AirportUserNewsPresenter implements AirportUserNewsContract.Present
                     List<UserNewsData> list = GetUserNewsResponse.newInstance(result);
                     mView.getUserNewsSucceed(list);
                 } else {
-                    mView.getUserNewsFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getUserNewsFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
