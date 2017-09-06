@@ -9,7 +9,7 @@ public interface ArriveFlightsContract {
     interface View {
         void getArriveFlightSucceed(String list);
 
-        void getArriveFlightFailed(String message);
+        void getArriveFlightFailed(String message, boolean timeout);
 
         void saveMyFlightSucceed(String message);
 

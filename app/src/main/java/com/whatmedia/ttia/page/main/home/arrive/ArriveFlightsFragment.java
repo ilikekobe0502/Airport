@@ -135,15 +135,19 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     }
 
     @Override
-    public void getArriveFlightFailed(String message) {
+    public void getArriveFlightFailed(String message, boolean timeout) {
         Log.d(TAG, "getArriveFlightFailed : " + message);
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(getString(R.string.server_error));
-                }
-            });
+            if (timeout) {
+
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(getString(R.string.server_error));
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

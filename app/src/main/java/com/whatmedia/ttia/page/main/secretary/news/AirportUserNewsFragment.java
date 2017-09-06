@@ -137,12 +137,12 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
                     }
                 });
             } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        showMessage(message);
-                    }
-                });
+//                mMainActivity.runOnUI(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        showMessage(message);
+//                    }
+//                });
             }
         } else {
             Log.d(TAG, "Fragment is not add");

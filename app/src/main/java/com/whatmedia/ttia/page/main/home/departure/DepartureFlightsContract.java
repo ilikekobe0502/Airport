@@ -11,7 +11,7 @@ public interface DepartureFlightsContract {
     interface View {
         void getDepartureFlightSucceed(List<FlightsInfoData> list);
 
-        void getDepartureFlightFailed(String message);
+        void getDepartureFlightFailed(String message, boolean timeout);
 
         void saveMyFlightSucceed(String message);
 

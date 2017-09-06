@@ -37,7 +37,7 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
         mApiConnect.getSearchFlightsInfoByDate(searchData, new ApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getArriveFlightFailed(e.toString());
+                mView.getArriveFlightFailed(e.toString(), timeout);
             }
 
             @Override
@@ -47,7 +47,7 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
                     Log.d(TAG, result);
                     mView.getArriveFlightSucceed(result);
                 } else {
-                    mView.getArriveFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getArriveFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -58,7 +58,7 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
         mApiConnect.doMyFlights(data, new ApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.saveMyFlightFailed(e.toString(),timeout);
+                mView.saveMyFlightFailed(e.toString(), timeout);
             }
 
             @Override

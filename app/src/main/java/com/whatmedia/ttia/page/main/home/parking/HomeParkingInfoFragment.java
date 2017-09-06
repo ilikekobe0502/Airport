@@ -121,12 +121,12 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     public void getParkingInfoFailed(final String message, boolean timeout) {
         if (isAdded() && !isDetached()) {
             if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
-                    }
-                });
+//                mMainActivity.runOnUI(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Util.showTimeoutDialog(getContext());
+//                    }
+//                });
             } else {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override

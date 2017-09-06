@@ -40,7 +40,7 @@ public class DepartureFlightsPresenter implements DepartureFlightsContract.Prese
         mApiConnect.getSearchFlightsInfoByDate(searchData, new ApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getDepartureFlightFailed(e.toString());
+                mView.getDepartureFlightFailed(e.toString(), timeout);
             }
 
             @Override
@@ -51,7 +51,7 @@ public class DepartureFlightsPresenter implements DepartureFlightsContract.Prese
                     List<FlightsInfoData> list = GetFlightsInfoResponse.newInstance(result);
                     mView.getDepartureFlightSucceed(list);
                 } else {
-                    mView.getDepartureFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getDepartureFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
