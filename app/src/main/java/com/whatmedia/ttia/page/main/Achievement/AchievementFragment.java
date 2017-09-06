@@ -74,8 +74,8 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-        mLoadingView.showLoadingView();
-        mPresenter.queryAchievementList();
+        if(mPresenter.queryAchievementList())
+            mLoadingView.showLoadingView();
 
         return view;
     }

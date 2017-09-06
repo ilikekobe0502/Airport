@@ -30,8 +30,8 @@ public class AchievementPresenter implements AchievementContract.Presenter {
     }
 
     @Override
-    public void queryAchievementList() {
-        mApiConnect.getAchievementList(new ApiConnect.MyCallback() {
+    public boolean queryAchievementList() {
+        return mApiConnect.getAchievementList(new ApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.queryAchievementListFail(e.toString(), timeout);

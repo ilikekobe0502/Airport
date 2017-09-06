@@ -12,6 +12,6 @@ public interface AchievementContract {
     }
 
     interface Presenter {
-        void queryAchievementList();
+        boolean queryAchievementList();
     }
 }
