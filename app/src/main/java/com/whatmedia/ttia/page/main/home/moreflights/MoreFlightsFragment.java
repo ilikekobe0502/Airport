@@ -66,6 +66,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
     private String mQueryType;
+    private boolean mToday = true;
 
 
     public MoreFlightsFragment() {
@@ -169,16 +170,21 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 public void run() {
                     mAdapter.setData(list);
                     int position = 0;
+                    boolean match = false;
                     for (int i = 0; i < list.size(); i++) {
                         if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
                             ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
                             if (data.getHour() > 0 | data.getMin() > 0 | data.getSec() > 0) {
                                 position = i;
+                                match = true;
                                 break;
                             }
                         } else {
                             Log.e(TAG, "list.get(i).getCExpressTime() error");
                         }
+                    }
+                    if (mToday && !match) {
+                        position = list.size() - 1;
                     }
                     mManager.scrollToPositionWithOffset(position, 0);
                 }
@@ -281,6 +287,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
 
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
+                mToday = false;
                 getFlight();
                 break;
             case R.id.textView_now:
@@ -292,6 +299,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
+                mToday = true;
                 getFlight();
                 break;
             case R.id.textView_next:
@@ -304,6 +312,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
 
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;
+                mToday = false;
                 getFlight();
                 break;
             case R.id.layout_frame:

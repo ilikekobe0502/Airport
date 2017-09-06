@@ -129,7 +129,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-        goToCurrentPosition(mDepartureList);
+        goToCurrentPosition(mFilterData);
         return view;
     }
 
@@ -397,16 +397,21 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private void goToCurrentPosition(List<FlightsInfoData> list) {
         if (list != null) {
             int position = 0;
+            boolean match = false;
             for (int i = 0; i < list.size(); i++) {
                 if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
                     ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
                     if (data.getHour() >= 0 && data.getMin() >= 0 && data.getSec() >= 0) {
                         position = i;
+                        match = true;
                         break;
                     }
                 } else {
                     Log.e(TAG, "list.get(i).getCExpressTime() error");
                 }
+            }
+            if (mToday && !match) {
+                position = list.size() - 1;
             }
             mManager.scrollToPositionWithOffset(position, 0);
         }
