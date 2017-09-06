@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <string name="app_name">桃园国际机场</string>
+
     <!--//Alert-->
     <string name="alert_btn_cancel">取消</string>
     <string name="alert_btn_ok">確定</string>
@@ -217,8 +220,6 @@
     <string name="zhcn">簡體中文</string>
     <string name="ja">日語</string>
     <string name="en">英語</string>
-
-    <string name="app_name">台灣智慧機場</string>
 
     <string-array name="drawable_array">
         <item>share</item>
