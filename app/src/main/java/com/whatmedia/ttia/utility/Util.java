@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -11,6 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -721,5 +723,13 @@ public class Util {
      */
     public static void setTextFont(Context context, TextView view) {
         view.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Times_New_Roman.ttf"));
+    }
+
+    public static void showTimeoutDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.note)
+                .setMessage(context.getString(R.string.timeout_message))
+                .setPositiveButton(R.string.alert_btn_ok, null)
+                .show();
     }
 }

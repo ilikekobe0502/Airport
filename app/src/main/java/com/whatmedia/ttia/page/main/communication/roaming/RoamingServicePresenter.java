@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class RoamingServicePresenter implements RoamingServiceContract.Presenter{
+public class RoamingServicePresenter implements RoamingServiceContract.Presenter {
     private final static String TAG = RoamingServicePresenter.class.getSimpleName();
 
     private static RoamingServicePresenter mRoamingServicePresenter;
@@ -32,10 +31,10 @@ public class RoamingServicePresenter implements RoamingServiceContract.Presenter
 
     @Override
     public void getRoamingServiceAPI() {
-        mApiConnect.getRoamingService(new Callback() {
+        mApiConnect.getRoamingService(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getRoamingServiceFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getRoamingServiceFailed(e.toString(), timeout);
             }
 
             @Override
@@ -45,7 +44,7 @@ public class RoamingServicePresenter implements RoamingServiceContract.Presenter
                     List<RoamingServiceData> list = GetRoamingServiceResponse.newInstance(result);
                     mView.getRoamingServiceSucceed(list);
                 } else {
-                    mView.getRoamingServiceFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getRoamingServiceFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

@@ -771,4 +771,5 @@
     <string name="directions_to">迄:</string>
     <string name="directions_from_hint">请以英文输入您的地点</string>
     <string name="directions_to_hint">请以英文输入您的目的地</string>
+    <string name="timeout_message">网路异常,暂时无法取得资讯</string>
 </resources>

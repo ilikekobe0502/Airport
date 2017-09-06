@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -40,10 +39,10 @@ public class ParkingInfoPresenter implements ParkingInfoContract.Presenter {
 
     @Override
     public void getParkingInfoAPI() {
-        mApiConnect.getParkIngInfo(new Callback() {
+        mApiConnect.getParkIngInfo(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getParkingInfoFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getParkingInfoFailed(e.toString(), timeout);
             }
 
             @Override
@@ -67,7 +66,7 @@ public class ParkingInfoPresenter implements ParkingInfoContract.Presenter {
                     }
                     mView.getParkingInfoSucceed(infoData);
                 } else {
-                    mView.getParkingInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getParkingInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -76,10 +75,10 @@ public class ParkingInfoPresenter implements ParkingInfoContract.Presenter {
     @Override
     public void getParkingDetailAPI() {
 
-        mApiConnect.getHomeParkIngInfo(new Callback() {
+        mApiConnect.getHomeParkIngInfo(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getParkingDetailFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getParkingDetailFailed(e.toString(), timeout);
             }
 
             @Override
@@ -103,7 +102,7 @@ public class ParkingInfoPresenter implements ParkingInfoContract.Presenter {
                     }
                     mView.getParkingDetailSucceed(infoData);
                 } else {
-                    mView.getParkingDetailFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getParkingDetailFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

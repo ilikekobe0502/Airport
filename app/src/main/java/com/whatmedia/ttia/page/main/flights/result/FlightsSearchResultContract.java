@@ -14,17 +14,19 @@ public interface FlightsSearchResultContract {
     interface View {
         void saveMyFlightSucceed(String message);
 
-        void saveMyFlightFailed(String message);
+        void saveMyFlightFailed(String message, boolean timeout);
 
         void getFlightSucceed(List<FlightsInfoData> list);
 
-        void getFlightFailed(String message);
+        void getFlightFailed(String message, boolean timeout);
     }
 
     interface Presenter {
         void saveMyFlightsAPI(FlightsInfoData data);
 
         void getFlightAPI(FlightSearchData searchData);
+
+        void getFlightByKeywordAPI(FlightSearchData searchData);
 
     }
 }

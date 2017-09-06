@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -37,10 +36,10 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
 
     @Override
     public void saveMyFlightsAPI(FlightsInfoData data) {
-        mApiConnect.doMyFlights(data, new Callback() {
+        mApiConnect.doMyFlights(data, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.saveMyFlightFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.saveMyFlightFailed(e.toString(), timeout);
             }
 
             @Override
@@ -50,7 +49,7 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
                     Log.d(TAG, result);
                     mView.saveMyFlightSucceed(result);
                 } else {
-                    mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -58,10 +57,10 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
 
     @Override
     public void getFlightAPI(FlightSearchData searchData) {
-        mApiConnect.getSearchFlightsInfoByDate(searchData, new Callback() {
+        mApiConnect.getSearchFlightsInfoByDate(searchData, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getFlightFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getFlightFailed(e.toString(), timeout);
             }
 
             @Override
@@ -72,7 +71,29 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
                     List<FlightsInfoData> list = GetFlightsInfoResponse.newInstance(result);
                     mView.getFlightSucceed(list);
                 } else {
-                    mView.getFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getFlightByKeywordAPI(FlightSearchData searchData) {
+        mApiConnect.getSearchFlightsInfoByKeyWord(searchData, new ApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getFlightFailed(e.toString(), timeout);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    String result = response.body().string();
+                    Log.d(TAG, result);
+                    List<FlightsInfoData> list = GetFlightsInfoResponse.newInstance(result);
+                    mView.getFlightSucceed(list);
+                } else {
+                    mView.getFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

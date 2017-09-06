@@ -10,10 +10,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -157,17 +155,27 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     }
 
     @Override
-    public void getExchangeRateFailed(String result) {
+    public void getExchangeRateFailed(String result, boolean timeout) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getExchangeRateFailed : " + (!TextUtils.isEmpty(result) ? result : ""));
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mEditTextTargetAmount.setText("");
-                    showMessage(getString(R.string.data_error));
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mEditTextTargetAmount.setText("");
+                        showMessage(getString(R.string.data_error));
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

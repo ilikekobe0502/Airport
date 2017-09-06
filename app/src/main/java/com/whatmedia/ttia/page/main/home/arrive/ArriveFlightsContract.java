@@ -13,7 +13,7 @@ public interface ArriveFlightsContract {
 
         void saveMyFlightSucceed(String message);
 
-        void saveMyFlightFailed(String message);
+        void saveMyFlightFailed(String message, boolean timeout);
     }
 
     interface Presenter {

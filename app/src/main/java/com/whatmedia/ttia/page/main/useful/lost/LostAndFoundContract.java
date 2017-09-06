@@ -9,7 +9,7 @@ public interface LostAndFoundContract {
     interface View {
         void getLostAndFoundSucceed(List<LostAndFoundData> response);
 
-        void getLostAndFoundFailed(String message);
+        void getLostAndFoundFailed(String message, boolean timeout);
     }
 
     interface Presenter {

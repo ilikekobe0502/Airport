@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -43,10 +42,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getTerminalCodeAPI() {
-        mApiConnect.getTerminalCode(new Callback() {
+        mApiConnect.getTerminalCode(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTerminalFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTerminalFailed(e.toString(), timeout);
             }
 
             @Override
@@ -56,7 +55,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     List<TerminalCodeData> list = GetTerminalCodeResponse.newInstance(result);
                     mView.getTerminalSucceed(list);
                 } else {
-                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -64,10 +63,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getAreaCodeAPI() {
-        mApiConnect.getAreaCode(new Callback() {
+        mApiConnect.getAreaCode(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTerminalFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTerminalFailed(e.toString(), timeout);
             }
 
             @Override
@@ -77,7 +76,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     List<AreaCodeData> list = GetAreaCodeResponse.newInstance(result);
                     mView.getAreaSucceed(list);
                 } else {
-                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -85,10 +84,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getFloorCodeAPI() {
-        mApiConnect.getFloorCode(new Callback() {
+        mApiConnect.getFloorCode(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTerminalFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTerminalFailed(e.toString(), timeout);
             }
 
             @Override
@@ -98,7 +97,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     List<FloorCodeData> list = GetFloorCodeResponse.newInstance(result);
                     mView.getFloorSucceed(list);
                 } else {
-                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
 
             }
@@ -107,10 +106,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getKindOfRestaurantCodeAPI() {
-        mApiConnect.getRestaurantCode(new Callback() {
+        mApiConnect.getRestaurantCode(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTerminalFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTerminalFailed(e.toString(), timeout);
             }
 
             @Override
@@ -120,7 +119,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     List<RestaurantCodeData> list = GetRestaurantCodeResponse.newInstance(result);
                     mView.getKindOfRestaurantCodeSucceed(list);
                 } else {
-                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -128,10 +127,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getRestaurantInfoAPI(String terminalsID, String areaID, String restaurantTypeID, String floorID) {
-        mApiConnect.getRestaurantInfo(terminalsID, areaID, restaurantTypeID, floorID, new Callback() {
+        mApiConnect.getRestaurantInfo(terminalsID, areaID, restaurantTypeID, floorID, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getRestaurantInfoFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getRestaurantInfoFailed(e.toString(), timeout);
             }
 
             @Override
@@ -140,7 +139,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     String result = response.body().string();
                     mView.getRestaurantInfoSucceed(result);
                 } else {
-                    mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -148,10 +147,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getStoreCodeAPI() {
-        mApiConnect.getStoreCode(new Callback() {
+        mApiConnect.getStoreCode(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTerminalFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTerminalFailed(e.toString(), timeout);
             }
 
             @Override
@@ -161,7 +160,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     List<StoreCodeData> list = GetStoreCodeResponse.newInstance(result);
                     mView.getStoreCodeSuccess(list);
                 } else {
-                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -169,10 +168,10 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getStoreInfoAPI(String terminalsID, String areaID, String storeTypeID, String floorID) {
-        mApiConnect.getStoreInfo(terminalsID, areaID, storeTypeID, floorID, new Callback() {
+        mApiConnect.getStoreInfo(terminalsID, areaID, storeTypeID, floorID, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getRestaurantInfoFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getRestaurantInfoFailed(e.toString(), timeout);
             }
 
             @Override
@@ -181,7 +180,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                     String result = response.body().string();
                     mView.getStoreSuccess(result);
                 } else {
-                    mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

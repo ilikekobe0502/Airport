@@ -119,11 +119,24 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     }
 
     @Override
-    public void getFlightsArriveFailed(String message) {
+    public void getFlightsArriveFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, "getFlightsArriveFailed : " + message);
-        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
-        mPresenter.getFlightsInfoAPI(mSearchData);
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getFlightsArriveFailed : " + message);
+                mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
+                mPresenter.getFlightsInfoAPI(mSearchData);
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
@@ -138,10 +151,23 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     }
 
     @Override
-    public void getFlightsDepartureFailed(String message) {
+    public void getFlightsDepartureFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, "getFlightsDepartureFailed: " + message);
-        checkToNextPage();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getFlightsDepartureFailed: " + message);
+                checkToNextPage();
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @OnClick(R.id.layout_search)

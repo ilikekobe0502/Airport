@@ -8,7 +8,7 @@ public interface RoadsideAssistanceContract {
     interface View {
         void getRoadsideAssistanceSucceed(List<RoadsideAssistanceData> response);
 
-        void getRoadsideAssistanceFailed(String message);
+        void getRoadsideAssistanceFailed(String message, boolean timeout);
     }
 
     interface Presenter {

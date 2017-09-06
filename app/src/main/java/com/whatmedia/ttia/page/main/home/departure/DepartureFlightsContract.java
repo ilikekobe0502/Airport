@@ -15,7 +15,7 @@ public interface DepartureFlightsContract {
 
         void saveMyFlightSucceed(String message);
 
-        void saveMyFlightFailed(String message);
+        void saveMyFlightFailed(String message, boolean timeout);
     }
 
     interface Presenter {

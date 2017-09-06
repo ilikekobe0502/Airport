@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +27,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.HomeParkingInfoData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -167,8 +167,20 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     }
 
     @Override
-    public void getParkingInfoFailed(final String message) {
+    public void getParkingInfoFailed(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
@@ -182,9 +194,23 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     }
 
     @Override
-    public void getParkingDetailFailed(String message) {
+    public void getParkingDetailFailed(String message, boolean timeout) {
         showMessage(message);
-        Log.e(TAG, "getParkingDetailFailed() :" + message);
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mLoadingView.goneLoadingView();
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getParkingDetailFailed() :" + message);
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     public Bitmap resizeMapIcons(int drawable, int width, int height) {

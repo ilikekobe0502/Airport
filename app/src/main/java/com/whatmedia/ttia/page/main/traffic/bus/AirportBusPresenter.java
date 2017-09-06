@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,10 +34,10 @@ public class AirportBusPresenter implements AirportBusContract.Presenter {
 
     @Override
     public void getAirportBusAPI() {
-        mApiConnect.getAirportBus(new Callback() {
+        mApiConnect.getAirportBus(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getAirportBusFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getAirportBusFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +47,7 @@ public class AirportBusPresenter implements AirportBusContract.Presenter {
                     List<AirportBusData> list = GetAirportBusResponse.newInstance(result);
                     mView.getAirportBusSucceed(list);
                 } else {
-                    mView.getAirportBusFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getAirportBusFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

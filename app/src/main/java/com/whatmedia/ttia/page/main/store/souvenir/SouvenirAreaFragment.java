@@ -18,6 +18,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.store.souvenir.detail.SouvenirDetailContract;
 import com.whatmedia.ttia.response.data.SouvenirData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -144,16 +145,25 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
     }
 
     @Override
-    public void querySouvenirListFail(final String message) {
+    public void querySouvenirListFail(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e(TAG, "querySouvenirListFail : " + message);
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, "querySouvenirListFail : " + message);
+                        showMessage(message);
+                    }
+                });
+            }
         } else
 
         {

@@ -153,24 +153,6 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     }
 
-    public void saveAchievement(final String minorID) {
-        mApiConnect.saveAchievement(minorID, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.code() == 200) {
-                    //success
-                    Log.e("IBeacon", "saveAchievement() success, minorID:" + minorID);
-                } else {
-                    //fail
-                }
-            }
-        });
-    }
-
     public void changeUserStatus(final String minorID) {
         Log.e("IBeacon", "mTokenErrorCount:"+mTokenErrorCount+", minorID:" + minorID + ", changeUserStatus(minorID) call.");
         if (!mApiConnect.registerUser(minorID, new Callback() {
