@@ -31,8 +31,8 @@ public class AchievementPresenter implements AchievementContract.Presenter{
     }
 
     @Override
-    public void queryAchievementList() {
-        mApiConnect.getAchievementList(new Callback() {
+    public boolean queryAchievementList() {
+        return mApiConnect.getAchievementList(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 mView.queryAchievementListFail(e.toString());
