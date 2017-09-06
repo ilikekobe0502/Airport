@@ -117,7 +117,13 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         mTextViewLast.setText(mLastShowDate);
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mDepartureList);
+        mFilterData.clear();
+        for (FlightsInfoData item : mDepartureList) {
+            if (item.getExpressDate().contains(mNowShowDate)) {
+                mFilterData.add(item);
+            }
+        }
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mFilterData);
         mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -315,7 +321,13 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                         || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)
                         || item.getFlightCode().toLowerCase().contains(mKeyWorld) || item.getCTName().contains(mKeyWorld) || item.getCSName().contains(mKeyWorld) || item.getJName().contains(mKeyWorld)
                         || item.getEName().toLowerCase().contains(mKeyWorld)) {
-                    mFilterData.add(item);
+                    if (mToday) {
+                        if (item.getExpressDate().contains(mNowShowDate)) {
+                            mFilterData.add(item);
+                        }
+                    } else {
+                        mFilterData.add(item);
+                    }
                 }
             }
             mMainActivity.runOnUI(new Runnable() {

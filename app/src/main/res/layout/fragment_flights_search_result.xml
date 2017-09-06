@@ -17,19 +17,20 @@
 
         <TextView
             android:id="@+id/textView_last"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_pixel_55"
+            android:layout_height="@dimen/dp_pixel_30"
             android:layout_centerVertical="true"
             android:background="@drawable/date_bg"
             android:gravity="center"
             android:paddingLeft="@dimen/dp_pixel_5"
             android:paddingRight="@dimen/dp_pixel_5"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_pixel_15" />
 
         <TextView
             android:id="@+id/textView_now"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_pixel_55"
+            android:layout_height="@dimen/dp_pixel_30"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_pixel_10"
             android:layout_toRightOf="@+id/textView_last"
@@ -37,12 +38,13 @@
             android:gravity="center"
             android:paddingLeft="@dimen/dp_pixel_5"
             android:paddingRight="@dimen/dp_pixel_5"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_pixel_15" />
 
         <TextView
             android:id="@+id/textView_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_pixel_55"
+            android:layout_height="@dimen/dp_pixel_30"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_pixel_10"
             android:layout_toRightOf="@+id/textView_now"
@@ -50,12 +52,13 @@
             android:gravity="center"
             android:paddingLeft="@dimen/dp_pixel_5"
             android:paddingRight="@dimen/dp_pixel_5"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_pixel_15" />
 
         <ImageView
             android:id="@+id/imageView_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_pixel_38"
+            android:layout_height="@dimen/dp_pixel_38"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_pixel_8"
             android:layout_toLeftOf="@+id/imageView_down"
@@ -63,8 +66,8 @@
 
         <ImageView
             android:id="@+id/imageView_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_pixel_38"
+            android:layout_height="@dimen/dp_pixel_38"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/dow_off" />
