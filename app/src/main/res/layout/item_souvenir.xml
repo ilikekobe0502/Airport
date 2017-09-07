@@ -33,6 +33,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_pixel_10"
             android:text="桃園機場捷運限量紀念品"
+            android:minLines="2"
             android:textColor="#323a4d"
             android:textSize="@dimen/sp_pixel_13" />
 
