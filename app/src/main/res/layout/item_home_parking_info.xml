@@ -44,7 +44,7 @@
 
     <View
         android:id="@+id/line"
-        android:layout_width="1dp"
+        android:layout_width="@dimen/dp_pixel_1"
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/layout_info"
         android:layout_toRightOf="@+id/layout_info"
