@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -77,6 +79,7 @@ import com.whatmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.services.IBeacon;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.Locale;
@@ -109,6 +112,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         Mint.initAndStartSession(this.getApplication(), "95cdb302");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        checkLayoutMode();
 
         String versionName = "Error";
         int versionCode = -1;
@@ -893,5 +898,27 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 super.onBackPressed();
         } else
             super.onBackPressed();
+    }
+
+    public void checkLayoutMode(){
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        float screenWidth = dm.widthPixels;
+        float screenHeight = dm.heightPixels;
+
+        if(screenHeight>screenWidth){
+            if(screenWidth/screenHeight >= (float)2/(float)3){
+                Preferences.saveScreenMode(getBaseContext(),true);
+            }else{
+                Preferences.saveScreenMode(getBaseContext(),false);
+            }
+        }else{
+            if(screenHeight/screenWidth >= (float)2/(float)3){
+                Preferences.saveScreenMode(getBaseContext(),true);
+            }else{
+                Preferences.saveScreenMode(getBaseContext(),false);
+            }
+        }
     }
 }

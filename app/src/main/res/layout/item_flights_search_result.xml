@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/dp_pixel_2">
 
     <ImageView
+        android:id="@+id/layout_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_55"
         android:layout_centerHorizontal="true"
