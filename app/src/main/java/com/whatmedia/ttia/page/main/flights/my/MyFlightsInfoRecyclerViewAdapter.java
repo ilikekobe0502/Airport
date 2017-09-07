@@ -68,11 +68,27 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
         holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
-        holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+        switch (mLocale) {
+            case "zh_TW":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+                break;
+            case "zh_CN":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+                break;
+            case "en":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationEng()) ? item.getContactsLocationEng().trim() : "");
+                break;
+            case "ja":
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationEng()) ? item.getContactsLocationEng().trim() : "");
+                break;
+            default:
+                holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
+                break;
+        }
         holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
         if (!TextUtils.isEmpty(item.getTerminals())) {
             StringBuilder builder = new StringBuilder();
-            switch (mLocale){
+            switch (mLocale) {
                 case "zh_TW":
                 case "zh_CN":
                     builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
@@ -95,7 +111,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorText));
             else
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextSpecial));
-            holder.mTextViewState.setText(checkFlightShowText(item.getFlightStatus()));
+            holder.mTextViewState.setText(FlightsInfoData.checkFlightShowText(mContext,item.getFlightStatus()));
         } else
             holder.mTextViewState.setText("");
 
