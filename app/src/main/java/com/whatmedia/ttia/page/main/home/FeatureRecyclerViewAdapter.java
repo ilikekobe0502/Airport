@@ -1,18 +1,24 @@
 package com.whatmedia.ttia.page.main.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.HomeFeature;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.Preferences;
 
 import java.util.List;
 
@@ -30,10 +36,14 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
     private List<HomeFeature> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
+    private String mLocale;
+    private boolean isScreen34Mode;
 
     public FeatureRecyclerViewAdapter(Context context, List<HomeFeature> items) {
         mItems = items;
         mContext = context;
+        mLocale = Preferences.getLocaleSetting(mContext);
+        isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
     }
 
     @Override
@@ -54,7 +64,24 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
             return;
         }
 
+        switch (mLocale){
+            case "zh_TW":
+            case "zh_CN":
+                holder.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13));
+                break;
+            default:
+                holder.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_8));
+                break;
+        }
+
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
+
+        if(isScreen34Mode){
+            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth()/8,getScreenWidth()/8);
+            t.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            holder.mImageViewIcon.setLayoutParams(t);
+        }
+
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
         holder.mImageViewIcon.setTag(item);
@@ -67,6 +94,14 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 
     public void setClickListener(IOnItemClickListener listener) {
         mListener = listener;
+    }
+
+    public int getScreenWidth(){
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity)mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //宽度 dm.widthPixels
+        //高度 dm.heightPixels
+        return  dm.widthPixels ;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

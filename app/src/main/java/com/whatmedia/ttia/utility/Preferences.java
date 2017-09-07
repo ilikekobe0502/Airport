@@ -19,6 +19,7 @@ public class Preferences {
     private final static String TAG_LOCALE_Setting = "locale";
     private final static String TAG_FCM_TOKEN = "fcm_token";
     private final static String TAG_FIRST_INIT = "first";
+    private final static String TAG_SCREEN_MODE = "screen_mode";
 
     private static SharedPreferences preferences;
 
@@ -145,5 +146,17 @@ public class Preferences {
     public static boolean getUserFirstInit(Context context) {
         preferences = context.getSharedPreferences(TAG_FIRST_INIT, 0);
         return preferences.getBoolean(TAG_FIRST_INIT, false);
+    }
+
+    public static void saveScreenMode(Context context, boolean is34mode){
+        preferences = context.getSharedPreferences(TAG_SCREEN_MODE, 0);
+        preferences.edit()
+                .putBoolean(TAG_SCREEN_MODE,is34mode)
+                .commit();
+    }
+
+    public static boolean checkScreenIs34Mode(Context context) {
+        preferences = context.getSharedPreferences(TAG_SCREEN_MODE, 0);
+        return preferences.getBoolean(TAG_SCREEN_MODE, false);
     }
 }
