@@ -50,7 +50,8 @@ public class DialogContentData {
         String contactsLocation;
         String airLine;
         boolean isDeparture;
-        HashMap<String, Long> expressTimeDif;
+        HashMap<String, Long> expectTimeDif;
+
         switch (locale) {
             default:
             case "zh_TW":
@@ -96,27 +97,24 @@ public class DialogContentData {
         //出發航班
         if (isDeparture) {
             item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_exceptime));
-            item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
-                    , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
+            item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
+                    , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
             list.add(item);
             item = new DialogContentData();
             item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_actualtime));
-
-
         } else {//抵達航班
             item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_exceptime));
-            item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
-                    , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
+            item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
+                    , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
             list.add(item);
             item = new DialogContentData();
             item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_actualtime));
-
         }
 
-        expressTimeDif = Util.getDifferentTimeWithNowTime(String.format("%1$s %2$s", data.getExpressDate(), data.getExpressTime()), Util.TAG_FORMAT_ALL);
-        if (expressTimeDif.get(Util.TAG_HOUR) <= 0 && expressTimeDif.get(Util.TAG_MIN) <= 0 && expressTimeDif.get(Util.TAG_SEC) <= 0) {
-            item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
-                    , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
+        expectTimeDif = Util.getDifferentTimeWithNowTime(String.format("%1$s %2$s", data.getExpectedDate(), data.getExpectedTime()), Util.TAG_FORMAT_ALL);
+        if (expectTimeDif.get(Util.TAG_HOUR) <= 0 && expectTimeDif.get(Util.TAG_MIN) <= 0 && expectTimeDif.get(Util.TAG_SEC) <= 0) {
+            item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
+                    , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
         } else {
             item.setContent("");
         }
