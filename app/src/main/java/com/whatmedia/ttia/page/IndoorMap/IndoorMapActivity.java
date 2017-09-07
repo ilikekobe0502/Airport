@@ -97,7 +97,7 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
     @BindView(R.id.loadingView)
     FrameLayout mLoadingView;
     @BindView(R.id.editText_search)
-    SearchView mEditTextSearch;
+    android.support.v7.widget.SearchView mEditTextSearch;
     @BindView(R.id.routeBar)
     ViewGroup m_routeBar;
     @BindView(R.id.descLabel)
