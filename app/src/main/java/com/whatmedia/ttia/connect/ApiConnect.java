@@ -76,6 +76,8 @@ public class ApiConnect extends StateCode {
 
         mClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(2, TimeUnit.SECONDS)
+                .writeTimeout(2, TimeUnit.SECONDS)
                 .build();
 
         if (mApiConnect == null) {

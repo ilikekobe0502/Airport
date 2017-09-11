@@ -168,7 +168,7 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 if (view.isShown()) {
-                    mDataList = Util.addNotification(getContext(), hourOfDay, minute);
+                    mDataList = Util.addNotificationClock(getContext(), hourOfDay, minute);
                     mAdapter.setData(mDataList);
                 }
             }
