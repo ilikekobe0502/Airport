@@ -5,13 +5,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by neo_mac on 2017/6/17.
@@ -44,7 +44,7 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     Log.d(TAG, result);

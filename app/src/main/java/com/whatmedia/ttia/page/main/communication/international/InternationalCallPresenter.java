@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.response.GetInternationCallResponse;
 import com.whatmedia.ttia.response.data.InternationCallData;
 
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Response;
 
 public class InternationalCallPresenter implements InternationalCallContract.Presenter {
     private final static String TAG = InternationalCallPresenter.class.getSimpleName();
@@ -38,7 +38,7 @@ public class InternationalCallPresenter implements InternationalCallContract.Pre
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<InternationCallData> list = GetInternationCallResponse.newInstance(result);
