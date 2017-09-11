@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.response.GetQuestionnaireResponse;
 import com.whatmedia.ttia.response.data.QuestionnaireData;
 
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Response;
 
 public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
     private final static String TAG = QuestionnairePresenter.class.getSimpleName();
@@ -38,7 +38,7 @@ public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<QuestionnaireData> list = GetQuestionnaireResponse.newInstance(result);
@@ -59,7 +59,7 @@ public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     mView.sendQuestionnaireSucceed(result);

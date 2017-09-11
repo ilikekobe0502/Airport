@@ -5,12 +5,12 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.response.GetLanguageResponse;
 
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Response;
 
 public class TravelLanguageResultPresenter implements TravelLanguageResultContract.Presenter {
     private final static String TAG = TravelLanguageResultPresenter.class.getSimpleName();
@@ -36,7 +36,7 @@ public class TravelLanguageResultPresenter implements TravelLanguageResultContra
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     mView.getLanguageSucceed(GetLanguageResponse.newInstance(result));

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.response.GetAreaCodeResponse;
 import com.whatmedia.ttia.response.GetFloorCodeResponse;
 import com.whatmedia.ttia.response.GetRestaurantCodeResponse;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by neo_mac on 2017/6/17.
@@ -49,7 +49,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<TerminalCodeData> list = GetTerminalCodeResponse.newInstance(result);
@@ -70,7 +70,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<AreaCodeData> list = GetAreaCodeResponse.newInstance(result);
@@ -91,7 +91,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<FloorCodeData> list = GetFloorCodeResponse.newInstance(result);
@@ -113,7 +113,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<RestaurantCodeData> list = GetRestaurantCodeResponse.newInstance(result);
@@ -134,7 +134,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     mView.getRestaurantInfoSucceed(result);
@@ -154,7 +154,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     List<StoreCodeData> list = GetStoreCodeResponse.newInstance(result);
@@ -175,7 +175,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
                     mView.getStoreSuccess(result);
