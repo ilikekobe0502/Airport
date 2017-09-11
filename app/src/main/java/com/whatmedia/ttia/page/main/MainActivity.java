@@ -135,6 +135,9 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         mImageViewHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mLoadingView != null && mImageViewHome.isShown()) {
+                    mLoadingView.setVisibility(View.GONE);
+                }
                 Page.clearBackStack(MainActivity.this);
                 addFragment(Page.TAG_HOME, null, false);
             }
