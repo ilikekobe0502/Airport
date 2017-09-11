@@ -896,28 +896,32 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         if (mLoadingView != null) {
             if (!mLoadingView.isShown())
                 super.onBackPressed();
+            else {
+                mLoadingView.setVisibility(View.GONE);
+                super.onBackPressed();
+            }
         } else
             super.onBackPressed();
     }
 
-    public void checkLayoutMode(){
+    public void checkLayoutMode() {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         float screenWidth = dm.widthPixels;
         float screenHeight = dm.heightPixels;
 
-        if(screenHeight>screenWidth){
-            if(screenWidth/screenHeight >= (float)2/(float)3){
-                Preferences.saveScreenMode(getBaseContext(),true);
-            }else{
-                Preferences.saveScreenMode(getBaseContext(),false);
+        if (screenHeight > screenWidth) {
+            if (screenWidth / screenHeight >= (float) 2 / (float) 3) {
+                Preferences.saveScreenMode(getBaseContext(), true);
+            } else {
+                Preferences.saveScreenMode(getBaseContext(), false);
             }
-        }else{
-            if(screenHeight/screenWidth >= (float)2/(float)3){
-                Preferences.saveScreenMode(getBaseContext(),true);
-            }else{
-                Preferences.saveScreenMode(getBaseContext(),false);
+        } else {
+            if (screenHeight / screenWidth >= (float) 2 / (float) 3) {
+                Preferences.saveScreenMode(getBaseContext(), true);
+            } else {
+                Preferences.saveScreenMode(getBaseContext(), false);
             }
         }
     }
