@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,10 +34,10 @@ public class TaxiPresenter implements TaxiContract.Presenter {
 
     @Override
     public void getTaxiAPI() {
-        mApiConnect.getTaxi(new Callback() {
+        mApiConnect.getTaxi(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTaxiFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTaxiFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +47,7 @@ public class TaxiPresenter implements TaxiContract.Presenter {
                     List<TaxiData> list = GetTaxiResponse.newInstance(result);
                     mView.getTaxiSucceed(list);
                 } else {
-                    mView.getTaxiFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTaxiFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

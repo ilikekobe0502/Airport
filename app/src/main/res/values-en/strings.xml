@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">Taoyuan Airpor</string>
+
     <!--//Alert-->
     <string name="alert_btn_cancel">Cancel</string>
     <string name="alert_btn_ok">OK</string>
@@ -12,8 +14,8 @@
 
     <string name="navi_btn_back">Back</string>
     <string name="navi_title_menu">Menu</string>
-    <string name="tableview_header_takeoff">%s Departing flights</string>
-    <string name="tableview_header_arrival">%sArrival</string>
+    <string name="tableview_header_takeoff">%s Departure flights</string>
+    <string name="tableview_header_arrival">%s Arrival flights</string>
 
     <string name="cell_terminal">T.</string>
     <string name="cell_time">Time</string>
@@ -27,24 +29,24 @@
     <string name="flight_takeoff_detail_dialog">  Airline：    Flight No.：    Dest.：    Status：    Schedule Takeoff Time：       Actual Takeoff Time：       Terminal：    Gate：    Checkin Counter：    </string>
     <string name="flight_arrival_detail_dialog">  Airline：    Flight No.：    Origin：    Status：    Schedule Arrival Time：       Actual Arrival Time：       Terminal：    Baggage Carousel：    </string>
 
-    <string name="flight_takeoff_detail_dialog_airname">  Airline：  </string>
-    <string name="flight_takeoff_detail_dialog_airnumber">  Flight No.：  </string>
-    <string name="flight_takeoff_detail_dialog_arrivelocation">  Dest.：  </string>
+    <string name="flight_takeoff_detail_dialog_airname">  Airline:</string>
+    <string name="flight_takeoff_detail_dialog_airnumber">  Flight No.:</string>
+    <string name="flight_takeoff_detail_dialog_arrivelocation">  Dest.:</string>
     <string name="flight_takeoff_detail_dialog_status">  Status：  </string>
-    <string name="flight_takeoff_detail_dialog_exceptime">  Schedule Takeoff Time：  </string>
-    <string name="flight_takeoff_detail_dialog_actualtime">  Actual Takeoff Time：  </string>
-    <string name="flight_takeoff_detail_dialog_terminal">  Terminal：  </string>
-    <string name="flight_takeoff_detail_dialog_gate">  Gate：  </string>
-    <string name="flight_takeoff_detail_dialog_checkincount">  Checkin Counter：  </string>
+    <string name="flight_takeoff_detail_dialog_exceptime">Schedule\nTakeoff Time:</string>
+    <string name="flight_takeoff_detail_dialog_actualtime">Actual\nTakeoff Time:</string>
+    <string name="flight_takeoff_detail_dialog_terminal">  Terminal:</string>
+    <string name="flight_takeoff_detail_dialog_gate">  Gate:</string>
+    <string name="flight_takeoff_detail_dialog_checkincount">  Checkin Counter:</string>
 
-    <string name="flight_arrival_detail_dialog_airname">  Airline：  </string>
-    <string name="flight_arrival_detail_dialog_airnumber">  Flight No.：  </string>
-    <string name="flight_arrival_detail_dialog_arrivelocation">  Origin：  </string>
-    <string name="flight_arrival_detail_dialog_status">  Status：  </string>
-    <string name="flight_arrival_detail_dialog_exceptime">  Schedule Arrival Time：  </string>
-    <string name="flight_arrival_detail_dialog_actualtime">  Actual Arrival Time：  </string>
-    <string name="flight_arrival_detail_dialog_terminal">  Terminal：  </string>
-    <string name="flight_arrival_detail_dialog_package">  Baggage Carousel：  </string>
+    <string name="flight_arrival_detail_dialog_airname">  Airline:</string>
+    <string name="flight_arrival_detail_dialog_airnumber">  Flight No.:</string>
+    <string name="flight_arrival_detail_dialog_arrivelocation">  Origin:</string>
+    <string name="flight_arrival_detail_dialog_status">  Status:</string>
+    <string name="flight_arrival_detail_dialog_exceptime">Schedule\nArrival Time:</string>
+    <string name="flight_arrival_detail_dialog_actualtime">Actual\nArrival Time:</string>
+    <string name="flight_arrival_detail_dialog_terminal">  Terminal:</string>
+    <string name="flight_arrival_detail_dialog_package">Baggage Carousel:</string>
 
     <string name="flight_add_to_my_flight_dialog">Do you want to add this flight to My Flight?</string>
     <string name="flight_add_to_my_flight_result_dialog">The flight has been add to My Flight successfully!</string>
@@ -217,8 +219,6 @@
     <string name="zhcn">Simplified Chinese</string>
     <string name="ja">Japanese</string>
     <string name="en">English</string>
-
-    <string name="app_name">Smart Airport</string>
 
     <string-array name="drawable_array">
         <item>share</item>
@@ -546,27 +546,94 @@
 
     <!--  FlightRemind Hour  -->
     <string-array name="flightremind_array_hour">
-        <item>0</item> <item>1</item> <item>2</item> <item>3</item> <item>4</item>
-        <item>5</item> <item>6</item> <item>7</item> <item>8</item> <item>9</item>
-        <item>10</item> <item>11</item> <item>12</item> <item>13</item> <item>14</item>
-        <item>15</item> <item>16</item> <item>17</item> <item>18</item> <item>19</item>
-        <item>20</item> <item>21</item> <item>22</item> <item>23</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
     </string-array>
 
     <!--  FlightRemind Hour  -->
     <string-array name="flightremind_array_minute">
-        <item>0</item> <item>1</item> <item>2</item> <item>3</item> <item>4</item>
-        <item>5</item> <item>6</item> <item>7</item> <item>8</item> <item>9</item>
-        <item>10</item> <item>11</item> <item>12</item> <item>13</item> <item>14</item>
-        <item>15</item> <item>16</item> <item>17</item> <item>18</item> <item>19</item>
-        <item>20</item> <item>21</item> <item>22</item> <item>23</item> <item>24</item>
-        <item>25</item> <item>26</item> <item>27</item> <item>28</item> <item>29</item>
-        <item>30</item> <item>31</item> <item>32</item> <item>33</item> <item>34</item>
-        <item>35</item> <item>36</item> <item>37</item> <item>38</item> <item>39</item>
-        <item>40</item> <item>41</item> <item>42</item> <item>43</item> <item>44</item>
-        <item>45</item> <item>46</item> <item>47</item> <item>48</item> <item>49</item>
-        <item>50</item> <item>51</item> <item>52</item> <item>53</item> <item>54</item>
-        <item>55</item> <item>56</item> <item>57</item> <item>58</item> <item>59</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
     </string-array>
 
     <!-- communication -->
@@ -768,4 +835,10 @@
     <string name="indoor_search_sub_title">Road map</string>
     <string name="indoor_search_start_text">Start：%d</string>
     <string name="indoor_search_end_text">End：%d</string>
+
+    <string name="directions_from">Start:</string>
+    <string name="directions_to">End:</string>
+    <string name="directions_from_hint">Please enter your location</string>
+    <string name="directions_to_hint">Please enter your destination</string>
+    <string name="timeout_message">Cannot retrived the information due to network issue</string>
 </resources>

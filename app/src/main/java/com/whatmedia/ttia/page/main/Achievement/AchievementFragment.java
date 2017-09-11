@@ -18,6 +18,8 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.Achievement.Detail.AchievementDetailContract;
 import com.whatmedia.ttia.response.data.AchievementsData;
+import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -72,8 +74,8 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-        mLoadingView.showLoadingView();
-        mPresenter.queryAchievementList();
+        if(mPresenter.queryAchievementList())
+            mLoadingView.showLoadingView();
 
         return view;
     }
@@ -140,7 +142,19 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
     }
 
     @Override
-    public void queryAchievementListFail(String message) {
+    public void queryAchievementListFail(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 }

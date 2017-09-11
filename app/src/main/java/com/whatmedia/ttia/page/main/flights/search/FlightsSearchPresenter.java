@@ -11,7 +11,6 @@ import com.whatmedia.ttia.response.data.FlightsInfoData;
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,13 +34,13 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
 
     @Override
     public void getFlightsInfoAPI(final FlightSearchData searchData) {
-        mApiConnect.getSearchFlightsInfoByKeyWord(searchData, new Callback() {
+        mApiConnect.getSearchFlightsInfoByKeyWord(searchData, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Call call, IOException e, boolean timeout) {
                 if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
-                    mView.getFlightsArriveFailed(e.toString());
+                    mView.getFlightsArriveFailed(e.toString(),timeout);
                 else
-                    mView.getFlightsDepartureFailed(e.toString());
+                    mView.getFlightsDepartureFailed(e.toString(),timeout);
             }
 
             @Override
@@ -55,9 +54,9 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
                         mView.getFlightsDepartureSucceed(result);
                 } else {
                     if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
-                        mView.getFlightsArriveFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                        mView.getFlightsArriveFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                     else
-                        mView.getFlightsDepartureFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                        mView.getFlightsDepartureFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

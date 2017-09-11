@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AchievementPresenter implements AchievementContract.Presenter{
+public class AchievementPresenter implements AchievementContract.Presenter {
     private final static String TAG = AchievementPresenter.class.getSimpleName();
 
     private static AchievementPresenter mAchievementPresenter;
@@ -31,11 +30,11 @@ public class AchievementPresenter implements AchievementContract.Presenter{
     }
 
     @Override
-    public void queryAchievementList() {
-        mApiConnect.getAchievementList(new Callback() {
+    public boolean queryAchievementList() {
+        return mApiConnect.getAchievementList(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.queryAchievementListFail(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.queryAchievementListFail(e.toString(), timeout);
             }
 
             @Override
@@ -45,7 +44,7 @@ public class AchievementPresenter implements AchievementContract.Presenter{
                     List<AchievementsData> list = GetAchievementsDataResponse.newInstance(result);
                     mView.queryAchievementListSuccess(list);
                 } else {
-                    mView.queryAchievementListFail(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.queryAchievementListFail(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

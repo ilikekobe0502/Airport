@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class InternationalCallPresenter implements InternationalCallContract.Presenter{
+public class InternationalCallPresenter implements InternationalCallContract.Presenter {
     private final static String TAG = InternationalCallPresenter.class.getSimpleName();
 
     private static InternationalCallPresenter mInternationalCallPresenter;
@@ -32,10 +31,10 @@ public class InternationalCallPresenter implements InternationalCallContract.Pre
 
     @Override
     public void getInternationalCallAPI() {
-        mApiConnect.getInternationCall(new Callback() {
+        mApiConnect.getInternationCall(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getInternationalCallFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getInternationalCallFailed(e.toString(), timeout);
             }
 
             @Override
@@ -45,7 +44,7 @@ public class InternationalCallPresenter implements InternationalCallContract.Pre
                     List<InternationCallData> list = GetInternationCallResponse.newInstance(result);
                     mView.getInternationalCallSucceed(list);
                 } else {
-                    mView.getInternationalCallFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getInternationalCallFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

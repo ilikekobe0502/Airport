@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.flights.my;
 
 import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.util.List;
 
@@ -11,11 +10,11 @@ public interface MyFlightsInfoContract {
     interface View {
         void getMyFlightsInfoSucceed(List<FlightsInfoData> response);
 
-        void getMyFlightsInfoFailed(String message);
+        void getMyFlightsInfoFailed(String message, boolean timeout);
 
         void deleteMyFlightsInfoSucceed(String response);
 
-        void deleteMyFlightsInfoFailed(String message);
+        void deleteMyFlightsInfoFailed(String message, boolean timeout);
     }
 
     interface Presenter {

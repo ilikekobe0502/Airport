@@ -12,11 +12,11 @@ public interface MoreFlightsContract {
     interface View {
         void getFlightSucceed(List<FlightsInfoData> list);
 
-        void getFlightFailed(String message);
+        void getFlightFailed(String message, boolean timeout);
 
         void saveMyFlightSucceed(String message);
 
-        void saveMyFlightFailed(String message);
+        void saveMyFlightFailed(String message, boolean timeout);
     }
 
     interface Presenter {

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -36,10 +35,10 @@ public class AirportMrtPresenter implements AirportMrtContract.Presenter {
 
     @Override
     public void getAirportMrtAPI() {
-        mApiConnect.getAirportMrt(new Callback() {
+        mApiConnect.getAirportMrt(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getAirportMrtFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getAirportMrtFailed(e.toString(), timeout);
             }
 
             @Override
@@ -49,7 +48,7 @@ public class AirportMrtPresenter implements AirportMrtContract.Presenter {
                     List<AirportMrtData> list = GetAirportMrtResponse.newInstance(result);
                     mView.getAirportMrtSucceed(list);
                 } else {
-                    mView.getAirportMrtFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getAirportMrtFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

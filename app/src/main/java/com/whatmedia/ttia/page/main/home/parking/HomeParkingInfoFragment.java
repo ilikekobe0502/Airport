@@ -15,6 +15,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.HomeParkingInfoData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -117,14 +118,23 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     }
 
     @Override
-    public void getParkingInfoFailed(final String message) {
+    public void getParkingInfoFailed(final String message, boolean timeout) {
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(!TextUtils.isEmpty(message) ? message : getString(R.string.server_error));
-                }
-            });
+            if (timeout) {
+//                mMainActivity.runOnUI(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Util.showTimeoutDialog(getContext());
+//                    }
+//                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(!TextUtils.isEmpty(message) ? message : getString(R.string.server_error));
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

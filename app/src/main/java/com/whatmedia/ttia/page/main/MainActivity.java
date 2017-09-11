@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -77,6 +79,7 @@ import com.whatmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.services.IBeacon;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.Locale;
@@ -110,6 +113,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        checkLayoutMode();
+
         String versionName = "Error";
         int versionCode = -1;
         try {
@@ -130,6 +135,9 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         mImageViewHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mLoadingView != null && mImageViewHome.isShown()) {
+                    mLoadingView.setVisibility(View.GONE);
+                }
                 Page.clearBackStack(MainActivity.this);
                 addFragment(Page.TAG_HOME, null, false);
             }
@@ -578,8 +586,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                             }
                         });
             } else if (fragment instanceof MoreFlightsFragment) {//更多航班
+                String date = Util.getNowDate(Util.TAG_FORMAT_MD);
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
+                        .setTitleText(TextUtils.equals(fragment.getArguments().getString(MoreFlightsContract.TAG_KIND), FlightsInfoData.TAG_KIND_DEPARTURE) ?
+                                getString(R.string.tableview_header_takeoff, date) :
+                                getString(R.string.tableview_header_arrival, date))
                         .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -888,7 +899,33 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         if (mLoadingView != null) {
             if (!mLoadingView.isShown())
                 super.onBackPressed();
+            else {
+                mLoadingView.setVisibility(View.GONE);
+                super.onBackPressed();
+            }
         } else
             super.onBackPressed();
+    }
+
+    public void checkLayoutMode() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        float screenWidth = dm.widthPixels;
+        float screenHeight = dm.heightPixels;
+
+        if (screenHeight > screenWidth) {
+            if (screenWidth / screenHeight >= (float) 2 / (float) 3) {
+                Preferences.saveScreenMode(getBaseContext(), true);
+            } else {
+                Preferences.saveScreenMode(getBaseContext(), false);
+            }
+        } else {
+            if (screenHeight / screenWidth >= (float) 2 / (float) 3) {
+                Preferences.saveScreenMode(getBaseContext(), true);
+            } else {
+                Preferences.saveScreenMode(getBaseContext(), false);
+            }
+        }
     }
 }

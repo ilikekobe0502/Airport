@@ -7,13 +7,11 @@ import android.util.Log;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.response.GetMyFlightsResponse;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -38,10 +36,10 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
 
     @Override
     public void getMyFlightsInfoAPI() {
-        mApiConnect.getMyFlightsInfo(new Callback() {
+        mApiConnect.getMyFlightsInfo(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getMyFlightsInfoFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getMyFlightsInfoFailed(e.toString(), timeout);
             }
 
             @Override
@@ -52,7 +50,7 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
                     List<FlightsInfoData> list = GetMyFlightsResponse.newInstance(result);
                     mView.getMyFlightsInfoSucceed(list);
                 } else {
-                    mView.getMyFlightsInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getMyFlightsInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });
@@ -60,10 +58,10 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
 
     @Override
     public void deleteMyFlightsInfoAPI(FlightsInfoData data) {
-        mApiConnect.doMyFlights(data, new Callback() {
+        mApiConnect.doMyFlights(data, new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.deleteMyFlightsInfoFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.deleteMyFlightsInfoFailed(e.toString(), timeout);
             }
 
             @Override
@@ -73,7 +71,7 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
                     Log.d(TAG, result);
                     mView.deleteMyFlightsInfoSucceed(result);
                 } else {
-                    mView.deleteMyFlightsInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.deleteMyFlightsInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

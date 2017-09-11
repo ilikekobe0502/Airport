@@ -8,7 +8,7 @@ public interface TourBusContract {
     interface View {
         void getTourBusSucceed(List<TourBusData> response);
 
-        void getTourBusFailed(String message);
+        void getTourBusFailed(String message, boolean timeout);
     }
 
     interface Presenter {

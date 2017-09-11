@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class LostAndFoundPresenter implements LostAndFoundContract.Presenter{
+public class LostAndFoundPresenter implements LostAndFoundContract.Presenter {
     private final static String TAG = LostAndFoundPresenter.class.getSimpleName();
 
     private static LostAndFoundPresenter mLostAndFoundPresenter;
@@ -32,10 +31,10 @@ public class LostAndFoundPresenter implements LostAndFoundContract.Presenter{
 
     @Override
     public void getLostAndFoundAPI() {
-        mApiConnect.getLostAndFound(new Callback() {
+        mApiConnect.getLostAndFound(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getLostAndFoundFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getLostAndFoundFailed(e.toString(), timeout);
             }
 
             @Override
@@ -45,7 +44,7 @@ public class LostAndFoundPresenter implements LostAndFoundContract.Presenter{
                     List<LostAndFoundData> list = GetLostAndFoundResponse.newInstance(result);
                     mView.getLostAndFoundSucceed(list);
                 } else {
-                    mView.getLostAndFoundFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getLostAndFoundFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

@@ -5,8 +5,10 @@ import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,6 +49,9 @@ public class DialogContentData {
 
         String contactsLocation;
         String airLine;
+        boolean isDeparture;
+        HashMap<String, Long> expectTimeDif;
+
         switch (locale) {
             default:
             case "zh_TW":
@@ -75,23 +80,73 @@ public class DialogContentData {
         item.setContent(!TextUtils.isEmpty(data.getFlightCode()) ? data.getFlightCode().trim() : "");
         list.add(item);
         item = new DialogContentData();
-        if (!TextUtils.equals(data.getKinds(), FlightsInfoData.TAG_KIND_DEPARTURE))
+
+        //抵達航班
+        if (!TextUtils.equals(data.getKinds(), FlightsInfoData.TAG_KIND_DEPARTURE)) {
             item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_arrivelocation));
-        else
+            isDeparture = false;
+        } else {//出發航班
             item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_arrivelocation));
+            isDeparture = true;
+        }
 
         item.setContent(contactsLocation);
         list.add(item);
         item = new DialogContentData();
-        item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_exceptime));
-        item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
-                , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
-        list.add(item);
-        item = new DialogContentData();
-        item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_actualtime));
-        item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
-                , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
-        list.add(item);
+
+        /*
+        /如果航班狀態為"時間更改"或"延遲"
+        /則只有[預計時間]需要顯示
+        /並且將[實際時間]的欄位塞入預計時間
+        */
+        if (TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_SCHEDULE_CHANGE) ||
+                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_DELAY)) {
+            //出發航班
+            if (isDeparture) {
+                item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_exceptime));
+                item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
+                        , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
+                list.add(item);
+                item = new DialogContentData();
+                item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_actualtime));
+            } else {//抵達航班
+                item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_exceptime));
+                item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
+                        , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
+                list.add(item);
+                item = new DialogContentData();
+                item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_actualtime));
+            }
+            item.setContent("");
+            list.add(item);
+        } else {
+            //出發航班
+            if (isDeparture) {
+                item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_exceptime));
+                item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
+                        , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
+                list.add(item);
+                item = new DialogContentData();
+                item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_actualtime));
+            } else {//抵達航班
+                item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_exceptime));
+                item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpressDate()) ? data.getExpressDate().trim() : ""
+                        , !TextUtils.isEmpty(data.getExpressTime()) ? data.getExpressTime().trim() : ""));
+                list.add(item);
+                item = new DialogContentData();
+                item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_actualtime));
+            }
+
+            expectTimeDif = Util.getDifferentTimeWithNowTime(String.format("%1$s %2$s", data.getExpectedDate(), data.getExpectedTime()), Util.TAG_FORMAT_ALL);
+            if (expectTimeDif.get(Util.TAG_HOUR) <= 0 && expectTimeDif.get(Util.TAG_MIN) <= 0 && expectTimeDif.get(Util.TAG_SEC) <= 0) {
+                item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
+                        , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
+            } else {
+                item.setContent("");
+            }
+            list.add(item);
+        }
+
         item = new DialogContentData();
         item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_terminal));
         item.setContent(!TextUtils.isEmpty(data.getTerminals()) ? data.getTerminals().trim() : "");

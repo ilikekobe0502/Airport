@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,10 +34,10 @@ public class TourBusPresenter implements TourBusContract.Presenter {
 
     @Override
     public void getTourBusAPI() {
-        mApiConnect.getTourBus(new Callback() {
+        mApiConnect.getTourBus(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getTourBusFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTourBusFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +47,7 @@ public class TourBusPresenter implements TourBusContract.Presenter {
                     List<TourBusData> list = GetTourBusResponse.newInstance(result);
                     mView.getTourBusSucceed(list);
                 } else {
-                    mView.getTourBusFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getTourBusFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

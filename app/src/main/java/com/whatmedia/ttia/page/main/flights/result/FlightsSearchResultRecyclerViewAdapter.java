@@ -1,9 +1,11 @@
 package com.whatmedia.ttia.page.main.flights.result;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +35,23 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     private Context mContext;
     private IOnItemClickListener mListener;
     private String mLocale;
+    private boolean isScreen34Mode;
+    private RelativeLayout.LayoutParams mParamsFrame;
+    private RelativeLayout.LayoutParams mParamsBackground;
 
     public FlightsSearchResultRecyclerViewAdapter(Context context, List<FlightsInfoData> data) {
         mContext = context;
         mItems = data;
         mLocale = Preferences.getLocaleSetting(context);
+        isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
+        initParams();
     }
 
     public FlightsSearchResultRecyclerViewAdapter(Context context) {
         mContext = context;
         mLocale = Preferences.getLocaleSetting(context);
+        isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
+        initParams();
     }
 
     @Override
@@ -58,6 +67,11 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         FlightsInfoData item = mItems.get(position);
         if (item == null)
             return;
+
+        if(!isScreen34Mode){
+            holder.mLayoutFrame.setLayoutParams(mParamsFrame);
+            holder.mLayoutBackground.setLayoutParams(mParamsBackground);
+        }
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
         holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
@@ -136,6 +150,8 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_background)
+        ImageView mLayoutBackground;
         @BindView(R.id.layout_frame)
         RelativeLayout mLayoutFrame;
         @BindView(R.id.textView_time)
@@ -187,5 +203,19 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         if (data.contains(FlightsInfoData.TAG_ON_TIME))
             return true;
         return false;
+    }
+
+    public void initParams(){
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity)mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //宽度 dm.widthPixels
+        //高度 dm.heightPixels
+
+        mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
+        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10),0
+                ,mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10),0);
+
+        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
+        mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
     }
 }

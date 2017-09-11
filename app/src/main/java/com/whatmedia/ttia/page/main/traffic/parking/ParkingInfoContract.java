@@ -8,11 +8,11 @@ public interface ParkingInfoContract {
     interface View {
         void getParkingInfoSucceed(List<HomeParkingInfoData> response);
 
-        void getParkingInfoFailed(String message);
+        void getParkingInfoFailed(String message, boolean timeout);
 
         void getParkingDetailSucceed(List<HomeParkingInfoData> response);
 
-        void getParkingDetailFailed(String message);
+        void getParkingDetailFailed(String message, boolean timeout);
     }
 
     interface Presenter {

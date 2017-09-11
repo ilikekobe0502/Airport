@@ -36,8 +36,8 @@
 
             <Button
                 android:id="@+id/button_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_95"
+                android:layout_height="@dimen/dp_pixel_50"
                 android:layout_marginRight="@dimen/dp_pixel_40"
                 android:background="@drawable/frame_dialog_button"
                 android:text="@string/alert_btn_cancel"
@@ -46,8 +46,8 @@
 
             <Button
                 android:id="@+id/button_ok"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_pixel_95"
+                android:layout_height="@dimen/dp_pixel_50"
                 android:layout_toRightOf="@+id/button_cancel"
                 android:background="@drawable/frame_dialog_button"
                 android:text="@string/alert_btn_add"

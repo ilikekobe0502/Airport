@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +15,10 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
-import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.RoamingDetailData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -112,16 +109,25 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     }
 
     @Override
-    public void getRoamingDetailFailed(final String message) {
+    public void getRoamingDetailFailed(final String message, boolean timeout) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

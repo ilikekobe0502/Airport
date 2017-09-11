@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -35,10 +34,10 @@ public class RoadsideAssistancePresenter implements RoadsideAssistanceContract.P
 
     @Override
     public void getRoadsideAssistanceAPI() {
-        mApiConnect.getRoadsideAssistance(new Callback() {
+        mApiConnect.getRoadsideAssistance(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getRoadsideAssistanceFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getRoadsideAssistanceFailed(e.toString(), timeout);
             }
 
             @Override
@@ -48,7 +47,7 @@ public class RoadsideAssistancePresenter implements RoadsideAssistanceContract.P
                     List<RoadsideAssistanceData> list = GetRoadsideAssistanceResponse.newInstance(result);
                     mView.getRoadsideAssistanceSucceed(list);
                 } else {
-                    mView.getRoadsideAssistanceFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getRoadsideAssistanceFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

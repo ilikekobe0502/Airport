@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <string name="app_name">桃園機場</string>
+
     <!--//Alert-->
     <string name="alert_btn_cancel">取消</string>
     <string name="alert_btn_ok">確定</string>
@@ -31,8 +34,8 @@
     <string name="flight_takeoff_detail_dialog_airnumber">  班機號碼：  </string>
     <string name="flight_takeoff_detail_dialog_arrivelocation">  抵達地：  </string>
     <string name="flight_takeoff_detail_dialog_status">  狀態：  </string>
-    <string name="flight_takeoff_detail_dialog_exceptime">  預計起飛時間：  </string>
-    <string name="flight_takeoff_detail_dialog_actualtime">  實際起飛時間：  </string>
+    <string name="flight_takeoff_detail_dialog_exceptime">預計起飛時間：</string>
+    <string name="flight_takeoff_detail_dialog_actualtime">實際起飛時間：</string>
     <string name="flight_takeoff_detail_dialog_terminal">  航廈：  </string>
     <string name="flight_takeoff_detail_dialog_gate">  登機門：  </string>
     <string name="flight_takeoff_detail_dialog_checkincount">  報到櫃檯：  </string>
@@ -41,10 +44,10 @@
     <string name="flight_arrival_detail_dialog_airnumber">  班機號碼：  </string>
     <string name="flight_arrival_detail_dialog_arrivelocation">  出發地：  </string>
     <string name="flight_arrival_detail_dialog_status">  狀態：  </string>
-    <string name="flight_arrival_detail_dialog_exceptime">  預計抵達時間：  </string>
-    <string name="flight_arrival_detail_dialog_actualtime">  實際抵達時間：  </string>
+    <string name="flight_arrival_detail_dialog_exceptime">預計抵達時間：</string>
+    <string name="flight_arrival_detail_dialog_actualtime">實際抵達時間：</string>
     <string name="flight_arrival_detail_dialog_terminal">  航廈：  </string>
-    <string name="flight_arrival_detail_dialog_package">  行李轉盤：  </string>
+    <string name="flight_arrival_detail_dialog_package">行李轉盤：</string>
 
     <string name="flight_add_to_my_flight_dialog">加入該航班至我的航班？</string>
     <string name="flight_add_to_my_flight_result_dialog">已成功加入我的航班！</string>
@@ -217,8 +220,6 @@
     <string name="zhcn">簡體中文</string>
     <string name="ja">日語</string>
     <string name="en">英語</string>
-
-    <string name="app_name">台灣智慧機場</string>
 
     <string-array name="drawable_array">
         <item>share</item>
@@ -833,4 +834,11 @@
     <string name="indoor_search_sub_title">路線圖</string>
     <string name="indoor_search_start_text">起始：%d</string>
     <string name="indoor_search_end_text">終點：%d</string>
+
+
+    <string name="directions_from">起:</string>
+    <string name="directions_to">迄:</string>
+    <string name="directions_from_hint">請以英文輸入您的地點</string>
+    <string name="directions_to_hint">請以英文輸入您的目的地</string>
+    <string name="timeout_message">網路異常,暫時無法取得資訊</string>
 </resources>

@@ -8,7 +8,7 @@ public interface SkyTrainContract {
     interface View {
         void getSkyTrainSucceed(List<SkyTrainData> response);
 
-        void getSkyTrainFailed(String message);
+        void getSkyTrainFailed(String message, boolean timeout);
     }
 
     interface Presenter {

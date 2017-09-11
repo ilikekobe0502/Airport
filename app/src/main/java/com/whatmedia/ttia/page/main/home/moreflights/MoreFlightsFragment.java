@@ -66,6 +66,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
     private String mQueryType;
+    private boolean mToday = true;
 
 
     public MoreFlightsFragment() {
@@ -169,16 +170,21 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 public void run() {
                     mAdapter.setData(list);
                     int position = 0;
+                    boolean match = false;
                     for (int i = 0; i < list.size(); i++) {
                         if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
                             ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
                             if (data.getHour() > 0 | data.getMin() > 0 | data.getSec() > 0) {
                                 position = i;
+                                match = true;
                                 break;
                             }
                         } else {
                             Log.e(TAG, "list.get(i).getCExpressTime() error");
                         }
+                    }
+                    if (mToday && !match) {
+                        position = list.size() - 1;
                     }
                     mManager.scrollToPositionWithOffset(position, 0);
                 }
@@ -189,16 +195,25 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     }
 
     @Override
-    public void getFlightFailed(String message) {
+    public void getFlightFailed(String message, boolean timeout) {
         Log.d(TAG, "getFlightFailed : " + message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(getString(R.string.server_error));
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(getString(R.string.server_error));
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -224,17 +239,26 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     }
 
     @Override
-    public void saveMyFlightFailed(final String message) {
-
+    public void saveMyFlightFailed(final String message, boolean timeout) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e(TAG, message);
-                    showMessage(message);
-                }
-            });
+
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, message);
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -263,6 +287,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
 
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
+                mToday = false;
                 getFlight();
                 break;
             case R.id.textView_now:
@@ -274,6 +299,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
+                mToday = true;
                 getFlight();
                 break;
             case R.id.textView_next:
@@ -286,44 +312,47 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
 
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;
+                mToday = false;
                 getFlight();
                 break;
             case R.id.layout_frame:
                 if (view.getTag() instanceof FlightsInfoData) {
                     final FlightsInfoData tag = (FlightsInfoData) view.getTag();
 
-                    final MyDialog myDialog = MyDialog.newInstance()
-                            .setTitle(getString(R.string.flight_dialog_title))
-                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                            .setRightClickListener(new IOnItemClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    if (tag != null) {
+                    final MyDialog myDialog = MyDialog.newInstance();
+                    if (!myDialog.isAdded()) {
+                        myDialog.setTitle(getString(R.string.flight_dialog_title))
+                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                                .setRightClickListener(new IOnItemClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (tag != null) {
 //                                        FlightsInfoData data = new FlightsInfoData();
-                                        if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
-                                            mLoadingView.showLoadingView();
-                                            tag.setAirlineCode(tag.getAirlineCode());
-                                            if (tag.getShift().length() == 2) {
-                                                tag.setShift("  " + tag.getShift());
-                                            } else if (tag.getShift().length() == 3) {
-                                                tag.setShift(" " + tag.getShift());
+                                            if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
+                                                mLoadingView.showLoadingView();
+                                                tag.setAirlineCode(tag.getAirlineCode());
+                                                if (tag.getShift().length() == 2) {
+                                                    tag.setShift("  " + tag.getShift());
+                                                } else if (tag.getShift().length() == 3) {
+                                                    tag.setShift(" " + tag.getShift());
+                                                }
+                                                tag.setShift(tag.getShift());
+                                                tag.setExpressDate(tag.getExpressDate());
+                                                tag.setExpressTime(tag.getExpressTime());
+                                                tag.setType("0");
+                                                mPresenter.saveMyFlightsAPI(tag);
+                                            } else {
+                                                Log.e(TAG, "view.getTag() content is error");
+                                                showMessage(getString(R.string.data_error));
                                             }
-                                            tag.setShift(tag.getShift());
-                                            tag.setExpressDate(tag.getExpressDate());
-                                            tag.setExpressTime(tag.getExpressTime());
-                                            tag.setType("0");
-                                            mPresenter.saveMyFlightsAPI(tag);
                                         } else {
-                                            Log.e(TAG, "view.getTag() content is error");
+                                            Log.e(TAG, "view.getTag() is null");
                                             showMessage(getString(R.string.data_error));
                                         }
-                                    } else {
-                                        Log.e(TAG, "view.getTag() is null");
-                                        showMessage(getString(R.string.data_error));
                                     }
-                                }
-                            });
-                    myDialog.show(getActivity().getFragmentManager(), "dialog");
+                                });
+                        myDialog.show(getActivity().getFragmentManager(), "dialog");
+                    }
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));

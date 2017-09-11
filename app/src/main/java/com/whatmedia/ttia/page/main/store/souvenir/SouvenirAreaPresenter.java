@@ -5,19 +5,16 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.response.GetQuestionnaireResponse;
 import com.whatmedia.ttia.response.GetSouvenirDataResponse;
-import com.whatmedia.ttia.response.data.QuestionnaireData;
 import com.whatmedia.ttia.response.data.SouvenirData;
 
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class SouvenirAreaPresenter implements SouvenirAreaContract.Presenter{
+public class SouvenirAreaPresenter implements SouvenirAreaContract.Presenter {
     private final static String TAG = SouvenirAreaPresenter.class.getSimpleName();
 
     private static SouvenirAreaPresenter mSouvenirAreaPresenter;
@@ -34,10 +31,10 @@ public class SouvenirAreaPresenter implements SouvenirAreaContract.Presenter{
 
     @Override
     public void querySouvenirList() {
-        mApiConnect.getSouvenirList(new Callback() {
+        mApiConnect.getSouvenirList(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.querySouvenirListFail(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.querySouvenirListFail(e.toString(), timeout);
             }
 
             @Override
@@ -47,7 +44,7 @@ public class SouvenirAreaPresenter implements SouvenirAreaContract.Presenter{
                     List<SouvenirData> list = GetSouvenirDataResponse.newInstance(result);
                     mView.querySouvenirListSuccess(list);
                 } else {
-                    mView.querySouvenirListFail(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.querySouvenirListFail(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

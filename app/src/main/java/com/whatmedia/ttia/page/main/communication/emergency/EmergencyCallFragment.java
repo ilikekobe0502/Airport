@@ -15,6 +15,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.EmergenctCallData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -98,16 +99,25 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
     }
 
     @Override
-    public void getEmergencyCallFailed(final String message) {
+    public void getEmergencyCallFailed(final String message, boolean timeout) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }

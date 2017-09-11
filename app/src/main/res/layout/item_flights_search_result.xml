@@ -2,15 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_frame"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_pixel_60"
+    android:layout_height="@dimen/dp_pixel_55"
     android:layout_marginLeft="@dimen/dp_pixel_10"
     android:layout_marginRight="@dimen/dp_pixel_10"
     android:paddingBottom="@dimen/dp_pixel_2"
     android:paddingTop="@dimen/dp_pixel_2">
 
     <ImageView
+        android:id="@+id/layout_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_pixel_55"
         android:layout_centerHorizontal="true"
         android:background="@drawable/flight_background" />
 
@@ -83,7 +84,7 @@
         android:layout_width="@dimen/dp_pixel_50"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/textView_state"
-        android:background="@drawable/flight_bg01">
+        android:background="@drawable/bg_flight_gate">
 
         <View
             android:id="@+id/line3"
@@ -98,11 +99,13 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/line3"
             android:textStyle="bold"
+            android:textSize="@dimen/sp_pixel_14"
             android:gravity="center" />
 
         <TextView
             android:id="@+id/textView_gate"
             android:layout_width="match_parent"
+            android:textSize="@dimen/sp_pixel_14"
             android:layout_height="match_parent"
             android:layout_below="@+id/line3"
             android:textStyle="bold"

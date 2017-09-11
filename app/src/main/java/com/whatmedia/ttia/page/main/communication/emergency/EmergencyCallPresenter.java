@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
-public class EmergencyCallPresenter implements EmergencyCallContract.Presenter{
+public class EmergencyCallPresenter implements EmergencyCallContract.Presenter {
     private final static String TAG = EmergencyCallPresenter.class.getSimpleName();
 
     private static EmergencyCallPresenter mEmergencyCallPresenter;
@@ -32,10 +31,10 @@ public class EmergencyCallPresenter implements EmergencyCallContract.Presenter{
 
     @Override
     public void getEmergencyCallAPI() {
-        mApiConnect.getEmergencyCall(new Callback() {
+        mApiConnect.getEmergencyCall(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getEmergencyCallFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getEmergencyCallFailed(e.toString(), timeout);
             }
 
             @Override
@@ -45,7 +44,7 @@ public class EmergencyCallPresenter implements EmergencyCallContract.Presenter{
                     List<EmergenctCallData> list = GetEmergenctCallResponse.newInstance(result);
                     mView.getEmergencyCallSucceed(list);
                 } else {
-                    mView.getEmergencyCallFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getEmergencyCallFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
                 }
             }
         });

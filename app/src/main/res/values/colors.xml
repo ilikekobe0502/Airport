@@ -35,4 +35,5 @@
     <color name="white0.1">#1affffff</color>
     <color name="colorPurpleToolbarRightBackground">#6657dd</color>
     <color name="colorMapSearchBg">#dcdcdc</color>
+    <color name="colorFlightItemGate">#d3d4d4</color>
 </resources>

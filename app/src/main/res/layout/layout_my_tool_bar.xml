@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_frame"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="@dimen/dp_pixel_50"
     android:paddingLeft="@dimen/dp_pixel_8"
     android:paddingRight="@dimen/dp_pixel_8">
 
     <ImageView
         android:id="@+id/imageView_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_pixel_35"
+        android:layout_height="@dimen/dp_pixel_35"
         android:layout_centerVertical="true"
         android:background="@drawable/back"
         android:scaleType="centerCrop"
@@ -100,10 +101,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/frame_other_area_background"
+                android:layout_margin="@dimen/dp_pixel_1"
                 android:padding="@dimen/dp_pixel_5">
 
 
-                <TextView
+                <com.whatmedia.ttia.utility.FontFitTextView
                     android:id="@+id/textView_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,7 +113,10 @@
                     android:gravity="center"
                     android:text="@string/timezone_other_area"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp_pixel_14" />
+                    android:textSize="@dimen/sp_pixel_14"
+                    app:minTextSize="@dimen/sp_pixel_10"
+                    app:decreaseValue="@dimen/dp_pixel_1"
+                    app:needResize="true"/>
 
                 <ImageView
                     android:id="@+id/imageView_area"
@@ -127,8 +132,8 @@
 
     <ImageView
         android:id="@+id/imageView_right_single"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_pixel_35"
+        android:layout_height="@dimen/dp_pixel_35"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@drawable/increase"

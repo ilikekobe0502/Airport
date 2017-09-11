@@ -9,7 +9,7 @@ public interface EmergencyCallContract {
     interface View {
         void getEmergencyCallSucceed(List<EmergenctCallData> response);
 
-        void getEmergencyCallFailed(String message);
+        void getEmergencyCallFailed(String message, boolean timeout);
     }
 
     interface Presenter {

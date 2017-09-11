@@ -130,15 +130,20 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     }
 
     @Override
-    public void getDepartureFlightFailed(String message) {
+    public void getDepartureFlightFailed(String message, boolean timeout) {
         Log.d(TAG, "getArriveFlightFailed : " + message);
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    showMessage(getString(R.string.server_error));
-                }
-            });
+
+            if (timeout) {
+
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMessage(getString(R.string.server_error));
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -164,17 +169,26 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     }
 
     @Override
-    public void saveMyFlightFailed(final String message) {
+    public void saveMyFlightFailed(final String message, boolean timeout) {
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e(TAG, message);
-                    showMessage(message);
-                }
-            });
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, message);
+                        showMessage(message);
+                    }
+                });
+            }
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -187,38 +201,40 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                 if (view.getTag() instanceof FlightsInfoData) {
                     final FlightsInfoData tag = (FlightsInfoData) view.getTag();
 
-                    final MyDialog myDialog = MyDialog.newInstance()
-                            .setTitle(getString(R.string.flight_dialog_title))
-                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                            .setRightClickListener(new IOnItemClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    if (tag != null) {
+                    final MyDialog myDialog = MyDialog.newInstance();
+                    if (!myDialog.isAdded()) {
+                        myDialog.setTitle(getString(R.string.flight_dialog_title))
+                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                                .setRightClickListener(new IOnItemClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (tag != null) {
 //                                        FlightsInfoData data = new FlightsInfoData();
-                                        if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
-                                            mLoadingView.showLoadingView();
-                                            tag.setAirlineCode(tag.getAirlineCode());
-                                            if (tag.getShift().length() == 2) {
-                                                tag.setShift("  " + tag.getShift());
-                                            } else if (tag.getShift().length() == 3) {
-                                                tag.setShift(" " + tag.getShift());
+                                            if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
+                                                mLoadingView.showLoadingView();
+                                                tag.setAirlineCode(tag.getAirlineCode());
+                                                if (tag.getShift().length() == 2) {
+                                                    tag.setShift("  " + tag.getShift());
+                                                } else if (tag.getShift().length() == 3) {
+                                                    tag.setShift(" " + tag.getShift());
+                                                }
+                                                tag.setShift(tag.getShift());
+                                                tag.setExpressDate(tag.getExpressDate());
+                                                tag.setExpressTime(tag.getExpressTime());
+                                                tag.setType("0");
+                                                mPresenter.saveMyFlightsAPI(tag);
+                                            } else {
+                                                Log.e(TAG, "view.getTag() content is error");
+                                                showMessage(getString(R.string.data_error));
                                             }
-                                            tag.setShift(tag.getShift());
-                                            tag.setExpressDate(tag.getExpressDate());
-                                            tag.setExpressTime(tag.getExpressTime());
-                                            tag.setType("0");
-                                            mPresenter.saveMyFlightsAPI(tag);
                                         } else {
-                                            Log.e(TAG, "view.getTag() content is error");
+                                            Log.e(TAG, "view.getTag() is null");
                                             showMessage(getString(R.string.data_error));
                                         }
-                                    } else {
-                                        Log.e(TAG, "view.getTag() is null");
-                                        showMessage(getString(R.string.data_error));
                                     }
-                                }
-                            });
-                    myDialog.show(getActivity().getFragmentManager(), "dialog");
+                                });
+                        myDialog.show(getActivity().getFragmentManager(), "dialog");
+                    }
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));

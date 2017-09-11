@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.flights.search;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -120,11 +119,24 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     }
 
     @Override
-    public void getFlightsArriveFailed(String message) {
+    public void getFlightsArriveFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, "getFlightsArriveFailed : " + message);
-        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
-        mPresenter.getFlightsInfoAPI(mSearchData);
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getFlightsArriveFailed : " + message);
+                mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
+                mPresenter.getFlightsInfoAPI(mSearchData);
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @Override
@@ -139,10 +151,23 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     }
 
     @Override
-    public void getFlightsDepartureFailed(String message) {
+    public void getFlightsDepartureFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        Log.e(TAG, "getFlightsDepartureFailed: " + message);
-        checkToNextPage();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, "getFlightsDepartureFailed: " + message);
+                checkToNextPage();
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
     }
 
     @OnClick(R.id.layout_search)
@@ -150,6 +175,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         String keyword = mEditTextSearch.getText().toString();
         if (!TextUtils.isEmpty(keyword)) {
             mBundle.clear();
+            mBundle.putString(FlightsSearchResultContract.TAG_KEY_WORLD, keyword);
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
             mSearchData.setKeyWord(keyword);

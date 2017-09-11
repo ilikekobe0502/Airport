@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
@@ -36,10 +35,10 @@ public class AirportEmergencyPresenter implements AirportEmergencyContract.Prese
 
     @Override
     public void getEmergencyAPI() {
-        mApiConnect.getUserEmergency(new Callback() {
+        mApiConnect.getUserEmergency(new ApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mView.getEmergencyFailed(e.toString());
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getEmergencyFailed(e.toString(), timeout);
             }
 
             @Override
@@ -50,7 +49,7 @@ public class AirportEmergencyPresenter implements AirportEmergencyContract.Prese
                     List<UserNewsData> list = GetUserNewsResponse.newInstance(result);
                     mView.getEmergencySucceed(list);
                 } else
-                    mView.getEmergencyFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "");
+                    mView.getEmergencyFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
             }
         });
     }

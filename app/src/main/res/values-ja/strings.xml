@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Taoyuan Airpor</string>
 
     <!--//Alert-->
     <string name="alert_btn_cancel">取り消す</string>
@@ -31,8 +32,8 @@
     <string name="flight_takeoff_detail_dialog_airnumber">  フライト番号：  </string>
     <string name="flight_takeoff_detail_dialog_arrivelocation">  目的地：  </string>
     <string name="flight_takeoff_detail_dialog_status">  状況：  </string>
-    <string name="flight_takeoff_detail_dialog_exceptime">  出発予定時刻：  </string>
-    <string name="flight_takeoff_detail_dialog_actualtime">  実際の出発時間：  </string>
+    <string name="flight_takeoff_detail_dialog_exceptime">出発予定時刻：  </string>
+    <string name="flight_takeoff_detail_dialog_actualtime">実際の出発時間：  </string>
     <string name="flight_takeoff_detail_dialog_terminal">  ターミナル：  </string>
     <string name="flight_takeoff_detail_dialog_gate">  ゲート：  </string>
     <string name="flight_takeoff_detail_dialog_checkincount">  チェックインカウンター：  </string>
@@ -41,10 +42,10 @@
     <string name="flight_arrival_detail_dialog_airnumber">  フライト番号：  </string>
     <string name="flight_arrival_detail_dialog_arrivelocation">  出発地：  </string>
     <string name="flight_arrival_detail_dialog_status">  状況：  </string>
-    <string name="flight_arrival_detail_dialog_exceptime">  到着予定時刻：  </string>
-    <string name="flight_arrival_detail_dialog_actualtime">  実際の到着時刻：  </string>
+    <string name="flight_arrival_detail_dialog_exceptime">到着予定時刻：</string>
+    <string name="flight_arrival_detail_dialog_actualtime">実際の到着時刻：</string>
     <string name="flight_arrival_detail_dialog_terminal">  ターミナル：  </string>
-    <string name="flight_arrival_detail_dialog_package">  手荷物受取：  </string>
+    <string name="flight_arrival_detail_dialog_package">手荷物受取：</string>
 
     <string name="flight_add_to_my_flight_dialog">あなたは私のフライトにこのフライトを追加しますか?</string>
     <string name="flight_add_to_my_flight_result_dialog">フライトに成功マイフライトに追加されている!</string>
@@ -217,8 +218,6 @@
     <string name="zhcn">簡体字中国語</string>
     <string name="ja">日本語</string>
     <string name="en">英語</string>
-
-    <string name="app_name">Smart Airport</string>
 
     <string-array name="drawable_array">
         <item>share</item>
@@ -767,4 +766,10 @@
     <string name="indoor_search_sub_title">ロードマップ</string>
     <string name="indoor_search_start_text">開始：%d</string>
     <string name="indoor_search_end_text">終了：%d</string>
+
+    <string name="directions_from">Start:</string>
+    <string name="directions_to">End:</string>
+    <string name="directions_from_hint">Please enter your location</string>
+    <string name="directions_to_hint">Please enter your destination</string>
+    <string name="timeout_message">ネットワークの問題に起因した情報を取得できません。</string>
 </resources>

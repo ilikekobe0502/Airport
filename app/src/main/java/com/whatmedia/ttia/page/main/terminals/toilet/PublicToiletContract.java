@@ -8,7 +8,7 @@ public interface PublicToiletContract {
     interface View {
         void getPublicToiletSucceed(List<AirportFacilityData> response);
 
-        void getPublicFailed(String message);
+        void getPublicFailed(String message, boolean timeout);
     }
 
     interface Presenter {

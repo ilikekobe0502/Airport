@@ -8,10 +8,10 @@ import java.util.List;
 public interface AchievementContract {
     interface View {
         void queryAchievementListSuccess(List<AchievementsData> list);
-        void queryAchievementListFail(String message);
+        void queryAchievementListFail(String message, boolean timeout);
     }
 
     interface Presenter {
-        void queryAchievementList();
+        boolean queryAchievementList();
     }
 }

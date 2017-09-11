@@ -9,7 +9,7 @@ public interface InternationalCallContract {
     interface View {
         void getInternationalCallSucceed(List<InternationCallData> response);
 
-        void getInternationalCallFailed(String message);
+        void getInternationalCallFailed(String message, boolean timeout);
     }
 
     interface Presenter {

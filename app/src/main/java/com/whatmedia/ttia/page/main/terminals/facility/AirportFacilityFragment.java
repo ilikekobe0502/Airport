@@ -19,6 +19,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.facility.detail.FacilityDetailContract;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -143,8 +144,16 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     }
 
     @Override
-    public void getAirportFacilityFailed(String message) {
+    public void getAirportFacilityFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
+        if (timeout) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    Util.showTimeoutDialog(getContext());
+                }
+            });
+        }
     }
 
     @OnClick({R.id.imageView_left, R.id.imageView_right})
