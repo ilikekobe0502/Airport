@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:paddingBottom="@dimen/dp_pixel_16"
     android:paddingTop="@dimen/dp_pixel_16"
+    android:layout_marginRight="@dimen/dp_pixel_16"
+    android:layout_marginLeft="@dimen/dp_pixel_16"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageView_icon"
         android:layout_centerHorizontal="true"
-        android:layout_width="@dimen/dp_pixel_80"
-        android:layout_height="@dimen/dp_pixel_80"
+        android:layout_width="@dimen/dp_pixel_95"
+        android:layout_height="@dimen/dp_pixel_95"
         android:background="@drawable/language_setting_08_off" />
 
     <com.whatmedia.ttia.utility.FontFitTextView
