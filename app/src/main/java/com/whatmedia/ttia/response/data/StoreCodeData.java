@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class StoreCodeData {
-    @SerializedName("StoreTypeID")
+    @SerializedName("StoreD")//Server回傳欄位就是"StoreD"
     private String storeTypeId;
     @SerializedName("StoreTypeName")
     private String storeTypeName;

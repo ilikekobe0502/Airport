@@ -293,11 +293,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         switch (view.getId()) {
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
-                if (mFromPage == Page.TAG_STORE_OFFERS) {
+                if (mFromPage == Page.TAG_STORE_OFFERS) {//商店資訊
                     mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
                             mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mStoreCodeData != null ? mStoreCodeData.getStoreTypeId() : ""
                             , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
-                } else {
+                } else {//餐廳資訊
                     mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
                             mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : ""
                             , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
@@ -394,7 +394,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (view.getTag() != null && view.getTag() instanceof RestaurantCodeData) {
+                                    if (view.getTag() != null && view.getTag() instanceof StoreCodeData) {
                                         mStoreCodeData = (StoreCodeData) view.getTag();
                                         mTextViewRestaurant.setText(mStoreCodeData.getStoreTypeName());
                                     } else {

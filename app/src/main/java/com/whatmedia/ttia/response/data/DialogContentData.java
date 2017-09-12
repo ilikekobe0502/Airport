@@ -95,12 +95,13 @@ public class DialogContentData {
         item = new DialogContentData();
 
         /*
-        /如果航班狀態為"時間更改"或"延遲"
+        /如果航班狀態為"時間更改"或"延遲"或"取消航班"
         /則只有[預計時間]需要顯示
         /並且將[實際時間]的欄位塞入預計時間
         */
         if (TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_SCHEDULE_CHANGE) ||
-                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_DELAY)) {
+                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_DELAY)||
+                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_CANCELLED)) {
             //出發航班
             if (isDeparture) {
                 item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_exceptime));
