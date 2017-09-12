@@ -157,7 +157,7 @@
                         android:id="@+id/textView_sub_name_P3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/parking_info_parking_space_1F"
+                        android:text="@string/parking_info_parking_space_B1_B2"
                         android:textColor="@color/colorTextHomeParkingInfoName"
                         android:textSize="@dimen/sp_pixel_10" />
                 </LinearLayout>
@@ -219,7 +219,7 @@
                         android:id="@+id/textView_sub_name_P4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/parking_info_parking_space_B1_B2"
+                        android:text="@string/parking_info_parking_space_1F"
                         android:textColor="@color/colorTextHomeParkingInfoName"
                         android:textSize="@dimen/sp_pixel_10" />
                 </LinearLayout>

@@ -126,10 +126,10 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
                     public void run() {
                         mTextViewNameP1.setText(getString(R.string.parking_info_parking_space_P1));
                         mTextViewNameP2.setText(getString(R.string.parking_info_parking_space_P2));
-                        mTextViewNameP4.setText(getString(R.string.parking_info_parking_space_P4));
-                        mTextViewSubNameP4.setText(getString(R.string.parking_info_parking_space_B1_B2));
                         mTextViewNameP3.setText(getString(R.string.parking_info_parking_space_P4));
-                        mTextViewSubNameP3.setText(getString(R.string.parking_info_parking_space_1F));
+                        mTextViewSubNameP3.setText(getString(R.string.parking_info_parking_space_B1_B2));
+                        mTextViewNameP4.setText(getString(R.string.parking_info_parking_space_P4));
+                        mTextViewSubNameP4.setText(getString(R.string.parking_info_parking_space_1F));
 
                         String count1 = !TextUtils.isEmpty(result.get(0).getAvailableCar()) ? result.get(0).getAvailableCar() : "0";
                         String count2 = !TextUtils.isEmpty(result.get(1).getAvailableCar()) ? result.get(1).getAvailableCar() : "0";
@@ -150,18 +150,18 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
                             mTextViewCountP2.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextHomeParkingInfoFull));
                         }
                         if (!TextUtils.equals(count3, "0")) {
-                            mTextViewCountP4.setText(getString(R.string.parking_info_parking_space_number_of, count3));
-                            mTextViewCountP4.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                        } else {
-                            mTextViewCountP4.setText(getString(R.string.parking_info_parking_space_full_state));
-                            mTextViewCountP4.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextHomeParkingInfoFull));
-                        }
-                        if (!TextUtils.equals(count4, "0")) {
-                            mTextViewCountP3.setText(getString(R.string.parking_info_parking_space_number_of, count4));
+                            mTextViewCountP3.setText(getString(R.string.parking_info_parking_space_number_of, count3));
                             mTextViewCountP3.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                         } else {
                             mTextViewCountP3.setText(getString(R.string.parking_info_parking_space_full_state));
                             mTextViewCountP3.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextHomeParkingInfoFull));
+                        }
+                        if (!TextUtils.equals(count4, "0")) {
+                            mTextViewCountP4.setText(getString(R.string.parking_info_parking_space_number_of, count4));
+                            mTextViewCountP4.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                        } else {
+                            mTextViewCountP4.setText(getString(R.string.parking_info_parking_space_full_state));
+                            mTextViewCountP4.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextHomeParkingInfoFull));
                         }
                     }
 //                    mAdapter.setData(result);
