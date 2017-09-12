@@ -528,6 +528,56 @@ public class Util {
         return clockDataList;
     }
 
+    public static List<ClockData> addNotificationClock(Context context, int hourOfDay, int minute) {
+        String sourceTime = String.format("%1$d:%2$d", hourOfDay, minute);
+        //取得原本佇列裡面就有的時間列表
+        List<ClockData> clockDataList = GetClockDataResponse.newInstance(Preferences.getClockData(context));
+        //取得原本佇列裡面就有的我的航班列表
+        List<FlightsInfoData> myFlightDataList = GetMyFlightsResponse.newInstance(Preferences.getMyFlightsData(context));
+
+        ClockData clockData = new ClockData();
+
+        if (myFlightDataList != null && myFlightDataList.size() > 0) {
+            //將所有MyFlights的資料設入暫存檔裡
+            for (FlightsInfoData item : myFlightDataList) {
+                ClockTimeData clockTimeData = new ClockTimeData();
+                //先計算出航班時間扣除設定時間
+                //再將上面的時間結果與現在時間取時間差
+                HashMap<String, Long> diffTime = Util.getDifferentTimeWithNowTime(Util.getDifferentTime(sourceTime, item.getExpectedTime()));
+                //將設定好的資料塞入clockTimeData
+                clockTimeData.setHour(diffTime.get(Util.TAG_HOUR));
+                clockTimeData.setMin(diffTime.get(Util.TAG_MIN));
+                clockTimeData.setSec(diffTime.get(Util.TAG_SEC));
+                //如果時間差秒數大於0則代表大於現在時間，則設定鬧鐘參數
+                if (clockTimeData.getSec() > 0) {
+                    item.setNotificationId(new Random().nextInt(9000) + 65);
+                    item.setNotificationTime(clockTimeData);
+                }
+                //設入一筆推播時間資料
+                clockData.setFlightsData(myFlightDataList);
+            }
+        } else {
+            Log.e(TAG, "myFlightDataList = null || myFlightDataList < 0");
+        }
+
+        //將推播時間的開關開啟
+        clockData.setNotify(true);
+        String timeString = context.getString(R.string.my_flights_notify, hourOfDay, minute);
+        //設置推播畫面的資料
+        ClockTimeData clockTimeData = new ClockTimeData();
+        clockTimeData.setHour(hourOfDay);
+        clockTimeData.setMin(minute);
+        clockData.setTime(clockTimeData);
+        clockData.setTimeString(timeString);
+        clockData.setId(new Random().nextInt(9000) + 65);
+        clockDataList.add(clockData);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(clockDataList);
+        Preferences.saveClockData(context, json);
+        return clockDataList;
+    }
+
     /**
      * Modify notification time
      * 先讓此Item刪除 然後重新新增
@@ -548,7 +598,7 @@ public class Util {
             }
         }
 
-        return addNotification(context, hourOfDay, minute);
+        return addNotificationClock(context, hourOfDay, minute);
     }
 
     /**

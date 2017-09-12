@@ -44,7 +44,8 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @BindView(R.id.layout_ok)
     RelativeLayout mLayoutOk;
 
-    private static String mWeatherUrl = "http://210.241.14.99/weather/index.php?region=%1$s&lang=%2$s";
+//    private static String mWeatherUrl = "http://210.241.14.99/weather/index.php?region=%1$s&lang=%2$s";
+    private static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=%1$s&lang=%2$s";//先放舊的IP
     private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;

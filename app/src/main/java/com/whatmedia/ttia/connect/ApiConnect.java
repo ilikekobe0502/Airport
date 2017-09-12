@@ -1,16 +1,10 @@
 package com.whatmedia.ttia.connect;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.whatmedia.ttia.Manifest;
 import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
 import com.whatmedia.ttia.response.data.FlightSearchData;
@@ -60,7 +54,7 @@ public class ApiConnect extends StateCode {
     public interface MyCallback {
         void onFailure(Call call, IOException e, boolean timeout);
 
-        void onResponse(Call call, Response response) throws IOException;
+        void onResponse(Call call, MyResponse response) throws IOException;
     }
 
     public ApiConnect() {
@@ -76,6 +70,8 @@ public class ApiConnect extends StateCode {
 
         mClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(1000, TimeUnit.MILLISECONDS)
                 .build();
 
         if (mApiConnect == null) {
@@ -151,7 +147,15 @@ public class ApiConnect extends StateCode {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                callback.onResponse(call, response);
+                try {
+                    MyResponse myResponse = new MyResponse();
+                    myResponse.setMyResponseBody(response.body().string());
+                    myResponse.setMessage(response.message());
+                    myResponse.setCode(response.code());
+                    callback.onResponse(call, myResponse);
+                } catch (IOException e) {
+                    onFailure(call, e);
+                }
             }
         });
         Log.d(TAG, request.url().toString());

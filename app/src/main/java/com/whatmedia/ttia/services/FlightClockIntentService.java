@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
@@ -65,6 +66,7 @@ public class FlightClockIntentService extends IntentService {
                         .setDefaults(Notification.DEFAULT_VIBRATE)
                         .setLargeIcon(Icon.createWithResource(this, R.mipmap.ic_launcher))
                         .setSmallIcon(R.mipmap.icon)
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setAutoCancel(true);
             } else {
                 builder.setContentTitle(getString(R.string.title_flight_notify))
@@ -75,6 +77,7 @@ public class FlightClockIntentService extends IntentService {
                                 !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
                         .setDefaults(Notification.DEFAULT_VIBRATE)
                         .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setAutoCancel(true);
             }
 

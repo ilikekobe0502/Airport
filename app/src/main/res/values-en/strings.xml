@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Taoyuan International Airport</string>
+    <string name="app_name">Taoyuan Airpor</string>
 
     <!--//Alert-->
     <string name="alert_btn_cancel">Cancel</string>
@@ -14,7 +14,7 @@
 
     <string name="navi_btn_back">Back</string>
     <string name="navi_title_menu">Menu</string>
-    <string name="tableview_header_takeoff">%s Departing flights</string>
+    <string name="tableview_header_takeoff">%s Departure flights</string>
     <string name="tableview_header_arrival">%s Arrival flights</string>
 
     <string name="cell_terminal">T.</string>

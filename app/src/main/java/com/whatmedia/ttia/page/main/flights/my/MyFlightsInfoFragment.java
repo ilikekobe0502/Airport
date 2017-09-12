@@ -158,15 +158,19 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     @Override
     public void getMyFlightsInfoFailed(String message, boolean timeout) {
         mLoadingView.goneLoadingView();
-        if (timeout) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Util.showTimeoutDialog(getContext());
-                }
-            });
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            } else {
+                Log.e(TAG, message);
+            }
         } else {
-            Log.e(TAG, message);
+            Log.d(TAG, "Fragment is not add");
         }
 
 //        showNoDataDialog();

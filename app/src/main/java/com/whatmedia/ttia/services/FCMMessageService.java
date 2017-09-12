@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -31,12 +32,14 @@ public class FCMMessageService extends FirebaseMessagingService {
                     .setDefaults(Notification.DEFAULT_VIBRATE)
                     .setLargeIcon(Icon.createWithResource(this, R.mipmap.ic_launcher))
                     .setSmallIcon(R.mipmap.icon)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setAutoCancel(true);
         } else {
             builder.setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setDefaults(Notification.DEFAULT_VIBRATE)
                     .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setAutoCancel(true);
         }
 

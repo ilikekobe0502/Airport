@@ -27,7 +27,8 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @BindView(R.id.webView)
     WebView mWebView;
 
-    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
+//    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
+    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
     private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;

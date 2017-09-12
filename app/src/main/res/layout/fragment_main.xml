@@ -36,13 +36,14 @@
         android:layout_height="0dp"
         android:layout_below="@+id/layout_info"
         android:layout_weight="4"
+        android:weightSum="12"
         android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager_feature"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="11"
             android:paddingBottom="@dimen/dp_pixel_10" />
 
         <android.support.design.widget.TabLayout

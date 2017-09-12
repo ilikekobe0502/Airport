@@ -77,7 +77,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
 
         if(isScreen34Mode){
-            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth()/8,getScreenWidth()/8);
+            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth()/9,getScreenWidth()/9);
             t.addRule(RelativeLayout.CENTER_HORIZONTAL);
             holder.mImageViewIcon.setLayoutParams(t);
         }

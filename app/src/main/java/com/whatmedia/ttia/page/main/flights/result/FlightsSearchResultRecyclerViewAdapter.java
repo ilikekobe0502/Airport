@@ -200,7 +200,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
      * @return
      */
     private boolean checkFlightState(String data) {
-        if (data.contains(FlightsInfoData.TAG_ON_TIME))
+        if (data.contains(FlightsInfoData.TAG_ON_TIME)||data.contains(FlightsInfoData.TAG_ARRIVED))
             return true;
         return false;
     }
