@@ -22,8 +22,8 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="@color/colorText"
-        android:textStyle="bold"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_13"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/line1"
@@ -44,7 +44,8 @@
             android:layout_width="@dimen/dp_pixel_20"
             android:layout_height="@dimen/dp_pixel_20"
             android:layout_centerInParent="true"
-            android:scaleType="centerCrop" />
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
     </RelativeLayout>
 
     <View
@@ -98,18 +99,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/line3"
-            android:textStyle="bold"
+            android:gravity="center"
             android:textSize="@dimen/sp_pixel_14"
-            android:gravity="center" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView_gate"
             android:layout_width="match_parent"
-            android:textSize="@dimen/sp_pixel_14"
             android:layout_height="match_parent"
             android:layout_below="@+id/line3"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textSize="@dimen/sp_pixel_14"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView
@@ -121,6 +122,6 @@
         android:gravity="center"
         android:paddingRight="@dimen/dp_pixel_10"
         android:textColor="@color/colorText"
-        android:textStyle="bold"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_13"
+        android:textStyle="bold" />
 </RelativeLayout>

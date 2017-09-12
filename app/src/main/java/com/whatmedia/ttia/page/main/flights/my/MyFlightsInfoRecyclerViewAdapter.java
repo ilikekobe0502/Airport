@@ -111,7 +111,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorText));
             else
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextSpecial));
-            holder.mTextViewState.setText(FlightsInfoData.checkFlightShowText(mContext,item.getFlightStatus()));
+            holder.mTextViewState.setText(FlightsInfoData.checkFlightShowText(mContext, item.getFlightStatus()));
         } else
             holder.mTextViewState.setText("");
 
@@ -209,7 +209,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
      * @return
      */
     private boolean checkFlightState(String data) {
-        if (data.contains(FlightsInfoData.TAG_ON_TIME)) {
+        if (data.contains(FlightsInfoData.TAG_ON_TIME) || data.contains(FlightsInfoData.TAG_ARRIVED)) {
             return true;
         }
         return false;

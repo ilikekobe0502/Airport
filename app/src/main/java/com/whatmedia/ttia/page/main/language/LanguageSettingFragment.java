@@ -125,30 +125,30 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
             }
 
             final String finalString = string;
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.note)
-                    .setMessage(getString(R.string.language_setting_select_dialog, string))
-                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+//            new AlertDialog.Builder(getContext())
+//                    .setTitle(R.string.note)
+//                    .setMessage(getString(R.string.language_setting_select_dialog, string))
+//                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
                             Preferences.saveLocaleSetting(getContext(), setting.getLocale().toString());
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle(R.string.note)
-                                    .setMessage(getString(R.string.language_setting_select_confirm_dialog, finalString))
-                                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+//                            new AlertDialog.Builder(getContext())
+//                                    .setTitle(R.string.note)
+//                                    .setMessage(getString(R.string.language_setting_select_confirm_dialog, finalString))
+//                                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
                                             Intent i = getActivity().getIntent();
                                             getActivity().finish();
                                             getActivity().startActivity(i);
-                                        }
-                                    })
-                                    .show();
+//                                        }
+//                                    })
+//                                    .show();
 //                            mAdapter.setData();
-                        }
-                    })
-                    .setNegativeButton(R.string.alert_btn_cancel, null)
-                    .show();
+//                        }
+//                    })
+//                    .setNegativeButton(R.string.alert_btn_cancel, null)
+//                    .show();
         } else {
             Log.e(TAG, "View.getTag() is not instance of FlightInfo");
         }
