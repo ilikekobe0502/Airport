@@ -114,6 +114,14 @@
         android:layout_alignParentBottom="true"
         android:background="@android:color/black"
         android:visibility="gone">
+        
+        <NumberPicker
+            android:id="@+id/number_picker_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_ok"
+            android:scaleX="1.5"
+            android:scaleY="1.5" />
 
         <RelativeLayout
             android:id="@+id/layout_ok"
@@ -132,13 +140,5 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_15" />
         </RelativeLayout>
-
-        <NumberPicker
-            android:scaleX="1.5"
-            android:scaleY="1.5"
-            android:id="@+id/number_picker_left"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layout_ok" />
     </RelativeLayout>
 </RelativeLayout>
