@@ -98,8 +98,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
         mPresenter = FlightsSearchResultPresenter.getInstance(getContext(), this);
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS))
-                && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))
                 && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
             mArriveList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS));
             mDepartureList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS));
@@ -159,6 +158,12 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
             Log.e(TAG, castException.toString());
             /** The activity does not implement the listener. */
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        getArguments().putString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS, "");
+        super.onSaveInstanceState(outState);
     }
 
     @Override

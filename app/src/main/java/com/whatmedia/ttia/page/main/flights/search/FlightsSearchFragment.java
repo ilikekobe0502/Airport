@@ -179,7 +179,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
             mSearchData.setKeyWord(keyword);
-            mSearchData.setQueryType(FlightsInfoData.TAG_KIND_ARRIVE);
+            mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
             mPresenter.getFlightsInfoAPI(mSearchData);
         }
     }
@@ -189,7 +189,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
      */
     private void checkToNextPage() {
         if (isAdded() && !isDetached()) {
-            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS)) && TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
+            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
 
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
