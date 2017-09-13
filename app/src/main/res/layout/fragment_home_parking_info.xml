@@ -26,6 +26,7 @@
             android:weightSum="4">
 
             <RelativeLayout
+                android:id="@+id/layout_sample"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -35,6 +36,7 @@
                     android:id="@+id/layout_info_P1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -64,21 +66,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_pixel_15" />
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/layout_info_P1"
-                    android:layout_toEndOf="@+id/layout_info_P1">
-
-                    <View
-                        android:id="@+id/line_P1"
-                        android:layout_width="@dimen/dp_pixel_1"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:background="@color/colorHomeParkingInfoLine" />
-                </RelativeLayout>
             </RelativeLayout>
+
+            <View
+                android:id="@+id/line_P1"
+                android:layout_width="@dimen/dp_pixel_1"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorHomeParkingInfoLine" />
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -90,6 +85,7 @@
                     android:id="@+id/layout_info_P2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -119,21 +115,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_pixel_15" />
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/layout_info_P2"
-                    android:layout_toEndOf="@+id/layout_info_P2">
-
-                    <View
-                        android:id="@+id/line_P2"
-                        android:layout_width="@dimen/dp_pixel_1"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:background="@color/colorHomeParkingInfoLine" />
-                </RelativeLayout>
             </RelativeLayout>
+
+            <View
+                android:id="@+id/line_P2"
+                android:layout_width="@dimen/dp_pixel_1"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorHomeParkingInfoLine" />
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -145,6 +134,7 @@
                     android:id="@+id/layout_info_P3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -182,21 +172,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_pixel_15" />
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignBottom="@+id/layout_info_P3"
-                    android:layout_toEndOf="@+id/layout_info_P3">
-
-                    <View
-                        android:id="@+id/line_P3"
-                        android:layout_width="@dimen/dp_pixel_1"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:background="@color/colorHomeParkingInfoLine" />
-                </RelativeLayout>
             </RelativeLayout>
+
+            <View
+                android:id="@+id/line_P3"
+                android:layout_width="@dimen/dp_pixel_1"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorHomeParkingInfoLine" />
 
             <RelativeLayout
                 android:layout_width="0dp"
