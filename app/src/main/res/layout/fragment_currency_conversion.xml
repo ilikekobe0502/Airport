@@ -134,6 +134,8 @@
         </RelativeLayout>
 
         <NumberPicker
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:id="@+id/number_picker_left"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
