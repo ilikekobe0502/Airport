@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.HomeParkingInfoData;
+import com.whatmedia.ttia.utility.Preferences;
 
 import java.util.List;
 
@@ -48,6 +50,8 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private HomeParkingInfoContract.Presenter mPresenter;
+    private boolean is34Mode = false;
+    private String mLocale = "";
 
     private HomeParkingInfoRecyclerViewAdapter mAdapter;
 
@@ -81,6 +85,16 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
 
         mPresenter = HomeParkingInfoPresenter.getInstance(getContext(), this);
         mPresenter.getParkingInfoAPI();
+        is34Mode = Preferences.checkScreenIs34Mode(getContext());
+        mLocale = Preferences.getLocaleSetting(getContext());
+
+        if(is34Mode && mLocale.equals("en")){
+            mTextViewCountP1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
+            mTextViewCountP2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
+            mTextViewCountP3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
+            mTextViewCountP4.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
+        }
+
         return view;
     }
 
