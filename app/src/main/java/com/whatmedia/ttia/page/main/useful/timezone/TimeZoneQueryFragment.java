@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.whatmedia.ttia.component.ClockView;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.Calendar;
@@ -43,6 +45,8 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     TextView mTextTime;
     @BindView(R.id.clockview)
     ClockView mClockView;
+    @BindView(R.id.clock_bg)
+    ImageView mClockBackground;
 
     private static final int RUNNING = 1000;
     @BindView(R.id.layout_ok)
@@ -58,6 +62,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private TimeZoneQueryContract.Presenter mPresenter;
+    private RelativeLayout.LayoutParams mClockBackgroundLayoutParams;
 
     private int mRegion = 0;
     private int mCountry = 0;
@@ -130,6 +135,18 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         sysTimeStr = DateFormat.format("ss:hh:mm:", sysTime);
         mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0, 2).toString()));
         tool();
+
+        if(Preferences.checkScreenIs34Mode(getContext())){
+            mClockBackgroundLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+            mClockBackgroundLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            mClockBackgroundLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
+                    ,getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
+                    ,getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
+                    ,getResources().getDimensionPixelSize(R.dimen.dp_pixel_20));
+
+            mClockBackground.setLayoutParams(mClockBackgroundLayoutParams);
+        }
+
         return view;
     }
 
