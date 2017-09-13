@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 
     private int mRegion = 0;
     private int mCountry = 0;
-//    private String[] mCodeArray;
+    //    private String[] mCodeArray;
     private String[] mItems;
     private String mTimeStamp = "+8";
 
@@ -136,13 +137,13 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0, 2).toString()));
         tool();
 
-        if(Preferences.checkScreenIs34Mode(getContext())){
-            mClockBackgroundLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        if (Preferences.checkScreenIs34Mode(getContext())) {
+            mClockBackgroundLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mClockBackgroundLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             mClockBackgroundLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
-                    ,getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
-                    ,getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
-                    ,getResources().getDimensionPixelSize(R.dimen.dp_pixel_20));
+                    , getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
+                    , getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)
+                    , getResources().getDimensionPixelSize(R.dimen.dp_pixel_20));
 
             mClockBackground.setLayoutParams(mClockBackgroundLayoutParams);
         }
@@ -203,7 +204,9 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 //                    sysTimeStr = DateFormat.format("ss:hh:mm:", sysTime);
 //                    mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
 
-                    String hour, min, sec;
+                    String hour = "0";
+                    String min = "0";
+                    String sec = "0";
 
                     if (c.get(Calendar.HOUR_OF_DAY) < 10) {
                         hour = "0" + c.get(Calendar.HOUR_OF_DAY);
@@ -221,13 +224,15 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                         sec = c.get(Calendar.SECOND) + "";
                     }
 
-                    mTextTime.setText(hour + ":" + min + ":" + sec);
-                    mClockView.setHour(c.get(Calendar.HOUR_OF_DAY));
-                    mClockView.setMinute(c.get(Calendar.MINUTE));
-                    mClockView.setSecond(c.get(Calendar.SECOND));
-
+                    if (!TextUtils.isEmpty(hour) && !TextUtils.isEmpty(min) && !TextUtils.isEmpty(sec)) {
+                        mTextTime.setText(String.format("%1$s:%2$s:%3$s", hour, min, sec));
+                        mClockView.setHour(c.get(Calendar.HOUR_OF_DAY));
+                        mClockView.setMinute(c.get(Calendar.MINUTE));
+                        mClockView.setSecond(c.get(Calendar.SECOND));
+                    } else {
+                        Log.e(TAG, "Time data Null");
+                    }
                     break;
-
                 default:
                     break;
             }
@@ -330,7 +335,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     }
 
     private void setClock() {
-        if ( mItems.length > mCountry) {
+        if (mItems.length > mCountry) {
             Log.d(TAG, "switchRegion():" + "mCodeArray[mCountry]" + mItems[mCountry]);
         } else {
             Log.e(TAG, "switchRegion():mCodeArray.length < mCountry + mItems.length < mCountry");
@@ -340,10 +345,10 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
             return;
         }
         mTextCity.setText(mItems[mCountry]);
-        String zoneName = mCountryName[mRegion]+"/"+mTownName[mCountry];
-        mTimeStamp =String.valueOf(TimeUnit.MILLISECONDS.toHours(TimeZone.getTimeZone(zoneName).getRawOffset()));
+        String zoneName = mCountryName[mRegion] + "/" + mTownName[mCountry];
+        mTimeStamp = String.valueOf(TimeUnit.MILLISECONDS.toHours(TimeZone.getTimeZone(zoneName).getRawOffset()));
 
-        Log.e("TIMEZONE",zoneName+":"+mTimeStamp);
+        Log.e("TIMEZONE", zoneName + ":" + mTimeStamp);
 
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
