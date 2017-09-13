@@ -100,7 +100,6 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))
                 && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
-            mArriveList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS));
             mDepartureList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS));
             mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD).toLowerCase();
 
@@ -162,7 +161,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        getArguments().putString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS, "");
+        getArguments().putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, "");
         super.onSaveInstanceState(outState);
     }
 

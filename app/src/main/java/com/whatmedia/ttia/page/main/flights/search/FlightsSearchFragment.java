@@ -142,10 +142,14 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     @Override
     public void getFlightsDepartureSucceed(String response) {
         mLoadingView.goneLoadingView();
-        if (!TextUtils.isEmpty(response)) {
-            mBundle.putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, response);
+        if (isAdded() && !isDetached()) {
+            if (!TextUtils.isEmpty(response)) {
+                mBundle.putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, response);
+            } else {
+                Log.e(TAG, "departure response is null");
+            }
         } else {
-            Log.e(TAG, "departure response is null");
+            Log.d(TAG, "Fragment is not add");
         }
         checkToNextPage();
     }
