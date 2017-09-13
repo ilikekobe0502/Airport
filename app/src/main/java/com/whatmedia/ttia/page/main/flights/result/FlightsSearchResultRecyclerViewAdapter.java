@@ -68,14 +68,14 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         if (item == null)
             return;
 
-        if(!isScreen34Mode){
+        if (!isScreen34Mode) {
             holder.mLayoutFrame.setLayoutParams(mParamsFrame);
             holder.mLayoutBackground.setLayoutParams(mParamsBackground);
         }
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
         holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
-        switch (mLocale){
+        switch (mLocale) {
             case "zh_TW":
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
                 break;
@@ -92,11 +92,15 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
                 break;
         }
-        holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
+        if (TextUtils.equals(item.getKinds(), FlightsInfoData.TAG_KIND_ARRIVE))
+            holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "");
+        else {
+            holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
+        }
         if (!TextUtils.isEmpty(item.getTerminals())) {
 
             StringBuilder builder = new StringBuilder();
-            switch (mLocale){
+            switch (mLocale) {
                 case "zh_TW":
                 case "zh_CN":
                     builder.append(item.getTerminals()).append(mContext.getString(R.string.flights_search_result_terminal_text));
@@ -119,7 +123,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorText));
             else
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextSpecial));
-            holder.mTextViewState.setText(FlightsInfoData.checkFlightShowText(mContext,item.getFlightStatus()));
+            holder.mTextViewState.setText(FlightsInfoData.checkFlightShowText(mContext, item.getFlightStatus()));
         } else
             holder.mTextViewState.setText("");
 
@@ -200,22 +204,22 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
      * @return
      */
     private boolean checkFlightState(String data) {
-        if (data.contains(FlightsInfoData.TAG_ON_TIME)||data.contains(FlightsInfoData.TAG_ARRIVED))
+        if (data.contains(FlightsInfoData.TAG_ON_TIME) || data.contains(FlightsInfoData.TAG_ARRIVED) || data.contains(FlightsInfoData.TAG_DEPARTED))
             return true;
         return false;
     }
 
-    public void initParams(){
+    public void initParams() {
         DisplayMetrics dm = new DisplayMetrics();
-        ((Activity)mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
 
-        mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
-        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10),0
-                ,mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10),0);
+        mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
+        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0
+                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0);
 
-        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
+        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
         mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
     }
 }

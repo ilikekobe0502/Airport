@@ -85,7 +85,11 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
                 break;
         }
-        holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
+        if (TextUtils.equals(item.getKinds(), FlightsInfoData.TAG_KIND_ARRIVE))
+            holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "");
+        else {
+            holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
+        }
         if (!TextUtils.isEmpty(item.getTerminals())) {
             StringBuilder builder = new StringBuilder();
             switch (mLocale) {
@@ -209,7 +213,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
      * @return
      */
     private boolean checkFlightState(String data) {
-        if (data.contains(FlightsInfoData.TAG_ON_TIME) || data.contains(FlightsInfoData.TAG_ARRIVED)) {
+        if (data.contains(FlightsInfoData.TAG_ON_TIME) || data.contains(FlightsInfoData.TAG_ARRIVED) || data.contains(FlightsInfoData.TAG_DEPARTED)) {
             return true;
         }
         return false;

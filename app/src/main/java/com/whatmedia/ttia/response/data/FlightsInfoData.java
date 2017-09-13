@@ -400,7 +400,7 @@ public class FlightsInfoData implements Serializable {
         else if (data.contains(FlightsInfoData.TAG_SCHEDULE_CHANGE))
             text = context.getString(R.string.flights_search_tag_schedule_change_show_text);
         else if (data.contains(FlightsInfoData.TAG_DEPARTED))
-            text = context.getString(R.string.flights_search_tag_departed_show_text);
+            text = context.getString(R.string.flights_search_tag_on_time_show_text);
         return text;
     }
 }
