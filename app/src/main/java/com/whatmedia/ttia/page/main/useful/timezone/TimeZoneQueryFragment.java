@@ -159,6 +159,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     @Override
     public void onDestroy() {
         mMainActivity.getMyToolbar().setOnBackClickListener(null);
+        mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 
