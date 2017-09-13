@@ -22,214 +22,223 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layout_sample"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1">
+                android:orientation="horizontal"
+                android:weightSum="4">
 
-                <LinearLayout
-                    android:id="@+id/layout_info_P1"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/layout_sample"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/layout_info_P1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="horizontal">
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView_name_P1"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/parking_info_parking_space_P1"
-                            android:textColor="@color/colorTextHomeParkingInfoName"
-                            android:textSize="@dimen/sp_pixel_21"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_name_P1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/parking_info_parking_space_P1"
+                                android:textColor="@color/colorTextHomeParkingInfoName"
+                                android:textSize="@dimen/sp_pixel_21"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView_count_P1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView_name_P1"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:minEms="4"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/sp_pixel_15" />
                     </LinearLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView_count_P1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView_name_P1"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:minEms="4"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp_pixel_15" />
-                </LinearLayout>
-            </RelativeLayout>
+                <View
+                    android:id="@+id/line_P1"
+                    android:layout_width="@dimen/dp_pixel_1"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/colorHomeParkingInfoLine" />
 
-            <View
-                android:id="@+id/line_P1"
-                android:layout_width="@dimen/dp_pixel_1"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:background="@color/colorHomeParkingInfoLine" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/layout_info_P2"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/layout_info_P2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="horizontal">
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView_name_P2"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/parking_info_parking_space_P2"
-                            android:textColor="@color/colorTextHomeParkingInfoName"
-                            android:textSize="@dimen/sp_pixel_21"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_name_P2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/parking_info_parking_space_P2"
+                                android:textColor="@color/colorTextHomeParkingInfoName"
+                                android:textSize="@dimen/sp_pixel_21"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView_count_P2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView_name"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:minEms="4"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/sp_pixel_15" />
                     </LinearLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView_count_P2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView_name"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:minEms="4"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp_pixel_15" />
-                </LinearLayout>
-            </RelativeLayout>
+                <View
+                    android:id="@+id/line_P2"
+                    android:layout_width="@dimen/dp_pixel_1"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/colorHomeParkingInfoLine" />
 
-            <View
-                android:id="@+id/line_P2"
-                android:layout_width="@dimen/dp_pixel_1"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:background="@color/colorHomeParkingInfoLine" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/layout_info_P3"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/layout_info_P3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="horizontal">
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView_name_P3"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/parking_info_parking_space_P4"
-                            android:textColor="@color/colorTextHomeParkingInfoName"
-                            android:textSize="@dimen/sp_pixel_21"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_name_P3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/parking_info_parking_space_P4"
+                                android:textColor="@color/colorTextHomeParkingInfoName"
+                                android:textSize="@dimen/sp_pixel_21"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView_sub_name_P3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/parking_info_parking_space_B1_B2"
+                                android:textColor="@color/colorTextHomeParkingInfoName"
+                                android:textSize="@dimen/sp_pixel_10"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/textView_sub_name_P3"
+                            android:id="@+id/textView_count_P3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/parking_info_parking_space_B1_B2"
-                            android:textColor="@color/colorTextHomeParkingInfoName"
-                            android:textSize="@dimen/sp_pixel_10"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:minEms="4"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/sp_pixel_15" />
                     </LinearLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView_count_P3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:minEms="4"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp_pixel_15" />
-                </LinearLayout>
-            </RelativeLayout>
+                <View
+                    android:id="@+id/line_P3"
+                    android:layout_width="@dimen/dp_pixel_1"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/colorHomeParkingInfoLine" />
 
-            <View
-                android:id="@+id/line_P3"
-                android:layout_width="@dimen/dp_pixel_1"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:background="@color/colorHomeParkingInfoLine" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/layout_info_P4"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/layout_info_P4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="horizontal">
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView_name_P4"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/parking_info_parking_space_P4"
-                            android:textColor="@color/colorTextHomeParkingInfoName"
-                            android:textSize="@dimen/sp_pixel_21"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView_name_P4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/parking_info_parking_space_P4"
+                                android:textColor="@color/colorTextHomeParkingInfoName"
+                                android:textSize="@dimen/sp_pixel_21"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView_sub_name_P4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/parking_info_parking_space_1F"
+                                android:textColor="@color/colorTextHomeParkingInfoName"
+                                android:textSize="@dimen/sp_pixel_10"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/textView_sub_name_P4"
+                            android:id="@+id/textView_count_P4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/parking_info_parking_space_1F"
-                            android:textColor="@color/colorTextHomeParkingInfoName"
-                            android:textSize="@dimen/sp_pixel_10"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:minEms="4"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/sp_pixel_15" />
                     </LinearLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView_count_P4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:minEms="4"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp_pixel_15" />
-                </LinearLayout>
-            </RelativeLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
