@@ -3,15 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView_pronunciation"
-        android:layout_width="@dimen/dp_pixel_40"
-        android:layout_height="@dimen/dp_pixel_40"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/dp_pixel_20"
-        android:layout_marginTop="@dimen/dp_pixel_10"
-        android:background="@color/colorTextStoreInfoTitle" />
-
     <LinearLayout
         android:id="@+id/layout_bg"
         android:layout_width="match_parent"
@@ -60,4 +51,13 @@
             android:textSize="@dimen/sp_pixel_16" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView_pronunciation"
+        android:layout_width="@dimen/dp_pixel_40"
+        android:layout_height="@dimen/dp_pixel_40"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_pixel_20"
+        android:layout_marginTop="@dimen/dp_pixel_10"
+        android:src="@drawable/speaker" />
 </RelativeLayout>
