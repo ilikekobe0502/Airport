@@ -73,6 +73,8 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
 
     private String[] mCountryName;
     private String[] mTownName;
+    private Thread mThread;
+    private boolean mRunThread;
 
     public TimeZoneQueryFragment() {
         // Required empty public constructor
@@ -90,11 +92,15 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new TimeThread().start();
     }
 
     @Override
     public void onResume() {
+        if (mThread == null) {
+            mThread = new TimeThread();
+            mThread.start();
+        }
+        mRunThread = true;
         super.onResume();
     }
 
@@ -159,8 +165,22 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     @Override
     public void onDestroy() {
         mMainActivity.getMyToolbar().setOnBackClickListener(null);
-        mHandler.removeCallbacksAndMessages(null);
+        mRunThread = false;
+        if (mThread != null)
+            mThread = null;
+        if (mHandler != null)
+            mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        mRunThread = false;
+        if (mThread != null)
+            mThread = null;
+        if (mHandler != null)
+            mHandler.removeCallbacksAndMessages(null);
+        super.onPause();
     }
 
     @Override
@@ -249,7 +269,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
     public class TimeThread extends Thread {
         @Override
         public void run() {
-            do {
+            while (mRunThread) {
                 try {
                     Thread.sleep(1000);
                     Message msg = new Message();
@@ -258,7 +278,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } while (true);
+            }
         }
     }
 
