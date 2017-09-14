@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,13 +117,13 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
     public void onClick(View view) {
         SouvenirData data = mList.get(Integer.valueOf(view.getTag().toString()));
         Bundle bundle = new Bundle();
-        bundle.putString(SouvenirDetailContract.IMG_PATH, data.getImgPath());
-        bundle.putString(SouvenirDetailContract.TEXT_PRICE, "NT$" + data.getPrice());
-        bundle.putString(SouvenirDetailContract.TEXT_ADDRESS, getString(R.string.souvenir_detail_address) + data.getTerminalsName() + "-" + data.getFloorName());
-        bundle.putString(SouvenirDetailContract.TEXT_TIME, getString(R.string.souvenir_detail_time) + data.getOpenTime() + "-" + data.getCloseTime());
-        bundle.putString(SouvenirDetailContract.TEXT_PHONE, getString(R.string.souvenir_detail_phone) + data.getTel());
-        bundle.putString(SouvenirDetailContract.TEXT_DES, data.getContent());
-        bundle.putString(SouvenirDetailContract.TEXT_NAME, data.getName());
+        bundle.putString(SouvenirDetailContract.IMG_PATH, !TextUtils.isEmpty(data.getImgPath()) ? data.getImgPath() : "");
+        bundle.putString(SouvenirDetailContract.TEXT_PRICE, "NT$" + (!TextUtils.isEmpty(data.getPrice()) ? data.getPrice() : ""));
+        bundle.putString(SouvenirDetailContract.TEXT_ADDRESS, getString(R.string.souvenir_detail_address) + (!TextUtils.isEmpty(data.getTerminalsName()) ? data.getTerminalsName() : "") + "-" + (!TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
+        bundle.putString(SouvenirDetailContract.TEXT_TIME, getString(R.string.souvenir_detail_time) + (!TextUtils.isEmpty(data.getOpenTime()) ? data.getOpenTime() : "") + "-" + (!TextUtils.isEmpty(data.getCloseTime()) ? data.getCloseTime() : ""));
+        bundle.putString(SouvenirDetailContract.TEXT_PHONE, getString(R.string.souvenir_detail_phone) + (!TextUtils.isEmpty(data.getTel()) ? data.getTel() : ""));
+        bundle.putString(SouvenirDetailContract.TEXT_DES, !TextUtils.isEmpty(data.getContent()) ? data.getContent() : "");
+        bundle.putString(SouvenirDetailContract.TEXT_NAME, !TextUtils.isEmpty(data.getName()) ? data.getName() : "");
         mMainActivity.addFragment(Page.TAG_SOUVENIR_DETAIL, bundle, true);
     }
 
