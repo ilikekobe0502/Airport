@@ -47,6 +47,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
@@ -775,11 +777,29 @@ public class Util {
         view.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Times_New_Roman.ttf"));
     }
 
+    /**
+     * Show Time out dialog
+     *
+     * @param context
+     */
     public static void showTimeoutDialog(Context context) {
         new AlertDialog.Builder(context)
                 .setTitle(R.string.note)
                 .setMessage(context.getString(R.string.timeout_message))
                 .setPositiveButton(R.string.alert_btn_ok, null)
                 .show();
+    }
+
+    /**
+     * Filter symbol
+     *
+     * @param str
+     * @return
+     */
+    public static String filterSymbol(String str) {
+        String regEx = "[`_＿~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/／?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.replaceAll("").trim();
     }
 }

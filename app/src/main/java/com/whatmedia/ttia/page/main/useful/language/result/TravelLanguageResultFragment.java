@@ -21,6 +21,8 @@ import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -177,11 +179,14 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
         switch (view.getId()) {
             case R.id.imageView_pronunciation:
                 if (view.getTag() != null && view.getTag() instanceof String) {
+                    String world = Util.filterSymbol(String.valueOf(view.getTag()));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        mTts.speak(String.valueOf(view.getTag()), TextToSpeech.QUEUE_FLUSH, null, TAG_PRONUNCIATION);
+                        mTts.speak(world, TextToSpeech.QUEUE_FLUSH, null, TAG_PRONUNCIATION);
                     } else {
-                        mTts.speak(String.valueOf(view.getTag()), TextToSpeech.QUEUE_FLUSH, null);
+                        mTts.speak(world, TextToSpeech.QUEUE_FLUSH, null);
                     }
+                } else {
+                    Log.e(TAG, "view.getTag() is error");
                 }
                 break;
         }
