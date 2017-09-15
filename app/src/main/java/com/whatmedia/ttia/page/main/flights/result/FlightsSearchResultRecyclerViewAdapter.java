@@ -198,7 +198,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
 //    }
 
     /**
-     * Check flight is "on time"
+     * Check flight is "on time" or "arrived" or "departure"
      *
      * @param data
      * @return

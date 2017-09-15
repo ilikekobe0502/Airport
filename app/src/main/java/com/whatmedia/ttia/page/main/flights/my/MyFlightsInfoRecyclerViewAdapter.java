@@ -207,7 +207,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
     }
 
     /**
-     * Check flight is "on time"
+     * Check flight is "on time" or "arrived" or "departure"
      *
      * @param data
      * @return
