@@ -125,14 +125,14 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     public void getExchangeRateSucceed(final ExchangeRateData response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (response != null && !TextUtils.isEmpty(response.getRate())) {
+            if (response != null && !TextUtils.isEmpty(response.getAmount())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
                         if (!mIsClickBottom)
-                            mEditTextTargetAmount.setText(response.getRate());
+                            mEditTextTargetAmount.setText(String.format("%.6f",Float.valueOf(response.getAmount())));
                         else
-                            mEditTextSourceAmount.setText(response.getRate());
+                            mEditTextSourceAmount.setText(String.format("%.6f",Float.valueOf(response.getAmount())));
                     }
                 });
             } else {
