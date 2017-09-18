@@ -20,6 +20,7 @@ import com.whatmedia.ttia.response.data.ClockData;
 import com.whatmedia.ttia.response.GetClockDataResponse;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -80,6 +81,8 @@ public class FlightClockIntentService extends IntentService {
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setAutoCancel(true);
             }
+
+            Util.wakeUpScreen(getApplicationContext(), 6000, TAG);
 
             //Click intent
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0,

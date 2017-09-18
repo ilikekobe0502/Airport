@@ -114,10 +114,10 @@ public class IBeacon extends Service implements BeaconConsumer {
         mApiConnect = ApiConnect.getInstance(this);
 
 
-        if (mBluetoothAdapter.isEnabled())//判斷目前bluetooth狀態 開啟會回傳true
-            Mint.logEvent(TAG_DEVICE_NAME+"BlueOn");
+        if (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())//判斷目前bluetooth狀態 開啟會回傳true
+            Mint.logEvent(TAG_DEVICE_NAME + "BlueOn");
         else
-            Mint.logEvent(TAG_DEVICE_NAME+"BlueOff");
+            Mint.logEvent(TAG_DEVICE_NAME + "BlueOff");
     }
 
     @Override

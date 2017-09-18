@@ -4,16 +4,15 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -801,5 +800,19 @@ public class Util {
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(str);
         return matcher.replaceAll("").trim();
+    }
+
+    /**
+     * Wake up screen
+     *
+     * @param context
+     * @param second
+     * @param tag
+     */
+    public static void wakeUpScreen(Context context, int second, String tag) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        final PowerManager.WakeLock mWakelock = pm.newWakeLock(
+                PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, tag);
+        mWakelock.acquire(second);
     }
 }
