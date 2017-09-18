@@ -830,6 +830,12 @@
 
     <string name="timezone_taipei">台北</string>
 
+    <!-- 權限 -->
+    <string name="permission_title">"這個App需要地點權限"</string>
+    <string name="permission_message">"請授予位置訪問權限，以便此應用可以檢測Beacon"</string>
+    <string name="permission_reject_title">"功能限制"</string>
+    <string name="permission_reject_message">"由於尚未授予位置信息訪問權限，因此在後台無法發現以便此應用可以檢測Beacon"</string>
+
     <!-- indoor -->
     <string name="indoor_search_sub_title">路線圖</string>
     <string name="indoor_search_start_text">起始：%d</string>

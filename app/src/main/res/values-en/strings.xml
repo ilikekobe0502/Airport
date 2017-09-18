@@ -831,6 +831,12 @@
 
     <string name="timezone_taipei">Taipei</string>
 
+    <!-- 權限 -->
+    <string name="permission_title">"This app requires place permission"</string>
+    <string name="permission_message">rant location access so that this application can detect Beacon"</string>
+    <string name="permission_reject_title">"function limit"</string>
+    <string name="permission_reject_message">"Since the location information has not been granted access, it can not be found in the background so that this application can detect Beacon"</string>
+
     <!-- indoor -->
     <string name="indoor_search_sub_title">Road map</string>
     <string name="indoor_search_start_text">Start：%d</string>

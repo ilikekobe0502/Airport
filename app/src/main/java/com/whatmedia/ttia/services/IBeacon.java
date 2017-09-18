@@ -2,11 +2,13 @@ package com.whatmedia.ttia.services;
 
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.splunk.mint.Mint;
 import com.whatmedia.ttia.connect.ApiConnect;
 
 import org.altbeacon.beacon.Beacon;
@@ -73,6 +75,7 @@ import okhttp3.Response;
 */
 public class IBeacon extends Service implements BeaconConsumer {
     private static final String TAG = IBeacon.class.getSimpleName();
+    private final static String TAG_DEVICE_NAME = android.os.Build.MODEL;
 
     public static final String BEACON_UUID_1 = "a0000000-0000-0000-0000-000000000000";
     public static final String BEACON_UUID_2 = "b0000000-0000-0000-0000-000000000000";
@@ -86,6 +89,8 @@ public class IBeacon extends Service implements BeaconConsumer {
     private HashMap<String, Integer> mMap = new HashMap<>();
     private long date = System.currentTimeMillis() / day_millseconds;
     private int mTokenErrorCount = 0;
+    private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
 
     //    private List<String> mAlreadySendMinorID = new ArrayList<>();
     private int mTempCount;
@@ -107,6 +112,12 @@ public class IBeacon extends Service implements BeaconConsumer {
         //好像可以做filter的功能
         mRegion = new Region("NeoIdentifier", null, null, null);
         mApiConnect = ApiConnect.getInstance(this);
+
+
+        if (mBluetoothAdapter.isEnabled())//判斷目前bluetooth狀態 開啟會回傳true
+            Mint.logEvent(TAG_DEVICE_NAME+"BlueOn");
+        else
+            Mint.logEvent(TAG_DEVICE_NAME+"BlueOff");
     }
 
     @Override
@@ -136,7 +147,7 @@ public class IBeacon extends Service implements BeaconConsumer {
                     if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
-                            synchronized (mBeaconLocker){
+                            synchronized (mBeaconLocker) {
                                 mTokenErrorCount = 0;
                                 changeUserStatus(minorID);
                             }
@@ -154,7 +165,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     }
 
     public void changeUserStatus(final String minorID) {
-        Log.e("IBeacon", "mTokenErrorCount:"+mTokenErrorCount+", minorID:" + minorID + ", changeUserStatus(minorID) call.");
+        Log.e("IBeacon", "mTokenErrorCount:" + mTokenErrorCount + ", minorID:" + minorID + ", changeUserStatus(minorID) call.");
         if (!mApiConnect.registerUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
