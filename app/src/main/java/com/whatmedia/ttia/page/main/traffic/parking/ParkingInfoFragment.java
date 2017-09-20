@@ -77,7 +77,8 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
         ButterKnife.bind(this, view);
 
         MapsInitializer.initialize(getContext());
-        mMapView.onCreate(savedInstanceState);
+        if (mMapView != null)
+            mMapView.onCreate(savedInstanceState);
         mPresenter = ParkingInfoPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getParkingDetailAPI();
@@ -87,44 +88,54 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     @Override
     public void onStart() {
         super.onStart();
-        mMapView.onStart();
+        if (mMapView != null)
+            mMapView.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
+        if (mMapView != null)
+            mMapView.onResume();
     }
 
     @Override
     public void onPause() {
-        mMapView.onPause();
+        if (mMapView != null)
+            mMapView.onPause();
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        mMapView.onStop();
+        if (mMapView != null)
+            mMapView.onStop();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        mMapView.onDestroy();
-        mMainActivity.getMyToolbar().setOnBackClickListener(null);
+        if (mMapView != null)
+            mMapView.onDestroy();
+        if (mMainActivity != null && mMainActivity.getMyToolbar() != null)
+            mMainActivity.getMyToolbar().setOnBackClickListener(null);
         super.onDestroy();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
+
+        if (mMapView != null)
+            mMapView.onSaveInstanceState(outState);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+
+        if (mMapView != null)
+            mMapView.onLowMemory();
     }
 
     @Override
