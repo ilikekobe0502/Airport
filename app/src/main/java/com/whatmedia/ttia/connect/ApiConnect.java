@@ -69,9 +69,9 @@ public class ApiConnect extends StateCode {
     public static ApiConnect getInstance(Context context) {
 
         mClient = new OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(1000, TimeUnit.MILLISECONDS)
-                .writeTimeout(1000, TimeUnit.MILLISECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(3000, TimeUnit.MILLISECONDS)
+                .writeTimeout(3000, TimeUnit.MILLISECONDS)
                 .build();
 
         if (mApiConnect == null) {
@@ -139,10 +139,15 @@ public class ApiConnect extends StateCode {
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if (e.toString().contains("SocketTimeoutException"))
+                if (e.toString().contains("SocketTimeoutException")) {
+                    Log.e(TAG,"Timeout");
                     callback.onFailure(call, e, true);
-                else
+
+                }else {
+                    Log.e(TAG,"not timeout");
                     callback.onFailure(call, e, false);
+
+                }
             }
 
             @Override
@@ -151,6 +156,8 @@ public class ApiConnect extends StateCode {
                     MyResponse myResponse = new MyResponse();
                     myResponse.setMyResponseBody(response.body().string());
                     myResponse.setMessage(response.message());
+
+                    Log.e(TAG,myResponse.message());
                     myResponse.setCode(response.code());
                     callback.onResponse(call, myResponse);
                 } catch (IOException e) {

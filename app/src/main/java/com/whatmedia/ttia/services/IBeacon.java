@@ -90,6 +90,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     private long date = System.currentTimeMillis() / day_millseconds;
     private int mTokenErrorCount = 0;
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private boolean mSend = false;
 
 
     //    private List<String> mAlreadySendMinorID = new ArrayList<>();
@@ -144,13 +145,15 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
                 for (Beacon beacon : beacons) {
                     Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if ((beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
+                    if (!mSend && (beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -80) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
-                            synchronized (mBeaconLocker) {
-                                mTokenErrorCount = 0;
-                                changeUserStatus(minorID);
-                            }
+
+//                            synchronized (mBeaconLocker) {
+                            mSend = true;
+                            mTokenErrorCount = 0;
+                            changeUserStatus(minorID);
+//                            }
                         }
                     }
                 }
@@ -166,10 +169,12 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     public void changeUserStatus(final String minorID) {
         Log.e("IBeacon", "mTokenErrorCount:" + mTokenErrorCount + ", minorID:" + minorID + ", changeUserStatus(minorID) call.");
-        if (!mApiConnect.registerUser(minorID, new Callback() {
+//        if (!mApiConnect.registerUser(minorID, new Callback() {
+        mApiConnect.registerUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "registerUser failure");
+                mSend = false;
             }
 
             @Override
@@ -178,21 +183,23 @@ public class IBeacon extends Service implements BeaconConsumer {
                     //success
                     Log.e("IBeacon", "registerUser() success, minorID:" + minorID);
                     mMap.put(minorID, 0);
+                    mSend = false;
                 } else {
                     Log.e(TAG, "registerUser failure");
                 }
             }
-        })) {
-            Log.e(TAG, "Token error : mTokenErrorCount = " + mTokenErrorCount);
-            mTokenErrorCount++;
-            if (mTokenErrorCount < 10) {
-                mApiConnect = null;
-                mApiConnect = ApiConnect.getInstance(getApplicationContext());
-                changeUserStatus(minorID);
-            } else {
-                mTokenErrorCount = 0;
-                // TODO: 2017/9/2 提醒重開APP
-            }
-        }
+        });
+//        ) {
+//            Log.e(TAG, "Token error : mTokenErrorCount = " + mTokenErrorCount);
+//            mTokenErrorCount++;
+//            if (mTokenErrorCount < 10) {
+//                mApiConnect = null;
+//                mApiConnect = ApiConnect.getInstance(getApplicationContext());
+//                changeUserStatus(minorID);
+//            } else {
+//                mTokenErrorCount = 0;
+//                 TODO: 2017/9/2 提醒重開APP
+//            }
+//        }
     }
 }
