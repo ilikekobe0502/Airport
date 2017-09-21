@@ -37,7 +37,7 @@ public class FCMTokenService extends FirebaseInstanceIdService {
     private void registerUser() {
         if (mApiFailureCount < 5) {
             ApiConnect.getInstance(getApplicationContext())
-                    .registerUser("A123456", new Callback() {
+                    .registerUser(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             mApiFailureCount++;

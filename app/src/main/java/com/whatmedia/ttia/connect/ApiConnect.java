@@ -743,12 +743,29 @@ public class ApiConnect extends StateCode {
     /**
      * 寫入/刪除場域內使用者
      */
-    public static boolean registerUser(String minorID, Callback callback) {
+    public static boolean registerUser(Callback callback) {
         if (!TextUtils.isEmpty(mToken) && !TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
             HttpUrl url = HttpUrl.parse(TAG_HOST + "registerUser")
                     .newBuilder()
                     .addQueryParameter("UserID", TAG_DEVICE_ID)
-                    .addQueryParameter("Devicetoken", mToken)
+                    .addQueryParameter("token", mToken)
+                    .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                    .build();
+            getApi(url, callback);
+            return true;
+        }
+        Log.e(TAG, "mToken is error");
+        return false;
+    }
+    /**
+     * 寫入/刪除場域內使用者
+     */
+    public static boolean pushNFtoUser(String minorID,Callback callback) {
+        if (!TextUtils.isEmpty(mToken) && !TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
+            HttpUrl url = HttpUrl.parse(TAG_HOST + "PushNFtoUser")
+                    .newBuilder()
+                    .addQueryParameter("UserID", TAG_DEVICE_ID)
+                    .addQueryParameter("token", mToken)
                     .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                     .addQueryParameter("BeaconID", minorID)
                     .build();

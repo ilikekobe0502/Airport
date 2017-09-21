@@ -170,7 +170,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     public void changeUserStatus(final String minorID) {
         Log.e("IBeacon", "mTokenErrorCount:" + mTokenErrorCount + ", minorID:" + minorID + ", changeUserStatus(minorID) call.");
 //        if (!mApiConnect.registerUser(minorID, new Callback() {
-        mApiConnect.registerUser(minorID, new Callback() {
+        mApiConnect.pushNFtoUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "registerUser failure");
