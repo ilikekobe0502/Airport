@@ -83,7 +83,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             String terminal = RestaurantInfoData.getTerminalText(getContext(), data.getTerminalsName());
 
             if (!TextUtils.isEmpty(data.getImgPath())) {
-                String image = ApiConnect.TAG_IMAGE_HOST + data.getImgPath();
+                String image = data.getImgPath();
                 Log.d(TAG, "image url = " + image);
                 Util.setPicassoRetry(getContext()
                         , mImageViewPicture
@@ -109,7 +109,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             String terminal = StoreInfoData.getTerminalText(getContext(), storeData.getTerminalsName());
 
             if (!TextUtils.isEmpty(storeData.getStoreIMGPath())) {
-                String image = ApiConnect.TAG_IMAGE_HOST + storeData.getStoreIMGPath();
+                String image = storeData.getStoreIMGPath();
                 Log.d(TAG, "image url = " + image);
                 Util.setPicassoRetry(getContext()
                         , mImageViewPicture

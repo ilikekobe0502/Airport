@@ -4,6 +4,7 @@ package com.whatmedia.ttia.page.main.store.souvenir;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +64,12 @@ public class SouvenirAreaRecyclerViewAdapter extends RecyclerView.Adapter<Souven
             Log.e(TAG, "item is null");
             return;
         }
-
-        Util.setPicassoRetry(mContext, holder.mImageIcon, TAG_IMAGE_HOST + item.getImgPath(), 0, 0);
+        if (!TextUtils.isEmpty(item.getImgPath())) {
+            holder.mImageIcon.setVisibility(View.VISIBLE);
+            Util.setPicassoRetry(mContext, holder.mImageIcon, item.getImgPath(), 0, 0);
+        } else {
+            holder.mImageIcon.setVisibility(View.INVISIBLE);
+        }
 
         holder.mTextName.setText(item.getName());
         holder.mTextPrice.setText("NT$" + item.getPrice());

@@ -711,8 +711,6 @@ public class ApiConnect extends StateCode {
             HttpUrl url = HttpUrl.parse(TAG_HOST + "get_Achievement")
                     .newBuilder()
                     .addQueryParameter("UserID", TAG_DEVICE_ID)
-                    .addQueryParameter("Devicetoken", mToken)
-                    .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
                     .addQueryParameter("lan", mLocale)
                     .build();
             getApi(url, callback);

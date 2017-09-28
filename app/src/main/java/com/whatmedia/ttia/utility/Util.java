@@ -711,24 +711,26 @@ public class Util {
      * @param count
      */
     public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int count) {
-        Picasso.with(context).load(url).transform(new CornorTransform(radius, 0)).into(imageView, new Callback() {
-            @Override
-            public void onSuccess() {
-                Log.d(TAG, "image load success");
-            }
-
-            @Override
-            public void onError() {
-                Log.e(TAG, "image load error :" + url);
-                String t = String.valueOf(count);
-                int i = Integer.parseInt(t);
-                Log.e(TAG, "count  :" + i);
-                if (count != 5) {
-                    i++;
-                    setPicassoRetry(context, imageView, url, radius, i);
+        if (url!=null) {
+            Picasso.with(context).load(url).transform(new CornorTransform(radius, 0)).into(imageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    Log.d(TAG, "image load success");
                 }
-            }
-        });
+
+                @Override
+                public void onError() {
+                    Log.e(TAG, "image load error :" + url);
+                    String t = String.valueOf(count);
+                    int i = Integer.parseInt(t);
+                    Log.e(TAG, "count  :" + i);
+                    if (count != 5) {
+                        i++;
+                        setPicassoRetry(context, imageView, url, radius, i);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -743,27 +745,29 @@ public class Util {
      * @param count
      */
     public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int width, int height, final int count) {
-        Picasso.with(context).load(url)
-                .resize(width, height)
-                .transform(new CornorTransform(radius, 0))
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d(TAG, "image load success");
-                    }
-
-                    @Override
-                    public void onError() {
-                        Log.e(TAG, "image load error :" + url);
-                        String t = String.valueOf(count);
-                        int i = Integer.parseInt(t);
-                        Log.e(TAG, "count  :" + i);
-                        if (count != 5) {
-                            i++;
-                            setPicassoRetry(context, imageView, url, radius, i);
+        if (url!=null) {
+            Picasso.with(context).load(url)
+                    .resize(width, height)
+                    .transform(new CornorTransform(radius, 0))
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d(TAG, "image load success");
                         }
-                    }
-                });
+
+                        @Override
+                        public void onError() {
+                            Log.e(TAG, "image load error :" + url);
+                            String t = String.valueOf(count);
+                            int i = Integer.parseInt(t);
+                            Log.e(TAG, "count  :" + i);
+                            if (count != 5) {
+                                i++;
+                                setPicassoRetry(context, imageView, url, radius, i);
+                            }
+                        }
+                    });
+        }
     }
 
     /**

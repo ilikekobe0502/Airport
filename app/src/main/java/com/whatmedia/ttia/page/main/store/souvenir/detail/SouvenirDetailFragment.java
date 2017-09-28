@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,7 +102,9 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         mPresenter = SouvenirDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
 
-        Util.setPicassoRetry(getContext(), mImageIcon, TAG_IMAGE_HOST + imagePath, mRadius, 0);
+        if (!TextUtils.isEmpty(imagePath))
+            Util.setPicassoRetry(getContext(), mImageIcon, imagePath, mRadius, 0);
+
         mTextPrice.setText(textPrice);
         mTextAddress.setText(textAddress);
         mTextTime.setText(textTime);

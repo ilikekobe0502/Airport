@@ -85,8 +85,8 @@ public class AchievementDetailFragment extends BaseFragment implements Achieveme
 
         mPresenter = AchievementDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
-        Log.e("Ian", TAG_IMAGE_HOST + imagePath);
-        Util.setPicassoRetry(getContext(), mImageIcon, TAG_IMAGE_HOST + imagePath, mRadius, 0);
+        Log.e("Ian", imagePath);
+        Util.setPicassoRetry(getContext(), mImageIcon, imagePath, mRadius, 0);
         mTextDate.setText(textDate);
         mTextTitle.setText(textTitle);
         mTextContent.setText(textContent);

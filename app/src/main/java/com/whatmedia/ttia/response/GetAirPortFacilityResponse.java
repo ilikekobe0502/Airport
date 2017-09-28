@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.response;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
 
@@ -13,13 +14,17 @@ import java.util.List;
  */
 
 public class GetAirPortFacilityResponse {
-    private static List<AirportFacilityData> data;
+    @SerializedName("data")
+    private List<AirportFacilityData> data;
 
     public static List<AirportFacilityData> newInstance(String response) {
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<AirportFacilityData>>() {
+        Type type = new TypeToken<AirportFacilityData>() {
         }.getType();
-        data = gson.fromJson(response, type);
-        return data;
+        GetAirPortFacilityResponse airPortFacilityResponse = gson.fromJson(response, GetAirPortFacilityResponse.class);
+        if (airPortFacilityResponse != null && airPortFacilityResponse.data != null) {
+            return airPortFacilityResponse.data;
+        } else
+            return new ArrayList<>();
     }
 }

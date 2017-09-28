@@ -64,7 +64,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
             String pictureUrl;
             if (!TextUtils.isEmpty(item.getImgPath())) {
-                pictureUrl = ApiConnect.TAG_IMAGE_HOST + item.getImgPath();
+                pictureUrl = item.getImgPath();
                 Util.setPicassoRetry(mContext, holder.mImageViewPicture, pictureUrl, mRadius, 0);
             } else
                 pictureUrl = "";
@@ -83,7 +83,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getConetnt()) ? storeItem.getConetnt() : "");
             String pictureUrl;
             if (!TextUtils.isEmpty(storeItem.getStoreIMGPath())) {
-                pictureUrl = ApiConnect.TAG_IMAGE_HOST + storeItem.getStoreIMGPath();
+                pictureUrl = storeItem.getStoreIMGPath();
                 // TODO: 2017/8/6 corner mot work
                 Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else

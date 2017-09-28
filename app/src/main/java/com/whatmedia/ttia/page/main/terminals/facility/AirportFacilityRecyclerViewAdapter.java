@@ -70,7 +70,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
 
         if (!TextUtils.isEmpty(item.getMainImgPath())) {
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
-            String imageUrl = ApiConnect.TAG_IMAGE_HOST + item.getMainImgPath();
+            String imageUrl = !TextUtils.isEmpty(item.getMainImgPath()) ? item.getMainImgPath() : "";
             Log.d(TAG, imageUrl);
             setPicassoRetry(holder, imageUrl);
         } else

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,8 +99,9 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                 @Override
                 public void run() {
                     try {
-                        Log.e("Ian", "img path:" + ApiConnect.TAG_IMAGE_HOST + facilityData.getLegendImgPath());
-                        mBitmaps= getBitmap(getContext(),facilityData.getLegendImgPath());
+                        String path = !TextUtils.isEmpty(facilityData.getLegendImgPath()) ? facilityData.getLegendImgPath() : "";
+                        Log.e("Ian", "img path:" + path);
+                        mBitmaps = getBitmap(getContext(), path);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -107,7 +109,8 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                         mMainActivity.runOnUI(new Runnable() {
                             @Override
                             public void run() {
-                                mImagePicture.setImage(ImageSource.bitmap(mBitmaps));
+                                if (ImageSource.bitmap(mBitmaps) != null)
+                                    mImagePicture.setImage(ImageSource.bitmap(mBitmaps));
                             }
                         });
                     } else {
@@ -160,15 +163,15 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         super.onDetach();
     }
 
-    public Bitmap getBitmap(Context context,String path) throws IOException {
-        Bitmap bitmap = Picasso.with(context).load(ApiConnect.TAG_IMAGE_HOST + path)
+    public Bitmap getBitmap(Context context, String path) throws IOException {
+        Bitmap bitmap = Picasso.with(context).load(path)
                 .config(Bitmap.Config.ARGB_8888)
                 .priority(Picasso.Priority.HIGH)
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .get();
-        if(bitmap == null){
-            return getBitmap(context,path);
-        }else{
+        if (bitmap == null) {
+            return getBitmap(context, path);
+        } else {
             return bitmap;
         }
     }
