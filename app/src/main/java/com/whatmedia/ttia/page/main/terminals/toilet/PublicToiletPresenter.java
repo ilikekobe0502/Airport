@@ -5,8 +5,8 @@ import android.text.TextUtils;
 
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.connect.MyResponse;
+import com.whatmedia.ttia.response.GetAirportToiletResponse;
 import com.whatmedia.ttia.response.data.AirportFacilityData;
-import com.whatmedia.ttia.response.GetAirPortFacilityResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +44,7 @@ public class PublicToiletPresenter implements PublicToiletContract.Presenter {
             public void onResponse(Call call, MyResponse response) throws IOException {
                 if (response.code() == 200) {
                     String result = response.body().string();
-                    List<AirportFacilityData> list = GetAirPortFacilityResponse.newInstance(result);
+                    List<AirportFacilityData> list = GetAirportToiletResponse.newInstance(result);
                     mView.getPublicToiletSucceed(list);
                 } else {
                     mView.getPublicFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);

@@ -88,7 +88,9 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-                        mWebView.loadUrl(response.get(0).getIrHtml());
+//                        mWebView.loadUrl(response.get(0).getIrHtml());
+
+                        mWebView.loadData(response.get(0).getIrHtml(), "text/html; charset=utf-8", "UTF-8");
                         mTextQuery.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
