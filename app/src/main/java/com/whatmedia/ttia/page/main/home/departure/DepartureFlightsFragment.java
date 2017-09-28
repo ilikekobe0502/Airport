@@ -44,6 +44,8 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
     private String mDepartureDate;
     private String mArriveDate;
+    private FlightSearchData mQueryData;
+    private int mRetryCount = 0;
 
 
     public DepartureFlightsFragment() {
@@ -69,10 +71,10 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
         mPresenter = DepartureFlightsPresenter.getInstance(getContext(), this);
 
-        FlightSearchData data = new FlightSearchData();
-        data.setQueryType(FlightsInfoData.TAG_KIND_TOP4_DEPARTURE);
-        data.setExpressTime(Util.getNowDate());
-        mPresenter.getDepartureFlightAPI(data);
+        mQueryData = new FlightSearchData();
+        mQueryData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_DEPARTURE);
+        mQueryData.setExpressTime(Util.getNowDate());
+        mPresenter.getDepartureFlightAPI(mQueryData);
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -118,6 +120,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     @Override
     public void getDepartureFlightSucceed(final List<FlightsInfoData> list) {
         if (isAdded() && !isDetached()) {
+            mRetryCount = 0;
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
@@ -134,15 +137,21 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
         Log.d(TAG, "getArriveFlightFailed : " + message);
         if (isAdded() && !isDetached()) {
 
-            if (timeout) {
+            if(mRetryCount < 5){
+                mRetryCount++;
+                mPresenter.getDepartureFlightAPI(mQueryData);
+            }else{
+                mRetryCount = 0;
+                if (timeout) {
 
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        showMessage(getString(R.string.server_error));
-                    }
-                });
+                } else {
+                    mMainActivity.runOnUI(new Runnable() {
+                        @Override
+                        public void run() {
+                            showMessage(getString(R.string.server_error));
+                        }
+                    });
+                }
             }
         } else {
             Log.d(TAG, "Fragment is not add");
