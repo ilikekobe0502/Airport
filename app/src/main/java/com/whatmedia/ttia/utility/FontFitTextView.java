@@ -13,7 +13,6 @@ import com.whatmedia.ttia.R;
 
 /**
  * 會因應寬度，動態改變字體大小的TextView
- * @author ChrisJeng
  *
  */
 public class FontFitTextView extends android.support.v7.widget.AppCompatTextView{
