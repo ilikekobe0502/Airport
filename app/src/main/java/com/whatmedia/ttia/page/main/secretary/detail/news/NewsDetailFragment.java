@@ -84,7 +84,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
                 mImageViewPicture.setVisibility(View.VISIBLE);
                 Util.setPicassoRetry(getContext()
                         , mImageViewPicture
-                        , ApiConnect.TAG_IMAGE_HOST + item.getImageUrl()
+                        , item.getImageUrl()
                         , mRadius
                         , getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
                         , getResources().getDimensionPixelSize(R.dimen.dp_pixel_152)

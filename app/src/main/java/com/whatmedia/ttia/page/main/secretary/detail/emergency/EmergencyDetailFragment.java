@@ -83,7 +83,8 @@ public class EmergencyDetailFragment extends BaseFragment implements EmergencyDe
             if (!TextUtils.isEmpty(item.getImageUrl())) {
                 mImageViewPicture.setVisibility(View.VISIBLE);
                 Util.setPicassoRetry(getContext()
-                        , mImageViewPicture, ApiConnect.TAG_IMAGE_HOST + item.getImageUrl()
+                        , mImageViewPicture
+                        , item.getImageUrl()
                         , mRadius, getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
                         , getResources().getDimensionPixelSize(R.dimen.dp_pixel_152)
                         , 0);

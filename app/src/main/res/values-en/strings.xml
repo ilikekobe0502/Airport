@@ -732,7 +732,7 @@
     <string name="parking_info_parking_space_much">"Plenty of parking \navailable"</string>
     <string name="parking_info_parking_space_enough">"Parking still \navailable"</string>
     <string name="parking_info_parking_space_full">"Parking full"</string>
-    <string name="parking_info_parking_space_number_of">"available\n%s"</string>
+    <string name="parking_info_parking_space_number_of">"Available\n%s"</string>
     <string name="parking_info_parking_space_full_state">"Is full"</string>
     <string name="parking_info_parking_space_P1">"P1"</string>
     <string name="parking_info_parking_space_P2">"P2"</string>
