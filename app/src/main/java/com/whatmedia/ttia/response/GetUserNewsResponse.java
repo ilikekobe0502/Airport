@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.response;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.whatmedia.ttia.response.data.UserNewsData;
 
@@ -13,13 +14,17 @@ import java.util.List;
  */
 
 public class GetUserNewsResponse {
-    private static List<UserNewsData> data;
+    @SerializedName("data")
+    private List<UserNewsData> data;
 
     public static List<UserNewsData> newInstance(String response) {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<UserNewsData>>() {
         }.getType();
-        data = gson.fromJson(response, type);
-        return data;
+        GetUserNewsResponse userNewsResponse = gson.fromJson(response, GetUserNewsResponse.class);
+        if (userNewsResponse != null && userNewsResponse.data != null)
+            return userNewsResponse.data;
+        else
+            return new ArrayList<>();
     }
 }
