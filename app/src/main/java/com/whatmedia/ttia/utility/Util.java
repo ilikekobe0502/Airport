@@ -418,7 +418,7 @@ public class Util {
         if (marqueeSubMessage.length() == 0) {
             marqueeSubMessage.append(context.getString(R.string.marquee_default_end_message));
         }
-        Log.e("Ian", marqueeSubMessage.toString());
+        Log.e(TAG, marqueeSubMessage.toString());
         return marqueeSubMessage.toString();
     }
 

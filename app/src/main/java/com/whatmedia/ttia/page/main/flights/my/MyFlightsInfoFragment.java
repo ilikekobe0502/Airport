@@ -182,7 +182,6 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         if (isAdded() && !isDetached()) {
             mDeletePosition++;
             if (mSelectSize == mDeletePosition) {//代表佇列中的資料已刪完
-                // TODO: 2017/8/15 Delete Notification
                 mSelectSize = 0;
                 mDeletePosition = 0;
                 mMainActivity.runOnUI(new Runnable() {

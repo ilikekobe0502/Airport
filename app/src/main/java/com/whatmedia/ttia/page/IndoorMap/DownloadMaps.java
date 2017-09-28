@@ -229,7 +229,7 @@ class DownloadMaps
                 }
             }
             ed.commit();
-            return true; // ktodo
+            return true;
         }
 
         @Override

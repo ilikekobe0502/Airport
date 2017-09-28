@@ -103,14 +103,12 @@ public class IBeacon extends Service implements BeaconConsumer {
     public void onCreate() {
         super.onCreate();
         mBeaconManager = BeaconManager.getInstanceForApplication(this);
-        //adam設的 不知道用意
         BeaconParser beaconParser = new BeaconParser()
                 .setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
         mBeaconManager.getBeaconParsers().add(beaconParser);
         //掃描頻率
         mBeaconManager.setForegroundBetweenScanPeriod(2000L);
         mBeaconManager.bind(this);
-        //好像可以做filter的功能
         mRegion = new Region("NeoIdentifier", null, null, null);
         mApiConnect = ApiConnect.getInstance(this);
 
@@ -129,7 +127,6 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -138,7 +135,6 @@ public class IBeacon extends Service implements BeaconConsumer {
         mBeaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-//                Log.e("date","date:"+date+", System.currentTimeMillis()/day_millseconds:"+System.currentTimeMillis()/day_millseconds+", System.currentTimeMillis():"+System.currentTimeMillis());
                 if (System.currentTimeMillis() / day_millseconds != date) {
                     mMap.clear();
                     date = System.currentTimeMillis() / day_millseconds;
@@ -148,12 +144,9 @@ public class IBeacon extends Service implements BeaconConsumer {
                     if (!mSend && (beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -90) {
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
-
-//                            synchronized (mBeaconLocker) {
                             mSend = true;
                             mTokenErrorCount = 0;
                             changeUserStatus(minorID);
-//                            }
                         }
                     }
                 }
@@ -169,7 +162,6 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     public void changeUserStatus(final String minorID) {
         Log.e("IBeacon", "mTokenErrorCount:" + mTokenErrorCount + ", minorID:" + minorID + ", changeUserStatus(minorID) call.");
-//        if (!mApiConnect.registerUser(minorID, new Callback() {
         mApiConnect.pushNFtoUser(minorID, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -189,17 +181,5 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
             }
         });
-//        ) {
-//            Log.e(TAG, "Token error : mTokenErrorCount = " + mTokenErrorCount);
-//            mTokenErrorCount++;
-//            if (mTokenErrorCount < 10) {
-//                mApiConnect = null;
-//                mApiConnect = ApiConnect.getInstance(getApplicationContext());
-//                changeUserStatus(minorID);
-//            } else {
-//                mTokenErrorCount = 0;
-//                 TODO: 2017/9/2 提醒重開APP
-//            }
-//        }
     }
 }

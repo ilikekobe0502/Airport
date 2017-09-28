@@ -1355,7 +1355,6 @@ public class IndoorMapActivity extends IndoorBaseActivity implements IActivityTo
                 startActivityForResult(intent, s_requestCodeDirections);
                 break;
             case R.id.action_cancel:
-                // TODO: 2017/8/22
                 cancelAll();
                 break;
             case R.id.imageView_home:

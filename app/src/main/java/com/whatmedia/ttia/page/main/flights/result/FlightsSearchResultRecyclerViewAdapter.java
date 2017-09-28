@@ -188,15 +188,6 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
 
     }
 
-//    private SpannableStringBuilder checkFlightState(String data) {
-//        SpannableStringBuilder builder = new SpannableStringBuilder(data);
-//        ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(mContext,))
-//        if (data.contains(FlightsInfoData.TAG_CANCELLED)) {
-//        }
-//
-//        return builder;
-//    }
-
     /**
      * Check flight is "on time" or "arrived" or "departure"
      *

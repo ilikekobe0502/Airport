@@ -74,11 +74,6 @@ public class StoreSearchResultFragment extends BaseFragment implements StoreSear
         else if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT))) {
             storeList = GetStoreInfoDataResponse.newInstance(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT));
         }
-
-        // TODO: 2017/8/6 Subtitle
-//        if (list.size()>0){
-//            mTextViewSubtitle.setText(list.get(0).get);
-//        }
         mAdapter = new StoreSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);

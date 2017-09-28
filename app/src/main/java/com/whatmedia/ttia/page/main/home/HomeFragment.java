@@ -136,15 +136,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
                 case TAG_INDOOR_MAP://室內地圖導航
-                    // TODO: 2017/8/19 某些版本會crash不知道為何要查
-//                    try {
-//                        Intent i =new Intent();
-//                        i.setComponent(new ComponentName("com.point_consulting.testindoormap", "com.point_consulting.testindoormap.MapsActivity"));
-//                        getActivity().startActivity(i);
-//                    } catch (ActivityNotFoundException e) {
-//                        e.printStackTrace();
-//                        showMessage(getString(R.string.data_error));
-//                    }
                     try {
                         Intent i =new Intent(getContext(), IndoorMapActivity.class);
                         getActivity().startActivity(i);

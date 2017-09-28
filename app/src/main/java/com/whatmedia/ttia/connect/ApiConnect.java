@@ -95,7 +95,6 @@ public class ApiConnect extends StateCode {
      * Switch locale
      */
     private static void switchLocale() {
-        // TODO: 2017/8/18 等到語言可以用的時候改回來
         String localeCache = Preferences.getLocaleSetting(mContext);
         if (TextUtils.equals(localeCache, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString())) {
             mLocale = "tw";
@@ -373,11 +372,6 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getRestaurantInfo(String terminalsID, String areaID, String restaurantTypeID, String floorID, MyCallback callback) {
-        //TODO 幹 只有cn無資料 所以這邊做個排除動作
-        // TODO: 2017/9/1 他有資料了我又改回來了！不知道哪天又要改回去吧幹
-//        if (mLocale.equals("cn")) {
-//            mLocale = "tw";
-//        }
         HttpUrl url = HttpUrl.parse(TAG_HOST + "seach_restaurant")
                 .newBuilder()
                 .addQueryParameter("lan", mLocale)

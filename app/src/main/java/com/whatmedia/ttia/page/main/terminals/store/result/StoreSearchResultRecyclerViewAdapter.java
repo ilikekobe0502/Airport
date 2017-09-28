@@ -84,7 +84,6 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             String pictureUrl;
             if (!TextUtils.isEmpty(storeItem.getStoreIMGPath())) {
                 pictureUrl = storeItem.getStoreIMGPath();
-                // TODO: 2017/8/6 corner mot work
                 Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else
                 pictureUrl = "";

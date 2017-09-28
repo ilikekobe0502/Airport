@@ -100,7 +100,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                 public void run() {
                     try {
                         String path = !TextUtils.isEmpty(facilityData.getLegendImgPath()) ? facilityData.getLegendImgPath() : "";
-                        Log.e("Ian", "img path:" + path);
+                        Log.e(TAG, "img path:" + path);
                         mBitmaps = getBitmap(getContext(), path);
                     } catch (IOException e) {
                         e.printStackTrace();
