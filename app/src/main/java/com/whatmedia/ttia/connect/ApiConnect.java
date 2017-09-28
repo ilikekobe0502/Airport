@@ -518,11 +518,10 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getUserNews(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_NewsUserList")
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_AirportSecretary")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", mToken)
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)
+                .addQueryParameter("SearchType", "News")
                 .addQueryParameter("lan", mLocaleApiError)
                 .build();
         getApi(url, callback);
@@ -534,11 +533,10 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getUserEmergency(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_EmergencyUserList")
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_AirportSecretary")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", mToken)
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)// TODO: 2017/9/1 等他們Server 改好要改２
+                .addQueryParameter("SearchType", "Emer")
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
@@ -550,11 +548,10 @@ public class ApiConnect extends StateCode {
      * @param callback
      */
     public static void getUserSweetNotify(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_IntimateReminderUserList")
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_AirportSecretary")
                 .newBuilder()
                 .addQueryParameter("UserID", TAG_DEVICE_ID)
-                .addQueryParameter("Devicetoken", mToken)
-                .addQueryParameter("DeviceType", TAG_DEVICE_TYPE)// TODO: 2017/9/1 等他們Server 改好要改2
+                .addQueryParameter("SearchType", "IRemind")
                 .addQueryParameter("lan", mLocale)
                 .build();
         getApi(url, callback);
