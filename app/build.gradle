@@ -7,8 +7,8 @@ android {
         applicationId "com.whatmedia.ttia"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 20180872
-        versionName "1.0.51"
+        versionCode 20180873
+        versionName "1.0.52"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
