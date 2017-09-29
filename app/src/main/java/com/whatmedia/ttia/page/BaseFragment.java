@@ -13,7 +13,7 @@ public class BaseFragment extends Fragment implements IFragmentTools {
 
     @Override
     public void showMessage(String message) {
-        if (getActivity().findViewById(android.R.id.content) != null)
+        if (isAdded() && !isDetached() && getActivity() != null && getActivity().findViewById(android.R.id.content) != null)
             Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
         else {
             Log.e(TAG, "getActivity().findViewById(android.R.id.content) is null");
