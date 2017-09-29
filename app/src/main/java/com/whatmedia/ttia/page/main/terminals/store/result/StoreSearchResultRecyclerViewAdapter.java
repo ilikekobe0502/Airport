@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
-import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
@@ -61,7 +59,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, item.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, item.getFloorName()) : "");
             holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
-            holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContenct()) ? item.getContenct() : "");
+            holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
             String pictureUrl;
             if (!TextUtils.isEmpty(item.getImgPath())) {
                 pictureUrl = item.getImgPath();

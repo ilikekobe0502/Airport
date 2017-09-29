@@ -12,13 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.component.CornorTransform;
-import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.response.data.RestaurantInfoData;
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.response.data.StoreInfoData;
 import com.whatmedia.ttia.utility.Util;
 
@@ -99,7 +95,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
                     !TextUtils.isEmpty(data.getOpenStime()) ? data.getOpenStime() : "",
                     !TextUtils.isEmpty(data.getOpenEtime()) ? data.getOpenEtime() : ""));
             mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(data.getTel()) ? data.getTel() : ""));
-            mTextViewContent.setText(!TextUtils.isEmpty(data.getContenct()) ? data.getContenct() : "");
+            mTextViewContent.setText(!TextUtils.isEmpty(data.getContent()) ? data.getContent() : "");
         } else if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT) != null) {
             storeData = (StoreInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT);
             Log.d(TAG, storeData.toString());

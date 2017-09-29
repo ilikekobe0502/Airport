@@ -31,8 +31,8 @@ public class RestaurantInfoData implements Serializable {
     private String floorCode;
     @SerializedName("RestaurantTypeID")
     private String restaurantTypeId;
-    @SerializedName("Contenct")
-    private String contenct;
+    @SerializedName("Content")
+    private String Content;
     @SerializedName("WebURL")
     private String webURL;
     @SerializedName("OpenStime")
@@ -94,12 +94,12 @@ public class RestaurantInfoData implements Serializable {
         this.restaurantTypeId = restaurantTypeId;
     }
 
-    public String getContenct() {
-        return contenct;
+    public String getContent() {
+        return Content;
     }
 
-    public void setContenct(String contenct) {
-        this.contenct = contenct;
+    public void setContent(String content) {
+        this.Content = content;
     }
 
     public String getWebURL() {

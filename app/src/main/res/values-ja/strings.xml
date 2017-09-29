@@ -663,7 +663,7 @@
     <string name="parking_info_parking_space_much">"空きスペースが十分にあります"</string>
     <string name="parking_info_parking_space_enough">"空き駐車スペース"</string>
     <string name="parking_info_parking_space_full">"駐車場が満車です"</string>
-    <string name="parking_info_parking_space_number_of">"そこ%s"</string>
+    <string name="parking_info_parking_space_number_of">"空車%s"</string>
     <string name="parking_info_parking_space_full_state">"いっぱい"</string>
     <string name="parking_info_parking_space_P1">"P1"</string>
     <string name="parking_info_parking_space_P2">"P2"</string>
