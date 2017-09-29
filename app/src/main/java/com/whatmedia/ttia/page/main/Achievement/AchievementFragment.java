@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,7 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-        if(mPresenter.queryAchievementList())
+        if (mPresenter.queryAchievementList())
             mLoadingView.showLoadingView();
 
         return view;
@@ -117,10 +118,10 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
     public void onClick(View view) {
         AchievementsData data = mList.get(Integer.valueOf(view.getTag().toString()));
         Bundle bundle = new Bundle();
-        bundle.putString(AchievementDetailContract.IMAGE_PATH, data.getImgPath());
-        bundle.putString(AchievementDetailContract.TEXT_DATE, data.getDate());
-        bundle.putString(AchievementDetailContract.TEXT_TITLE, data.getTitle());
-        bundle.putString(AchievementDetailContract.TEXT_CONTENT, data.getContent());
+        bundle.putString(AchievementDetailContract.IMAGE_PATH, !TextUtils.isEmpty(data.getImgPath()) ? data.getImgPath() : "");
+        bundle.putString(AchievementDetailContract.TEXT_DATE, !TextUtils.isEmpty(data.getDate()) ? data.getDate() : "");
+        bundle.putString(AchievementDetailContract.TEXT_TITLE, !TextUtils.isEmpty(data.getTitle()) ? data.getTitle() : "");
+        bundle.putString(AchievementDetailContract.TEXT_CONTENT, !TextUtils.isEmpty(data.getContent()) ? data.getContent() : "");
         mMainActivity.addFragment(Page.TAG_ACHIEVEMENT_DETAIL, bundle, true);
     }
 

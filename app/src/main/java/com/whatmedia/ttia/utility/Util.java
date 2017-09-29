@@ -711,7 +711,7 @@ public class Util {
      * @param count
      */
     public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int count) {
-        if (url!=null) {
+        if (!TextUtils.isEmpty(url)) {
             Picasso.with(context).load(url).transform(new CornorTransform(radius, 0)).into(imageView, new Callback() {
                 @Override
                 public void onSuccess() {
@@ -745,7 +745,7 @@ public class Util {
      * @param count
      */
     public static void setPicassoRetry(final Context context, final ImageView imageView, final String url, final int radius, final int width, int height, final int count) {
-        if (url!=null) {
+        if (url != null) {
             Picasso.with(context).load(url)
                     .resize(width, height)
                     .transform(new CornorTransform(radius, 0))

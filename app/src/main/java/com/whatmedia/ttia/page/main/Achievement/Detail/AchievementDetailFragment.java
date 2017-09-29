@@ -65,13 +65,13 @@ public class AchievementDetailFragment extends BaseFragment implements Achieveme
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             imagePath = getArguments().containsKey(AchievementDetailContract.IMAGE_PATH) ?
-                    getArguments().get(AchievementDetailContract.IMAGE_PATH).toString() : "";
+                    getArguments().getString(AchievementDetailContract.IMAGE_PATH) : "";
             textDate = getArguments().containsKey(AchievementDetailContract.TEXT_DATE) ?
-                    getArguments().get(AchievementDetailContract.TEXT_DATE).toString() : "";
+                    getArguments().getString(AchievementDetailContract.TEXT_DATE) : "";
             textTitle = getArguments().containsKey(AchievementDetailContract.TEXT_TITLE) ?
-                    getArguments().get(AchievementDetailContract.TEXT_TITLE).toString() : "";
+                    getArguments().getString(AchievementDetailContract.TEXT_TITLE) : "";
             textContent = getArguments().containsKey(AchievementDetailContract.TEXT_CONTENT) ?
-                    getArguments().get(AchievementDetailContract.TEXT_CONTENT).toString() : "";
+                    getArguments().getString(AchievementDetailContract.TEXT_CONTENT) : "";
         }
         mRadius = getResources().getDimensionPixelSize(R.dimen.dp_pixel_8);
     }

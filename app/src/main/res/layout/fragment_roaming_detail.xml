@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/all_bg"
+    android:clickable="true"
     android:orientation="vertical">
 
     <WebView
@@ -15,16 +16,16 @@
         android:id="@+id/text_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/but_bg_mdpi"
-        android:gravity="center"
-        android:text="@string/roaming_detail_query"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_21"
-        android:layout_marginTop="@dimen/dp_pixel_30"
         android:layout_marginBottom="@dimen/dp_pixel_30"
         android:layout_marginLeft="@dimen/dp_pixel_90"
         android:layout_marginRight="@dimen/dp_pixel_90"
+        android:layout_marginTop="@dimen/dp_pixel_30"
+        android:background="@drawable/but_bg_mdpi"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dp_pixel_15"
         android:paddingTop="@dimen/dp_pixel_15"
-        android:paddingBottom="@dimen/dp_pixel_15"/>
+        android:text="@string/roaming_detail_query"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_pixel_21" />
 
 </LinearLayout>
