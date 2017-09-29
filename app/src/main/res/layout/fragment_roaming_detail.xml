@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/all_bg"
-    android:clickable="true"
-    android:orientation="vertical">
+    android:clickable="true">
 
-    <WebView
-        android:id="@+id/webview"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"></WebView>
+        android:layout_marginLeft="@dimen/dp_pixel_100"
+        android:layout_marginTop="@dimen/dp_pixel_80"
+        android:layout_height="@dimen/dp_pixel_183" />
 
     <TextView
         android:id="@+id/text_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_pixel_30"
         android:layout_marginLeft="@dimen/dp_pixel_90"
         android:layout_marginRight="@dimen/dp_pixel_90"
@@ -28,4 +30,4 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_21" />
 
-</LinearLayout>
+</RelativeLayout>

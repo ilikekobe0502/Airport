@@ -5,14 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -32,8 +35,8 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     private IActivityTools.IMainActivity mMainActivity;
     private RoamingDetailContract.Presenter mPresenter;
 
-    @BindView(R.id.webview)
-    WebView mWebView;
+    @BindView(R.id.imageView)
+    ImageView mImageView;
     @BindView(R.id.text_query)
     TextView mTextQuery;
 
@@ -57,7 +60,6 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
         mLoadingView.showLoadingView();
         mPresenter.getRoamingDetailAPI(getArguments().get("key").toString());
 
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         return view;
     }
@@ -85,12 +87,17 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             if (response != null && response.size() > 0) {
+                String image = "";
+                if (!TextUtils.isEmpty(response.get(0).getIrHtml()) && response.get(0).getIrHtml().contains("http") && response.get(0).getIrHtml().contains("JPG")) {
+                    image = response.get(0).getIrHtml().substring(response.get(0).getIrHtml().indexOf("http"), response.get(0).getIrHtml().indexOf("JPG") + 3);
+                }
+                final String finalImage = image;
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-//                        mWebView.loadUrl(response.get(0).getIrHtml());
+                        if (!TextUtils.isEmpty(finalImage))
+                            Picasso.with(getContext()).load(finalImage).into(mImageView);
 
-                        mWebView.loadData(response.get(0).getIrHtml(), "text/html; charset=utf-8", "UTF-8");
                         mTextQuery.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
