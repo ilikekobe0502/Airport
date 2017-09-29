@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class RestaurantInfoData implements Serializable {
     @SerializedName("RestaurantID")
     private String restaurantId;
-    @SerializedName("RestaurantName")
+    @SerializedName("Name")
     private String restaurantName;
     @SerializedName("TerminalsID")
     private String terminalsId;
