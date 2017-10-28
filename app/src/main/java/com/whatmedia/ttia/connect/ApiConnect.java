@@ -79,9 +79,9 @@ public class ApiConnect extends StateCode {
             mApiConnect = new ApiConnect();
         }
 
-        if (TAG_DEVICE_ID == null) {
-            TAG_DEVICE_ID = Util.getDeviceId(context);
-        }
+//        if (TAG_DEVICE_ID == null) {
+//            TAG_DEVICE_ID = Util.getDeviceId(context);
+//        }
 
         if (TextUtils.isEmpty(mToken) || TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
             mToken = Preferences.getFCMToken(context);

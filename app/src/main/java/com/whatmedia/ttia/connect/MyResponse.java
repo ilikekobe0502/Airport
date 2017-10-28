@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.connect;
 
+import android.text.TextUtils;
+
 /**
  * Created by neo_mac on 2017/9/11.
  */
@@ -10,7 +12,7 @@ public class MyResponse {
     private String message;
 
     public ResponseBody body() {
-        return myResponseBody;
+        return myResponseBody != null ? myResponseBody : new ResponseBody();
     }
 
 
@@ -40,7 +42,7 @@ public class MyResponse {
         private String body;
 
         public String string() {
-            return body;
+            return !TextUtils.isEmpty(body) ? body : "";
         }
 
         public void setBody(String mybody) {

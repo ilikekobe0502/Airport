@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.home;
 
 import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +18,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.enums.HomeFeature;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.GetLanguageListResponse;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.IndoorMap.IndoorMapActivity;
@@ -68,7 +69,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = HomePresenter.getInstance(getContext());
+        mPresenter = new HomePresenter(getContext(), this);
+        mPresenter.getLanguageList();
 
         mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
         mViewPagerInfo.setAdapter(mInfoAdapter);
@@ -137,7 +139,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     break;
                 case TAG_INDOOR_MAP://室內地圖導航
                     try {
-                        Intent i =new Intent(getContext(), IndoorMapActivity.class);
+                        Intent i = new Intent(getContext(), IndoorMapActivity.class);
                         getActivity().startActivity(i);
                     } catch (ActivityNotFoundException e) {
                         e.printStackTrace();
@@ -260,5 +262,30 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 mInfoAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void getLanguageListSuccess(GetLanguageListResponse response) {
+
+    }
+
+    @Override
+    public void getLanguageListFailed(String e, boolean timeout) {
+        if (!timeout){
+            if (isAdded() && !isDetached()) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.note)
+                                .setMessage(R.string.data_not_found)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            } else {
+                Log.d(TAG, "Fragment is not add");
+            }
+        }
     }
 }

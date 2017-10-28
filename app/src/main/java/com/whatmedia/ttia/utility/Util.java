@@ -46,6 +46,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -470,11 +471,10 @@ public class Util {
     /**
      * 取得 deviceId
      *
-     * @param context
      * @return
      */
-    public static String getDeviceId(Context context) {
-        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    public static String getDeviceId() {
+        return UUID.randomUUID().toString();
     }
 
     /**

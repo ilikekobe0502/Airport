@@ -20,6 +20,7 @@ public class Preferences {
     private final static String TAG_FCM_TOKEN = "fcm_token";
     private final static String TAG_FIRST_INIT = "first";
     private final static String TAG_SCREEN_MODE = "screen_mode";
+    private final static String TAG_LANGUAGE_LIST = "language_list";
 
     private static SharedPreferences preferences;
 
@@ -148,15 +149,39 @@ public class Preferences {
         return preferences.getBoolean(TAG_FIRST_INIT, false);
     }
 
-    public static void saveScreenMode(Context context, boolean is34mode){
+    public static void saveScreenMode(Context context, boolean is34mode) {
         preferences = context.getSharedPreferences(TAG_SCREEN_MODE, 0);
         preferences.edit()
-                .putBoolean(TAG_SCREEN_MODE,is34mode)
+                .putBoolean(TAG_SCREEN_MODE, is34mode)
                 .commit();
     }
 
     public static boolean checkScreenIs34Mode(Context context) {
         preferences = context.getSharedPreferences(TAG_SCREEN_MODE, 0);
         return preferences.getBoolean(TAG_SCREEN_MODE, false);
+    }
+
+    /**
+     * Save Language list
+     *
+     * @param context
+     * @param data
+     */
+    public static void saveLanguageList(Context context, String data) {
+        preferences = context.getSharedPreferences(TAG_LANGUAGE_LIST, 0);
+        preferences.edit()
+                .putString(TAG_LANGUAGE_LIST, data)
+                .apply();
+    }
+
+    /**
+     * Get Language list
+     *
+     * @param context
+     * @return
+     */
+    public static String getLanguageList(Context context) {
+        preferences = context.getSharedPreferences(TAG_LANGUAGE_LIST, 0);
+        return preferences.getString(TAG_LANGUAGE_LIST, "");
     }
 }
