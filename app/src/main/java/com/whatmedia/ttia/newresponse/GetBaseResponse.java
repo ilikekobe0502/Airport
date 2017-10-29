@@ -13,7 +13,7 @@ public class GetBaseResponse {
     private BaseResultData result;
 
 
-    public GetBaseResponse getGson(String data) {
+    public GetBaseResponse getBaseGson(String data) {
         Gson gson = new Gson();
         return gson.fromJson(data, GetBaseResponse.class);
     }

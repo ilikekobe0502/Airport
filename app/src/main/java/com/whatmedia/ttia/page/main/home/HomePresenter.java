@@ -21,20 +21,20 @@ import okhttp3.Call;
 public class HomePresenter implements HomeContract.Presenter {
 
     private static final int TAG_DEFAULT_LANGUAGE = 1; // 預設語系為中文
-    private static WeakReference<NewApiConnect> mNewApiConnect;
+    private NewApiConnect mNewApiConnect;
     private Context mContext;
     private HomeContract.View mView;
 
 
     HomePresenter(Context context, HomeContract.View view) {
-        mNewApiConnect = new WeakReference<NewApiConnect>(NewApiConnect.getInstance(context));
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
         mContext = context;
     }
 
     @Override
     public void getLanguageList() {
-        mNewApiConnect.get().getLangList(new NewApiConnect.MyCallback() {
+        mNewApiConnect.getLangList(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getLanguageListFailed(e.toString(), timeout);
@@ -72,7 +72,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
         response.setData(data);
         String json = response.getJson();
-        mNewApiConnect.get().registerUser(json, new NewApiConnect.MyCallback() {
+        mNewApiConnect.registerUser(json, new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.registerUserFailed(e.toString(), timeout);

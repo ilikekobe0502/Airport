@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.language;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +34,7 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
     private LanguageSettingContract.Presenter mPresenter;
 
     private LanguageSettingRecyclerViewAdapter mAdapter;
+    private LanguageSetting mSetting;
 
     public LanguageSettingFragment() {
         // Required empty public constructor
@@ -64,7 +64,7 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
         View view = inflater.inflate(R.layout.fragment_language_setting_info, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = LanguageSettingPresenter.getInstance(getContext(), this);
+        mPresenter = new LanguageSettingPresenter(getContext(), this);
 
         mAdapter = new LanguageSettingRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -93,7 +93,7 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-//            mLoadingView = (IActivityTools.ILoadingView) context;
+            mLoadingView = (IActivityTools.ILoadingView) context;
             mMainActivity = (IActivityTools.IMainActivity) context;
         } catch (ClassCastException castException) {
             Log.e(TAG, castException.toString());
@@ -109,48 +109,52 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
     @Override
     public void onClick(View view) {
         if (view.getTag() instanceof LanguageSetting) {
-            final LanguageSetting setting = (LanguageSetting) view.getTag();
-            String string = "";
-            switch (setting.ordinal()) {
-                case 0:
-                case 1:
-                    string = getString(setting.getTitle());
-                    break;
-                case 2:
-                    string = getString(R.string.language_setting_english);
-                    break;
-                case 3:
-                    string = getString(R.string.language_setting_japanese);
-                    break;
-            }
+            mLoadingView.showLoadingView();
 
-            final String finalString = string;
-//            new AlertDialog.Builder(getContext())
-//                    .setTitle(R.string.note)
-//                    .setMessage(getString(R.string.language_setting_select_dialog, string))
-//                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-                            Preferences.saveLocaleSetting(getContext(), setting.getLocale().toString());
-//                            new AlertDialog.Builder(getContext())
-//                                    .setTitle(R.string.note)
-//                                    .setMessage(getString(R.string.language_setting_select_confirm_dialog, finalString))
-//                                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent i = getActivity().getIntent();
-                                            getActivity().finish();
-                                            getActivity().startActivity(i);
-//                                        }
-//                                    })
-//                                    .show();
-//                            mAdapter.setData();
-//                        }
-//                    })
-//                    .setNegativeButton(R.string.alert_btn_cancel, null)
-//                    .show();
+            mSetting = (LanguageSetting) view.getTag();
+            mPresenter.editUserLanguage(mSetting.ordinal());
         } else {
             Log.e(TAG, "View.getTag() is not instance of FlightInfo");
+        }
+    }
+
+    @Override
+    public void editUserLanguageSuccess() {
+        mLoadingView.goneLoadingView();
+
+        Preferences.saveLocaleSetting(getContext(), mSetting.getLocale().toString());
+        Intent i = getActivity().getIntent();
+        getActivity().finish();
+        getActivity().startActivity(i);
+    }
+
+    @Override
+    public void editUserLanguageFailed(final String error, boolean timeout) {
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            if (!timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.note)
+                                .setMessage(String.format("%1$s\n%2$s", getString(R.string.server_error), error))
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            } else {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.note)
+                                .setMessage(getString(R.string.timeout_message))
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -48,7 +49,7 @@ public class NewApiConnect {
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "[Failure = ]", e);
+                Log.e(TAG, "[Failure]", e);
                 if (e.toString().contains("SocketTimeoutException")) {
                     Log.e(TAG, "timeout");
                     callback.onFailure(call, e, true);
@@ -74,7 +75,7 @@ public class NewApiConnect {
                             String responseString = new String(decryptBytes);
                             Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
 
-                            baseResponse = baseResponse.getGson(responseString);
+                            baseResponse = baseResponse.getBaseGson(responseString);
                             if (baseResponse.getResult().getCode() == 200) {
                                 callback.onResponse(call, responseString);
                             } else {
@@ -100,15 +101,39 @@ public class NewApiConnect {
 
 
     private void postApi(HttpUrl url, RequestBody body, final MyCallback callback) {
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+        postApi(url, body, null, callback);
+    }
+
+    private void postApi(HttpUrl url, RequestBody body, boolean defaultHeader, final MyCallback callback) {
+        if (defaultHeader) {
+            Headers headers = new Headers.Builder()
+                    .add("deviceId", TAG_DEVICE_ID)
+                    .build();
+            postApi(url, body, headers, callback);
+        } else {
+            postApi(url, body, null, callback);
+        }
+    }
+
+    private void postApi(HttpUrl url, RequestBody body, Headers headers, final MyCallback callback) {
+        Request request;
+        if (headers == null) {
+            request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+        } else {
+            request = new Request.Builder()
+                    .url(url)
+                    .headers(headers)
+                    .post(body)
+                    .build();
+        }
 
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "[Failure = ]", e);
+                Log.e(TAG, "[Failure]", e);
                 if (e.toString().contains("SocketTimeoutException")) {
                     Log.e(TAG, "timeout");
                     callback.onFailure(call, e, true);
@@ -138,7 +163,7 @@ public class NewApiConnect {
                             String responseString = new String(decryptBytes);
                             Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
 
-                            baseResponse = baseResponse.getGson(responseString);
+                            baseResponse = baseResponse.getBaseGson(responseString);
                             if (baseResponse.getResult().getCode() == 200) {
                                 callback.onResponse(call, responseString);
                             } else {
@@ -268,5 +293,20 @@ public class NewApiConnect {
 
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, callback);
+    }
+
+    /**
+     * 修改使用者語言設置
+     *
+     * @param json
+     * @param callback
+     */
+    public void editUserLanguage(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("edit_lang"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
     }
 }
