@@ -309,4 +309,17 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 取得航班資訊
+     * 為了帶參數，則使用Post method
+     */
+    public void getFlightsListInfo(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("flight_list"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
 }

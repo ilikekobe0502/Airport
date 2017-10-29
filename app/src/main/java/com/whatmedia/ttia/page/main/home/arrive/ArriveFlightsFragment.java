@@ -70,7 +70,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
         View view = inflater.inflate(R.layout.fragment_home_info_arrive, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = ArriveFlightsPresenter.getInstance(getContext(), this);
+        mPresenter = new ArriveFlightsPresenter(getContext(), this);
 
         mQueryData = new FlightSearchData();
         mQueryData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_ARRIVE);

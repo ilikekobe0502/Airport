@@ -18,6 +18,7 @@ public interface ArriveFlightsContract {
 
     interface Presenter {
         void getArriveFlightAPI(FlightSearchData searchData);
+
         void saveMyFlightsAPI(FlightsInfoData data);
     }
 }
