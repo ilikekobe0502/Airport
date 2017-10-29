@@ -122,7 +122,7 @@ public class Preferences {
      */
     public static String getFCMToken(Context context) {
         preferences = context.getSharedPreferences(TAG_FCM_TOKEN, 0);
-        return preferences.getString(TAG_FCM_TOKEN, TAG_ERROR);
+        return preferences.getString(TAG_FCM_TOKEN, "");
     }
 
     /**

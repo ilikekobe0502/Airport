@@ -266,12 +266,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 
     @Override
     public void getLanguageListSuccess(GetLanguageListResponse response) {
-
+        mPresenter.registerUser();
     }
 
     @Override
     public void getLanguageListFailed(String e, boolean timeout) {
-        if (!timeout){
+        if (!timeout) {
             if (isAdded() && !isDetached()) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
@@ -279,6 +279,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         new AlertDialog.Builder(getContext())
                                 .setTitle(R.string.note)
                                 .setMessage(R.string.data_not_found)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            } else {
+                Log.d(TAG, "Fragment is not add");
+            }
+        }
+    }
+
+    @Override
+    public void registerUserSuccess() {
+
+    }
+
+    @Override
+    public void registerUserFailed(final String e, boolean timeout) {
+        if (!timeout) {
+            if (isAdded() && !isDetached()) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle(R.string.note)
+                                .setMessage(String.format("%1$s\n%2$s", getString(R.string.register_user_error), e))
                                 .setPositiveButton(R.string.ok, null)
                                 .show();
                     }

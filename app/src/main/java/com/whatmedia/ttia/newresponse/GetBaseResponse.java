@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.newresponse;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.whatmedia.ttia.newresponse.data.BaseResultData;
 
 /**
@@ -7,10 +9,17 @@ import com.whatmedia.ttia.newresponse.data.BaseResultData;
  */
 
 public class GetBaseResponse {
+    @SerializedName("result")
     private BaseResultData result;
 
+
+    public GetBaseResponse getGson(String data) {
+        Gson gson = new Gson();
+        return gson.fromJson(data, GetBaseResponse.class);
+    }
+
     public BaseResultData getResult() {
-        return result;
+        return result != null ? result : new BaseResultData();
     }
 
     public void setResult(BaseResultData result) {

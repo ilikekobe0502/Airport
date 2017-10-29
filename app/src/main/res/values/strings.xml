@@ -866,4 +866,6 @@
     <string name="directions_from_hint">請以英文輸入您的地點</string>
     <string name="directions_to_hint">請以英文輸入您的目的地</string>
     <string name="timeout_message">網路異常,暫時無法取得資訊</string>
+
+    <string name="register_user_error">註冊使用者失敗</string>
 </resources>

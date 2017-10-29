@@ -11,10 +11,16 @@ public interface HomeContract {
         void getLanguageListSuccess(GetLanguageListResponse response);
 
         void getLanguageListFailed(String e, boolean timeout);
+
+        void registerUserSuccess();
+
+        void registerUserFailed(String e, boolean timeout);
     }
 
     interface Presenter {
 
         void getLanguageList();
+
+        void registerUser();
     }
 }

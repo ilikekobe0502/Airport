@@ -37,6 +37,7 @@ import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.services.FlightClockBroadcast;
 
 import java.lang.reflect.Field;
+import java.security.spec.AlgorithmParameterSpec;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +50,10 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
@@ -818,5 +823,48 @@ public class Util {
         final PowerManager.WakeLock mWakelock = pm.newWakeLock(
                 PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, tag);
         mWakelock.acquire(second);
+    }
+
+    /**
+     * 解密Response
+     *
+     * @param ivBytes
+     * @param keyBytes
+     * @param textBytes
+     * @return
+     */
+    public static byte[] decryptAES(byte[] ivBytes, byte[] keyBytes, byte[] textBytes) {
+        try {
+            AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+            SecretKeySpec newKey = new SecretKeySpec(keyBytes, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, newKey, ivSpec);
+            return cipher.doFinal(textBytes);
+        } catch (Exception ex) {
+            Log.e(TAG, "[DecryptAES] ", ex);
+            return null;
+        }
+
+    }
+
+    /**
+     * 加密Data
+     *
+     * @param ivBytes
+     * @param keyBytes
+     * @param textBytes
+     * @return
+     */
+    public static byte[] encryptAES(byte[] ivBytes, byte[] keyBytes, byte[] textBytes) {
+        try {
+            AlgorithmParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+            SecretKeySpec newKey = new SecretKeySpec(keyBytes, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, newKey, ivSpec);
+            return cipher.doFinal(textBytes);
+        } catch (Exception ex) {
+            Log.e(TAG, "[EncryptAES] ", ex);
+            return null;
+        }
     }
 }

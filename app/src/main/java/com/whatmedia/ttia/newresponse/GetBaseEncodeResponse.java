@@ -11,13 +11,26 @@ import java.lang.reflect.Type;
  */
 
 public class GetBaseEncodeResponse {
-    private static BaseEncodeData data;
+    private BaseEncodeData data;
 
-    public static BaseEncodeData newInstance(String response) {
+    public BaseEncodeData getGson(String response) {
         Gson gson = new Gson();
         Type type = new TypeToken<BaseEncodeData>() {
         }.getType();
         data = gson.fromJson(response, type);
         return data;
+    }
+
+    public String getJson() {
+        Gson gson = new Gson();
+        return gson.toJson(data);
+    }
+
+    public BaseEncodeData getData() {
+        return data;
+    }
+
+    public void setData(BaseEncodeData data) {
+        this.data = data;
     }
 }
