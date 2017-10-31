@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.RestaurantInfoData;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.response.data.StoreInfoData;
 import com.whatmedia.ttia.utility.Util;
@@ -32,7 +31,7 @@ import butterknife.OnClick;
 public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<StoreSearchResultRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = StoreSearchResultRecyclerViewAdapter.class.getSimpleName();
 
-    private List<RestaurantInfoData> mItems;
+    private List<com.whatmedia.ttia.newresponse.data.RestaurantInfoData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
     private int mRadius;
@@ -52,17 +51,17 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mItems != null) {
-            RestaurantInfoData item = mItems.get(position);
+            com.whatmedia.ttia.newresponse.data.RestaurantInfoData item = mItems.get(position);
             if (item == null)
                 return;
 
             holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, item.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, item.getFloorName()) : "");
-            holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantName()) ? item.getRestaurantName() : "");
+            holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantTypeName()) ? item.getRestaurantTypeName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
             String pictureUrl;
-            if (!TextUtils.isEmpty(item.getImgPath())) {
-                pictureUrl = item.getImgPath();
+            if (!TextUtils.isEmpty(item.getImgUrl())) {
+                pictureUrl = item.getImgUrl();
                 Util.setPicassoRetry(mContext, holder.mImageViewPicture, pictureUrl, mRadius, 0);
             } else
                 pictureUrl = "";
@@ -102,7 +101,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
         return count;
     }
 
-    public void setData(List<RestaurantInfoData> data) {
+    public void setData(List<com.whatmedia.ttia.newresponse.data.RestaurantInfoData> data) {
         mItems = data;
         notifyDataSetChanged();
     }

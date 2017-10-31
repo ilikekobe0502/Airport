@@ -8,11 +8,8 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.AreaCodeData;
-import com.whatmedia.ttia.response.data.FloorCodeData;
-import com.whatmedia.ttia.response.data.RestaurantCodeData;
+import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
 import com.whatmedia.ttia.response.data.StoreCodeData;
-import com.whatmedia.ttia.response.data.TerminalCodeData;
 
 import java.util.List;
 
@@ -25,10 +22,10 @@ import butterknife.OnClick;
  */
 
 public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter<MyDialogStoreSearchRecyclerViewAdapter.ViewHolder> {
-    private List<TerminalCodeData> mTerminalCodeList;
-    private List<AreaCodeData> mAreaCodeList;
-    private List<FloorCodeData> mFloorCodeList;
-    private List<RestaurantCodeData> mRestaurantCodeList;
+    private List<StoreConditionCodeData> mTerminalCodeList;
+    private List<StoreConditionCodeData> mAreaCodeList;
+    private List<StoreConditionCodeData> mFloorCodeList;
+    private List<StoreConditionCodeData> mRestaurantCodeList;
     private List<StoreCodeData> mStoreCodeList;
 
     private IOnItemClickListener mListener;
@@ -42,32 +39,32 @@ public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mTerminalCodeList != null) {
-            TerminalCodeData item = mTerminalCodeList.get(position);
+            StoreConditionCodeData item = mTerminalCodeList.get(position);
             if (item == null)
                 return;
 
-            holder.mTextViewItem.setText(item.getTerminalsName());
+            holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         } else if (mAreaCodeList != null) {
-            AreaCodeData item = mAreaCodeList.get(position);
+            StoreConditionCodeData item = mAreaCodeList.get(position);
             if (item == null)
                 return;
 
-            holder.mTextViewItem.setText(item.getAreaName());
+            holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         } else if (mFloorCodeList != null) {
-            FloorCodeData item = mFloorCodeList.get(position);
+            StoreConditionCodeData item = mFloorCodeList.get(position);
             if (item == null)
                 return;
 
-            holder.mTextViewItem.setText(item.getFloorName());
+            holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         } else if (mRestaurantCodeList != null) {
-            RestaurantCodeData item = mRestaurantCodeList.get(position);
+            StoreConditionCodeData item = mRestaurantCodeList.get(position);
             if (item == null)
                 return;
 
-            holder.mTextViewItem.setText(item.getRestaurantTypeName());
+            holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         } else if (mStoreCodeList != null) {
             StoreCodeData item = mStoreCodeList.get(position);
@@ -96,22 +93,22 @@ public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter
     }
 
 
-    public void setTerminalCodeData(List<TerminalCodeData> list) {
+    public void setTerminalCodeData(List<StoreConditionCodeData> list) {
         mTerminalCodeList = list;
         notifyDataSetChanged();
     }
 
-    public void setAreaCodeData(List<AreaCodeData> list) {
+    public void setAreaCodeData(List<StoreConditionCodeData> list) {
         mAreaCodeList = list;
         notifyDataSetChanged();
     }
 
-    public void setFloorCodeData(List<FloorCodeData> list) {
+    public void setFloorCodeData(List<StoreConditionCodeData> list) {
         mFloorCodeList = list;
         notifyDataSetChanged();
     }
 
-    public void setRestaurantCodeData(List<RestaurantCodeData> list) {
+    public void setRestaurantCodeData(List<StoreConditionCodeData> list) {
         mRestaurantCodeList = list;
         notifyDataSetChanged();
     }

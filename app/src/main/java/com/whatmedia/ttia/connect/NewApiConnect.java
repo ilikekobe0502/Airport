@@ -406,4 +406,66 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 取得餐廳總類清單
+     *
+     * @param callback
+     */
+    public void getRestaurantTypeList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("restaurant_type_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得航廈清單
+     *
+     * @param callback
+     */
+    public void getTerminalList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("terminals_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得區域清單
+     *
+     * @param callback
+     */
+    public void getAreaList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("area_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得樓層清單
+     *
+     * @param callback
+     */
+    public void getFloorList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("floor_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得餐廳搜尋清單
+     * @param json
+     * @param callback
+     */
+    public void getRestaurantInfoList(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("restaurant_list"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
 }
