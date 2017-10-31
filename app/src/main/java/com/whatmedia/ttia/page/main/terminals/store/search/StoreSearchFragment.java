@@ -15,15 +15,14 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyStoreDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultContract;
 import com.whatmedia.ttia.response.data.AreaCodeData;
 import com.whatmedia.ttia.response.data.FloorCodeData;
-import com.whatmedia.ttia.response.data.RestaurantCodeData;
 import com.whatmedia.ttia.response.data.StoreCodeData;
-import com.whatmedia.ttia.response.data.TerminalCodeData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -53,17 +52,17 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     private StoreSearchContract.Presenter mPresenter;
 
 
-    private List<TerminalCodeData> mTerminalCodeList;
-    private List<AreaCodeData> mAreaCodeList;
-    private List<FloorCodeData> mFloorCodeList;
-    private List<RestaurantCodeData> mRestaurantCodeList;
+    private List<StoreConditionCodeData> mTerminalCodeList;
+    private List<StoreConditionCodeData> mAreaCodeList;
+    private List<StoreConditionCodeData> mFloorCodeList;
+    private List<StoreConditionCodeData> mRestaurantCodeList;
     private List<StoreCodeData> mStoreCodeList;
 
-    private TerminalCodeData mTerminalCodeData;
-    private AreaCodeData mAreaCodeData;
-    private FloorCodeData mFloorCodeData;
-    private RestaurantCodeData mRestaurantCodeData;
-    private StoreCodeData mStoreCodeData;
+    private StoreConditionCodeData mTerminalCodeData;
+    private StoreConditionCodeData mAreaCodeData;
+    private StoreConditionCodeData mFloorCodeData;
+    private StoreConditionCodeData mRestaurantCodeData;
+    private StoreConditionCodeData mStoreCodeData;
     private int mFromPage = 0;
 
     public StoreSearchFragment() {
@@ -97,7 +96,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         if (getArguments() != null) {
             mFromPage = getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE);
         }
-        mPresenter = StoreSearchPresenter.getInstance(getContext(), this);
+        mPresenter =new StoreSearchPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTerminalCodeAPI();
 
@@ -146,11 +145,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getTerminalSucceed(final List<TerminalCodeData> response) {
+    public void getTerminalSucceed(final List<StoreConditionCodeData> response) {
         if (isAdded() && !isDetached()) {
             mTerminalCodeList = response;
-            TerminalCodeData nonSelect = new TerminalCodeData();
-            nonSelect.setTerminalsName(getString(R.string.restaurant_store_search_non_select_terminal));
+            StoreConditionCodeData nonSelect = new StoreConditionCodeData();
+            nonSelect.setName(getString(R.string.restaurant_store_search_non_select_terminal));
             mTerminalCodeList.add(0, nonSelect);
 
             mPresenter.getAreaCodeAPI();
@@ -180,11 +179,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getAreaSucceed(List<AreaCodeData> response) {
+    public void getAreaSucceed(List<StoreConditionCodeData> response) {
         if (isAdded() && !isDetached()) {
             mAreaCodeList = response;
-            AreaCodeData nonSelect = new AreaCodeData();
-            nonSelect.setAreaName(getString(R.string.restaurant_store_search_non_select_area));
+            StoreConditionCodeData nonSelect = new StoreConditionCodeData();
+            nonSelect.setName(getString(R.string.restaurant_store_search_non_select_area));
             mAreaCodeList.add(0, nonSelect);
             mPresenter.getFloorCodeAPI();
         } else {
@@ -193,11 +192,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getFloorSucceed(List<FloorCodeData> response) {
+    public void getFloorSucceed(List<StoreConditionCodeData> response) {
         if (isAdded() && !isDetached()) {
             mFloorCodeList = response;
-            FloorCodeData nonSelect = new FloorCodeData();
-            nonSelect.setFloorName(getString(R.string.restaurant_store_search_non_select_floor));
+            StoreConditionCodeData nonSelect = new StoreConditionCodeData();
+            nonSelect.setName(getString(R.string.restaurant_store_search_non_select_floor));
             mFloorCodeList.add(0, nonSelect);
 
             if (mFromPage == Page.TAG_STORE_OFFERS)
@@ -210,11 +209,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getKindOfRestaurantCodeSucceed(List<RestaurantCodeData> response) {
+    public void getKindOfRestaurantCodeSucceed(List<StoreConditionCodeData> response) {
         if (isAdded() && !isDetached()) {
             mRestaurantCodeList = response;
-            RestaurantCodeData nonSelect = new RestaurantCodeData();
-            nonSelect.setRestaurantTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_restaurant));
+            StoreConditionCodeData nonSelect = new StoreConditionCodeData();
+            nonSelect.setName(getString(R.string.restaurant_store_search_non_select_kind_of_restaurant));
             mRestaurantCodeList.add(0, nonSelect);
             mLoadingView.goneLoadingView();
         } else {
@@ -225,8 +224,8 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     @Override
     public void getRestaurantInfoSucceed(String response) {
         if (isAdded() && !isDetached()) {
+            mLoadingView.goneLoadingView();
             if (!TextUtils.isEmpty(response)) {
-                mLoadingView.goneLoadingView();
                 Bundle bundle = new Bundle();
                 bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
                 mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
@@ -294,13 +293,13 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
                 if (mFromPage == Page.TAG_STORE_OFFERS) {//商店資訊
-                    mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
-                            mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mStoreCodeData != null ? mStoreCodeData.getStoreTypeId() : ""
-                            , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
+                    mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getName() : "",
+                            mAreaCodeData != null ? mAreaCodeData.getId() : "", mStoreCodeData != null ? mStoreCodeData.getId() : ""
+                            , mFloorCodeData != null ? mFloorCodeData.getId() : "");
                 } else {//餐廳資訊
-                    mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getTerminalsId() : "",
-                            mAreaCodeData != null ? mAreaCodeData.getAreaId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getRestaurantTypeId() : ""
-                            , mFloorCodeData != null ? mFloorCodeData.getFloorId() : "");
+                    mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getName() : "",
+                            mAreaCodeData != null ? mAreaCodeData.getId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getId() : ""
+                            , mFloorCodeData != null ? mFloorCodeData.getId() : "");
                 }
                 break;
             case R.id.textView_terminal:
@@ -315,9 +314,9 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (view.getTag() != null && view.getTag() instanceof TerminalCodeData) {
-                                    mTerminalCodeData = (TerminalCodeData) view.getTag();
-                                    mTextViewTerminal.setText(mTerminalCodeData.getTerminalsName());
+                                if (view.getTag() != null && view.getTag() instanceof StoreConditionCodeData) {
+                                    mTerminalCodeData = (StoreConditionCodeData) view.getTag();
+                                    mTextViewTerminal.setText(mTerminalCodeData.getName());
                                 } else {
                                     Log.e(TAG, "View.getTag() is null or data error");
                                 }
@@ -341,9 +340,9 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (view.getTag() != null && view.getTag() instanceof AreaCodeData) {
-                                    mAreaCodeData = (AreaCodeData) view.getTag();
-                                    mTextViewArea.setText(mAreaCodeData.getAreaName());
+                                if (view.getTag() != null && view.getTag() instanceof StoreConditionCodeData) {
+                                    mAreaCodeData = (StoreConditionCodeData) view.getTag();
+                                    mTextViewArea.setText(mAreaCodeData.getName());
                                 } else {
                                     Log.e(TAG, "View.getTag() is null or data error");
                                 }
@@ -367,9 +366,9 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (view.getTag() != null && view.getTag() instanceof FloorCodeData) {
-                                    mFloorCodeData = (FloorCodeData) view.getTag();
-                                    mTextViewFloor.setText(mFloorCodeData.getFloorName());
+                                if (view.getTag() != null && view.getTag() instanceof StoreConditionCodeData) {
+                                    mFloorCodeData = (StoreConditionCodeData) view.getTag();
+                                    mTextViewFloor.setText(mFloorCodeData.getName());
                                 } else {
                                     Log.e(TAG, "View.getTag() is null or data error");
                                 }
@@ -394,9 +393,9 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (view.getTag() != null && view.getTag() instanceof StoreCodeData) {
-                                        mStoreCodeData = (StoreCodeData) view.getTag();
-                                        mTextViewRestaurant.setText(mStoreCodeData.getStoreTypeName());
+                                    if (view.getTag() != null && view.getTag() instanceof StoreConditionCodeData) {
+                                        mStoreCodeData = (StoreConditionCodeData) view.getTag();
+                                        mTextViewRestaurant.setText(mStoreCodeData.getName());
                                     } else {
                                         Log.e(TAG, "View.getTag() is null or data error");
                                     }
@@ -420,9 +419,9 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (view.getTag() != null && view.getTag() instanceof RestaurantCodeData) {
-                                        mRestaurantCodeData = (RestaurantCodeData) view.getTag();
-                                        mTextViewRestaurant.setText(mRestaurantCodeData.getRestaurantTypeName());
+                                    if (view.getTag() != null && view.getTag() instanceof StoreConditionCodeData) {
+                                        mRestaurantCodeData = (StoreConditionCodeData) view.getTag();
+                                        mTextViewRestaurant.setText(mRestaurantCodeData.getName());
                                     } else {
                                         Log.e(TAG, "View.getTag() is null or data error");
                                     }

@@ -17,11 +17,8 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.AreaCodeData;
-import com.whatmedia.ttia.response.data.FloorCodeData;
-import com.whatmedia.ttia.response.data.RestaurantCodeData;
+import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
 import com.whatmedia.ttia.response.data.StoreCodeData;
-import com.whatmedia.ttia.response.data.TerminalCodeData;
 
 import java.util.List;
 
@@ -49,10 +46,10 @@ public class MyStoreDialog extends DialogFragment {
 
     private String mTitle;
     private MyDialogStoreSearchRecyclerViewAdapter mSearchAdapter;
-    private List<TerminalCodeData> mTerminalCodeList;
-    private List<AreaCodeData> mAreaCodeList;
-    private List<FloorCodeData> mFloorCodeList;
-    private List<RestaurantCodeData> mRestaurantCodeList;
+    private List<StoreConditionCodeData> mTerminalCodeList;
+    private List<StoreConditionCodeData> mAreaCodeList;
+    private List<StoreConditionCodeData> mFloorCodeList;
+    private List<StoreConditionCodeData> mRestaurantCodeList;
     private List<StoreCodeData> mStoreCodeList;
 
     public static MyStoreDialog newInstance() {
@@ -129,25 +126,25 @@ public class MyStoreDialog extends DialogFragment {
         return this;
     }
 
-    public MyStoreDialog setTerminalCodeData(List<TerminalCodeData> list) {
+    public MyStoreDialog setTerminalCodeData(List<StoreConditionCodeData> list) {
         clearData();
         mTerminalCodeList = list;
         return this;
     }
 
-    public MyStoreDialog setAreaCodeData(List<AreaCodeData> list) {
+    public MyStoreDialog setAreaCodeData(List<StoreConditionCodeData> list) {
         clearData();
         mAreaCodeList = list;
         return this;
     }
 
-    public MyStoreDialog setFloorCodeData(List<FloorCodeData> list) {
+    public MyStoreDialog setFloorCodeData(List<StoreConditionCodeData> list) {
         clearData();
         mFloorCodeList = list;
         return this;
     }
 
-    public MyStoreDialog setRestaurantCodeData(List<RestaurantCodeData> list) {
+    public MyStoreDialog setRestaurantCodeData(List<StoreConditionCodeData> list) {
         clearData();
         mRestaurantCodeList = list;
         return this;
