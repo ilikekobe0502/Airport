@@ -50,7 +50,7 @@ public class MyStoreDialog extends DialogFragment {
     private List<StoreConditionCodeData> mAreaCodeList;
     private List<StoreConditionCodeData> mFloorCodeList;
     private List<StoreConditionCodeData> mRestaurantCodeList;
-    private List<StoreCodeData> mStoreCodeList;
+    private List<StoreConditionCodeData> mStoreCodeList;
 
     public static MyStoreDialog newInstance() {
         if (mMyDialog == null) {
@@ -150,7 +150,7 @@ public class MyStoreDialog extends DialogFragment {
         return this;
     }
 
-    public MyStoreDialog setStoreCodeData(List<StoreCodeData> list) {
+    public MyStoreDialog setStoreCodeData(List<StoreConditionCodeData> list) {
         clearData();
         mStoreCodeList = list;
         return this;

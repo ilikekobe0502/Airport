@@ -15,7 +15,8 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.squareup.picasso.Picasso;
-import com.whatmedia.ttia.response.data.StoreInfoData;
+import com.whatmedia.ttia.newresponse.data.RestaurantInfoData;
+import com.whatmedia.ttia.newresponse.data.StoreInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
 public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<StoreSearchResultRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = StoreSearchResultRecyclerViewAdapter.class.getSimpleName();
 
-    private List<com.whatmedia.ttia.newresponse.data.RestaurantInfoData> mItems;
+    private List<RestaurantInfoData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
     private int mRadius;
@@ -51,7 +52,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mItems != null) {
-            com.whatmedia.ttia.newresponse.data.RestaurantInfoData item = mItems.get(position);
+            RestaurantInfoData item = mItems.get(position);
             if (item == null)
                 return;
 
@@ -76,11 +77,11 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
             holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, storeItem.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(storeItem.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, storeItem.getFloorName()) : "");
-            holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getStoreName()) ? storeItem.getStoreName() : "");
-            holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getConetnt()) ? storeItem.getConetnt() : "");
+            holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getStoreTypeName()) ? storeItem.getStoreTypeName() : "");
+            holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getContent()) ? storeItem.getContent() : "");
             String pictureUrl;
-            if (!TextUtils.isEmpty(storeItem.getStoreIMGPath())) {
-                pictureUrl = storeItem.getStoreIMGPath();
+            if (!TextUtils.isEmpty(storeItem.getImgUrl())) {
+                pictureUrl = storeItem.getImgUrl();
                 Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else
                 pictureUrl = "";
@@ -101,7 +102,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
         return count;
     }
 
-    public void setData(List<com.whatmedia.ttia.newresponse.data.RestaurantInfoData> data) {
+    public void setData(List<RestaurantInfoData> data) {
         mItems = data;
         notifyDataSetChanged();
     }

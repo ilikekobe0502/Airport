@@ -9,8 +9,11 @@ import com.whatmedia.ttia.newresponse.GetAreaListResponse;
 import com.whatmedia.ttia.newresponse.GetFloorListResponse;
 import com.whatmedia.ttia.newresponse.GetRestaurantListResponse;
 import com.whatmedia.ttia.newresponse.GetRestaurantQueryResponse;
+import com.whatmedia.ttia.newresponse.GetStoreListResponse;
+import com.whatmedia.ttia.newresponse.GetStoreQueryResponse;
 import com.whatmedia.ttia.newresponse.GetTerminalListResponse;
 import com.whatmedia.ttia.newresponse.data.RestaurantQueryData;
+import com.whatmedia.ttia.newresponse.data.StoreQueryData;
 
 import java.io.IOException;
 
@@ -143,42 +146,50 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
     @Override
     public void getStoreCodeAPI() {
-//        mApiConnect.getStoreCode(new ApiConnect.MyCallback() {
-//            @Override
-//            public void onFailure(Call call, IOException e, boolean timeout) {
-//                mView.getTerminalFailed(e.toString(), timeout);
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, MyResponse response) throws IOException {
-//                if (response.code() == 200) {
-//                    String result = response.body().string();
-//                    List<StoreCodeData> list = GetStoreCodeResponse.newInstance(result);
-//                    mView.getStoreCodeSuccess(list);
-//                } else {
-//                    mView.getTerminalFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-//                }
-//            }
-//        });
+        mNewApiConnect.getStoreList(new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getTerminalFailed(e.toString(), timeout);
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                GetStoreListResponse getStoreListResponse = GetStoreListResponse.getGson(response);
+                if (getStoreListResponse.getStoreTypeList() != null)
+                    mView.getStoreCodeSuccess(getStoreListResponse.getStoreTypeList());
+                else
+                    mView.getTerminalFailed(mContext.getString(R.string.data_error), false);
+            }
+        });
     }
 
     @Override
     public void getStoreInfoAPI(String terminalsID, String areaID, String storeTypeID, String floorID) {
-//        mApiConnect.getStoreInfo(terminalsID, areaID, storeTypeID, floorID, new ApiConnect.MyCallback() {
-//            @Override
-//            public void onFailure(Call call, IOException e, boolean timeout) {
-//                mView.getRestaurantInfoFailed(e.toString(), timeout);
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, MyResponse response) throws IOException {
-//                if (response.code() == 200) {
-//                    String result = response.body().string();
-//                    mView.getStoreSuccess(result);
-//                } else {
-//                    mView.getRestaurantInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-//                }
-//            }
-//        });
+        StoreQueryData queryData = new StoreQueryData();
+        GetStoreQueryResponse upload = new GetStoreQueryResponse();
+
+        queryData.setTerminalsId(terminalsID);
+        queryData.setAreaId(areaID);
+        queryData.setStoreTypeId(storeTypeID);
+        queryData.setFloorId(floorID);
+
+        upload.setData(queryData);
+
+        String json = upload.getJson();
+        if (TextUtils.isEmpty(json)) {
+            mView.getRestaurantInfoFailed(mContext.getString(R.string.data_error), false);
+            return;
+        }
+        mNewApiConnect.getStoreInfoList(json, new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getRestaurantInfoFailed(e.toString(), timeout);
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                mView.getStoreSuccess(response);
+            }
+        });
     }
 }

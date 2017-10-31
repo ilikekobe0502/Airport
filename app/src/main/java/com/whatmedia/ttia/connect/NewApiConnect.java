@@ -457,11 +457,39 @@ public class NewApiConnect {
 
     /**
      * 取得餐廳搜尋清單
+     *
      * @param json
      * @param callback
      */
     public void getRestaurantInfoList(String json, MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("restaurant_list"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 取得商店種類清單
+     *
+     * @param callback
+     */
+    public void getStoreList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("store_type_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得商店搜尋清單
+     *
+     * @param json
+     * @param callback
+     */
+    public void getStoreInfoList(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("store_list"))
                 .newBuilder()
                 .build();
 

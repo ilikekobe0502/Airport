@@ -20,9 +20,6 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultContract;
-import com.whatmedia.ttia.response.data.AreaCodeData;
-import com.whatmedia.ttia.response.data.FloorCodeData;
-import com.whatmedia.ttia.response.data.StoreCodeData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -45,18 +42,16 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     TextView mTextViewFloor;
     @BindView(R.id.textView_restaurant)
     TextView mTextViewRestaurant;
-
-
+    
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private StoreSearchContract.Presenter mPresenter;
-
 
     private List<StoreConditionCodeData> mTerminalCodeList;
     private List<StoreConditionCodeData> mAreaCodeList;
     private List<StoreConditionCodeData> mFloorCodeList;
     private List<StoreConditionCodeData> mRestaurantCodeList;
-    private List<StoreCodeData> mStoreCodeList;
+    private List<StoreConditionCodeData> mStoreCodeList;
 
     private StoreConditionCodeData mTerminalCodeData;
     private StoreConditionCodeData mAreaCodeData;
@@ -257,12 +252,12 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getStoreCodeSuccess(List<StoreCodeData> response) {
+    public void getStoreCodeSuccess(List<StoreConditionCodeData> response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mStoreCodeList = response;
-            StoreCodeData nonSelect = new StoreCodeData();
-            nonSelect.setStoreTypeName(getString(R.string.restaurant_store_search_non_select_kind_of_store_title));
+            StoreConditionCodeData nonSelect = new StoreConditionCodeData();
+            nonSelect.setName(getString(R.string.restaurant_store_search_non_select_kind_of_store_title));
             mStoreCodeList.add(0, nonSelect);
         } else {
             Log.d(TAG, "Fragment is not add");

@@ -15,13 +15,13 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetRestaurantInfoListResponse;
+import com.whatmedia.ttia.newresponse.GetStoreInfoListResponse;
+import com.whatmedia.ttia.newresponse.data.RestaurantInfoData;
+import com.whatmedia.ttia.newresponse.data.StoreInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.store.info.StoreSearchInfoContract;
-import com.whatmedia.ttia.response.GetStoreInfoDataResponse;
-import com.whatmedia.ttia.response.data.RestaurantInfoData;
-import com.whatmedia.ttia.response.data.StoreInfoData;
 
 import java.util.List;
 
@@ -67,14 +67,16 @@ public class StoreSearchResultFragment extends BaseFragment implements StoreSear
         ButterKnife.bind(this, view);
 
         mPresenter = StoreSearchResultPresenter.getInstance(getContext(), this);
-        List<com.whatmedia.ttia.newresponse.data.RestaurantInfoData> list = null;
+        List<RestaurantInfoData> list = null;
         List<StoreInfoData> storeList = null;
+
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT))) {
             GetRestaurantInfoListResponse restaurantInfoListResponse = GetRestaurantInfoListResponse.getGson(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT));
             if (restaurantInfoListResponse.getRestaurantList() != null)
                 list = restaurantInfoListResponse.getRestaurantList();
         } else if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT))) {
-            storeList = GetStoreInfoDataResponse.newInstance(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT));
+            GetStoreInfoListResponse storeInfoListResponse = GetStoreInfoListResponse.getGson(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT));
+            storeList = storeInfoListResponse.getStoreList();
         }
         mAdapter = new StoreSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
