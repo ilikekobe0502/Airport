@@ -277,7 +277,7 @@ public class NewApiConnect {
         }
 
         if (TAG_DEVICE_ID == null) {
-            TAG_DEVICE_ID = Util.getDeviceId();
+            TAG_DEVICE_ID = Util.getDeviceId(context);
         }
 
 //        if (TextUtils.isEmpty(mToken) || TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
