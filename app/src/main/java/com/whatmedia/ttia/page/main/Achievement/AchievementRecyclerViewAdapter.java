@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.AchievementsData;
+import com.whatmedia.ttia.newresponse.data.AchievementsData;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class AchievementRecyclerViewAdapter extends RecyclerView.Adapter<Achieve
             return;
         }
 
-        if(item.getResult().equals(DONE)){
+        if(item.isComplete()){
             holder.mImageIcon.setImageResource(R.drawable.achievement_11_01);
         }else{
             holder.mImageIcon.setImageResource(R.drawable.achievement_11_02);
@@ -68,7 +68,7 @@ public class AchievementRecyclerViewAdapter extends RecyclerView.Adapter<Achieve
             holder.mView.setBackgroundColor(Color.TRANSPARENT);
         }
 
-        holder.mTextDate.setText(item.getDate());
+        holder.mTextDate.setText(item.getStartDate());
         holder.mTextTitle.setText(item.getTitle());
         holder.mView.setTag(position);
     }

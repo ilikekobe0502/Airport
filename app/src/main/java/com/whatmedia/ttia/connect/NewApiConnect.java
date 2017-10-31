@@ -406,4 +406,16 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 取得我的航班清單
+     *
+     * @param callback
+     */
+    public void getAchievementList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("achievement_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
