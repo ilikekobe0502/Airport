@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.newresponse;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.whatmedia.ttia.newresponse.data.FlightsQueryData;
 
@@ -8,11 +10,14 @@ import com.whatmedia.ttia.newresponse.data.FlightsQueryData;
  */
 
 public class GetFlightsQueryResponse extends GetBaseResponse {
+    private static final String TAG = GetFlightsQueryResponse.class.getSimpleName();
     private FlightsQueryData data;
 
     public String getJson() {
         Gson gson = new Gson();
-        return data != null ? gson.toJson(data) : "";
+        String json = data != null ? gson.toJson(data) : "";
+        Log.i(TAG, String.format("[Json] %s", json));
+        return json;
     }
 
     public FlightsQueryData getData() {

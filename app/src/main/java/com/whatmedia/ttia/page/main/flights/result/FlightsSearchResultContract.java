@@ -1,8 +1,7 @@
 package com.whatmedia.ttia.page.main.flights.result;
 
 
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 
 import java.util.List;
 
@@ -16,17 +15,20 @@ public interface FlightsSearchResultContract {
 
         void saveMyFlightFailed(String message, boolean timeout);
 
-        void getFlightSucceed(List<FlightsInfoData> list);
+        void getFlightSucceed(List<FlightsListData> list);
 
         void getFlightFailed(String message, boolean timeout);
+
+        String getKeyword();
     }
 
     interface Presenter {
-        void saveMyFlightsAPI(FlightsInfoData data);
+        void saveMyFlightsAPI(FlightsListData flightsListData);
 
-        void getFlightAPI(FlightSearchData searchData);
+        void getFlightAPI();
 
-        void getFlightByKeywordAPI(FlightSearchData searchData);
+        void getFlightByDateAPI(String date);
 
+        void getFlightByQueryTypeAPI(int queryType);
     }
 }

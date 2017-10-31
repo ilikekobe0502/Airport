@@ -17,8 +17,6 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultContract;
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -37,7 +35,6 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     private FlightsSearchContract.Presenter mPresenter;
 
     private Bundle mBundle = new Bundle();
-    private FlightSearchData mSearchData = new FlightSearchData();
 
     public FlightsSearchFragment() {
         // Required empty public constructor
@@ -67,7 +64,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         View view = inflater.inflate(R.layout.fragment_flights_search, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = FlightsSearchPresenter.getInstance(getContext(), this);
+        mPresenter = new FlightsSearchPresenter(getContext(), this);
 
 
         return view;
@@ -104,39 +101,6 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void getFlightsArriveSucceed(String response) {
-        if (!TextUtils.isEmpty(response) && mSearchData != null) {
-            mBundle.putString(FlightsSearchResultContract.TAG_ARRIVE_FLIGHTS, response);
-
-        } else {
-            Log.e(TAG, "arrive response is null");
-        }
-        mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
-        mPresenter.getFlightsInfoAPI(mSearchData);
-    }
-
-    @Override
-    public void getFlightsArriveFailed(String message, boolean timeout) {
-        mLoadingView.goneLoadingView();
-        if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
-                    }
-                });
-            } else {
-                Log.e(TAG, "getFlightsArriveFailed : " + message);
-                mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
-                mPresenter.getFlightsInfoAPI(mSearchData);
-            }
-        } else {
-            Log.d(TAG, "Fragment is not add");
-        }
     }
 
     @Override
@@ -182,9 +146,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
             mBundle.putString(FlightsSearchResultContract.TAG_KEY_WORLD, keyword);
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
-            mSearchData.setKeyWord(keyword);
-            mSearchData.setQueryType(FlightsInfoData.TAG_KIND_DEPARTURE);
-            mPresenter.getFlightsInfoAPI(mSearchData);
+            mPresenter.getFlightsInfoAPI(keyword);
         }
     }
 

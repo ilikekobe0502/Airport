@@ -31,7 +31,7 @@ import okhttp3.Response;
 public class NewApiConnect {
     private final static String TAG = NewApiConnect.class.getSimpleName();
     private final static String TAG_HOST = "https://59.127.195.228:11700/api/";
-    private final static MediaType TAG_JSON = MediaType.parse("application/json; charset=utf-8");
+    private final static MediaType TAG_JSON = MediaType.parse("application/json");
     private final static String TAG_AES_KEY = "taoyuanairporttaoyuanairporttaoy";
     private final static String TAG_AES_IV = "taoyuanairportta";
 
@@ -42,9 +42,33 @@ public class NewApiConnect {
     private static String mToken;
 
     private void getApi(HttpUrl url, final MyCallback callback) {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+        getApi(url, null, callback);
+    }
+
+    private void getApi(HttpUrl url, boolean defaultHeaders, final MyCallback callback) {
+        if (defaultHeaders) {
+            Headers headers = new Headers.Builder()
+                    .add("deviceId", TAG_DEVICE_ID)
+                    .add("Content-Type", "application/json")
+                    .build();
+            getApi(url, headers, callback);
+        } else {
+            getApi(url, null, callback);
+        }
+    }
+
+    private void getApi(HttpUrl url, Headers headers, final MyCallback callback) {
+        Request request;
+        if (headers == null) {
+            request = new Request.Builder()
+                    .url(url)
+                    .build();
+        } else {
+            request = new Request.Builder()
+                    .url(url)
+                    .headers(headers)
+                    .build();
+        }
 
         mClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -223,7 +247,7 @@ public class NewApiConnect {
             e.printStackTrace();
         }
         baseEncodeResponse.setData(encodeData);
-        return baseEncodeResponse.getData().getEncode();
+        return baseEncodeResponse.getJson();
     }
 
     public interface MyCallback {
@@ -313,9 +337,48 @@ public class NewApiConnect {
     /**
      * 取得航班資訊
      * 為了帶參數，則使用Post method
+     *
+     * @param json
+     * @param callback
      */
     public void getFlightsListInfo(String json, MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("flight_list"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 儲存我的航班
+     *
+     * @param json
+     * @param callback
+     */
+    public void saveMyFlights(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("new_my_flight"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 取得我的航班清單
+     *
+     * @param callback
+     */
+    public void getMyFlights(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("my_flight_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    public void deleteMyFlights(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("delete_my_flight"))
                 .newBuilder()
                 .build();
 

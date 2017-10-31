@@ -1,13 +1,14 @@
 package com.whatmedia.ttia.page.main.home.arrive;
 
 
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
+
+import java.util.List;
 
 public interface ArriveFlightsContract {
 
     interface View {
-        void getArriveFlightSucceed(String list);
+        void getArriveFlightSucceed(List<FlightsListData> list);
 
         void getArriveFlightFailed(String message, boolean timeout);
 
@@ -17,8 +18,8 @@ public interface ArriveFlightsContract {
     }
 
     interface Presenter {
-        void getArriveFlightAPI(FlightSearchData searchData);
+        void getArriveFlightAPI();
 
-        void saveMyFlightsAPI(FlightsInfoData data);
+        void saveMyFlightsAPI(FlightsListData flightsListData);
     }
 }

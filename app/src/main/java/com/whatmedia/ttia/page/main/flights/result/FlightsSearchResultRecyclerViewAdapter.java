@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
  */
 
 public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<FlightsSearchResultRecyclerViewAdapter.ViewHolder> {
-    private List<FlightsInfoData> mItems;
+    private List<FlightsListData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
     private String mLocale;
@@ -39,7 +40,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     private RelativeLayout.LayoutParams mParamsFrame;
     private RelativeLayout.LayoutParams mParamsBackground;
 
-    public FlightsSearchResultRecyclerViewAdapter(Context context, List<FlightsInfoData> data) {
+    public FlightsSearchResultRecyclerViewAdapter(Context context, List<FlightsListData> data) {
         mContext = context;
         mItems = data;
         mLocale = Preferences.getLocaleSetting(context);
@@ -64,7 +65,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mItems == null)
             return;
-        FlightsInfoData item = mItems.get(position);
+        FlightsListData item = mItems.get(position);
         if (item == null)
             return;
 
@@ -74,7 +75,9 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         }
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
-        holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
+        holder.mTextViewFlightCode.setText(String.format("%1$s %2$s",
+                !TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode().trim() : "",
+                !TextUtils.isEmpty(item.getShifts()) ? item.getShifts().trim() : ""));
         switch (mLocale) {
             case "zh_TW":
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
@@ -144,7 +147,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         return mItems != null ? mItems.size() : 0;
     }
 
-    public void setData(List<FlightsInfoData> data) {
+    public void setData(List<FlightsListData> data) {
         mItems = data;
         notifyDataSetChanged();
     }

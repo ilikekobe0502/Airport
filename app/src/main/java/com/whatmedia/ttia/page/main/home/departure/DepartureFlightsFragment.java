@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
@@ -40,11 +41,6 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     private DepartureFlightsContract.Presenter mPresenter;
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
-    private List<FlightsInfoData> mDepartureList;
-
-    private String mDepartureDate;
-    private String mArriveDate;
-    private FlightSearchData mQueryData;
     private int mRetryCount = 0;
 
 
@@ -69,12 +65,9 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
         View view = inflater.inflate(R.layout.fragment_home_info_departure, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = DepartureFlightsPresenter.getInstance(getContext(), this);
+        mPresenter = new DepartureFlightsPresenter(getContext(), this);
 
-        mQueryData = new FlightSearchData();
-        mQueryData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_DEPARTURE);
-        mQueryData.setExpressTime(Util.getNowDate());
-        mPresenter.getDepartureFlightAPI(mQueryData);
+        mPresenter.getDepartureFlightAPI();
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -118,7 +111,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
 
     @Override
-    public void getDepartureFlightSucceed(final List<FlightsInfoData> list) {
+    public void getDepartureFlightSucceed(final List<FlightsListData> list) {
         if (isAdded() && !isDetached()) {
             mRetryCount = 0;
             mMainActivity.runOnUI(new Runnable() {
@@ -139,7 +132,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
             if(mRetryCount < 5){
                 mRetryCount++;
-                mPresenter.getDepartureFlightAPI(mQueryData);
+                mPresenter.getDepartureFlightAPI();
             }else{
                 mRetryCount = 0;
                 if (timeout) {
@@ -166,7 +159,6 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    showMessage(!TextUtils.isEmpty(message) ? message : "");
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
                     mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
@@ -207,8 +199,8 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
-                if (view.getTag() instanceof FlightsInfoData) {
-                    final FlightsInfoData tag = (FlightsInfoData) view.getTag();
+                if (view.getTag() instanceof FlightsListData) {
+                    final FlightsListData tag = (FlightsListData) view.getTag();
 
                     final MyDialog myDialog = MyDialog.newInstance();
                     if (!myDialog.isAdded()) {
@@ -217,27 +209,15 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                                 .setRightClickListener(new IOnItemClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        if (tag != null) {
-//                                        FlightsInfoData data = new FlightsInfoData();
-                                            if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
-                                                mLoadingView.showLoadingView();
-                                                tag.setAirlineCode(tag.getAirlineCode());
-                                                if (tag.getShift().length() == 2) {
-                                                    tag.setShift("  " + tag.getShift());
-                                                } else if (tag.getShift().length() == 3) {
-                                                    tag.setShift(" " + tag.getShift());
-                                                }
-                                                tag.setShift(tag.getShift());
-                                                tag.setExpressDate(tag.getExpressDate());
-                                                tag.setExpressTime(tag.getExpressTime());
-                                                tag.setType("0");
-                                                mPresenter.saveMyFlightsAPI(tag);
-                                            } else {
-                                                Log.e(TAG, "view.getTag() content is error");
-                                                showMessage(getString(R.string.data_error));
-                                            }
+                                        if (tag != null &&
+                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                                !TextUtils.isEmpty(tag.getShifts()) &&
+                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                                !TextUtils.isEmpty(tag.getExpressTime())) {
+                                            mLoadingView.showLoadingView();
+                                            mPresenter.saveMyFlightsAPI(tag);
                                         } else {
-                                            Log.e(TAG, "view.getTag() is null");
+                                            Log.e(TAG, "view.getTag() content is error");
                                             showMessage(getString(R.string.data_error));
                                         }
                                     }

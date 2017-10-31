@@ -14,15 +14,13 @@ import android.view.ViewGroup;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultRecyclerViewAdapter;
-import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.response.data.DialogContentData;
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -41,11 +39,6 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     private ArriveFlightsContract.Presenter mPresenter;
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
-    private String mArrivetureList;
-
-    private String mDepartureDate;
-    private String mArriveDate;
-    private FlightSearchData mQueryData;
     private int mRetryCount = 0;
 
 
@@ -71,11 +64,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
         ButterKnife.bind(this, view);
 
         mPresenter = new ArriveFlightsPresenter(getContext(), this);
-
-        mQueryData = new FlightSearchData();
-        mQueryData.setQueryType(FlightsInfoData.TAG_KIND_TOP4_ARRIVE);
-        mQueryData.setExpressTime(Util.getNowDate());
-        mPresenter.getArriveFlightAPI(mQueryData);
+        mPresenter.getArriveFlightAPI();
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -119,16 +108,14 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
 
 
     @Override
-    public void getArriveFlightSucceed(final String list) {
+    public void getArriveFlightSucceed(final List<FlightsListData> list) {
         if (isAdded() && !isDetached()) {
             mRetryCount = 0;
-            mArrivetureList = list;
-            final List<FlightsInfoData> flightsList = GetFlightsInfoResponse.newInstance(list);
 
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setData(flightsList);
+                    mAdapter.setData(list);
                 }
             });
         } else {
@@ -140,10 +127,10 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     public void getArriveFlightFailed(String message, boolean timeout) {
         Log.d(TAG, "getArriveFlightFailed : " + message);
         if (isAdded() && !isDetached()) {
-            if(mRetryCount < 5){
+            if (mRetryCount < 5) {
                 mRetryCount++;
-                mPresenter.getArriveFlightAPI(mQueryData);
-            }else{
+                mPresenter.getArriveFlightAPI();
+            } else {
                 mRetryCount = 0;
                 if (timeout) {
 
@@ -169,7 +156,6 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    showMessage(!TextUtils.isEmpty(message) ? message : "");
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
                     mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
@@ -210,8 +196,8 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
-                if (view.getTag() instanceof FlightsInfoData) {
-                    final FlightsInfoData tag = (FlightsInfoData) view.getTag();
+                if (view.getTag() instanceof FlightsListData) {
+                    final FlightsListData tag = (FlightsListData) view.getTag();
 
                     final MyDialog myDialog = MyDialog.newInstance();
                     if (!myDialog.isAdded()) {
@@ -220,27 +206,15 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
                                 .setRightClickListener(new IOnItemClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        if (tag != null) {
-//                                        FlightsInfoData data = new FlightsInfoData();
-                                            if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
-                                                mLoadingView.showLoadingView();
-                                                tag.setAirlineCode(tag.getAirlineCode());
-                                                if (tag.getShift().length() == 2) {
-                                                    tag.setShift("  " + tag.getShift());
-                                                } else if (tag.getShift().length() == 3) {
-                                                    tag.setShift(" " + tag.getShift());
-                                                }
-                                                tag.setShift(tag.getShift());
-                                                tag.setExpressDate(tag.getExpressDate());
-                                                tag.setExpressTime(tag.getExpressTime());
-                                                tag.setType("0");
-                                                mPresenter.saveMyFlightsAPI(tag);
-                                            } else {
-                                                Log.e(TAG, "view.getTag() content is error");
-                                                showMessage(getString(R.string.data_error));
-                                            }
+                                        if (tag != null &&
+                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                                !TextUtils.isEmpty(tag.getShifts()) &&
+                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                                !TextUtils.isEmpty(tag.getExpressTime())) {
+                                            mLoadingView.showLoadingView();
+                                            mPresenter.saveMyFlightsAPI(tag);
                                         } else {
-                                            Log.e(TAG, "view.getTag() is null");
+                                            Log.e(TAG, "view.getTag() content is error");
                                             showMessage(getString(R.string.data_error));
                                         }
                                     }

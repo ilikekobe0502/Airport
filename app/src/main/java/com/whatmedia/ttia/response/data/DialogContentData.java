@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
@@ -42,42 +43,46 @@ public class DialogContentData {
      * @param data
      * @return
      */
-    public static List<DialogContentData> getFlightDetail(Context context, FlightsInfoData data) {
+    public static List<DialogContentData> getFlightDetail(Context context, FlightsListData data) {
         String locale = Preferences.getLocaleSetting(context);
         List<DialogContentData> list = new ArrayList<>();
         DialogContentData item = new DialogContentData();
 
-        String contactsLocation;
-        String airLine;
+        String contactsLocation = "";
+        String airLine = "";
         boolean isDeparture;
         HashMap<String, Long> expectTimeDif;
+
+        // TODO: 2017/10/30 多語系部分要看名字要怎麼處理
+        airLine = !TextUtils.isEmpty(data.getAirlineName()) ? data.getAirlineName().trim() : "";
 
         switch (locale) {
             default:
             case "zh_TW":
                 contactsLocation = !TextUtils.isEmpty(data.getContactsLocationChinese()) ? data.getContactsLocationChinese().trim() : "";
-                airLine = !TextUtils.isEmpty(data.getCTName()) ? data.getCTName().trim() : "";
+//                airLine = !TextUtils.isEmpty(data.getCTName()) ? data.getCTName().trim() : "";
                 break;
             case "zh_CN":
                 contactsLocation = !TextUtils.isEmpty(data.getContactsLocationChinese()) ? data.getContactsLocationChinese().trim() : "";
-                airLine = !TextUtils.isEmpty(data.getCSName()) ? data.getCSName().trim() : "";
+//                airLine = !TextUtils.isEmpty(data.getCSName()) ? data.getCSName().trim() : "";
                 break;
             case "en":
                 contactsLocation = !TextUtils.isEmpty(data.getContactsLocationEng()) ? data.getContactsLocationEng().trim() : "";
-                airLine = !TextUtils.isEmpty(data.getEName()) ? data.getEName().trim() : "";
+//                airLine = !TextUtils.isEmpty(data.getEName()) ? data.getEName().trim() : "";
                 break;
             case "ja":
                 contactsLocation = !TextUtils.isEmpty(data.getContactsLocationEng()) ? data.getContactsLocationEng().trim() : "";
-                airLine = !TextUtils.isEmpty(data.getJName()) ? data.getJName().trim() : "";
+//                airLine = !TextUtils.isEmpty(data.getJName()) ? data.getJName().trim() : "";
                 break;
         }
+
 
         item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_airname));
         item.setContent(airLine);
         list.add(item);
         item = new DialogContentData();
         item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_airnumber));
-        item.setContent(!TextUtils.isEmpty(data.getFlightCode()) ? data.getFlightCode().trim() : "");
+        item.setContent(!TextUtils.isEmpty(data.getAirlineCode()) ? data.getAirlineCode().trim() : "");
         list.add(item);
         item = new DialogContentData();
 

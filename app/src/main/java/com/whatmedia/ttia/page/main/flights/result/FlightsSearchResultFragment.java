@@ -18,15 +18,15 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
+import com.whatmedia.ttia.newresponse.data.FlightsQueryData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.response.data.ClockTimeData;
 import com.whatmedia.ttia.response.data.DialogContentData;
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
@@ -57,9 +57,8 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private FlightsSearchResultContract.Presenter mPresenter;
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
-    private List<FlightsInfoData> mDepartureList;
-    private List<FlightsInfoData> mArriveList;
-    private List<FlightsInfoData> mFilterData = new ArrayList<>();
+    private List<FlightsListData> mDepartureList;
+    private List<FlightsListData> mFilterData = new ArrayList<>();
 
     private String mLastShowDate = Util.getCountDate(-1);
     private String mNowShowDate = Util.getNowDate(Util.TAG_FORMAT_MD);
@@ -69,7 +68,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private String mNowDate = Util.getNowDate();
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
-    private String mQueryType = FlightsInfoData.TAG_KIND_DEPARTURE;
+    private int mQueryType = FlightsQueryData.TAG_DEPARTURE_ALL;
     private String mKeyWorld = "";
     private boolean mToday = true;
     private LinearLayoutManager mManager;
@@ -79,7 +78,6 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static FlightsSearchResultFragment newInstance() {
         FlightsSearchResultFragment fragment = new FlightsSearchResultFragment();
         return fragment;
@@ -96,17 +94,12 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         View view = inflater.inflate(R.layout.fragment_flights_search_result, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = FlightsSearchResultPresenter.getInstance(getContext(), this);
+        mPresenter = new FlightsSearchResultPresenter(getContext(), this);
 
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))
                 && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
-            mDepartureList = GetFlightsInfoResponse.newInstance(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS));
+            mDepartureList = GetFlightsListResponse.getGson(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS)).getFlightList();
             mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD).toLowerCase();
-
-//            if (mArriveList.size() > 0)
-//                mArriveDate = !TextUtils.isEmpty(mArriveList.get(0).getExpressDate()) ? mArriveList.get(0).getExpressDate() : "";
-//            if (mDepartureList.size() > 0)
-//                mDepartureDate = !TextUtils.isEmpty(mDepartureList.get(0).getExpressDate()) ? mDepartureList.get(0).getExpressDate() : "";
         } else {
             Log.e(TAG, "data error");
             showMessage(getString(R.string.data_error));
@@ -116,7 +109,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
         mFilterData.clear();
-        for (FlightsInfoData item : mDepartureList) {
+        for (FlightsListData item : mDepartureList) {
             if (item.getExpressDate().contains(mNowShowDate)) {
                 mFilterData.add(item);
             }
@@ -174,22 +167,26 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_up:
-                mQueryType = FlightsInfoData.TAG_KIND_DEPARTURE;
+                mQueryType = FlightsQueryData.TAG_DEPARTURE_ALL;
                 mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_on));
                 mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_off));
-//                mAdapter.setData(mDepartureList);
-                getFlight();
+
+                changeState();
+
+                mPresenter.getFlightByQueryTypeAPI(mQueryType);
                 break;
             case R.id.imageView_down:
-                mQueryType = FlightsInfoData.TAG_KIND_ARRIVE;
+                mQueryType = FlightsQueryData.TAG_ARRIVE_ALL;
                 mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_off));
                 mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
-//                mAdapter.setData(mArriveList);
-                getFlight();
+
+                changeState();
+
+                mPresenter.getFlightByQueryTypeAPI(mQueryType);
                 break;
             case R.id.layout_frame:
-                if (view.getTag() instanceof FlightsInfoData) {
-                    final FlightsInfoData tag = (FlightsInfoData) view.getTag();
+                if (view.getTag() instanceof FlightsListData) {
+                    final FlightsListData tag = (FlightsListData) view.getTag();
 
                     final MyDialog myDialog = MyDialog.newInstance();
                     if (!myDialog.isAdded()) {
@@ -198,27 +195,15 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                                 .setRightClickListener(new IOnItemClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        if (tag != null) {
-//                                        FlightsInfoData data = new FlightsInfoData();
-                                            if (!TextUtils.isEmpty(tag.getAirlineCode()) && !TextUtils.isEmpty(tag.getShift()) && !TextUtils.isEmpty(tag.getExpressDate()) && !TextUtils.isEmpty(tag.getExpressTime())) {
-                                                mLoadingView.showLoadingView();
-                                                tag.setAirlineCode(tag.getAirlineCode());
-                                                if (tag.getShift().length() == 2) {
-                                                    tag.setShift("  " + tag.getShift());
-                                                } else if (tag.getShift().length() == 3) {
-                                                    tag.setShift(" " + tag.getShift());
-                                                }
-                                                tag.setShift(tag.getShift());
-                                                tag.setExpressDate(tag.getExpressDate());
-                                                tag.setExpressTime(tag.getExpressTime());
-                                                tag.setType("0");
-                                                mPresenter.saveMyFlightsAPI(tag);
-                                            } else {
-                                                Log.e(TAG, "view.getTag() content is error");
-                                                showMessage(getString(R.string.data_error));
-                                            }
+                                        if (tag != null &&
+                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                                !TextUtils.isEmpty(tag.getShifts()) &&
+                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                                !TextUtils.isEmpty(tag.getExpressTime())) {
+                                            mLoadingView.showLoadingView();
+                                            mPresenter.saveMyFlightsAPI(tag);
                                         } else {
-                                            Log.e(TAG, "view.getTag() is null");
+                                            Log.e(TAG, "view.getTag() content is error");
                                             showMessage(getString(R.string.data_error));
                                         }
                                     }
@@ -241,7 +226,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
                 mToday = false;
-                getFlight();
+                changeState();
+
+                mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_now:
                 mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
@@ -254,7 +241,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
                 mToday = true;
-                getFlight();
+                changeState();
+
+                mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_next:
                 mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
@@ -267,7 +256,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;
                 mToday = false;
-                getFlight();
+                changeState();
+
+                mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
         }
     }
@@ -317,16 +308,14 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     }
 
     @Override
-    public void getFlightSucceed(final List<FlightsInfoData> list) {
+    public void getFlightSucceed(final List<FlightsListData> list) {
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mFilterData.clear();
-            for (FlightsInfoData item : list) {
-                if (item.getAirLineCName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
-                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)
-                        || item.getFlightCode().toLowerCase().contains(mKeyWorld) || item.getCTName().contains(mKeyWorld) || item.getCSName().contains(mKeyWorld) || item.getJName().contains(mKeyWorld)
-                        || item.getEName().toLowerCase().contains(mKeyWorld)) {
+            for (FlightsListData item : list) {
+                if (item.getAirlineName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
+                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)) {
                     if (mToday) {
                         if (item.getExpressDate().contains(mNowShowDate)) {
                             mFilterData.add(item);
@@ -379,32 +368,34 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         }
     }
 
-    private void getFlight() {
-        if (TextUtils.equals(mQueryType, FlightsInfoData.TAG_KIND_DEPARTURE))
+    @Override
+    public String getKeyword() {
+        return !TextUtils.isEmpty(mKeyWorld) ? mKeyWorld : "";
+    }
+
+    /**
+     * 更改Title bar
+     */
+    private void changeState() {
+        if (mQueryType == FlightsQueryData.TAG_DEPARTURE_ALL)
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_takeoff, mShowDate));
         else
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_arrival, mShowDate));
-
-
         mLoadingView.showLoadingView();
-        FlightSearchData data = new FlightSearchData();
-        data.setQueryType(mQueryType);
-        if (mToday) {
-            data.setKeyWord(mKeyWorld);
-            mPresenter.getFlightByKeywordAPI(data);
-        } else {
-            data.setExpressTime(mQueryDate);
-            mPresenter.getFlightAPI(data);
-        }
     }
 
-    private void goToCurrentPosition(List<FlightsInfoData> list) {
+    /**
+     * 移到最相近時間的item
+     *
+     * @param list
+     */
+    private void goToCurrentPosition(List<FlightsListData> list) {
         if (list != null) {
             int position = 0;
             boolean match = false;
             for (int i = 0; i < list.size(); i++) {
-                if (!TextUtils.isEmpty(list.get(i).getCExpressTime())) {
-                    ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(list.get(i).getCExpressTime(), Util.TAG_FORMAT_ALL).toString());
+                if (!TextUtils.isEmpty(list.get(i).getExpressTime())) {
+                    ClockTimeData data = ClockTimeData.getInstance(Util.getDifferentTimeWithNowTime(String.format("%1$s %2$s", list.get(i).getExpressDate(), list.get(i).getExpressTime()), Util.TAG_FORMAT_ALL).toString());
                     if (data.getHour() >= 0 && data.getMin() >= 0 && data.getSec() >= 0) {
                         position = i;
                         match = true;

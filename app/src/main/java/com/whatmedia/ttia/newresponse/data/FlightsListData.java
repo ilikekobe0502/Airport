@@ -13,6 +13,8 @@ public class FlightsListData {
     private String kinds;
     @SerializedName("airlineCode")
     private String airlineCode;
+    @SerializedName("airlineName")
+    private String airlineName;
     @SerializedName("shifts")
     private String shifts;
     @SerializedName("gate")
@@ -45,6 +47,8 @@ public class FlightsListData {
     private String luggageCarousel;
     @SerializedName("counter")
     private String counter;
+
+    private boolean isCheck;//MyFlights page是否有被勾選
 
     public String getTerminals() {
         return terminals;
@@ -196,5 +200,21 @@ public class FlightsListData {
 
     public void setCounter(String counter) {
         this.counter = counter;
+    }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
+    }
+
+    public boolean getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(boolean check) {
+        isCheck = check;
     }
 }

@@ -2,14 +2,17 @@ package com.whatmedia.ttia.page.main.flights.search;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
+import com.whatmedia.ttia.newresponse.GetFlightsQueryResponse;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
+import com.whatmedia.ttia.newresponse.data.FlightsQueryData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,44 +23,41 @@ import okhttp3.Call;
 public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
     private final static String TAG = FlightsSearchPresenter.class.getSimpleName();
 
-    private static FlightsSearchPresenter mFlightsSearchPresenter;
-    private static ApiConnect mApiConnect;
-    private static FlightsSearchContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private FlightsSearchContract.View mView;
+    private Context mContext;
 
 
-    public static FlightsSearchPresenter getInstance(Context context, FlightsSearchContract.View view) {
-        mFlightsSearchPresenter = new FlightsSearchPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    FlightsSearchPresenter(Context context, FlightsSearchContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mFlightsSearchPresenter;
+        mContext = context;
     }
 
     @Override
-    public void getFlightsInfoAPI(final FlightSearchData searchData) {
-        mApiConnect.getSearchFlightsInfoByKeyWord(searchData, new ApiConnect.MyCallback() {
+    public void getFlightsInfoAPI(final String keyword) {
+        FlightsQueryData data = new FlightsQueryData();
+        GetFlightsQueryResponse flightsListResponse = new GetFlightsQueryResponse();
+
+
+        data.setQueryType(FlightsQueryData.TAG_DEPARTURE_ALL);
+        data.setExpressDate(Util.getNowDate());
+        data.setKeyWord(keyword);
+        flightsListResponse.setData(data);
+        if (TextUtils.isEmpty(flightsListResponse.getJson())) {
+            mView.getFlightsDepartureFailed(mContext.getString(R.string.data_error), false);
+            return;
+        }
+
+        mNewApiConnect.getFlightsListInfo(flightsListResponse.getJson(), new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
-                if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
-                    mView.getFlightsArriveFailed(e.toString(),timeout);
-                else
-                    mView.getFlightsDepartureFailed(e.toString(),timeout);
+                mView.getFlightsDepartureFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    Log.d(TAG, result);
-                    if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
-                        mView.getFlightsArriveSucceed(result);
-                    else
-                        mView.getFlightsDepartureSucceed(result);
-                } else {
-                    if (TextUtils.equals(searchData.getQueryType(), FlightsInfoData.TAG_KIND_ARRIVE))
-                        mView.getFlightsArriveFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                    else
-                        mView.getFlightsDepartureFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                mView.getFlightsDepartureSucceed(response);
             }
         });
     }

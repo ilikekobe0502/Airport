@@ -17,16 +17,14 @@ import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.DialogContentData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +40,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private MyFlightsInfoContract.Presenter mPresenter;
-    private int mSelectSize = 0;
-    private int mDeletePosition = 0;
-    private Map<String, FlightsInfoData> mSelectList;
+    private List<FlightsListData> mSelectList;
     private boolean mIsInsert;//是否從新增過來，更新notification 佇列
 
 
@@ -54,7 +50,6 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static MyFlightsInfoFragment newInstance() {
         MyFlightsInfoFragment fragment = new MyFlightsInfoFragment();
         Bundle args = new Bundle();
@@ -81,7 +76,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         if (getArguments() != null) {
             mIsInsert = getArguments().getBoolean(MyFlightsInfoContract.TAG_INSERT);
         }
-        mPresenter = MyFlightsInfoPresenter.getInstance(getContext(), this);
+        mPresenter = new MyFlightsInfoPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getMyFlightsInfoAPI();
 
@@ -126,12 +121,11 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void getMyFlightsInfoSucceed(final List<FlightsInfoData> response) {
+    public void getMyFlightsInfoSucceed(final List<FlightsListData> response) {
 
         if (isAdded() && !isDetached()) {
             if (response == null) {
                 Log.e(TAG, "getMyFlightsInfoSucceed response is null");
-//            showNoDataDialog();
             } else {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
@@ -172,32 +166,20 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         } else {
             Log.d(TAG, "Fragment is not add");
         }
-
-//        showNoDataDialog();
     }
 
     @Override
-    public void deleteMyFlightsInfoSucceed(final String response) {
-
+    public void deleteMyFlightsInfoSucceed() {
+        mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            mDeletePosition++;
-            if (mSelectSize == mDeletePosition) {//代表佇列中的資料已刪完
-                mSelectSize = 0;
-                mDeletePosition = 0;
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        showMessage(response);
-                        mPresenter.getMyFlightsInfoAPI();
-                        mAdapter.setData(null);
-                    }
-                });
-            } else {
-                deleteData();
-            }
-
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setData(null);
+                    mPresenter.getMyFlightsInfoAPI();
+                }
+            });
         } else {
-            mLoadingView.goneLoadingView();
             Log.d(TAG, "Fragment is not add");
         }
     }
@@ -251,8 +233,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
-                if (view.getTag() instanceof FlightsInfoData) {
-                    final FlightsInfoData tag = (FlightsInfoData) view.getTag();
+                if (view.getTag() instanceof FlightsListData) {
+                    final FlightsListData tag = (FlightsListData) view.getTag();
                     if (tag != null) {
                         final MyDialog myDialog = MyDialog.newInstance()
                                 .setTitle(getString(R.string.flight_dialog_title))
@@ -274,29 +256,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
      * Delete data
      */
     private void deleteData() {
-        mSelectSize = mSelectList.size();
-        List<String> keyList = new ArrayList<>();
-        //save key
-        for (String key : mSelectList.keySet()) {
-            keyList.add(key);
-        }
-
-        FlightsInfoData item = mSelectList.get(keyList.get(mDeletePosition));
-        if (item.getIsCheck()) {
-            mLoadingView.showLoadingView();
-            FlightsInfoData data = new FlightsInfoData();
-            data.setAirlineCode(item.getAirlineCode());
-            if (item.getShift().length() == 2) {
-                item.setShift("  " + item.getShift());
-            } else if (item.getShift().length() == 3) {
-                item.setShift(" " + item.getShift());
-            }
-            data.setShift(item.getShift());
-            data.setExpressDate(item.getExpressDate());
-            data.setExpressTime(item.getExpressTime());
-            data.setType("1");
-            mPresenter.deleteMyFlightsInfoAPI(data);
-        }
+        mLoadingView.showLoadingView();
+        mPresenter.deleteMyFlightsInfoAPI(mSelectList);
     }
 
     /**

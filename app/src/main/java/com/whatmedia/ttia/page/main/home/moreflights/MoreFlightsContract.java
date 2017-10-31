@@ -1,8 +1,7 @@
 package com.whatmedia.ttia.page.main.home.moreflights;
 
 
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public interface MoreFlightsContract {
     String TAG_KIND = "com.whatmedia.ttia.page.main.home.moreflights.Kind";
 
     interface View {
-        void getFlightSucceed(List<FlightsInfoData> list);
+        void getFlightSucceed(List<FlightsListData> list);
 
         void getFlightFailed(String message, boolean timeout);
 
@@ -20,8 +19,12 @@ public interface MoreFlightsContract {
     }
 
     interface Presenter {
-        void getFlightAPI(FlightSearchData searchData);
+        void getFlightAPI();
 
-        void saveMyFlightsAPI(FlightsInfoData data);
+        void getFlightByQueryTypeAPI(int queryType);
+
+        void getFlightByDateAPI(String date);
+
+        void saveMyFlightsAPI(FlightsListData flightsListData);
     }
 }

@@ -15,13 +15,13 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,14 +34,13 @@ import butterknife.OnClick;
 public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFlightsInfoRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = MyFlightsInfoRecyclerViewAdapter.class.getSimpleName();
 
-    private List<FlightsInfoData> mItems;
+    private List<FlightsListData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
-    //    private List<FlightsInfoData> mSelectItems = new ArrayList<>();
-    private Map<String, FlightsInfoData> mSelectItems = new HashMap<>();
+    private List<FlightsListData> mSelectItems = new ArrayList<>();
     private String mLocale;
 
-    public MyFlightsInfoRecyclerViewAdapter(Context context, List<FlightsInfoData> list) {
+    public MyFlightsInfoRecyclerViewAdapter(Context context, List<FlightsListData> list) {
         mContext = context;
         mItems = list;
         mLocale = Preferences.getLocaleSetting(context);
@@ -62,12 +61,14 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (mItems == null)
             return;
-        FlightsInfoData item = mItems.get(position);
+        FlightsListData item = mItems.get(position);
         if (item == null)
             return;
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
-        holder.mTextViewFlightCode.setText(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "");
+        holder.mTextViewFlightCode.setText(String.format("%1$s %2$s",
+                !TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode().trim() : "",
+                !TextUtils.isEmpty(item.getShifts()) ? item.getShifts().trim() : ""));
         switch (mLocale) {
             case "zh_TW":
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
@@ -143,7 +144,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         return mItems != null ? mItems.size() : 0;
     }
 
-    public void setData(List<FlightsInfoData> data) {
+    public void setData(List<FlightsListData> data) {
         mItems = data;
         mSelectItems.clear();
         notifyDataSetChanged();
@@ -185,7 +186,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
             switch (view.getId()) {
                 case R.id.imageView_check:
                     if (view.getTag() != null) {
-                        FlightsInfoData selectData = (FlightsInfoData) view.getTag();
+                        FlightsListData selectData = (FlightsListData) view.getTag();
                         if (selectData.getIsCheck()) {//yes to no
                             selectData.setIsCheck(false);
                             mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
@@ -247,13 +248,14 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
      *
      * @return
      */
-    public Map<String, FlightsInfoData> getSelectData() {
+    public List<FlightsListData> getSelectData() {
+        mSelectItems.clear();
         if (mItems != null) {
-            for (FlightsInfoData item : mItems) {
+            for (FlightsListData item : mItems) {
                 if (item.getIsCheck())
-                    mSelectItems.put(item.getId(), item);
+                    mSelectItems.add(item);
             }
         }
-        return mSelectItems != null ? mSelectItems : new HashMap<String, FlightsInfoData>();
+        return mSelectItems;
     }
 }

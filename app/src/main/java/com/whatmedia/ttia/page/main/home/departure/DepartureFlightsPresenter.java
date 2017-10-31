@@ -2,13 +2,14 @@ package com.whatmedia.ttia.page.main.home.departure;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetFlightsInfoResponse;
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
+import com.whatmedia.ttia.newresponse.GetFlightsQueryResponse;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
+import com.whatmedia.ttia.newresponse.data.FlightsQueryData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,60 +23,68 @@ import okhttp3.Call;
 public class DepartureFlightsPresenter implements DepartureFlightsContract.Presenter {
     private final static String TAG = DepartureFlightsPresenter.class.getSimpleName();
 
-    private static DepartureFlightsPresenter mDepartureFlightsPresenter;
-    private static ApiConnect mApiConnect;
-    private static DepartureFlightsContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private DepartureFlightsContract.View mView;
+    private Context mContext;
 
 
-    public static DepartureFlightsPresenter getInstance(Context context, DepartureFlightsContract.View view) {
-        mDepartureFlightsPresenter = new DepartureFlightsPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    DepartureFlightsPresenter(Context context, DepartureFlightsContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-
-        return mDepartureFlightsPresenter;
+        mContext = context;
     }
 
     @Override
-    public void getDepartureFlightAPI(FlightSearchData searchData) {
-        mApiConnect.getSearchFlightsInfoByDate(searchData, new ApiConnect.MyCallback() {
+    public void getDepartureFlightAPI() {
+        FlightsQueryData data = new FlightsQueryData();
+        GetFlightsQueryResponse flightsListResponse = new GetFlightsQueryResponse();
+
+        data.setQueryType(FlightsQueryData.TAG_DEPARTURE_TOP4);
+        data.setExpressDate(Util.getNowDate());
+        flightsListResponse.setData(data);
+        if (TextUtils.isEmpty(flightsListResponse.getJson())) {
+            mView.getDepartureFlightFailed(mContext.getString(R.string.data_error), false);
+            return;
+        }
+
+        mNewApiConnect.getFlightsListInfo(flightsListResponse.getJson(), new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getDepartureFlightFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    Log.d(TAG, result);
-                    List<FlightsInfoData> list = GetFlightsInfoResponse.newInstance(result);
-                    mView.getDepartureFlightSucceed(list);
-                } else {
-                    mView.getDepartureFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetFlightsListResponse flightsListResponse = GetFlightsListResponse.getGson(response);
+                List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
+
+                mView.getDepartureFlightSucceed(flightsListData);
             }
         });
     }
 
     @Override
-    public void saveMyFlightsAPI(FlightsInfoData data) {
-        mApiConnect.doMyFlights(data, new ApiConnect.MyCallback() {
+    public void saveMyFlightsAPI(FlightsListData flightsListData) {
+        FlightsListData data = new FlightsListData();
+        GetFlightsListResponse response = new GetFlightsListResponse();
+
+        data.setAirlineCode(flightsListData.getAirlineCode());
+        data.setShifts(flightsListData.getShifts());
+        data.setExpressDate(flightsListData.getExpressDate());
+        data.setExpressTime(flightsListData.getExpressTime());
+
+        response.setUploadData(data);
+
+        mNewApiConnect.saveMyFlights(response.getJson(), new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.saveMyFlightFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    Log.d(TAG, result);
-                    mView.saveMyFlightSucceed(result);
-                } else {
-                    mView.saveMyFlightFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                mView.saveMyFlightSucceed(response);
             }
         });
-
     }
 }

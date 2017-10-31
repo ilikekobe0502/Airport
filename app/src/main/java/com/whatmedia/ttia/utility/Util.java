@@ -27,6 +27,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
 import com.whatmedia.ttia.response.GetMyFlightsResponse;
@@ -660,7 +661,7 @@ public class Util {
         return cacheData;
     }
 
-    public static void resetNotification(Context context, List<FlightsInfoData> myFlightData) {
+    public static void resetNotification(Context context, List<FlightsListData> myFlightData) {
         if (myFlightData != null && myFlightData.size() > 0) {
             List<ClockData> clockList = GetClockDataResponse.newInstance(Preferences.getClockData(context));
 

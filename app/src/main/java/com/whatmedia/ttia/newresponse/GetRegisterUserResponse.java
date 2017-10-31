@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.newresponse;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.whatmedia.ttia.newresponse.data.RegisterUserData;
 
@@ -8,6 +10,8 @@ import com.whatmedia.ttia.newresponse.data.RegisterUserData;
  */
 
 public class GetRegisterUserResponse {
+    private final static String TAG = GetRegisterUserResponse.class.getSimpleName();
+
     private RegisterUserData data;
 
     public RegisterUserData getData() {
@@ -24,6 +28,7 @@ public class GetRegisterUserResponse {
         Gson gson = new Gson();
         json = gson.toJson(data);
 
+        Log.i(TAG, String.format("[Json] %s",json));
         return json;
     }
 }

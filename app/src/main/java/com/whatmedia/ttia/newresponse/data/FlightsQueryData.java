@@ -10,8 +10,8 @@ public class FlightsQueryData {
 
     public final static int TAG_ARRIVE_TOP4 = 1;//入境前四筆
     public final static int TAG_DEPARTURE_TOP4 = 2;//出境前四筆
-    public final static int TAG_ARRIVE_ALL = 3;
-    public final static int TAG_DEPARTURE_ALL = 4;
+    public final static int TAG_ARRIVE_ALL = 3;//入境全部
+    public final static int TAG_DEPARTURE_ALL = 4;//出境全部
 
     @SerializedName("queryType")
     private int queryType;

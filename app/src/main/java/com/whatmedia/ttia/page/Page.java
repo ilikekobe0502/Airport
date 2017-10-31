@@ -64,7 +64,6 @@ import com.whatmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
  */
 
 public class Page {
-    // TODO: Example your page TAG
     public static final int TAG_HOME = 1000;
     public static final int TAG_HOME_DEPARTURE_FLIGHTS = 1001;
     public static final int TAG_HOME_ARRIVE_FLIGHTS = 1002;
@@ -193,7 +192,6 @@ public class Page {
 
     private static android.support.v4.app.Fragment getFragment(int page) {
         switch (page) {
-            // TODO Example to page
             case TAG_HOME:
                 return new HomeFragment().newInstance();
             case TAG_FIGHTS_INFO:
