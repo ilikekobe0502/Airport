@@ -9,7 +9,8 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.splunk.mint.Mint;
-import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.data.BeaconInfoData;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -23,8 +24,6 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /*
 
@@ -83,7 +82,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     private final long day_millseconds = 86400000;
     private static final Object mBeaconLocker = new Object();
 
-    private ApiConnect mApiConnect;
+    private NewApiConnect mNewApiConnect;
     private BeaconManager mBeaconManager;
     private Region mRegion;
     private HashMap<String, Integer> mMap = new HashMap<>();
@@ -91,6 +90,7 @@ public class IBeacon extends Service implements BeaconConsumer {
     private int mTokenErrorCount = 0;
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private boolean mSend = false;
+    private BeaconInfoData mBeaconInfoData = new BeaconInfoData();
 
 
     //    private List<String> mAlreadySendMinorID = new ArrayList<>();
@@ -110,7 +110,7 @@ public class IBeacon extends Service implements BeaconConsumer {
         mBeaconManager.setForegroundBetweenScanPeriod(2000L);
         mBeaconManager.bind(this);
         mRegion = new Region("NeoIdentifier", null, null, null);
-        mApiConnect = ApiConnect.getInstance(this);
+        mNewApiConnect = NewApiConnect.getInstance(this);
 
 
         if (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled())//判斷目前bluetooth狀態 開啟會回傳true
@@ -142,11 +142,13 @@ public class IBeacon extends Service implements BeaconConsumer {
                 for (Beacon beacon : beacons) {
                     Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
                     if (!mSend && (beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -90) {
+
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
+                            mMap.put(minorID, 0);
                             mSend = true;
                             mTokenErrorCount = 0;
-                            changeUserStatus(minorID);
+                            uploadBeacon(minorID);
                         }
                     }
                 }
@@ -160,25 +162,24 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     }
 
-    public void changeUserStatus(final String minorID) {
-        Log.e("IBeacon", "mTokenErrorCount:" + mTokenErrorCount + ", minorID:" + minorID + ", changeUserStatus(minorID) call.");
-        mApiConnect.pushNFtoUser(minorID, new Callback() {
+    public void uploadBeacon(final String minorID) {
+        Log.e("IBeacon", "mTokenErrorCount:" + mTokenErrorCount + ", minorID:" + minorID + ", uploadBeacon(minorID) call.");
+
+
+        mBeaconInfoData.setBeaconId(minorID);
+        mNewApiConnect.uploadBeacon(mBeaconInfoData.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Call call, IOException e, boolean timeout) {
                 Log.e(TAG, "registerUser failure");
                 mSend = false;
+                mMap.remove(minorID);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.code() == 200) {
-                    //success
-                    Log.e("IBeacon", "registerUser() success, minorID:" + minorID);
-                    mMap.put(minorID, 0);
-                    mSend = false;
-                } else {
-                    Log.e(TAG, "registerUser failure");
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                //success
+                Log.e("IBeacon", "registerUser() success, minorID:" + minorID);
+                mSend = false;
             }
         });
     }

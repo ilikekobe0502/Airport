@@ -377,8 +377,29 @@ public class NewApiConnect {
         getApi(url, true, callback);
     }
 
+    /**
+     * 刪除我的航班
+     *
+     * @param json
+     * @param callback
+     */
     public void deleteMyFlights(String json, MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("delete_my_flight"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 推播Beacon
+     *
+     * @param json
+     * @param callback
+     */
+    public void uploadBeacon(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("push_beacon"))
                 .newBuilder()
                 .build();
 
