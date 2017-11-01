@@ -498,12 +498,24 @@ public class NewApiConnect {
     }
 
     /**
-     * 取得行廈設施清單
+     * 取得航廈設施清單
      *
      * @param callback
      */
     public void getTerminalsFacilityList(MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("terminals_facility_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得航廈廁所清單
+     *
+     * @param callback
+     */
+    public void getTerminalsToiletList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("terminals_toilet_list"))
                 .newBuilder()
                 .build();
         getApi(url, true, callback);

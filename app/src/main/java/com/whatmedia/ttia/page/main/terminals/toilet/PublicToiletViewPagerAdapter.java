@@ -1,23 +1,19 @@
 package com.whatmedia.ttia.page.main.terminals.toilet;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.main.terminals.facility.AirportFacilityViewPagerAdapter;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
+import com.whatmedia.ttia.newresponse.data.ToiletFacilityListData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,13 +27,10 @@ public class PublicToiletViewPagerAdapter extends PagerAdapter implements IOnIte
     private final static String TAG = PublicToiletViewPagerAdapter.class.getSimpleName();
 
     private IOnItemClickListener mListener;
-    private List<AirportFacilityData> mItems;
-    private PublicToiletFragment mFragment;
-    private IActivityTools.ILoadingView mLoadingView;
+    private List<ToiletFacilityListData> mItems;
 
-    public PublicToiletViewPagerAdapter(PublicToiletFragment publicToiletFragment, IActivityTools.ILoadingView loadingView) {
-        mFragment = publicToiletFragment;
-        mLoadingView = loadingView;
+    public PublicToiletViewPagerAdapter() {
+
     }
 
     @Override
@@ -55,20 +48,9 @@ public class PublicToiletViewPagerAdapter extends PagerAdapter implements IOnIte
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_public_toilet_view_pager, container, false);
         final ViewHolder holder = new ViewHolder(view);
         if (mItems != null) {
-            mLoadingView.showLoadingView();
-            AirportFacilityData item = mItems.get(position);
-            if (!TextUtils.isEmpty(item.getContent())) {
-                holder.mWebView.loadData(item.getContent(), "text/html; charset=utf-8", "UTF-8");
-                holder.mWebView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        super.onPageFinished(view, url);
-                        mLoadingView.goneLoadingView();
-                    }
-                });
-            } else {
-                Log.e(TAG, "mTerminalTwo.getContent() is error");
-                mFragment.showMessage(mFragment.getString(R.string.data_error));
+            ToiletFacilityListData item = mItems.get(position);
+            if (item != null) {
+                holder.mAdapter.setData(item.getTerminalsToiletList() != null ? item.getTerminalsToiletList() : new ArrayList<TerminalsFacilityData>());
             }
         }
 
@@ -93,24 +75,30 @@ public class PublicToiletViewPagerAdapter extends PagerAdapter implements IOnIte
         mListener = listener;
     }
 
-    public void setData(List<AirportFacilityData> response) {
+    public void setData(List<ToiletFacilityListData> response) {
         mItems = response;
         notifyDataSetChanged();
     }
 
+    public String getSubTitle(int position) {
+        String title = "";
+        if (mItems != null && position < mItems.size() && mItems.get(position) != null) {
+            title = mItems.get(position).getTerminalsName();
+        }
+        return title;
+    }
+
     class ViewHolder {
-        @BindView(R.id.webView)
-        WebView mWebView;
+        @BindView(R.id.recyclerView)
+        RecyclerView mRecyclerView;
+        private PublicToiletRecyclerViewAdapter mAdapter;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
 
-            mWebView.getSettings().setBuiltInZoomControls(true);
-            mWebView.getSettings().setDisplayZoomControls(false);
-            mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-            mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() + 250);
-            mWebView.setBackgroundColor(0);
-            mWebView.setInitialScale(50);
+            mAdapter = new PublicToiletRecyclerViewAdapter(view.getContext());
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            mRecyclerView.setAdapter(mAdapter);
         }
     }
 

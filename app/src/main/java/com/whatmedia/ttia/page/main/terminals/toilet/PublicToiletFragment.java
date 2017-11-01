@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.ToiletFacilityListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -32,10 +32,6 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     ImageView mImageViewLeft;
     @BindView(R.id.imageView_right)
     ImageView mImageViewRight;
-    //    @BindView(R.id.webView)
-//    WebView mWebView;
-//    @BindView(R.id.webView_terminal_two)
-//    WebView mWebViewTerminalTwo;
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
 
@@ -45,9 +41,6 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     private PublicToiletContract.Presenter mPresenter;
 
     private PublicToiletViewPagerAdapter mAdapter;
-
-    private AirportFacilityData mTerminalOne;
-    private AirportFacilityData mTerminalTwo;
 
     public PublicToiletFragment() {
         // Required empty public constructor
@@ -77,11 +70,11 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
         View view = inflater.inflate(R.layout.fragment_public_toilet, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = PublicToiletPresenter.getInstance(getContext(), this);
+        mPresenter = new PublicToiletPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getPublicToiletAPI();
 
-        mAdapter = new PublicToiletViewPagerAdapter(this, mLoadingView);
+        mAdapter = new PublicToiletViewPagerAdapter();
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(this);
         setLeftView();
@@ -122,31 +115,14 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
     }
 
     @Override
-    public void getPublicToiletSucceed(final List<AirportFacilityData> response) {
+    public void getPublicToiletSucceed(final List<ToiletFacilityListData> response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             if (response != null) {
-                mTerminalOne = response.size() > 0 ? response.get(0) : new AirportFacilityData();
-                mTerminalTwo = response.size() >= 1 ? response.get(1) : new AirportFacilityData();
-
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.setData(response);
-
-//                    if (!TextUtils.isEmpty(mTerminalOne.getContent())) {
-//                        mWebView.loadData(mTerminalOne.getContent(), "text/html; charset=utf-8", "UTF-8");
-//                    } else {
-//                        Log.e(TAG, "mTerminalTwo.getContent() is error");
-//                        showMessage(getString(R.string.data_error));
-//                    }
-//
-//                    if (!TextUtils.isEmpty(mTerminalTwo.getContent())) {
-//                        mWebViewTerminalTwo.loadData(mTerminalTwo.getContent(), "text/html; charset=utf-8", "UTF-8");
-//                    } else {
-//                        Log.e(TAG, "mTerminalTwo.getContent() is error");
-//                        showMessage(getString(R.string.data_error));
-//                    }
                     }
                 });
             } else {
@@ -188,12 +164,14 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
         switch (view.getId()) {
             case R.id.imageView_left:
                 setLeftImageState();
-                setLeftView();
+                mViewPager.setCurrentItem(0, true);
+                setSubTitle(0);
                 break;
             case R.id.imageView_right:
                 setLRightImageState();
 
-                setRightView();
+                mViewPager.setCurrentItem(1, true);
+                setSubTitle(1);
                 break;
         }
     }
@@ -229,6 +207,12 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
         mTextViewSubtitle.setText(getString(R.string.terminal_2));
     }
 
+    private void setSubTitle(int position) {
+        if (mAdapter != null) {
+            mTextViewSubtitle.setText(mAdapter.getSubTitle(position));
+        }
+    }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -236,12 +220,11 @@ public class PublicToiletFragment extends BaseFragment implements PublicToiletCo
 
     @Override
     public void onPageSelected(int position) {
+        setSubTitle(position);
         if (position == 0) {
             setLeftImageState();
-            mTextViewSubtitle.setText(getString(R.string.terminal_1));
         } else {
             setLRightImageState();
-            mTextViewSubtitle.setText(getString(R.string.terminal_2));
         }
     }
 
