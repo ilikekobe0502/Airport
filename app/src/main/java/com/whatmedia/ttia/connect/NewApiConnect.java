@@ -181,24 +181,29 @@ public class NewApiConnect {
                     String result = response.body().string();
 
                     BaseEncodeData baseEncodeData = baseEncodeResponse.getGson(result);
-                    try {
-                        byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
-                        if (decryptBytes != null) {
-                            String responseString = new String(decryptBytes);
-                            Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
+                    if (baseEncodeData != null) {//如果不是Json會拋出Null有可能是Html
+                        try {
+                            byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
+                            if (decryptBytes != null) {
+                                String responseString = new String(decryptBytes);
+                                Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
 
-                            baseResponse = baseResponse.getBaseGson(responseString);
-                            if (baseResponse.getResult().getCode() == 200) {
-                                callback.onResponse(call, responseString);
+                                baseResponse = baseResponse.getBaseGson(responseString);
+                                if (baseResponse.getResult().getCode() == 200) {
+                                    callback.onResponse(call, responseString);
+                                } else {
+                                    onFailure(call, new IOException(baseResponse.getResult().getMessage()));
+                                }
                             } else {
-                                onFailure(call, new IOException(baseResponse.getResult().getMessage()));
+                                onFailure(call, new IOException("Decrypt array is null"));
                             }
-                        } else {
-                            onFailure(call, new IOException("Decrypt array is null"));
+                        } catch (Exception ex) {
+                            Log.e(TAG, "[Post response] ", ex);
+                            onFailure(call, new IOException(ex));
                         }
-                    } catch (Exception ex) {
-                        Log.e(TAG, "[Post response] ", ex);
-                        onFailure(call, new IOException(ex));
+                    } else {
+                        Log.i(TAG, "[Post response not Json]" + result);
+                        callback.onResponse(call, result);
                     }
                 } catch (IOException e) {
                     onFailure(call, e);
@@ -529,6 +534,21 @@ public class NewApiConnect {
      */
     public void exchangeRate(String json, MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("exchange_rate"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 取得天氣狀況
+     *
+     * @param json
+     * @param callback
+     */
+    public void getWeather(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("weather"))
                 .newBuilder()
                 .build();
 
