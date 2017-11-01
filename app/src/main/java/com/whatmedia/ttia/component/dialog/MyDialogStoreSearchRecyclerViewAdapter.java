@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
-import com.whatmedia.ttia.response.data.StoreCodeData;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter
     private List<StoreConditionCodeData> mAreaCodeList;
     private List<StoreConditionCodeData> mFloorCodeList;
     private List<StoreConditionCodeData> mRestaurantCodeList;
-    private List<StoreCodeData> mStoreCodeList;
+    private List<StoreConditionCodeData> mStoreCodeList;
 
     private IOnItemClickListener mListener;
 
@@ -67,11 +66,11 @@ public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter
             holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         } else if (mStoreCodeList != null) {
-            StoreCodeData item = mStoreCodeList.get(position);
+            StoreConditionCodeData item = mStoreCodeList.get(position);
             if (item == null)
                 return;
 
-            holder.mTextViewItem.setText(item.getStoreTypeName());
+            holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         }
     }
@@ -113,7 +112,7 @@ public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter
         notifyDataSetChanged();
     }
 
-    public void setStoreCodeData(List<StoreCodeData> list) {
+    public void setStoreCodeData(List<StoreConditionCodeData> list) {
         mStoreCodeList = list;
         notifyDataSetChanged();
     }

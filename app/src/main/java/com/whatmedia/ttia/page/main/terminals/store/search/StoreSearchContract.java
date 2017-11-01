@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.terminals.store.search;
 
 import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
-import com.whatmedia.ttia.response.data.StoreCodeData;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface StoreSearchContract {
 
         void getRestaurantInfoFailed(String message, boolean timeout);
 
-        void getStoreCodeSuccess(List<StoreCodeData> response);
+        void getStoreCodeSuccess(List<StoreConditionCodeData> response);
 
         void getStoreSuccess(String response);
     }

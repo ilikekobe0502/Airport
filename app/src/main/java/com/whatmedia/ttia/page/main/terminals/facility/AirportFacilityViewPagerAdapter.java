@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityListData;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class AirportFacilityViewPagerAdapter extends PagerAdapter implements IOn
 
     private AirportFacilityRecyclerViewAdapter mAdapter;
     private IOnItemClickListener mListener;
-    private List<AirportFacilityData> mItems;
+    private List<TerminalsFacilityListData> mItems;
 
     @Override
     public int getCount() {
@@ -74,7 +74,7 @@ public class AirportFacilityViewPagerAdapter extends PagerAdapter implements IOn
         mListener = listener;
     }
 
-    public void setData(List<AirportFacilityData> response) {
+    public void setData(List<TerminalsFacilityListData> response) {
         mItems = response;
         notifyDataSetChanged();
     }

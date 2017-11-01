@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityListData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
@@ -32,10 +32,12 @@ import butterknife.OnClick;
 public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<AirportFacilityRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = AirportFacilityRecyclerViewAdapter.class.getSimpleName();
 
-    private List<AirportFacilityData> mFirstItems;
-    private List<AirportFacilityData> mSecondItems;
+    private List<TerminalsFacilityData> mFirstItems;
+    private List<TerminalsFacilityData> mSecondItems;
     private Context mContext;
     private boolean mIsFirst;//判斷是否為第一航廈
+    private String mFirstTitle;
+    private String mSecondTitle;
     private IOnItemClickListener mListener;
 
     public AirportFacilityRecyclerViewAdapter(Context context) {
@@ -50,7 +52,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        AirportFacilityData item;
+        TerminalsFacilityData item;
         if (mIsFirst) {
             if (mFirstItems == null)
                 return;
@@ -68,9 +70,9 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
 
         holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getFloorName()) ? item.getFloorName() : "");
 
-        if (!TextUtils.isEmpty(item.getMainImgPath())) {
+        if (!TextUtils.isEmpty(item.getImgUrl())) {
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
-            String imageUrl = !TextUtils.isEmpty(item.getMainImgPath()) ? item.getMainImgPath() : "";
+            String imageUrl = item.getImgUrl();
             Log.d(TAG, imageUrl);
             setPicassoRetry(holder, imageUrl);
         } else
@@ -87,28 +89,31 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             return mSecondItems != null ? mSecondItems.size() : 0;
     }
 
-    public String setData(List<AirportFacilityData> data) {
+    public String setData(List<TerminalsFacilityListData> data) {
         String outSideTitle = "";
         mIsFirst = true;
         mFirstItems = new ArrayList<>();
         mSecondItems = new ArrayList<>();
 
-        for (AirportFacilityData item : data) {
+        for (TerminalsFacilityListData item : data) {
             if (!TextUtils.isEmpty(item.getTerminalsName())) {
-                if (item.getTerminalsName().contains("一"))
-                    mFirstItems.add(item);
-                else if (item.getTerminalsName().contains("二"))
-                    mSecondItems.add(item);
-                else if (item.getTerminalsName().contains("1"))
-                    mFirstItems.add(item);
-                else if (item.getTerminalsName().contains("2"))
-                    mSecondItems.add(item);
+                if (item.getTerminalsName().contains("一")) {
+                    mFirstItems = item.getTerminalsFacilityList();
+                    mFirstTitle = item.getTerminalsName();
+                } else if (item.getTerminalsName().contains("二")) {
+                    mSecondItems = item.getTerminalsFacilityList();
+                    mSecondTitle = item.getTerminalsName();
+                }else if (item.getTerminalsName().contains("1")) {
+                    mFirstItems = item.getTerminalsFacilityList();
+                    mFirstTitle = item.getTerminalsName();
+                } else if (item.getTerminalsName().contains("2")) {
+                    mSecondItems = item.getTerminalsFacilityList();
+                    mSecondTitle = item.getTerminalsName();
+                }
             }
         }
 
         notifyDataSetChanged();
-        if (mFirstItems.size() > 0)
-            outSideTitle = mFirstItems.get(0).getTerminalsName();
         return outSideTitle;
     }
 
@@ -125,9 +130,9 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         mIsFirst = isFirst;
         notifyDataSetChanged();
         if (isFirst && mFirstItems != null && mFirstItems.size() > 0)
-            return mFirstItems.get(0).getTerminalsName();
+            return mFirstTitle;
         else if (!isFirst && mSecondItems != null && mSecondItems.size() > 0)
-            return mSecondItems.get(0).getTerminalsName();
+            return mSecondTitle;
         else
             return "";
     }

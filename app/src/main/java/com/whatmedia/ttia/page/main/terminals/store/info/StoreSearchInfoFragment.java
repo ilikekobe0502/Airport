@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.RestaurantInfoData;
-import com.whatmedia.ttia.response.data.StoreInfoData;
+import com.whatmedia.ttia.newresponse.data.RestaurantInfoData;
+import com.whatmedia.ttia.newresponse.data.StoreInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -74,12 +74,10 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             data = (RestaurantInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT);
             Log.d(TAG, data.toString());
 
-            mTextViewTitle.setText(!TextUtils.isEmpty(data.getRestaurantName()) ? data.getRestaurantName() : "");
+            mTextViewTitle.setText(!TextUtils.isEmpty(data.getRestaurantTypeName()) ? data.getRestaurantTypeName() : "");
 
-            String terminal = RestaurantInfoData.getTerminalText(getContext(), data.getTerminalsName());
-
-            if (!TextUtils.isEmpty(data.getImgPath())) {
-                String image = data.getImgPath();
+            if (!TextUtils.isEmpty(data.getImgUrl())) {
+                String image = data.getImgUrl();
                 Log.d(TAG, "image url = " + image);
                 Util.setPicassoRetry(getContext()
                         , mImageViewPicture
@@ -90,22 +88,20 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
                         , 0);
             }
 
-            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, !TextUtils.isEmpty(terminal) ? terminal : "", !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, !TextUtils.isEmpty(data.getTerminalsName()) ? data.getTerminalsName() : "", !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
             mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
-                    !TextUtils.isEmpty(data.getOpenStime()) ? data.getOpenStime() : "",
-                    !TextUtils.isEmpty(data.getOpenEtime()) ? data.getOpenEtime() : ""));
+                    !TextUtils.isEmpty(data.getOpenTime()) ? data.getOpenTime() : "",
+                    !TextUtils.isEmpty(data.getCloseTime()) ? data.getCloseTime() : ""));
             mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(data.getTel()) ? data.getTel() : ""));
             mTextViewContent.setText(!TextUtils.isEmpty(data.getContent()) ? data.getContent() : "");
         } else if (getArguments() != null && getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT) != null) {
-            storeData = (StoreInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT);
+            storeData = (com.whatmedia.ttia.newresponse.data.StoreInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT);
             Log.d(TAG, storeData.toString());
 
-            mTextViewTitle.setText(!TextUtils.isEmpty(storeData.getStoreName()) ? storeData.getStoreName() : "");
+            mTextViewTitle.setText(!TextUtils.isEmpty(storeData.getStoreTypeName()) ? storeData.getStoreTypeName() : "");
 
-            String terminal = StoreInfoData.getTerminalText(getContext(), storeData.getTerminalsName());
-
-            if (!TextUtils.isEmpty(storeData.getStoreIMGPath())) {
-                String image = storeData.getStoreIMGPath();
+            if (!TextUtils.isEmpty(storeData.getImgUrl())) {
+                String image = storeData.getImgUrl();
                 Log.d(TAG, "image url = " + image);
                 Util.setPicassoRetry(getContext()
                         , mImageViewPicture
@@ -116,12 +112,12 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
                         , 0);
             }
 
-            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, terminal, !TextUtils.isEmpty(storeData.getFloorName()) ? storeData.getFloorName() : ""));
+            mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, storeData.getTerminalsName(), !TextUtils.isEmpty(storeData.getFloorName()) ? storeData.getFloorName() : ""));
             mTextViewTime.setText(getString(R.string.restaurant_store_search_info_time,
-                    !TextUtils.isEmpty(storeData.getOpenStime()) ? storeData.getOpenStime() : "",
-                    !TextUtils.isEmpty(storeData.getOpenEtime()) ? storeData.getOpenEtime() : ""));
-            mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(storeData.getStoreTel()) ? storeData.getStoreTel() : ""));
-            mTextViewContent.setText(!TextUtils.isEmpty(storeData.getConetnt()) ? storeData.getConetnt() : "");
+                    !TextUtils.isEmpty(storeData.getOpenTime()) ? storeData.getOpenTime() : "",
+                    !TextUtils.isEmpty(storeData.getCloseTime()) ? storeData.getCloseTime() : ""));
+            mTextViewPhone.setText(getString(R.string.restaurant_store_search_info_phone, !TextUtils.isEmpty(storeData.getTel()) ? storeData.getTel() : ""));
+            mTextViewContent.setText(!TextUtils.isEmpty(storeData.getContent()) ? storeData.getContent() : "");
         }
         return view;
     }

@@ -1,6 +1,10 @@
 package com.whatmedia.ttia.newresponse.data;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
+import com.whatmedia.ttia.R;
 
 import java.io.Serializable;
 
@@ -8,7 +12,7 @@ import java.io.Serializable;
  * Created by neo on 2017/10/31.
  */
 
-public class RestaurantInfoData implements Serializable{
+public class StoreInfoData implements Serializable{
     @SerializedName("id")
     private String id;
     @SerializedName("name")
@@ -19,8 +23,8 @@ public class RestaurantInfoData implements Serializable{
     private String areaName;
     @SerializedName("floorName")
     private String floorName;
-    @SerializedName("restaurantTypeName")
-    private String restaurantTypeName;
+    @SerializedName("storeTypeName")
+    private String storeTypeName;
     @SerializedName("content")
     private String content;
     @SerializedName("url")
@@ -74,12 +78,12 @@ public class RestaurantInfoData implements Serializable{
         this.floorName = floorName;
     }
 
-    public String getRestaurantTypeName() {
-        return restaurantTypeName;
+    public String getStoreTypeName() {
+        return storeTypeName;
     }
 
-    public void setRestaurantTypeName(String restaurantTypeName) {
-        this.restaurantTypeName = restaurantTypeName;
+    public void setStoreTypeName(String storeTypeName) {
+        this.storeTypeName = storeTypeName;
     }
 
     public String getContent() {
@@ -129,4 +133,38 @@ public class RestaurantInfoData implements Serializable{
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    public static String getSimpleTerminalText(Context context, String terminalsName) {
+        String terminal = "";
+        if (!TextUtils.isEmpty(terminalsName)) {
+            if (terminalsName.contains("一"))
+                terminal =context.getString(R.string.store_terminal_1);
+            else if (terminalsName.contains("二"))
+                terminal =context.getString(R.string.store_terminal_2);
+            else if (terminalsName.contains("1"))
+                terminal =context.getString(R.string.store_terminal_1);
+            else if (terminalsName.contains("2"))
+                terminal =context.getString(R.string.store_terminal_2);
+        }
+        return terminal;
+    }
+
+    public static String getFloorShowText(Context context, String floor) {
+        String floorText = context.getString(R.string.floor_1);
+        if (floor.contains("B1")) {
+            floorText = context.getString(R.string.floor_b1);
+        } else if (floor.contains("B2")) {
+            floorText = context.getString(R.string.floor_b2);
+        } else if (floor.contains("1")) {
+            floorText = context.getString(R.string.floor_1);
+        } else if (floor.contains("2")) {
+            floorText = context.getString(R.string.floor_2);
+        } else if (floor.contains("3")) {
+            floorText = context.getString(R.string.floor_3);
+        } else if (floor.contains("4"))
+            floorText = context.getString(R.string.floor_4);
+
+        return floorText;
+    }
+
 }

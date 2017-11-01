@@ -3,13 +3,11 @@ package com.whatmedia.ttia.page.main.terminals.facility;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
-import com.whatmedia.ttia.response.GetAirPortFacilityResponse;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetTerminalsFacilityListResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,35 +18,33 @@ import okhttp3.Call;
 public class AirportFacilityPresenter implements AirportFacilityContract.Presenter {
     private final static String TAG = AirportFacilityPresenter.class.getSimpleName();
 
-    private static AirportFacilityPresenter mAirportFacilityPresenter;
-    private static ApiConnect mApiConnect;
-    private static AirportFacilityContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private AirportFacilityContract.View mView;
+    private Context mContext;
 
 
-    public static AirportFacilityPresenter getInstance(Context context, AirportFacilityContract.View view) {
-        mAirportFacilityPresenter = new AirportFacilityPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    AirportFacilityPresenter(Context context, AirportFacilityContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mAirportFacilityPresenter;
+        mContext = context;
     }
 
     @Override
     public void getAirportFacilityAPI() {
-        mApiConnect.getAirportFacility(new ApiConnect.MyCallback() {
+
+        mNewApiConnect.getTerminalsFacilityList(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getAirportFacilityFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<AirportFacilityData> list = GetAirPortFacilityResponse.newInstance(result);
-                    mView.getAirportFacilitySucceed(list);
-                } else {
-                    mView.getAirportFacilityFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetTerminalsFacilityListResponse terminalsFacilityListResponse = GetTerminalsFacilityListResponse.getGson(response);
+                if (terminalsFacilityListResponse.getTerminalsFacilityList() != null)
+                    mView.getAirportFacilitySucceed(terminalsFacilityListResponse.getTerminalsFacilityList());
+                else
+                    mView.getAirportFacilityFailed(mContext.getString(R.string.data_error), false);
             }
         });
     }
