@@ -48,7 +48,7 @@ public class MoreWeatherPresenter implements MoreWeatherContract.Presenter {
         mNewApiConnect.getWeather(json, new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getApiFailed(mContext.getString(R.string.data_error), false);
+                mView.getApiFailed(mContext.getString(R.string.data_error), timeout);
             }
 
             @Override

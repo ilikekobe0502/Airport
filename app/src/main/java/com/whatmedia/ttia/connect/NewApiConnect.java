@@ -140,7 +140,7 @@ public class NewApiConnect {
     }
 
     private void postApi(HttpUrl url, RequestBody body, Headers headers, final MyCallback callback) {
-        Request request;
+        final Request request;
         if (headers == null) {
             request = new Request.Builder()
                     .url(url)
@@ -180,6 +180,8 @@ public class NewApiConnect {
                     GetBaseEncodeResponse baseEncodeResponse = new GetBaseEncodeResponse();//解析Encode資料
                     String result = response.body().string();
 
+                    if (result == null)
+                        result = "";
                     BaseEncodeData baseEncodeData = baseEncodeResponse.getGson(result);
                     if (baseEncodeData != null) {//如果不是Json會拋出Null有可能是Html
                         try {
@@ -201,9 +203,11 @@ public class NewApiConnect {
                             Log.e(TAG, "[Post response] ", ex);
                             onFailure(call, new IOException(ex));
                         }
-                    } else {
+                    } else if (!TextUtils.isEmpty(result)) {
                         Log.i(TAG, "[Post response not Json]" + result);
                         callback.onResponse(call, result);
+                    } else {
+                        onFailure(call, new IOException("response is error format"));
                     }
                 } catch (IOException e) {
                     onFailure(call, e);

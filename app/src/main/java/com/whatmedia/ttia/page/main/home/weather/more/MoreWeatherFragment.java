@@ -324,6 +324,6 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 
     @Override
     public void getApiFailed(String message, boolean timeout) {
-
+        mLoadingView.goneLoadingView();
     }
 }
