@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.ExchangeRate;
+import com.whatmedia.ttia.newresponse.data.ExchangeRateQueryData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.ExchangeRateData;
@@ -51,8 +52,8 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private CurrencyConversionContract.Presenter mPresenter;
-    private ExchangeRateData mExchangeRateData = new ExchangeRateData();
     private boolean mIsClickBottom;
+    private ExchangeRateQueryData mQueryData = new ExchangeRateQueryData();//上傳的Object
 
     public CurrencyConversionFragment() {
         // Required empty public constructor
@@ -75,7 +76,7 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
         View view = inflater.inflate(R.layout.fragment_currency_conversion, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = CurrencyConversionPresenter.getInstance(getContext(), this);
+        mPresenter = new CurrencyConversionPresenter(getContext(), this);
 
         setSourceState(ExchangeRate.TAG_TWD);
         setTargetState(ExchangeRate.TAG_USD);
@@ -122,33 +123,18 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     }
 
     @Override
-    public void getExchangeRateSucceed(final ExchangeRateData response) {
+    public void getExchangeRateSucceed(final float response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (response != null && !TextUtils.isEmpty(response.getAmount())) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!mIsClickBottom)
-                            mEditTextTargetAmount.setText(String.format("%.6f",Float.valueOf(response.getAmount())));
-                        else
-                            mEditTextSourceAmount.setText(String.format("%.6f",Float.valueOf(response.getAmount())));
-                    }
-                });
-            } else {
-                Log.e(TAG, "getExchangeRateSucceed response error");
-                if (isAdded() && !isDetached()) {
-                    mMainActivity.runOnUI(new Runnable() {
-                        @Override
-                        public void run() {
-                            mEditTextTargetAmount.setText("");
-                            showMessage(getString(R.string.data_error));
-                        }
-                    });
-                } else {
-                    Log.d(TAG, "Fragment is not add");
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    if (!mIsClickBottom)
+                        mEditTextTargetAmount.setText(String.format("%.6f", response));
+                    else
+                        mEditTextSourceAmount.setText(String.format("%.6f", response));
                 }
-            }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -225,17 +211,16 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
 
             mLoadingView.showLoadingView();
 
-            ExchangeRateData data = new ExchangeRateData();
             if (!mIsClickBottom) {
-                data.setSource(mTextViewSourceCode.getText().toString());
-                data.setTarget(mTextViewTargetCode.getText().toString());
-                data.setAmount(!TextUtils.isEmpty(mEditTextSourceAmount.getText().toString()) ? mEditTextSourceAmount.getText().toString() : "0");
+                mQueryData.setSource(mTextViewSourceCode.getText().toString());
+                mQueryData.setTarget(mTextViewTargetCode.getText().toString());
+                mQueryData.setAmount(!TextUtils.isEmpty(mEditTextSourceAmount.getText().toString()) ? Float.parseFloat(mEditTextSourceAmount.getText().toString()) : 0);
             } else {
-                data.setSource(mTextViewTargetCode.getText().toString());
-                data.setTarget(mTextViewSourceCode.getText().toString());
-                data.setAmount(!TextUtils.isEmpty(mEditTextTargetAmount.getText().toString()) ? mEditTextTargetAmount.getText().toString() : "0");
+                mQueryData.setSource(mTextViewTargetCode.getText().toString());
+                mQueryData.setTarget(mTextViewSourceCode.getText().toString());
+                mQueryData.setAmount(!TextUtils.isEmpty(mEditTextTargetAmount.getText().toString()) ? Float.parseFloat(mEditTextTargetAmount.getText().toString()) : 0);
             }
-            mPresenter.getExchangeRate(data);
+            mPresenter.getExchangeRate(mQueryData);
         } else {
             Log.d(TAG, "some data not ok");
         }
@@ -316,14 +301,6 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         getTransAPI();
         Util.hideSoftKeyboard(v);
-        Log.d("TAG", "event = " + event + "actid = " + actionId);
-//        if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
-//                event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-//            if (!event.isShiftPressed()) {
-//
-//                return true; // consume.
-//            }
-//        }
         return true;
     }
 

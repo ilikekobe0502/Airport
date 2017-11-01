@@ -520,4 +520,19 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 匯率換算
+     *
+     * @param json
+     * @param callback
+     */
+    public void exchangeRate(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("exchange_rate"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
 }
