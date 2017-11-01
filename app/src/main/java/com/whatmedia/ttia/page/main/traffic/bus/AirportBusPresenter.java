@@ -1,15 +1,12 @@
 package com.whatmedia.ttia.page.main.traffic.bus;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetAirportBusResponse;
-import com.whatmedia.ttia.response.data.AirportBusData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetBustInfoResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,37 +17,34 @@ import okhttp3.Call;
 public class AirportBusPresenter implements AirportBusContract.Presenter {
     private final static String TAG = AirportBusPresenter.class.getSimpleName();
 
-    private static AirportBusPresenter mAirportBusPresenter;
-    private static ApiConnect mApiConnect;
-    private static AirportBusContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private AirportBusContract.View mView;
+    private Context mContext;
 
 
-    public static AirportBusPresenter getInstance(Context context, AirportBusContract.View view) {
-        mAirportBusPresenter = new AirportBusPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    AirportBusPresenter(Context context, AirportBusContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mAirportBusPresenter;
+        mContext = context;
     }
 
     @Override
     public void getAirportBusAPI() {
-        mApiConnect.getAirportBus(new ApiConnect.MyCallback() {
+        mNewApiConnect.getBusInfo(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getAirportBusFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<AirportBusData> list = GetAirportBusResponse.newInstance(result);
-                    mView.getAirportBusSucceed(list);
+            public void onResponse(Call call, String response) throws IOException {
+                GetBustInfoResponse bustInfoResponse = GetBustInfoResponse.getGson(response);
+                if (bustInfoResponse.getBus() != null) {
+                    mView.getAirportBusSucceed(bustInfoResponse.getBus());
                 } else {
-                    mView.getAirportBusFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
+                    mView.getAirportBusFailed(mContext.getString(R.string.data_error), false);
                 }
             }
         });
-
     }
 }

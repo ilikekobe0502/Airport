@@ -559,4 +559,15 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 取得巴士資訊
+     * @param callback
+     */
+    public void getBusInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("bus"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
