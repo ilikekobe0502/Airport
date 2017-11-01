@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
@@ -76,7 +77,7 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
         View view = inflater.inflate(R.layout.fragment_airport_facility, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = AirportFacilityPresenter.getInstance(getContext(), this);
+        mPresenter = new AirportFacilityPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getAirportFacilityAPI();
 
@@ -128,7 +129,7 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     }
 
     @Override
-    public void getAirportFacilitySucceed(final List<AirportFacilityData> response) {
+    public void getAirportFacilitySucceed(final List<TerminalsFacilityListData> response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mMainActivity.runOnUI(new Runnable() {

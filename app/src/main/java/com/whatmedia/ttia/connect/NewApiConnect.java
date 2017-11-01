@@ -496,4 +496,16 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 取得行廈設施清單
+     *
+     * @param callback
+     */
+    public void getTerminalsFacilityList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("terminals_facility_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
