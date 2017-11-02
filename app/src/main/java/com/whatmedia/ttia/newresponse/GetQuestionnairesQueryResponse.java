@@ -3,9 +3,13 @@ package com.whatmedia.ttia.newresponse;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+import com.whatmedia.ttia.newresponse.data.AnswerListData;
 import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by neo_mac on 2017/10/29.
@@ -13,20 +17,25 @@ import java.util.List;
 
 public class GetQuestionnairesQueryResponse extends GetBaseResponse {
     private static final String TAG = GetQuestionnairesQueryResponse.class.getSimpleName();
-    private List<QuestionnairesListData> data;
+
+    private static final String KEY_VALUE = "questionnairesAnswerList";
+
+    private List<AnswerListData> data;
 
     public String getJson() {
+        Map<String,List<AnswerListData>> object = new HashMap<>();
+        object.put(KEY_VALUE,data);
         Gson gson = new Gson();
-        String json = data != null ? gson.toJson(data) : "";
+        String json = gson.toJson(object);
         Log.i(TAG, String.format("[Json] %s", json));
         return json;
     }
 
-    public List<QuestionnairesListData> getData() {
+    public List<AnswerListData> getData() {
         return data;
     }
 
-    public void setData(List<QuestionnairesListData> data) {
+    public void setData(List<AnswerListData> data) {
         this.data = data;
     }
 }

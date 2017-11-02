@@ -8,6 +8,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetQuestionnairesListResponse;
 import com.whatmedia.ttia.newresponse.GetQuestionnairesQueryResponse;
+import com.whatmedia.ttia.newresponse.data.AnswerListData;
 import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
     }
 
     @Override
-    public void sendQuestionnaireAPI(List<QuestionnairesListData> answer) {
+    public void sendQuestionnaireAPI(List<AnswerListData> answer) {
 
         GetQuestionnairesQueryResponse questionnairesQueryResponse = new GetQuestionnairesQueryResponse();
         questionnairesQueryResponse.setData(answer);
