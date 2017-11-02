@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +23,6 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
-import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,7 +41,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @BindView(R.id.layout_ok)
     RelativeLayout mLayoutOk;
 
-//    private static String mWeatherUrl = "http://210.241.14.99/weather/index.php?region=%1$s&lang=%2$s";
+    //    private static String mWeatherUrl = "http://210.241.14.99/weather/index.php?region=%1$s&lang=%2$s";
     private static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=%1$s&lang=%2$s";//先放舊的IP
     private static String mLocale;
 
@@ -84,16 +81,17 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         View view = inflater.inflate(R.layout.fragment_more_weather, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = MoreWeatherPresenter.getInstance(getContext(), this);
+        mPresenter = new MoreWeatherPresenter(getContext(), this);
 
         mLoadingView.showLoadingView();
+        mPresenter.getWeatherAPI("ASI|TW|TW018|TAOYUAN");
 
 //        if (TextUtils.isEmpty(mLocale))
-            mLocale = Preferences.getLocaleSetting(getContext());
+        mLocale = Preferences.getLocaleSetting(getContext());
 
         settingWebView();
         switchRegion();
-        showWebView();
+//        showWebView();
 
         tool();
         return view;
@@ -230,7 +228,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 //            else if (TextUtils.equals(mLocale, Locale.SIMPLIFIED_CHINESE.toString()))
 //                mLocale = "cn";
 //            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], mLocale));
-            switch (mLocale){
+            switch (mLocale) {
                 case "zh_TW":
                     mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "tw"));
                     break;
@@ -302,7 +300,30 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 
     @OnClick(R.id.layout_ok)
     public void onClick() {
-        showWebView();
+//        showWebView();
+        if (mCodeArray.length > mCountry) {
+            mLoadingView.showLoadingView();
+            mPresenter.getWeatherAPI(mCodeArray[mCountry]);
+        }
         mLayoutSelector.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getApiSucceed(final String response) {
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadData(response, "text/html; charset=UTF-8", "UTF-8");
+                }
+            });
+        } else {
+            Log.e(TAG, "[Fragment is not added]");
+        }
+    }
+
+    @Override
+    public void getApiFailed(String message, boolean timeout) {
+        mLoadingView.goneLoadingView();
     }
 }

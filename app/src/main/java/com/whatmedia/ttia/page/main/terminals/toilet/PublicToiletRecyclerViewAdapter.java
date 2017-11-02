@@ -6,15 +6,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,10 +26,8 @@ import butterknife.ButterKnife;
 public class PublicToiletRecyclerViewAdapter extends RecyclerView.Adapter<PublicToiletRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = PublicToiletRecyclerViewAdapter.class.getSimpleName();
 
-    private List<AirportFacilityData> mFirstItems;
-    private List<AirportFacilityData> mSecondItems;
+    private List<TerminalsFacilityData> mFirstItems;
     private Context mContext;
-    private boolean mIsFirst;//判斷是否為第一航廈
 
     public PublicToiletRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -43,85 +40,55 @@ public class PublicToiletRecyclerViewAdapter extends RecyclerView.Adapter<Public
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        AirportFacilityData item;
-        if (mIsFirst) {
-            if (mFirstItems == null)
-                return;
-            else
-                item = mFirstItems.get(position);
-        } else {
-            if (mSecondItems == null)
-                return;
-            else
-                item = mSecondItems.get(position);
-        }
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        if (mFirstItems == null)
+            return;
 
+        TerminalsFacilityData item = mFirstItems.get(position);
         if (item == null)
             return;
 
-        holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getFloorId()) ? item.getFloorId() : "");
-        if (!TextUtils.isEmpty(item.getContent()))
-            holder.mWebView.loadData(item.getContent(), "text/html; charset=utf-8", "UTF-8");
-        else
-            holder.mWebView.setVisibility(View.INVISIBLE);
+        holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getFloorName()) ? item.getFloorName() : "");
+        if (!TextUtils.isEmpty(item.getImgUrl())) {
+            holder.mImageViewPicture.setVisibility(View.VISIBLE);
+            Picasso.with(mContext).load(item.getImgUrl()).into(holder.mImageViewPicture, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+                    holder.mTextViewLoading.setText("ERROR");
+                }
+            });
+        } else {
+            holder.mImageViewPicture.setVisibility(View.INVISIBLE);
+            holder.mTextViewLoading.setText("ERROR");
+        }
     }
 
     @Override
     public int getItemCount() {
-        if (mIsFirst)
-            return mFirstItems != null ? mFirstItems.size() : 0;
-        else
-            return mSecondItems != null ? mSecondItems.size() : 0;
+        return mFirstItems != null ? mFirstItems.size() : 0;
     }
 
-    public String setData(List<AirportFacilityData> data) {
-        String outSideTitle = "";
-        mIsFirst = true;
-        mFirstItems = new ArrayList<>();
-        mSecondItems = new ArrayList<>();
-
-        for (AirportFacilityData item : data) {
-            if (TextUtils.equals(item.getTerminalsId(), AirportFacilityData.TAG_TERMINAL_FIRST))
-                mFirstItems.add(item);
-            else
-                mSecondItems.add(item);
-        }
-
+    public void setData(List<TerminalsFacilityData> data) {
+        mFirstItems = data;
         notifyDataSetChanged();
-        if (mFirstItems.size() > 0)
-            outSideTitle = mFirstItems.get(0).getTerminalsName();
-        return outSideTitle;
-    }
-
-    /**
-     * Set different terminal Data
-     *
-     * @param isFirst true: terminal 1 , false: terminal 2
-     */
-    public String setTerminal(boolean isFirst) {
-        mIsFirst = isFirst;
-        notifyDataSetChanged();
-        if (isFirst && mFirstItems != null && mFirstItems.size() > 0)
-            return mFirstItems.get(0).getTerminalsName();
-        else if (!isFirst && mSecondItems != null && mSecondItems.size() > 0)
-            return mSecondItems.get(0).getTerminalsName();
-        else
-            return "";
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textView_title)
         TextView mTextViewTitle;
-        @BindView(R.id.webView)
-        WebView mWebView;
+        @BindView(R.id.textView_loading)
+        TextView mTextViewLoading;
+        @BindView(R.id.imageView_picture)
+        ImageView mImageViewPicture;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
-            mWebView.getSettings().setBuiltInZoomControls(true);
-            mWebView.getSettings().setDisplayZoomControls(false);
         }
     }
 }

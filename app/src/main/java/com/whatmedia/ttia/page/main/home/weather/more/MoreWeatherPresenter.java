@@ -1,8 +1,16 @@
 package com.whatmedia.ttia.page.main.home.weather.more;
 
 import android.content.Context;
+import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetWeatherQueryResponse;
+import com.whatmedia.ttia.newresponse.data.WeatherQueryData;
+
+import java.io.IOException;
+
+import okhttp3.Call;
 
 /**
  * Created by neo_mac on 2017/6/17.
@@ -11,15 +19,42 @@ import com.whatmedia.ttia.connect.ApiConnect;
 public class MoreWeatherPresenter implements MoreWeatherContract.Presenter {
     private final static String TAG = MoreWeatherPresenter.class.getSimpleName();
 
-    private static MoreWeatherPresenter mMoreWeatherPresenter;
-    private static ApiConnect mApiConnect;
-    private static MoreWeatherContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private MoreWeatherContract.View mView;
+    private Context mContext;
 
 
-    public static MoreWeatherPresenter getInstance(Context context, MoreWeatherContract.View view) {
-            mMoreWeatherPresenter = new MoreWeatherPresenter();
-            mApiConnect = ApiConnect.getInstance(context);
-            mView = view;
-        return mMoreWeatherPresenter;
+    MoreWeatherPresenter(Context context, MoreWeatherContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
+        mView = view;
+        mContext = context;
+    }
+
+    @Override
+    public void getWeatherAPI(String cityId) {
+        WeatherQueryData queryData = new WeatherQueryData();
+        GetWeatherQueryResponse weatherQueryResponse = new GetWeatherQueryResponse();
+
+        queryData.setCityId(cityId);
+        queryData.setQueryType(WeatherQueryData.TAG_WEEK_WEATHER);
+        weatherQueryResponse.setData(queryData);
+
+        String json = weatherQueryResponse.getJson();
+        if (TextUtils.isEmpty(json)) {
+            mView.getApiFailed(mContext.getString(R.string.data_error), false);
+            return;
+        }
+
+        mNewApiConnect.getWeather(json, new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getApiFailed(mContext.getString(R.string.data_error), timeout);
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                mView.getApiSucceed(response);
+            }
+        });
     }
 }

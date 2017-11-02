@@ -13,12 +13,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BusInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.AirportBusData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +59,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = AirportBusPresenter.getInstance(getContext(), this);
+        mPresenter = new AirportBusPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getAirportBusAPI();
 
@@ -113,13 +111,13 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     }
 
     @Override
-    public void getAirportBusSucceed(final List<AirportBusData> response) {
+    public void getAirportBusSucceed(final BusInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getBusesHtml())) {
+            if (!TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-                        mWebView.loadData(response.get(0).getBusesHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });

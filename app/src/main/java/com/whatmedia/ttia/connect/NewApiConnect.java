@@ -140,7 +140,7 @@ public class NewApiConnect {
     }
 
     private void postApi(HttpUrl url, RequestBody body, Headers headers, final MyCallback callback) {
-        Request request;
+        final Request request;
         if (headers == null) {
             request = new Request.Builder()
                     .url(url)
@@ -180,25 +180,34 @@ public class NewApiConnect {
                     GetBaseEncodeResponse baseEncodeResponse = new GetBaseEncodeResponse();//解析Encode資料
                     String result = response.body().string();
 
+                    if (result == null)
+                        result = "";
                     BaseEncodeData baseEncodeData = baseEncodeResponse.getGson(result);
-                    try {
-                        byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
-                        if (decryptBytes != null) {
-                            String responseString = new String(decryptBytes);
-                            Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
+                    if (baseEncodeData != null) {//如果不是Json會拋出Null有可能是Html
+                        try {
+                            byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
+                            if (decryptBytes != null) {
+                                String responseString = new String(decryptBytes);
+                                Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
 
-                            baseResponse = baseResponse.getBaseGson(responseString);
-                            if (baseResponse.getResult().getCode() == 200) {
-                                callback.onResponse(call, responseString);
+                                baseResponse = baseResponse.getBaseGson(responseString);
+                                if (baseResponse.getResult().getCode() == 200) {
+                                    callback.onResponse(call, responseString);
+                                } else {
+                                    onFailure(call, new IOException(baseResponse.getResult().getMessage()));
+                                }
                             } else {
-                                onFailure(call, new IOException(baseResponse.getResult().getMessage()));
+                                onFailure(call, new IOException("Decrypt array is null"));
                             }
-                        } else {
-                            onFailure(call, new IOException("Decrypt array is null"));
+                        } catch (Exception ex) {
+                            Log.e(TAG, "[Post response] ", ex);
+                            onFailure(call, new IOException(ex));
                         }
-                    } catch (Exception ex) {
-                        Log.e(TAG, "[Post response] ", ex);
-                        onFailure(call, new IOException(ex));
+                    } else if (!TextUtils.isEmpty(result)) {
+                        Log.i(TAG, "[Post response not Json]" + result);
+                        callback.onResponse(call, result);
+                    } else {
+                        onFailure(call, new IOException("response is error format"));
                     }
                 } catch (IOException e) {
                     onFailure(call, e);
@@ -510,7 +519,7 @@ public class NewApiConnect {
     }
 
     /**
-     * 取得行廈設施清單
+     * 取得航廈設施清單
      *
      * @param callback
      */
@@ -528,6 +537,59 @@ public class NewApiConnect {
      */
     public void getUserEmergency(MyCallback callback) {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "emergency_list")
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+     /**
+     * 取得航廈廁所清單
+     *
+     * @param callback
+     */
+    public void getTerminalsToiletList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("terminals_toilet_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 匯率換算
+     *
+     * @param json
+     * @param callback
+     */
+    public void exchangeRate(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("exchange_rate"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 取得天氣狀況
+     *
+     * @param json
+     * @param callback
+     */
+    public void getWeather(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("weather"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 取得巴士資訊
+     * @param callback
+     */
+    public void getBusInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("bus"))
                 .newBuilder()
                 .build();
         getApi(url, true, callback);

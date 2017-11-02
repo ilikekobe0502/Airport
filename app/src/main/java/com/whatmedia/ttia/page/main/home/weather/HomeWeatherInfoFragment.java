@@ -27,7 +27,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @BindView(R.id.webView)
     WebView mWebView;
 
-//    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
+    //    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
     private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
     private static String mLocale;
 
@@ -63,35 +63,35 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
         View view = inflater.inflate(R.layout.fragment_home_weather_info, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = HomeWeatherInfoPresenter.getInstance(getContext(), this);
+        mPresenter = new HomeWeatherInfoPresenter(getContext(), this);
 //        mLoadingView.showLoadingView();
 //        if (TextUtils.isEmpty(mLocale))
-            mLocale = Preferences.getLocaleSetting(getContext());
+        mLocale = Preferences.getLocaleSetting(getContext());
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
+        mPresenter.getWeatherAPI("ASI|TW|TW018|TAOYUAN");
         //因為語系的字串跟查天氣送的字串不相同，所以我在此轉換一下(bug82)
-        switch (mLocale){
-            case "zh_TW":
-                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
-                break;
-            case "zh_CN":
-                mWebView.loadUrl(String.format(mWeatherUrl, "ch"));
-                break;
-            case "en":
-                mWebView.loadUrl(String.format(mWeatherUrl, "en"));
-                break;
-            case "ja":
-                mWebView.loadUrl(String.format(mWeatherUrl, "jp"));
-                break;
-            default:
-                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
-                break;
-        }
+//        switch (mLocale) {
+//            case "zh_TW":
+//                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
+//                break;
+//            case "zh_CN":
+//                mWebView.loadUrl(String.format(mWeatherUrl, "ch"));
+//                break;
+//            case "en":
+//                mWebView.loadUrl(String.format(mWeatherUrl, "en"));
+//                break;
+//            case "ja":
+//                mWebView.loadUrl(String.format(mWeatherUrl, "jp"));
+//                break;
+//            default:
+//                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
+//                break;
+//        }
 //        mWebView.loadUrl(String.format(mWeatherUrl, mLocale));
         mWebView.setWebViewClient(new WebViewClient() {
 
@@ -140,5 +140,24 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void getApiSucceed(final String response) {
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadData(response, "text/html; charset=UTF-8", "UTF-8");
+                }
+            });
+        } else {
+            Log.e(TAG, "[Fragment is not added]");
+        }
+    }
+
+    @Override
+    public void getApiFailed(String message, boolean timeout) {
+        mLoadingView.goneLoadingView();
     }
 }
