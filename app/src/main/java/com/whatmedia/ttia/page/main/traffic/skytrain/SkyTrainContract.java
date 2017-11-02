@@ -1,12 +1,10 @@
 package com.whatmedia.ttia.page.main.traffic.skytrain;
 
-import com.whatmedia.ttia.response.data.SkyTrainData;
-
-import java.util.List;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 
 public interface SkyTrainContract {
     interface View {
-        void getSkyTrainSucceed(List<SkyTrainData> response);
+        void getSkyTrainSucceed(BaseTrafficInfoData response);
 
         void getSkyTrainFailed(String message, boolean timeout);
     }

@@ -18,12 +18,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.SkyTrainData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +64,7 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = SkyTrainPresenter.getInstance(getContext(), this);
+        mPresenter = new SkyTrainPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getSkyTrainAPI();
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -143,14 +141,14 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
     }
 
     @Override
-    public void getSkyTrainSucceed(final List<SkyTrainData> response) {
+    public void getSkyTrainSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getSkytrainHtml())) {
+            if (response != null && !TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
 
-                        mWebView.loadData(response.get(0).getSkytrainHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });
