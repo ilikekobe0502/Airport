@@ -87,4 +87,8 @@ public class RoamingServiceRecyclerAdapter extends RecyclerView.Adapter<RoamingS
     public int getId(int tag){
         return Integer.valueOf(mItems.get(tag).getTiId());
     }
+
+    public String getTitle(int tag){
+        return mItems.get(tag).getTiName();
+    }
 }

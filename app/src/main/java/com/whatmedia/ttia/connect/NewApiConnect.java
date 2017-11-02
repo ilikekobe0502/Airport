@@ -6,13 +6,20 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.whatmedia.ttia.newresponse.GetBaseEncodeResponse;
 import com.whatmedia.ttia.newresponse.GetBaseResponse;
 import com.whatmedia.ttia.newresponse.data.BaseEncodeData;
 import com.whatmedia.ttia.utility.Util;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -536,7 +543,7 @@ public class NewApiConnect {
      * @param callback
      */
     public void getUserEmergency(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "emergency_list")
+        HttpUrl url = HttpUrl.parse(createUrl("emergency_list"))
                 .newBuilder()
                 .build();
         getApi(url, true, callback);
@@ -548,10 +555,10 @@ public class NewApiConnect {
      * @param callback
      */
     public void getUserSweetNotify(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "intimate_remind_list")
+        HttpUrl url = HttpUrl.parse(createUrl("intimate_remind_list"))
                 .newBuilder()
                 .build();
-        getApi(url,true, callback);
+        getApi(url, true, callback);
     }
 
     /**
@@ -560,10 +567,10 @@ public class NewApiConnect {
      * @param callback
      */
     public void getUserNews(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "news_list")
+        HttpUrl url = HttpUrl.parse(createUrl("news_list"))
                 .newBuilder()
                 .build();
-        getApi(url,true, callback);
+        getApi(url, true, callback);
     }
 
     /**
@@ -572,10 +579,10 @@ public class NewApiConnect {
      * @param callback
      */
     public void getSouvenirList(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "souvenir_list")
+        HttpUrl url = HttpUrl.parse(createUrl("souvenir_list"))
                 .newBuilder()
                 .build();
-        getApi(url,true, callback);
+        getApi(url, true, callback);
     }
 
     /**
@@ -584,10 +591,23 @@ public class NewApiConnect {
      * @param callback
      */
     public void getRoamingService(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "telecommunications_industry_list")
+        HttpUrl url = HttpUrl.parse(createUrl("telecommunications_industry_list"))
                 .newBuilder()
                 .build();
         getApi(url, true, callback);
+    }
+
+    /**
+     * 取得漫遊上網HTML
+     *
+     * @param callback
+     */
+    public void getRoamingDetail(String id, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("roaming_service"))
+                .newBuilder()
+                .build();
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(id));
+        postApi(url, body, true, callback);
     }
 
 

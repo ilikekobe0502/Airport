@@ -63,7 +63,8 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("key", mRoamingServiceRecyclerAdapter.getId((int) view.getTag()) + "");
+                bundle.putString(RoamingServiceContract.ARG_KEY, mRoamingServiceRecyclerAdapter.getId((int) view.getTag()) + "");
+                bundle.putString(RoamingServiceContract.ARG_TITLE,mRoamingServiceRecyclerAdapter.getTitle((int) view.getTag()));
                 mMainActivity.addFragment(Page.TAG_COMMUNICATION_ROAMING_DETAIL, bundle, true);
             }
         });

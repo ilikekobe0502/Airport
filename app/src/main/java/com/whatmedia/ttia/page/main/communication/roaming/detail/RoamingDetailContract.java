@@ -1,13 +1,10 @@
 package com.whatmedia.ttia.page.main.communication.roaming.detail;
 
 
-import com.whatmedia.ttia.response.data.RoamingDetailData;
-
-import java.util.List;
 
 public interface RoamingDetailContract {
     interface View {
-        void getRoamingDetailSucceed(List<RoamingDetailData> response);
+        void getRoamingDetailSucceed(String url,String image);
 
         void getRoamingDetailFailed(String message, boolean timeout);
     }
