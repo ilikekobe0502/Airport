@@ -1,15 +1,12 @@
 package com.whatmedia.ttia.page.main.traffic.roadside;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetRoadsideAssistanceResponse;
-import com.whatmedia.ttia.response.data.RoadsideAssistanceData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetRoadsideAssistInfoResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,37 +17,33 @@ import okhttp3.Call;
 public class RoadsideAssistancePresenter implements RoadsideAssistanceContract.Presenter {
     private final static String TAG = RoadsideAssistancePresenter.class.getSimpleName();
 
-    private static RoadsideAssistancePresenter mRoadsideAssistancePresenter;
-    private static ApiConnect mApiConnect;
-    private static RoadsideAssistanceContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private RoadsideAssistanceContract.View mView;
+    private Context mContext;
 
 
-    public static RoadsideAssistancePresenter getInstance(Context context, RoadsideAssistanceContract.View view) {
-        mRoadsideAssistancePresenter = new RoadsideAssistancePresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    RoadsideAssistancePresenter(Context context, RoadsideAssistanceContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mRoadsideAssistancePresenter;
+        mContext = context;
     }
 
     @Override
     public void getRoadsideAssistanceAPI() {
-        mApiConnect.getRoadsideAssistance(new ApiConnect.MyCallback() {
+        mNewApiConnect.getRoadsideAssistInfo(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getRoadsideAssistanceFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<RoadsideAssistanceData> list = GetRoadsideAssistanceResponse.newInstance(result);
-                    mView.getRoadsideAssistanceSucceed(list);
-                } else {
-                    mView.getRoadsideAssistanceFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetRoadsideAssistInfoResponse roadsideAssistInfoResponse = GetRoadsideAssistInfoResponse.getGson(response);
+                if (roadsideAssistInfoResponse.getRoadsideAssist() != null)
+                    mView.getRoadsideAssistanceSucceed(roadsideAssistInfoResponse.getRoadsideAssist());
+                else
+                    mView.getRoadsideAssistanceFailed(mContext.getString(R.string.data_error), false);
             }
         });
-
     }
 }

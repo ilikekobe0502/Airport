@@ -610,10 +610,35 @@ public class NewApiConnect {
 
     /**
      * 取得巴士資訊
+     *
      * @param callback
      */
     public void getBusInfo(MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("bus"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得機場捷運/高鐵資訊
+     *
+     * @param callback
+     */
+    public void getMrtHsrInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("mrt_hsr"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得道路救援資料
+     *
+     * @param callback
+     */
+    public void getRoadsideAssistInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("roadside_assist"))
                 .newBuilder()
                 .build();
         getApi(url, true, callback);

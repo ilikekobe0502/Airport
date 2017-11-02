@@ -18,12 +18,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.RoadsideAssistanceData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +40,6 @@ public class RoadsideAssistanceFragment extends BaseFragment implements Roadside
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static RoadsideAssistanceFragment newInstance() {
         RoadsideAssistanceFragment fragment = new RoadsideAssistanceFragment();
         Bundle args = new Bundle();
@@ -66,7 +63,7 @@ public class RoadsideAssistanceFragment extends BaseFragment implements Roadside
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = RoadsideAssistancePresenter.getInstance(getContext(), this);
+        mPresenter = new RoadsideAssistancePresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getRoadsideAssistanceAPI();
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -101,8 +98,8 @@ public class RoadsideAssistanceFragment extends BaseFragment implements Roadside
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                mWebView.loadUrl("javascript:window.HtmlViewer.showHTML" +
-                        "('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
+//                mWebView.loadUrl("javascript:window.HtmlViewer.showHTML" +
+//                        "('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
                 super.onPageFinished(view, url);
                 mLoadingView.goneLoadingView();
 
@@ -146,14 +143,13 @@ public class RoadsideAssistanceFragment extends BaseFragment implements Roadside
     }
 
     @Override
-    public void getRoadsideAssistanceSucceed(final List<RoadsideAssistanceData> response) {
+    public void getRoadsideAssistanceSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getRoadsideAssistanceHtml())) {
+            if (response != null && !TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-
-                        mWebView.loadData(response.get(0).getRoadsideAssistanceHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });

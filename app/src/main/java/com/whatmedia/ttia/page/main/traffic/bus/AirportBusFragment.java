@@ -13,7 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.newresponse.data.BusInfoData;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.utility.Util;
@@ -111,7 +111,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     }
 
     @Override
-    public void getAirportBusSucceed(final BusInfoData response) {
+    public void getAirportBusSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
             if (!TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
