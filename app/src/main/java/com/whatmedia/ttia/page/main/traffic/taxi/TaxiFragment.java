@@ -18,12 +18,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.TaxiData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +64,7 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = TaxiPresenter.getInstance(getContext(), this);
+        mPresenter = new TaxiPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTaxiAPI();
 
@@ -147,14 +145,14 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
     }
 
     @Override
-    public void getTaxiSucceed(final List<TaxiData> response) {
+    public void getTaxiSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getTaxiHtml())) {
+            if (response != null && !TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
 
-                        mWebView.loadData(response.get(0).getTaxiHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });

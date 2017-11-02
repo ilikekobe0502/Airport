@@ -1,15 +1,12 @@
 package com.whatmedia.ttia.page.main.traffic.taxi;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetTaxiResponse;
-import com.whatmedia.ttia.response.data.TaxiData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetTaxiInfoResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,37 +17,34 @@ import okhttp3.Call;
 public class TaxiPresenter implements TaxiContract.Presenter {
     private final static String TAG = TaxiPresenter.class.getSimpleName();
 
-    private static TaxiPresenter mTaxiPresenter;
-    private static ApiConnect mApiConnect;
-    private static TaxiContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private TaxiContract.View mView;
+    private Context mContext;
 
 
-    public static TaxiPresenter getInstance(Context context, TaxiContract.View view) {
-        mTaxiPresenter = new TaxiPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    TaxiPresenter(Context context, TaxiContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mTaxiPresenter;
+        mContext = context;
     }
 
     @Override
     public void getTaxiAPI() {
-        mApiConnect.getTaxi(new ApiConnect.MyCallback() {
+        mNewApiConnect.getTaxiInfo(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getTaxiFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<TaxiData> list = GetTaxiResponse.newInstance(result);
-                    mView.getTaxiSucceed(list);
-                } else {
-                    mView.getTaxiFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetTaxiInfoResponse taxiInfoResponse = GetTaxiInfoResponse.getGson(response);
+                if (taxiInfoResponse.getTaxi() != null)
+                    mView.getTaxiSucceed(taxiInfoResponse.getTaxi());
+                else
+                    mView.getTaxiFailed(mContext.getString(R.string.data_error), false);
+
             }
         });
-
     }
 }

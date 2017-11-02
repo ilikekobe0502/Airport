@@ -619,4 +619,16 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得計程車資料
+     *
+     * @param callback
+     */
+    public void getTaxiInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("taxi"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
