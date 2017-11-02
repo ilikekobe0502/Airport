@@ -631,4 +631,16 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得失物招領資料
+     *
+     * @param callback
+     */
+    public void getLostAndFoundInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("lostAndFound"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
