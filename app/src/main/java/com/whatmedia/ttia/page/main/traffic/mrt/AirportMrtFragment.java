@@ -18,12 +18,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.AirportMrtData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +64,7 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = AirportMrtPresenter.getInstance(getContext(), this);
+        mPresenter = new AirportMrtPresenter(getContext(), this);
 
         mLoadingView.showLoadingView();
         mPresenter.getAirportMrtAPI();
@@ -146,13 +144,13 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
     }
 
     @Override
-    public void getAirportMrtSucceed(final List<AirportMrtData> response) {
+    public void getAirportMrtSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getHighTrailHtle())) {
+            if (response != null && !TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-                        mWebView.loadData(response.get(0).getHighTrailHtle(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });

@@ -1,15 +1,12 @@
 package com.whatmedia.ttia.page.main.traffic.mrt;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetAirportMrtResponse;
-import com.whatmedia.ttia.response.data.AirportMrtData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetMrtInfoResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,38 +17,33 @@ import okhttp3.Call;
 public class AirportMrtPresenter implements AirportMrtContract.Presenter {
     private final static String TAG = AirportMrtPresenter.class.getSimpleName();
 
-    private static AirportMrtPresenter mAirportMrtPresenter;
-    private static ApiConnect mApiConnect;
-    private static AirportMrtContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private AirportMrtContract.View mView;
+    private Context mContext;
 
 
-    public static AirportMrtPresenter getInstance(Context context, AirportMrtContract.View view) {
-        mAirportMrtPresenter = new AirportMrtPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    AirportMrtPresenter(Context context, AirportMrtContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-
-        return mAirportMrtPresenter;
+        mContext = context;
     }
 
     @Override
     public void getAirportMrtAPI() {
-        mApiConnect.getAirportMrt(new ApiConnect.MyCallback() {
+        mNewApiConnect.getMrtHsrInfo(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getAirportMrtFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<AirportMrtData> list = GetAirportMrtResponse.newInstance(result);
-                    mView.getAirportMrtSucceed(list);
-                } else {
-                    mView.getAirportMrtFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetMrtInfoResponse mrtInfoResponse = GetMrtInfoResponse.getGson(response);
+                if (mrtInfoResponse.getMrtHsr() != null)
+                    mView.getAirportMrtSucceed(mrtInfoResponse.getMrtHsr());
+                else
+                    mView.getAirportMrtFailed(mContext.getString(R.string.data_error), false);
             }
         });
-
     }
 }

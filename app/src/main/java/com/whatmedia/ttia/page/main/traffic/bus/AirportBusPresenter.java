@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
-import com.whatmedia.ttia.newresponse.GetBustInfoResponse;
+import com.whatmedia.ttia.newresponse.GetBusInfoResponse;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class AirportBusPresenter implements AirportBusContract.Presenter {
 
             @Override
             public void onResponse(Call call, String response) throws IOException {
-                GetBustInfoResponse bustInfoResponse = GetBustInfoResponse.getGson(response);
+                GetBusInfoResponse bustInfoResponse = GetBusInfoResponse.getGson(response);
                 if (bustInfoResponse.getBus() != null) {
                     mView.getAirportBusSucceed(bustInfoResponse.getBus());
                 } else {
