@@ -4,10 +4,11 @@ package com.whatmedia.ttia.page.main.useful.questionnaire;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetQuestionnaireResponse;
-import com.whatmedia.ttia.response.data.QuestionnaireData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetQuestionnairesListResponse;
+import com.whatmedia.ttia.newresponse.GetQuestionnairesQueryResponse;
+import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,55 +18,55 @@ import okhttp3.Call;
 public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
     private final static String TAG = QuestionnairePresenter.class.getSimpleName();
 
-    private static QuestionnairePresenter mQuestionnairePresenter;
-    private static ApiConnect mApiConnect;
-    private static QuestionnaireContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private QuestionnaireContract.View mView;
+    private Context mContext;
 
 
-    public static QuestionnairePresenter getInstance(Context context, QuestionnaireContract.View view) {
-        mQuestionnairePresenter = new QuestionnairePresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    QuestionnairePresenter(Context context, QuestionnaireContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mQuestionnairePresenter;
+        mContext = context;
     }
 
     @Override
     public void getQuestionnaireAPI() {
-        mApiConnect.getQuestionnaire(new ApiConnect.MyCallback() {
+        mNewApiConnect.getQuestionnairesList(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getQuestionnaireFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<QuestionnaireData> list = GetQuestionnaireResponse.newInstance(result);
-                    mView.getQuestionnaireSucceed(list);
-                } else {
-                    mView.getQuestionnaireFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetQuestionnairesListResponse questionnairesListResponse = GetQuestionnairesListResponse.getGson(response);
+                if (questionnairesListResponse.getQuestionnairesList() != null)
+                    mView.getQuestionnaireSucceed(questionnairesListResponse.getQuestionnairesList());
+                else
+                    mView.getQuestionnaireFailed(mContext.getString(R.string.data_error), false);
             }
         });
     }
 
     @Override
-    public void sendQuestionnaireAPI(String answer) {
-        mApiConnect.sendQuestionnaireResult(answer, new ApiConnect.MyCallback() {
+    public void sendQuestionnaireAPI(List<QuestionnairesListData> answer) {
+
+        GetQuestionnairesQueryResponse questionnairesQueryResponse = new GetQuestionnairesQueryResponse();
+        questionnairesQueryResponse.setData(answer);
+        String json = questionnairesQueryResponse.getJson();
+        if (TextUtils.isEmpty(json)) {
+            mView.sendQuestionnaireFailed(mContext.getString(R.string.data_error), false);
+            return;
+        }
+        mNewApiConnect.sentQuestioonaires(json, new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.sendQuestionnaireFailed(e.toString(), timeout);
+                mView.sendQuestionnaireFailed(e.toString(),timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    mView.sendQuestionnaireSucceed(result);
-                } else {
-                    mView.sendQuestionnaireFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                mView.sendQuestionnaireSucceed();
             }
         });
     }

@@ -21,24 +21,6 @@
             android:layout_margin="@dimen/dp_pixel_15"
             android:layout_centerInParent="true"/>
 
-        <RelativeLayout
-            android:layout_marginRight="@dimen/dp_pixel_10"
-            android:id="@+id/layout_delete"
-            android:layout_width="@dimen/dp_pixel_60"
-            android:layout_height="@dimen/dp_pixel_40"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:background="@drawable/but_bg_mdpi"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/useful_quest_send"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_15" />
-        </RelativeLayout>
     </RelativeLayout>
 
     <TextView

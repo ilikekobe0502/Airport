@@ -670,4 +670,31 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 取得問券總類清單
+     *
+     * @param callback
+     */
+    public void getQuestionnairesList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("questionnaires_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 發送問卷答案
+     *
+     * @param json
+     * @param callback
+     */
+    public void sentQuestioonaires(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("new_questionnaires_answer"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
 }

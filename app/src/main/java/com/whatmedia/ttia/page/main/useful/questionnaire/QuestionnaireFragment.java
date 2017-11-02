@@ -11,13 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.QuestionnaireData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -29,8 +28,6 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
 
     @BindView(R.id.layout_recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.layout_delete)
-    RelativeLayout mButtonSend;
 
     private static final String TAG = QuestionnaireFragment.class.getSimpleName();
 
@@ -59,7 +56,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
         View view = inflater.inflate(R.layout.fragment_useful_quests, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = QuestionnairePresenter.getInstance(getContext(), this);
+        mPresenter = new QuestionnairePresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getQuestionnaireAPI();
 
@@ -67,14 +64,6 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mQuestionnaireRecyclerViewAdapter);
         mQuestionnaireRecyclerViewAdapter.setClickListener(this);
-
-        mButtonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadingView.showLoadingView();
-                mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
-            }
-        });
 
         return view;
     }
@@ -98,7 +87,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     }
 
     @Override
-    public void getQuestionnaireSucceed(final List<QuestionnaireData> response) {
+    public void getQuestionnaireSucceed(final List<QuestionnairesListData> response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             if (response != null && response.size() > 0) {
@@ -106,7 +95,6 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
                     @Override
                     public void run() {
                         mQuestionnaireRecyclerViewAdapter.setData(response);
-                        mQuestionnaireRecyclerViewAdapter.notifyDataSetChanged();
                     }
                 });
             } else {
@@ -138,13 +126,13 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
     }
 
     @Override
-    public void sendQuestionnaireSucceed(final String response) {
+    public void sendQuestionnaireSucceed() {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    showNoDataDialog();
+                    showSuccessDialog();
                 }
             });
         } else {
@@ -178,7 +166,7 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
         mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
     }
 
-    private void showNoDataDialog() {
+    private void showSuccessDialog() {
         if (isAdded() && !isDetached()) {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
