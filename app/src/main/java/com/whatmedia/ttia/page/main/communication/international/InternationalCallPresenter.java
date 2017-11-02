@@ -41,8 +41,8 @@ public class InternationalCallPresenter implements InternationalCallContract.Pre
             public void onResponse(Call call, String response) throws IOException {
                 GetInternationCallResponse getInternationCallResponse = GetInternationCallResponse.getGson(response);
 
-                if(getInternationCallResponse!=null && getInternationCallResponse.getInternationCallData()!=null){
-                    mView.getInternationalCallSucceed(getInternationCallResponse.getInternationCallData());
+                if(getInternationCallResponse!=null && getInternationCallResponse.getOnlyContentData()!=null){
+                    mView.getInternationalCallSucceed(getInternationCallResponse.getOnlyContentData());
                 }else{
                     mView.getInternationalCallFailed(mContext.getString(R.string.data_error), false);
                 }

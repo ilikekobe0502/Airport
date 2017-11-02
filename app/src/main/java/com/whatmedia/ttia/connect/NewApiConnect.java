@@ -622,6 +622,18 @@ public class NewApiConnect {
         getApi(url,true, callback);
     }
 
+    /**
+     * 取得緊急電話html
+     *
+     * @param callback
+     */
+    public void getEmergencyCall(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "emergency_call")
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
 
     /**
      * 取得航廈廁所清單

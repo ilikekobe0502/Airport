@@ -5,15 +5,14 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.whatmedia.ttia.newresponse.data.onlyContentData;
 
+public class GetEmergenctCallResponse {
 
-public class GetInternationCallResponse {
-
-    @SerializedName("internationalCall")
+    @SerializedName("emergencyCall")
     private onlyContentData onlyContentData;
 
-    public static GetInternationCallResponse getGson(String json) {
+    public static GetEmergenctCallResponse getGson(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, GetInternationCallResponse.class);
+        return gson.fromJson(json, GetEmergenctCallResponse.class);
     }
 
     public onlyContentData getOnlyContentData() {

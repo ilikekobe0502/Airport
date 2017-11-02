@@ -3,7 +3,7 @@ package com.whatmedia.ttia.newresponse.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class InternationCallData {
+public class onlyContentData {
     @SerializedName("content")
     private String icHtml;
 
