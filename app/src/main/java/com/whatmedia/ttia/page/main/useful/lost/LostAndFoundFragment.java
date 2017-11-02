@@ -19,12 +19,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.LostAndFoundData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,7 +66,7 @@ public class LostAndFoundFragment extends BaseFragment implements LostAndFoundCo
         View view = inflater.inflate(R.layout.fragment_useful_lost, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = LostAndFoundPresenter.getInstance(getContext(), this);
+        mPresenter = new LostAndFoundPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getLostAndFoundAPI();
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -147,13 +145,13 @@ public class LostAndFoundFragment extends BaseFragment implements LostAndFoundCo
     }
 
     @Override
-    public void getLostAndFoundSucceed(final List<LostAndFoundData> response) {
+    public void getLostAndFoundSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getLostHtml())) {
+            if (response != null && !TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-                        mWebView.loadData(response.get(0).getLostHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });

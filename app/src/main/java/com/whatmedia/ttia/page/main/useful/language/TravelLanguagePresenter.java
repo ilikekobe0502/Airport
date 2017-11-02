@@ -3,20 +3,47 @@ package com.whatmedia.ttia.page.main.useful.language;
 
 import android.content.Context;
 
-import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetTravelTypeListResponse;
+import com.whatmedia.ttia.newresponse.data.TravelTypeListData;
 
-public class TravelLanguagePresenter implements TravelLanguageContract.Presenter{
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Call;
+
+public class TravelLanguagePresenter implements TravelLanguageContract.Presenter {
     private final static String TAG = TravelLanguagePresenter.class.getSimpleName();
 
-    private static TravelLanguagePresenter mTravelLanguagePresenter;
-    private static ApiConnect mApiConnect;
-    private static TravelLanguageContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private TravelLanguageContract.View mView;
+    private Context mContext;
 
 
-    public static TravelLanguagePresenter getInstance(Context context, TravelLanguageContract.View view) {
-        mTravelLanguagePresenter = new TravelLanguagePresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    TravelLanguagePresenter(Context context, TravelLanguageContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mTravelLanguagePresenter;
+        mContext = context;
+    }
+
+    @Override
+    public void getTypeListApi() {
+        mNewApiConnect.getTravelSessionTypeList(new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                mView.getApiFailed(e.toString(), timeout);
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                GetTravelTypeListResponse travelTypeListResponse = GetTravelTypeListResponse.getGson(response);
+                List<TravelTypeListData> listData = travelTypeListResponse.getTravelSessionTypeList();
+                if (listData != null && listData.size() > 0)
+                    mView.getApiSucceed(listData);
+                else
+                    mView.getApiFailed(mContext.getString(R.string.data_error), false);
+            }
+        });
     }
 }

@@ -4,47 +4,37 @@ package com.whatmedia.ttia.page.main.useful.language;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.TravelTypeListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.useful.language.result.TravelLanguageResultContract;
+import com.whatmedia.ttia.utility.Util;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.whatmedia.ttia.page.Page.TAG_USERFUL_LANGUAGE_RESULT;
-
-public class TravelLanguageFragment extends BaseFragment implements TravelLanguageContract.View{
-
-    @BindView(R.id.item_1)
-    TextView mItem1;
-    @BindView(R.id.item_2)
-    TextView mItem2;
-    @BindView(R.id.item_3)
-    TextView mItem3;
-    @BindView(R.id.item_4)
-    TextView mItem4;
-    @BindView(R.id.item_5)
-    TextView mItem5;
-    @BindView(R.id.item_6)
-    TextView mItem6;
-    @BindView(R.id.item_7)
-    TextView mItem7;
-    @BindView(R.id.item_8)
-    TextView mItem8;
-
-
+public class TravelLanguageFragment extends BaseFragment implements TravelLanguageContract.View, TravelLanguageRecyclerViewAdapter.IOnItemClickListener {
     private static final String TAG = TravelLanguageFragment.class.getSimpleName();
+
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private TravelLanguageContract.Presenter mPresenter;
+
+    private TravelLanguageRecyclerViewAdapter mAdapter = new TravelLanguageRecyclerViewAdapter();
 
     public TravelLanguageFragment() {
         // Required empty public constructor
@@ -74,80 +64,13 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
         View view = inflater.inflate(R.layout.fragment_language_list, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = TravelLanguagePresenter.getInstance(getContext(), this);
+        mPresenter = new TravelLanguagePresenter(getContext(), this);
 
-        mItem1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",1);
-                bundle.putString("title",getString(R.string.conversation_general));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",3);
-                bundle.putString("title",getString(R.string.conversation_ask));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",5);
-                bundle.putString("title",getString(R.string.conversation_traffic));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",7);
-                bundle.putString("title",getString(R.string.conversation_travel));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",2);
-                bundle.putString("title",getString(R.string.conversation_car));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",4);
-                bundle.putString("title",getString(R.string.conversation_dining));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",6);
-                bundle.putString("title",getString(R.string.conversation_lodging));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
-        mItem8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("key",8);
-                bundle.putString("title",getString(R.string.conversation_shopping));
-                mMainActivity.addFragment(TAG_USERFUL_LANGUAGE_RESULT,bundle,true);
-            }
-        });
+        mPresenter.getTypeListApi();
+        mLoadingView.showLoadingView();
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setItemClickListener(this);
 
         return view;
     }
@@ -184,5 +107,48 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void getApiSucceed(final List<TravelTypeListData> response) {
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setData(response);
+                }
+            });
+        } else {
+            Log.e(TAG, "Fragment is not added");
+        }
+    }
+
+    @Override
+    public void getApiFailed(String s, boolean timeout) {
+        mLoadingView.goneLoadingView();
+        if (isAdded() && !isDetached()) {
+            if (timeout) {
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.showTimeoutDialog(getContext());
+                    }
+                });
+            }
+        } else {
+            Log.d(TAG, "Fragment is not add");
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getTag() instanceof TravelTypeListData) {
+            TravelTypeListData data = (TravelTypeListData) view.getTag();
+            Bundle bundle = new Bundle();
+            bundle.putString(TravelLanguageResultContract.TAG_ID, data.getId());
+            bundle.putString(TravelLanguageResultContract.TAG_Name, data.getName());
+            mMainActivity.addFragment(Page.TAG_USERFUL_LANGUAGE_RESULT, bundle, true);
+        }
     }
 }

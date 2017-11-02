@@ -1,13 +1,11 @@
 package com.whatmedia.ttia.page.main.useful.lost;
 
 
-import com.whatmedia.ttia.response.data.LostAndFoundData;
-
-import java.util.List;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 
 public interface LostAndFoundContract {
     interface View {
-        void getLostAndFoundSucceed(List<LostAndFoundData> response);
+        void getLostAndFoundSucceed(BaseTrafficInfoData response);
 
         void getLostAndFoundFailed(String message, boolean timeout);
     }
