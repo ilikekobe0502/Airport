@@ -610,6 +610,18 @@ public class NewApiConnect {
         postApi(url, body, true, callback);
     }
 
+    /**
+     * 取得國際電話html
+     *
+     * @param callback
+     */
+    public void getInternationCall(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("international_call"))
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
 
     /**
      * 取得航廈廁所清單
