@@ -1,12 +1,10 @@
 package com.whatmedia.ttia.page.main.traffic.tourbus;
 
-import com.whatmedia.ttia.response.data.TourBusData;
-
-import java.util.List;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 
 public interface TourBusContract {
     interface View {
-        void getTourBusSucceed(List<TourBusData> response);
+        void getTourBusSucceed(BaseTrafficInfoData response);
 
         void getTourBusFailed(String message, boolean timeout);
     }

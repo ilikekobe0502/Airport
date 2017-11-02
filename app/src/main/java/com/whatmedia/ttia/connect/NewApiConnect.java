@@ -668,4 +668,28 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得巡迴巴士資料
+     *
+     * @param callback
+     */
+    public void getShuttleInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("shuttle"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得機場電車資料
+     *
+     * @param callback
+     */
+    public void getTramInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("tram"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }

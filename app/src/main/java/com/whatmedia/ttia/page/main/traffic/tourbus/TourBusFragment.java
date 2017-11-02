@@ -18,12 +18,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.TourBusData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +64,7 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = TourBusPresenter.getInstance(getContext(), this);
+        mPresenter = new TourBusPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTourBusAPI();
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -143,14 +141,14 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
     }
 
     @Override
-    public void getTourBusSucceed(final List<TourBusData> response) {
+    public void getTourBusSucceed(final BaseTrafficInfoData response) {
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getShuttlesHtml())) {
+            if (response != null && !TextUtils.isEmpty(response.getContent())) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
 
-                        mWebView.loadData(response.get(0).getShuttlesHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });
