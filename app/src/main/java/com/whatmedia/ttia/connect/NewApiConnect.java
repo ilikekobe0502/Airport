@@ -578,6 +578,18 @@ public class NewApiConnect {
         getApi(url,true, callback);
     }
 
+    /**
+     * 取得電信業者清單
+     *
+     * @param callback
+     */
+    public void getRoamingService(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "telecommunications_industry_list")
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
 
     /**
      * 取得航廈廁所清單

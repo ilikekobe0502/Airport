@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.RoamingServiceData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
-import com.whatmedia.ttia.response.data.RoamingServiceData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
         View view = inflater.inflate(R.layout.fragment_roaming_service, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = RoamingServicePresenter.getInstance(getContext(), this);
+        mPresenter = new RoamingServicePresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getRoamingServiceAPI();
 
