@@ -520,4 +520,16 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得使用者緊急通知
+     *
+     * @param callback
+     */
+    public void getUserEmergency(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "emergency_list")
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
