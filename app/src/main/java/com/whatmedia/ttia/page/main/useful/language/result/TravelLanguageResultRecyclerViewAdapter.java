@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.LanguageData;
+import com.whatmedia.ttia.newresponse.data.TravelListData;
 
 import java.util.List;
 
@@ -26,21 +26,12 @@ import butterknife.OnClick;
 public class TravelLanguageResultRecyclerViewAdapter extends RecyclerView.Adapter<TravelLanguageResultRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = TravelLanguageResultRecyclerViewAdapter.class.getSimpleName();
 
-    private List<LanguageData> mItems;
+    private List<TravelListData> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
-//    private OnItemClickListener mClickListener;
 
-    //    public interface OnItemClickListener {
-//        void OnClick(View view, int score, int position);
-//    }
     public TravelLanguageResultRecyclerViewAdapter(Context context) {
         mContext = context;
-    }
-
-    public TravelLanguageResultRecyclerViewAdapter(Context context, List<LanguageData> lists) {
-        mContext = context;
-        mItems = lists;
     }
 
     @Override
@@ -56,15 +47,15 @@ public class TravelLanguageResultRecyclerViewAdapter extends RecyclerView.Adapte
             Log.e(TAG, "mItem is null");
             return;
         }
-        LanguageData item = mItems.get(position);
+        TravelListData item = mItems.get(position);
         if (item == null) {
             Log.e(TAG, "item is null");
             return;
         }
-        String tw = !TextUtils.isEmpty(item.getTextTW()) ? item.getTextTW() : "";
-        String cn = !TextUtils.isEmpty(item.getTextCN()) ? item.getTextCN() : "";
-        String jp = !TextUtils.isEmpty(item.getTextJP()) ? item.getTextJP() : "";
-        String en = !TextUtils.isEmpty(item.getTextEN()) ? item.getTextEN() : "";
+        String tw = !TextUtils.isEmpty(item.getTw()) ? item.getTw() : "";
+        String cn = !TextUtils.isEmpty(item.getRoman()) ? item.getRoman() : "";
+        String jp = !TextUtils.isEmpty(item.getJp()) ? item.getJp() : "";
+        String en = !TextUtils.isEmpty(item.getEn()) ? item.getEn() : "";
 
         holder.mText1.setText(tw);
         holder.mText2.setText(cn);
@@ -77,9 +68,6 @@ public class TravelLanguageResultRecyclerViewAdapter extends RecyclerView.Adapte
             holder.layout_bg.setBackgroundColor(Color.TRANSPARENT);
         }
 
-//        holder.mTextTitle.setText(mContext.getString(R.string.useful_quest_number)+item.getQuestId());
-//        holder.mTextQuest.setText(item.getQuestContent());
-
         holder.mImageViewPronunciation.setTag(tw);
     }
 
@@ -88,12 +76,9 @@ public class TravelLanguageResultRecyclerViewAdapter extends RecyclerView.Adapte
         return mItems != null ? mItems.size() : 0;
     }
 
-//    public void setOnClickListener(OnItemClickListener listener) {
-//        mClickListener = listener;
-//    }
-
-    public void setData(List<LanguageData> list) {
+    public void setData(List<TravelListData> list) {
         mItems = list;
+        notifyDataSetChanged();
     }
 
     public void setClickListener(IOnItemClickListener listener) {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +15,13 @@ import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.TravelListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.LanguageData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +39,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
     private IActivityTools.IMainActivity mMainActivity;
     private TravelLanguageResultContract.Presenter mPresenter;
     private TravelLanguageResultRecyclerViewAdapter mTravelLanguageResultRecyclerViewAdapter;
-    private int mQueryId = 0;
+    private String mQueryId;
     private String mTitle = "";
     private TextToSpeech mTts;
     private final TextToSpeech.OnInitListener mInitListener = new TextToSpeech.OnInitListener() {
@@ -91,11 +90,11 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments().containsKey("key")) {
-            mQueryId = getArguments().getInt("key");
+        if (!TextUtils.isEmpty(getArguments().getString(TravelLanguageResultContract.TAG_ID))) {
+            mQueryId = getArguments().getString(TravelLanguageResultContract.TAG_ID);
         }
-        if (getArguments().containsKey("title")) {
-            mTitle = getArguments().getString("title");
+        if (!TextUtils.isEmpty(getArguments().getString(TravelLanguageResultContract.TAG_Name))) {
+            mTitle = getArguments().getString(TravelLanguageResultContract.TAG_Name);
         }
 
     }
@@ -107,7 +106,7 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
         View view = inflater.inflate(R.layout.fragment_lauguage_result, container, false);
         ButterKnife.bind(this, view);
         mLoadingView.showLoadingView();
-        mPresenter = TravelLanguageResultPresenter.getInstance(getContext(), this);
+        mPresenter = new TravelLanguageResultPresenter(getContext(), this);
         mPresenter.getLanguageAPI(mQueryId);
 
         mTravelLanguageResultRecyclerViewAdapter = new TravelLanguageResultRecyclerViewAdapter(getContext());
@@ -142,14 +141,13 @@ public class TravelLanguageResultFragment extends BaseFragment implements Travel
     }
 
     @Override
-    public void getLanguageSucceed(final List<LanguageData> response) {
+    public void getLanguageSucceed(final List<TravelListData> response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
                     mTravelLanguageResultRecyclerViewAdapter.setData(response);
-                    mTravelLanguageResultRecyclerViewAdapter.notifyDataSetChanged();
                 }
             });
         } else {

@@ -643,4 +643,31 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得旅行會話種類清單
+     *
+     * @param callback
+     */
+    public void getTravelSessionTypeList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("travel_session_type_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得旅行會話清單
+     *
+     * @param json
+     * @param callback
+     */
+    public void getTravelSessionList(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("travel_session_list"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
 }
