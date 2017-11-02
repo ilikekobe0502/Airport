@@ -583,4 +583,16 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得道路救援資料
+     *
+     * @param callback
+     */
+    public void getRoadsideAssistInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("roadside_assist"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
