@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.AnswerListData;
 import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -186,9 +188,12 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
 
     }
 
-    List<QuestionnairesListData> getAnswer() {
-        // TODO: 2017/11/2 Ian
-        return null;
+    List<AnswerListData> getAnswer() {
+        List<AnswerListData> answerListData = new ArrayList<>();
+        for(QuestionnairesListData item:mItems){
+            answerListData.add(new AnswerListData(item.getId(),TextUtils.isEmpty(item.getAnswer())?"1":item.getAnswer()));
+        }
+        return answerListData;
     }
 
 

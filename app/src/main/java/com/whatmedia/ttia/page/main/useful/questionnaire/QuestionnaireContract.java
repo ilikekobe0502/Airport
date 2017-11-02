@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main.useful.questionnaire;
 
 
+import com.whatmedia.ttia.newresponse.data.AnswerListData;
 import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 
 import java.util.List;
@@ -19,6 +20,6 @@ public interface QuestionnaireContract {
     interface Presenter {
         void getQuestionnaireAPI();
 
-        void sendQuestionnaireAPI(List<QuestionnairesListData> answer);
+        void sendQuestionnaireAPI(List<AnswerListData> answer);
     }
 }
