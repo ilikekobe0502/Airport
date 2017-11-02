@@ -542,7 +542,31 @@ public class NewApiConnect {
         getApi(url, true, callback);
     }
 
-     /**
+    /**
+     * 取得使用者貼心提醒
+     *
+     * @param callback
+     */
+    public void getUserSweetNotify(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "intimate_remind_list")
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
+    /**
+     * 取得使用者最新消息
+     *
+     * @param callback
+     */
+    public void getUserNews(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "news_list")
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
+    /**
      * 取得航廈廁所清單
      *
      * @param callback

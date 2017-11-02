@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.UserNewsData;
+import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
             return;
         }
 
-        holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? Util.justShowDate(item.getaTime()) : "");
+        holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getPushTime()) ? Util.justShowDate(item.getPushTime()) : "");
         holder.mTextViewMessage.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
 
         if ((position + 1) % 2 != 0) {
