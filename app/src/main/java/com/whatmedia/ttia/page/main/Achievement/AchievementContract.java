@@ -1,7 +1,8 @@
 package com.whatmedia.ttia.page.main.Achievement;
 
 
-import com.whatmedia.ttia.response.data.AchievementsData;
+
+import com.whatmedia.ttia.newresponse.data.AchievementsData;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ public interface AchievementContract {
     }
 
     interface Presenter {
-        boolean queryAchievementList();
+        void queryAchievementList();
     }
 }

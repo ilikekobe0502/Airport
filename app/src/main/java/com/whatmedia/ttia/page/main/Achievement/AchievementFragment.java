@@ -14,12 +14,11 @@ import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.AchievementsData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.Achievement.Detail.AchievementDetailContract;
-import com.whatmedia.ttia.response.data.AchievementsData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -68,15 +67,15 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
         View view = inflater.inflate(R.layout.fragment_store_offer_info, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = AchievementPresenter.getInstance(getContext(), this);
+        mPresenter = new AchievementPresenter(getContext(), this);
 
         mAdapter = new AchievementRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
 
-        if (mPresenter.queryAchievementList())
-            mLoadingView.showLoadingView();
+        mLoadingView.showLoadingView();
+        mPresenter.queryAchievementList();
 
         return view;
     }
@@ -118,8 +117,8 @@ public class AchievementFragment extends BaseFragment implements AchievementCont
     public void onClick(View view) {
         AchievementsData data = mList.get(Integer.valueOf(view.getTag().toString()));
         Bundle bundle = new Bundle();
-        bundle.putString(AchievementDetailContract.IMAGE_PATH, !TextUtils.isEmpty(data.getImgPath()) ? data.getImgPath() : "");
-        bundle.putString(AchievementDetailContract.TEXT_DATE, !TextUtils.isEmpty(data.getDate()) ? data.getDate() : "");
+        bundle.putString(AchievementDetailContract.IMAGE_PATH, !TextUtils.isEmpty(data.getImgUrl()) ? data.getImgUrl() : "");
+        bundle.putString(AchievementDetailContract.TEXT_DATE, !TextUtils.isEmpty(data.getStartDate()) ? data.getStartDate() : "");
         bundle.putString(AchievementDetailContract.TEXT_TITLE, !TextUtils.isEmpty(data.getTitle()) ? data.getTitle() : "");
         bundle.putString(AchievementDetailContract.TEXT_CONTENT, !TextUtils.isEmpty(data.getContent()) ? data.getContent() : "");
         mMainActivity.addFragment(Page.TAG_ACHIEVEMENT_DETAIL, bundle, true);

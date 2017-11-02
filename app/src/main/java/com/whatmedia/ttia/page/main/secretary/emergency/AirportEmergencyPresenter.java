@@ -1,16 +1,12 @@
 package com.whatmedia.ttia.page.main.secretary.emergency;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetUserNewsResponse;
-import com.whatmedia.ttia.response.data.UserNewsData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetUserNewsResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -21,35 +17,33 @@ import okhttp3.Call;
 public class AirportEmergencyPresenter implements AirportEmergencyContract.Presenter {
     private final static String TAG = AirportEmergencyPresenter.class.getSimpleName();
 
-    private static AirportEmergencyPresenter mAirportEmergencyPresenter;
-    private static ApiConnect mApiConnect;
-    private static AirportEmergencyContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private AirportEmergencyContract.View mView;
+    private Context mContext;
 
-
-    public static AirportEmergencyPresenter getInstance(Context context, AirportEmergencyContract.View view) {
-        mAirportEmergencyPresenter = new AirportEmergencyPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    AirportEmergencyPresenter(Context context, AirportEmergencyContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mAirportEmergencyPresenter;
+        mContext = context;
     }
 
     @Override
     public void getEmergencyAPI() {
-        mApiConnect.getUserEmergency(new ApiConnect.MyCallback() {
+        mNewApiConnect.getUserEmergency(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getEmergencyFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    Log.d(TAG, result);
-                    List<UserNewsData> list = GetUserNewsResponse.newInstance(result);
-                    mView.getEmergencySucceed(list);
-                } else
-                    mView.getEmergencyFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
+            public void onResponse(Call call, String response) throws IOException {
+                GetUserNewsResponse getUserNewsResponse = GetUserNewsResponse.getGson(response);
+
+                if(getUserNewsResponse!=null && getUserNewsResponse.getUserNewsDataList()!=null){
+                    mView.getEmergencySucceed(getUserNewsResponse.getUserNewsDataList());
+                }else{
+                    mView.getEmergencyFailed(mContext.getString(R.string.data_error), false);
+                }
             }
         });
     }

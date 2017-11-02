@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,10 +18,8 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.RoamingDetailData;
+import com.whatmedia.ttia.page.main.communication.roaming.RoamingServiceContract;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,10 +52,10 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
         View view = inflater.inflate(R.layout.fragment_roaming_detail, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = RoamingDetailPresenter.getInstance(getContext(), this);
+        mPresenter = new RoamingDetailPresenter(getContext(), this);
         mLoadingView.showLoadingView();
-        mPresenter.getRoamingDetailAPI(getArguments().get("key").toString());
-
+        mPresenter.getRoamingDetailAPI(getArguments().get(RoamingServiceContract.ARG_KEY).toString());
+        tool(getArguments().get(RoamingServiceContract.ARG_TITLE).toString());
 
         return view;
     }
@@ -83,30 +79,25 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     }
 
     @Override
-    public void getRoamingDetailSucceed(final List<RoamingDetailData> response) {
+    public void getRoamingDetailSucceed(final String url, final String image) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0) {
-                String image = "";
-                if (!TextUtils.isEmpty(response.get(0).getIrHtml()) && response.get(0).getIrHtml().contains("http") && response.get(0).getIrHtml().contains("JPG")) {
-                    image = response.get(0).getIrHtml().substring(response.get(0).getIrHtml().indexOf("http"), response.get(0).getIrHtml().indexOf("JPG") + 3);
-                }
-                final String finalImage = image;
+            if (url != null && image!= null) {
+
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
-                        if (!TextUtils.isEmpty(finalImage))
-                            Picasso.with(getContext()).load(finalImage).into(mImageView);
+                        if (!TextUtils.isEmpty(image))
+                            Picasso.with(getContext()).load(image).into(mImageView);
 
                         mTextQuery.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Uri uri = Uri.parse(response.get(0).getIrUrl());
+                                Uri uri = Uri.parse(url);
                                 Intent it = new Intent(Intent.ACTION_VIEW, uri);
                                 startActivity(it);
                             }
                         });
-                        tool(response.get(0).getTiName());
                     }
                 });
             } else {

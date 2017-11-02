@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.secretary.detail.emergency.EmergencyDetailContract;
-import com.whatmedia.ttia.response.data.UserNewsData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class AirportEmergencyFragment extends BaseFragment implements AirportEme
         View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = AirportEmergencyPresenter.getInstance(getContext(), this);
+        mPresenter = new AirportEmergencyPresenter(getContext(), this);
 
         mLoadingView.showLoadingView();
         mPresenter.getEmergencyAPI();

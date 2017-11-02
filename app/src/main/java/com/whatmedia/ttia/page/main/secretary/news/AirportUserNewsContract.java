@@ -1,6 +1,6 @@
 package com.whatmedia.ttia.page.main.secretary.news;
 
-import com.whatmedia.ttia.response.data.UserNewsData;
+import com.whatmedia.ttia.newresponse.data.UserNewsData;
 
 import java.util.List;
 
