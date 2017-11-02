@@ -1,15 +1,12 @@
 package com.whatmedia.ttia.page.main.traffic.tourbus;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetTourBusResponse;
-import com.whatmedia.ttia.response.data.TourBusData;
+import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetShuttleBusInfoResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -20,37 +17,33 @@ import okhttp3.Call;
 public class TourBusPresenter implements TourBusContract.Presenter {
     private final static String TAG = TourBusPresenter.class.getSimpleName();
 
-    private static TourBusPresenter mTourBusPresenter;
-    private static ApiConnect mApiConnect;
-    private static TourBusContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private TourBusContract.View mView;
+    private Context mContext;
 
 
-    public static TourBusPresenter getInstance(Context context, TourBusContract.View view) {
-        mTourBusPresenter = new TourBusPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    TourBusPresenter(Context context, TourBusContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mTourBusPresenter;
+        mContext = context;
     }
 
     @Override
     public void getTourBusAPI() {
-        mApiConnect.getTourBus(new ApiConnect.MyCallback() {
+        mNewApiConnect.getShuttleInfo(new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getTourBusFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<TourBusData> list = GetTourBusResponse.newInstance(result);
-                    mView.getTourBusSucceed(list);
-                } else {
-                    mView.getTourBusFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
-                }
+            public void onResponse(Call call, String response) throws IOException {
+                GetShuttleBusInfoResponse shuttleBusInfoResponse = GetShuttleBusInfoResponse.getGson(response);
+                if (shuttleBusInfoResponse.getShuttle() != null)
+                    mView.getTourBusSucceed(shuttleBusInfoResponse.getShuttle());
+                else
+                    mView.getTourBusFailed(mContext.getString(R.string.data_error), false);
             }
         });
-
     }
 }

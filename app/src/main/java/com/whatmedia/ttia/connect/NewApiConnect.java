@@ -595,4 +595,16 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得巡迴巴士資料
+     *
+     * @param callback
+     */
+    public void getShuttleInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("shuttle"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
 }
