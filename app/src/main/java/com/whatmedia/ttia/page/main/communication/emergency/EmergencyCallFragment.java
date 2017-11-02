@@ -12,6 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.onlyContentData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.EmergenctCallData;
@@ -49,7 +50,7 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
         View view = inflater.inflate(R.layout.fragment_emergency_call, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = EmergencyCallPresenter.getInstance(getContext(), this);
+        mPresenter = new  EmergencyCallPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getEmergencyCallAPI();
 
@@ -77,15 +78,15 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
     }
 
     @Override
-    public void getEmergencyCallSucceed(final List<EmergenctCallData> response) {
+    public void getEmergencyCallSucceed(final onlyContentData onlyContentData) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0 && !TextUtils.isEmpty(response.get(0).getEcHtml())) {
+            if (onlyContentData != null) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
                         mLoadingView.goneLoadingView();
-                        mWebView.loadData(response.get(0).getEcHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(onlyContentData.getIcHtml(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
                 });

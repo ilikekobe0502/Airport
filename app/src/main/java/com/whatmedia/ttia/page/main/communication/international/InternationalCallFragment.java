@@ -12,12 +12,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.data.onlyContentData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.InternationCallData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +53,7 @@ public class InternationalCallFragment extends BaseFragment implements Internati
         View view = inflater.inflate(R.layout.fragemnt_airport_bus, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = InternationalCallPresenter.getInstance(getContext(), this);
+        mPresenter = new InternationalCallPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getInternationalCallAPI();
 
@@ -91,15 +89,15 @@ public class InternationalCallFragment extends BaseFragment implements Internati
     }
 
     @Override
-    public void getInternationalCallSucceed(final List<InternationCallData> response) {
+    public void getInternationalCallSucceed(final onlyContentData onlyContentData) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (response != null && response.size() > 0) {
+            if (onlyContentData != null) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
 //                    mTextTitle1.setText(response.get(0).getIcTitle().trim());
-                        mWebView.loadData(response.get(0).getIcHtml(), "text/html; charset=utf-8", "UTF-8");
+                        mWebView.loadData(onlyContentData.getIcHtml(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(Color.TRANSPARENT);
 //                    mTextTitle2.setText(response.get(1).getIcTitle().trim());
 //                    mWebView2.loadData(response.get(1).getIcHtml(), "text/html; charset=utf-8", "UTF-8");

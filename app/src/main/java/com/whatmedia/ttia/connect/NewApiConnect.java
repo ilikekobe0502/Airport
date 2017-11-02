@@ -6,13 +6,20 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.whatmedia.ttia.newresponse.GetBaseEncodeResponse;
 import com.whatmedia.ttia.newresponse.GetBaseResponse;
 import com.whatmedia.ttia.newresponse.data.BaseEncodeData;
 import com.whatmedia.ttia.utility.Util;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -417,6 +424,18 @@ public class NewApiConnect {
     }
 
     /**
+     * 取得成就清單
+     *
+     * @param callback
+     */
+    public void getAchievementList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("achievement_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
      * 取得餐廳總類清單
      *
      * @param callback
@@ -517,6 +536,104 @@ public class NewApiConnect {
                 .build();
         getApi(url, true, callback);
     }
+
+    /**
+     * 取得使用者緊急通知
+     *
+     * @param callback
+     */
+    public void getUserEmergency(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("emergency_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得使用者貼心提醒
+     *
+     * @param callback
+     */
+    public void getUserSweetNotify(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("intimate_remind_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得使用者最新消息
+     *
+     * @param callback
+     */
+    public void getUserNews(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("news_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得紀念品資訊
+     *
+     * @param callback
+     */
+    public void getSouvenirList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("souvenir_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得電信業者清單
+     *
+     * @param callback
+     */
+    public void getRoamingService(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("telecommunications_industry_list"))
+                .newBuilder()
+                .build();
+        getApi(url, true, callback);
+    }
+
+    /**
+     * 取得漫遊上網HTML
+     *
+     * @param callback
+     */
+    public void getRoamingDetail(String id, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("roaming_service"))
+                .newBuilder()
+                .build();
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(id));
+        postApi(url, body, true, callback);
+    }
+
+    /**
+     * 取得國際電話html
+     *
+     * @param callback
+     */
+    public void getInternationCall(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("international_call"))
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
+    /**
+     * 取得緊急電話html
+     *
+     * @param callback
+     */
+    public void getEmergencyCall(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "emergency_call")
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
 
     /**
      * 取得航廈廁所清單

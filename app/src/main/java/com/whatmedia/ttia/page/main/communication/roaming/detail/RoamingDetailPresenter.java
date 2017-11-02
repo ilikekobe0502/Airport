@@ -4,47 +4,56 @@ package com.whatmedia.ttia.page.main.communication.roaming.detail;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.connect.MyResponse;
-import com.whatmedia.ttia.response.GetRoamingDetailResponse;
-import com.whatmedia.ttia.response.data.RoamingDetailData;
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetRoamingDetailResponse;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 
 public class RoamingDetailPresenter implements RoamingDetailContract.Presenter {
     private final static String TAG = RoamingDetailPresenter.class.getSimpleName();
 
-    private static RoamingDetailPresenter mRoamingServicePresenter;
-    private static ApiConnect mApiConnect;
-    private static RoamingDetailContract.View mView;
+    private NewApiConnect mApiConnect;
+    private RoamingDetailContract.View mView;
+    private Context mContext;
 
 
-    public static RoamingDetailPresenter getInstance(Context context, RoamingDetailContract.View view) {
-        mRoamingServicePresenter = new RoamingDetailPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    RoamingDetailPresenter(Context context, RoamingDetailContract.View view) {
+        mApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mRoamingServicePresenter;
+        mContext = context;
     }
 
     @Override
     public void getRoamingDetailAPI(String id) {
-        mApiConnect.getRoamingDetail(id, new ApiConnect.MyCallback() {
+        Map<String, Integer> request = new HashMap<>();
+        request.put("telecommunicationIndustryId", Integer.valueOf(id));
+        JSONObject json = new JSONObject(request);
+
+        mApiConnect.getRoamingDetail(json.toString(), new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getRoamingDetailFailed(e.toString(), timeout);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    List<RoamingDetailData> list = GetRoamingDetailResponse.newInstance(result);
-                    mView.getRoamingDetailSucceed(list);
-                } else {
-                    mView.getRoamingDetailFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
+            public void onResponse(Call call, String response) throws IOException {
+
+                GetRoamingDetailResponse getRoamingDetailResponse = GetRoamingDetailResponse.getGson(response);
+
+                if(getRoamingDetailResponse!=null && getRoamingDetailResponse.getIrHtml() !=null && getRoamingDetailResponse.getIrUrl()!=null){
+                    mView.getRoamingDetailSucceed(getRoamingDetailResponse.getIrUrl(),getRoamingDetailResponse.getIrHtml());
+                }else{
+                    mView.getRoamingDetailFailed(mContext.getString(R.string.data_error), false);
                 }
             }
         });
