@@ -567,6 +567,19 @@ public class NewApiConnect {
     }
 
     /**
+     * 取得紀念品資訊
+     *
+     * @param callback
+     */
+    public void getSouvenirList(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(TAG_HOST + "souvenir_list")
+                .newBuilder()
+                .build();
+        getApi(url,true, callback);
+    }
+
+
+    /**
      * 取得航廈廁所清單
      *
      * @param callback

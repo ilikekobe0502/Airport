@@ -1,7 +1,7 @@
 package com.whatmedia.ttia.page.main.store.souvenir;
 
 
-import com.whatmedia.ttia.response.data.SouvenirData;
+import com.whatmedia.ttia.newresponse.data.SouvenirData;
 
 import java.util.List;
 

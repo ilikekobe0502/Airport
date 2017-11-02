@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.SouvenirData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.store.souvenir.detail.SouvenirDetailContract;
-import com.whatmedia.ttia.response.data.SouvenirData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class SouvenirAreaFragment extends BaseFragment implements SouvenirAreaCo
         View view = inflater.inflate(R.layout.fragment_souvenir, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = SouvenirAreaPresenter.getInstance(getContext(), this);
+        mPresenter = new SouvenirAreaPresenter(getContext(), this);
 
         mAdapter = new SouvenirAreaRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));

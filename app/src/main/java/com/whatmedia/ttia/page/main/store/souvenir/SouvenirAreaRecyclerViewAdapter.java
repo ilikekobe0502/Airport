@@ -2,7 +2,6 @@ package com.whatmedia.ttia.page.main.store.souvenir;
 
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,11 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.SouvenirData;
+import com.whatmedia.ttia.newresponse.data.SouvenirData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -26,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.whatmedia.ttia.connect.ApiConnect.TAG_IMAGE_HOST;
 
 public class SouvenirAreaRecyclerViewAdapter extends RecyclerView.Adapter<SouvenirAreaRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = SouvenirAreaRecyclerViewAdapter.class.getSimpleName();
