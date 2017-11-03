@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.component.MyToolbar;
@@ -23,8 +22,6 @@ import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.whatmedia.ttia.connect.ApiConnect.TAG_IMAGE_HOST;
 
 public class SouvenirDetailFragment extends BaseFragment implements SouvenirDetailContract.View {
     private static final String TAG = SouvenirDetailFragment.class.getSimpleName();
@@ -103,7 +100,9 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
         mLoadingView.showLoadingView();
 
         if (!TextUtils.isEmpty(imagePath))
-            Util.setPicassoRetry(getContext(), mImageIcon, imagePath, mRadius, 0);
+            Util.getHttpsPicasso(getContext()).load(imagePath)
+                    .transform(new CornorTransform(mRadius, 0))
+                    .into(mImageIcon);
 
         mTextPrice.setText(textPrice);
         mTextAddress.setText(textAddress);

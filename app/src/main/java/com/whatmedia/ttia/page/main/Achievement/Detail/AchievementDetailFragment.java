@@ -4,7 +4,6 @@ package com.whatmedia.ttia.page.main.Achievement.Detail;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
-import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.whatmedia.ttia.connect.ApiConnect.TAG_IMAGE_HOST;
 
 public class AchievementDetailFragment extends BaseFragment implements AchievementDetailContract.View {
     private static final String TAG = AchievementDetailFragment.class.getSimpleName();
@@ -86,7 +81,7 @@ public class AchievementDetailFragment extends BaseFragment implements Achieveme
         mPresenter = AchievementDetailPresenter.getInstance(getContext(), this);
         mLoadingView.showLoadingView();
         Log.e(TAG, imagePath);
-        Util.setPicassoRetry(getContext(), mImageIcon, imagePath, mRadius, 0);
+        Util.getHttpsPicasso(getContext()).load(imagePath).transform(new CornorTransform(mRadius, 0)).into(mImageIcon);
         mTextDate.setText(textDate);
         mTextTitle.setText(textTitle);
         mTextContent.setText(textContent);

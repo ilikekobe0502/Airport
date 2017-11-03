@@ -3,7 +3,6 @@ package com.whatmedia.ttia.page.main.terminals.facility;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,9 +71,17 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
 
         if (!TextUtils.isEmpty(item.getImgUrl())) {
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
-            String imageUrl = item.getImgUrl();
-            Log.d(TAG, imageUrl);
-            setPicassoRetry(holder, imageUrl);
+            Util.getHttpsPicasso(mContext).load(item.getImgUrl()).into(holder.mImageViewPicture, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+                    holder.mTextViewLoading.setText("ERROR");
+                }
+            });
         } else
             holder.mImageViewPicture.setVisibility(View.INVISIBLE);
 
@@ -103,7 +110,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
                 } else if (item.getTerminalsName().contains("二")) {
                     mSecondItems = item.getTerminalsFacilityList();
                     mSecondTitle = item.getTerminalsName();
-                }else if (item.getTerminalsName().contains("1")) {
+                } else if (item.getTerminalsName().contains("1")) {
                     mFirstItems = item.getTerminalsFacilityList();
                     mFirstTitle = item.getTerminalsName();
                 } else if (item.getTerminalsName().contains("2")) {
@@ -153,8 +160,8 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
 
         @OnClick(R.id.imageView_picture)
         public void onViewClicked(View view) {
-            if (mListener != null)
-                mListener.onClick(view);
+//            if (mListener != null)
+//                mListener.onClick(view);
         }
     }
 

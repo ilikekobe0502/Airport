@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.newresponse.data.RestaurantInfoData;
 import com.whatmedia.ttia.newresponse.data.StoreInfoData;
 import com.whatmedia.ttia.utility.Util;
@@ -63,7 +62,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             String pictureUrl;
             if (!TextUtils.isEmpty(item.getImgUrl())) {
                 pictureUrl = item.getImgUrl();
-                Util.setPicassoRetry(mContext, holder.mImageViewPicture, pictureUrl, mRadius, 0);
+                Util.getHttpsPicasso(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else
                 pictureUrl = "";
 
@@ -82,7 +81,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             String pictureUrl;
             if (!TextUtils.isEmpty(storeItem.getImgUrl())) {
                 pictureUrl = storeItem.getImgUrl();
-                Picasso.with(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
+                Util.getHttpsPicasso(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else
                 pictureUrl = "";
 

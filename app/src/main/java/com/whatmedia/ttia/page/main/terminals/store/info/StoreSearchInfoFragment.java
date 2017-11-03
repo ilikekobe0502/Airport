@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.newresponse.data.RestaurantInfoData;
@@ -79,13 +80,10 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             if (!TextUtils.isEmpty(data.getImgUrl())) {
                 String image = data.getImgUrl();
                 Log.d(TAG, "image url = " + image);
-                Util.setPicassoRetry(getContext()
-                        , mImageViewPicture
-                        , image
-                        , mRadius
-                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
-                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_145)
-                        , 0);
+                Util.getHttpsPicasso(getContext()).load(image)
+                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
+                        .transform(new CornorTransform(mRadius, 0))
+                        .into(mImageViewPicture);
             }
 
             mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, !TextUtils.isEmpty(data.getTerminalsName()) ? data.getTerminalsName() : "", !TextUtils.isEmpty(data.getFloorName()) ? data.getFloorName() : ""));
@@ -103,13 +101,10 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             if (!TextUtils.isEmpty(storeData.getImgUrl())) {
                 String image = storeData.getImgUrl();
                 Log.d(TAG, "image url = " + image);
-                Util.setPicassoRetry(getContext()
-                        , mImageViewPicture
-                        , image
-                        , mRadius
-                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_250)
-                        , getResources().getDimensionPixelSize(R.dimen.dp_pixel_145)
-                        , 0);
+                Util.getHttpsPicasso(getContext()).load(image)
+                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_145))
+                        .transform(new CornorTransform(mRadius, 0))
+                        .into(mImageViewPicture);
             }
 
             mTextViewLocation.setText(getString(R.string.restaurant_store_search_info_location, storeData.getTerminalsName(), !TextUtils.isEmpty(storeData.getFloorName()) ? storeData.getFloorName() : ""));

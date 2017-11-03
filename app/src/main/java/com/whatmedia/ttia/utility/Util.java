@@ -3,7 +3,6 @@ package com.whatmedia.ttia.utility;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.net.wifi.WifiInfo;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -25,10 +23,12 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
+import com.whatmedia.ttia.connect.HttpUtils;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.GetFlightsInfoResponse;
@@ -50,7 +50,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -707,6 +706,18 @@ public class Util {
             }
         }
         return false;
+    }
+
+    /**
+     * 取得可以使用Https的Picasso
+     *
+     * @param context
+     * @return
+     */
+    public static Picasso getHttpsPicasso(Context context) {
+        Picasso.Builder picassoBuilder = new Picasso.Builder(context);
+        picassoBuilder.downloader(new OkHttp3Downloader(new HttpUtils().getTrustAllClient())).build();
+        return picassoBuilder.build();
     }
 
     /**

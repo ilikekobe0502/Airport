@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -88,7 +87,8 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
                     @Override
                     public void run() {
                         if (!TextUtils.isEmpty(image))
-                            Picasso.with(getContext()).load(image).into(mImageView);
+                            Util.getHttpsPicasso(getContext()).load(image).into(mImageView);
+
 
                         mTextQuery.setOnClickListener(new View.OnClickListener() {
                             @Override

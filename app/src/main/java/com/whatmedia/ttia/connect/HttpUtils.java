@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient;
  * Created by neo_mac on 2017/10/27.
  */
 
-class HttpUtils {
+public class HttpUtils {
     private TrustAllManager mMyTrustManager;
 
     private SSLSocketFactory createSSLSocketFactory() {
@@ -30,7 +30,7 @@ class HttpUtils {
         return ssfFactory;
     }
 
-    OkHttpClient getTrustAllClient() {
+    public OkHttpClient getTrustAllClient() {
         OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
         mBuilder.sslSocketFactory(createSSLSocketFactory(), mMyTrustManager)
                 .hostnameVerifier(new TrustAllHostnameVerifier())

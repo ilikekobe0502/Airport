@@ -6,20 +6,13 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.whatmedia.ttia.newresponse.GetBaseEncodeResponse;
 import com.whatmedia.ttia.newresponse.GetBaseResponse;
 import com.whatmedia.ttia.newresponse.data.BaseEncodeData;
 import com.whatmedia.ttia.utility.Util;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;

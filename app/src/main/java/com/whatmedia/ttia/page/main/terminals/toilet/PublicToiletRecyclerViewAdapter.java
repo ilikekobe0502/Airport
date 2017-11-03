@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class PublicToiletRecyclerViewAdapter extends RecyclerView.Adapter<Public
         holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getFloorName()) ? item.getFloorName() : "");
         if (!TextUtils.isEmpty(item.getImgUrl())) {
             holder.mImageViewPicture.setVisibility(View.VISIBLE);
-            Picasso.with(mContext).load(item.getImgUrl()).into(holder.mImageViewPicture, new Callback() {
+            Util.getHttpsPicasso(mContext).load(item.getImgUrl()).into(holder.mImageViewPicture, new Callback() {
                 @Override
                 public void onSuccess() {
 

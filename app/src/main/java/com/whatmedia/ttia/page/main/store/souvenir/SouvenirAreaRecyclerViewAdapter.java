@@ -63,7 +63,7 @@ public class SouvenirAreaRecyclerViewAdapter extends RecyclerView.Adapter<Souven
         }
         if (!TextUtils.isEmpty(item.getImgPath())) {
             holder.mImageIcon.setVisibility(View.VISIBLE);
-            Util.setPicassoRetry(mContext, holder.mImageIcon, item.getImgPath(), 0, 0);
+            Util.getHttpsPicasso(mContext).load(item.getImgPath()).into(holder.mImageIcon);
         } else {
             holder.mImageIcon.setVisibility(View.INVISIBLE);
         }
