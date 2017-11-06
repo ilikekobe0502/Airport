@@ -1,15 +1,16 @@
 package com.whatmedia.ttia.page.main;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -25,9 +26,11 @@ import com.splunk.mint.Mint;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.enums.FlightInfo;
 import com.whatmedia.ttia.enums.HomeFeature;
-import com.whatmedia.ttia.enums.LanguageSetting;
+import com.whatmedia.ttia.newresponse.GetLocationQueryResponse;
+import com.whatmedia.ttia.newresponse.data.LocationQueryData;
 import com.whatmedia.ttia.page.BaseActivity;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
@@ -82,12 +85,14 @@ import com.whatmedia.ttia.services.IBeacon;
 import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
-public class MainActivity extends BaseActivity implements IActivityTools.ILoadingView, IActivityTools.IMainActivity, FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends BaseActivity implements IActivityTools.ILoadingView, IActivityTools.IMainActivity, FragmentManager.OnBackStackChangedListener, LocationListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String TAG_DEVICE_NAME = android.os.Build.MODEL;
 
@@ -104,6 +109,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     ImageView mImageViewHome;
 
     private String mMarqueeMessage;
+    private LocationManager mLocationManager;
 
 
     @Override
@@ -112,6 +118,9 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         Mint.initAndStartSession(this.getApplication(), "95cdb302");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
 
         checkLayoutMode();
 
@@ -163,6 +172,18 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         Intent beacons = new Intent(this, IBeacon.class);
         startService(beacons);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 500, this);
     }
 
     @Override
@@ -186,6 +207,12 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 return;
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mLocationManager.removeUpdates(this);
+        super.onDestroy();
     }
 
     @Override
@@ -939,5 +966,47 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 Preferences.saveScreenMode(getBaseContext(), false);
             }
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        LocationQueryData locationQueryData = new LocationQueryData();
+        GetLocationQueryResponse response = new GetLocationQueryResponse();
+        locationQueryData.setLatitude(String.valueOf(location.getLatitude()));
+        locationQueryData.setLongitude(String.valueOf(location.getLongitude()));
+        response.setData(locationQueryData);
+
+        String json = response.getJson();
+        if (TextUtils.isEmpty(json)) {
+            Log.e(TAG, "json is empty");
+            return;
+        }
+
+        new NewApiConnect().sentEditLocation(json, new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, boolean timeout) {
+                Log.e(TAG, "sentEditLocation response failure = " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                Log.d(TAG, "sentEditLocation response success = " + response);
+            }
+        });
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

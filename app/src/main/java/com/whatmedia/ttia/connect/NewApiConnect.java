@@ -818,4 +818,19 @@ public class NewApiConnect {
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
     }
+
+    /**
+     * 編輯使用者app目前位置
+     *
+     * @param json
+     * @param callback
+     */
+    public void sentEditLocation(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("edit_location"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
 }
