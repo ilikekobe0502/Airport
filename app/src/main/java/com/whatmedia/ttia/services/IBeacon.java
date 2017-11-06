@@ -78,6 +78,10 @@ public class IBeacon extends Service implements BeaconConsumer {
 
     public static final String BEACON_UUID_1 = "a0000000-0000-0000-0000-000000000000";
     public static final String BEACON_UUID_2 = "b0000000-0000-0000-0000-000000000000";
+    public static final String BEACON_UUID_4 = "A0000000-0000-0000-0000-000000000000";
+    public static final String BEACON_UUID_5 = "B0000000-0000-0000-0000-000000000000";
+    public static final String BEACON_UUID_6 = "7190B25E-4F49-FCAB-5359-3C5FD0D5A64B";
+    public static final String BEACON_UUID_7 = "2CC426BF-3CB1-5EA6-3887-41DA5A2D5";
     public static final String BEACON_UUID_3 = "e8229ba5-5ee0-4fb5-9648-366a7f97a70a";
     private final long day_millseconds = 86400000;
     private static final Object mBeaconLocker = new Object();
@@ -141,7 +145,11 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
                 for (Beacon beacon : beacons) {
                     Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if (!mSend && (beacon.getId1().toString().toLowerCase().equals(BEACON_UUID_1) || beacon.getId1().toString().toLowerCase().equals(BEACON_UUID_2)) && beacon.getRssi() > -90) {
+                    if (!mSend &&
+                            (beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)
+                                    || beacon.getId1().toString().equals(BEACON_UUID_4) || beacon.getId1().toString().equals(BEACON_UUID_5)
+                                    || beacon.getId1().toString().equals(BEACON_UUID_6) || beacon.getId1().toString().equals(BEACON_UUID_7))
+                            && beacon.getRssi() > -90) {
 
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
