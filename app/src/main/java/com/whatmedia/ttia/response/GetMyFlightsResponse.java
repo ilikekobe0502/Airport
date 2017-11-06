@@ -2,7 +2,6 @@ package com.whatmedia.ttia.response;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 
 import java.lang.reflect.Type;

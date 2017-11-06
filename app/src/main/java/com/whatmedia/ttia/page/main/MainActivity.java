@@ -110,6 +110,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
     private String mMarqueeMessage;
     private LocationManager mLocationManager;
+    private boolean mPositionListening;
 
 
     @Override
@@ -172,18 +173,6 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         Intent beacons = new Intent(this, IBeacon.class);
         startService(beacons);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 500, this);
     }
 
     @Override
@@ -191,6 +180,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setPositionListener();
                     Log.d("MainActivity", "coarse location permission granted");
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -210,9 +200,16 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onResume() {
+        setPositionListener();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
         mLocationManager.removeUpdates(this);
-        super.onDestroy();
+        mPositionListening = false;
+        super.onPause();
     }
 
     @Override
@@ -966,6 +963,21 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 Preferences.saveScreenMode(getBaseContext(), false);
             }
         }
+    }
+
+    private void setPositionListener() {
+        if (mPositionListening || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 500, this);
+        mPositionListening = true;
     }
 
     @Override

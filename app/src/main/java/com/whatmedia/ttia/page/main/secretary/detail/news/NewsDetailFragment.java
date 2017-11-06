@@ -11,14 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
-import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyRecyclerViewAdapter;
-import com.whatmedia.ttia.response.data.UserNewsData;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -77,14 +75,14 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         if (getArguments() != null && getArguments().getSerializable(NewsDetailContract.TAG_DATA) != null) {
             UserNewsData item = (UserNewsData) getArguments().getSerializable(NewsDetailContract.TAG_DATA);
 
-            mTextViewDate.setText(!TextUtils.isEmpty(item.getaTime()) ? Util.justShowDate(item.getaTime()) : "");
+            mTextViewDate.setText(!TextUtils.isEmpty(item.getPushTime()) ? Util.justShowDate(item.getPushTime()) : "");
             mTextViewTitle.setText(!TextUtils.isEmpty(item.getTitle()) ? item.getTitle() : "");
             mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
-            if (!TextUtils.isEmpty(item.getImageUrl())) {
+            if (!TextUtils.isEmpty(item.getImgUrl())) {
                 mImageViewPicture.setVisibility(View.VISIBLE);
 
                 Util.getHttpsPicasso(getContext())
-                        .load(item.getImageUrl())
+                        .load(item.getImgUrl())
                         .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_152))
                         .transform(new CornorTransform(mRadius, 0))
                         .into(mImageViewPicture);

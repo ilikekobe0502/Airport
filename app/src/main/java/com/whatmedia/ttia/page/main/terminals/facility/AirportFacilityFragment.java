@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
 import com.whatmedia.ttia.newresponse.data.TerminalsFacilityListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.facility.detail.FacilityDetailContract;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -86,12 +86,6 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPagerAdapter.setClickListener(this);
         mViewPager.addOnPageChangeListener(this);
-
-//        mAdapter = new AirportFacilityRecyclerViewAdapter(getContext());
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mRecyclerView.setAdapter(mAdapter);
-//        mAdapter.setOnclickListener(this);
-
         return view;
     }
 
@@ -169,8 +163,8 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
                 mViewPager.setCurrentItem(1, true);
                 break;
             case R.id.imageView_picture:
-                if (view.getTag() != null && view.getTag() instanceof AirportFacilityData) {
-                    AirportFacilityData facilityData = (AirportFacilityData) view.getTag();
+                if (view.getTag() != null && view.getTag() instanceof TerminalsFacilityData) {
+                    TerminalsFacilityData facilityData = (TerminalsFacilityData) view.getTag();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(FacilityDetailContract.TAG_DATA, facilityData);
                     mMainActivity.addFragment(Page.TAG_AIRPORT_FACILITY_DETAIL, bundle, true);

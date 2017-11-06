@@ -2,18 +2,12 @@ package com.whatmedia.ttia.page.main.useful.lost;
 
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetLostAndFoundInfoResponse;
-import com.whatmedia.ttia.response.GetLostAndFoundResponse;
-import com.whatmedia.ttia.response.data.LostAndFoundData;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 

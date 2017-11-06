@@ -2,9 +2,6 @@ package com.whatmedia.ttia.page.main.communication.emergency;
 
 
 import com.whatmedia.ttia.newresponse.data.onlyContentData;
-import com.whatmedia.ttia.response.data.EmergenctCallData;
-
-import java.util.List;
 
 public interface EmergencyCallContract {
     interface View {

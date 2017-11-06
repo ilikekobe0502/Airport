@@ -3,7 +3,6 @@ package com.whatmedia.ttia.page.main.communication.emergency;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +14,7 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.newresponse.data.onlyContentData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.EmergenctCallData;
 import com.whatmedia.ttia.utility.Util;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

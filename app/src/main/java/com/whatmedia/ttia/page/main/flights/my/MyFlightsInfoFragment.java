@@ -7,16 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -134,9 +135,12 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                     }
                 });
 
-                Gson gson = new Gson();
-                String json = gson.toJson(response);
-                Preferences.saveMyFlightsData(getContext(), json);
+                GetFlightsListResponse flightsListResponse = new GetFlightsListResponse();
+                flightsListResponse.setFlightList(response);
+                String json = flightsListResponse.getListJson();
+                if (!TextUtils.isEmpty(json)) {
+                    Preferences.saveMyFlightsData(getContext(), json);
+                }
                 if (mIsInsert)
                     Util.resetNotification(getContext(), response);
 

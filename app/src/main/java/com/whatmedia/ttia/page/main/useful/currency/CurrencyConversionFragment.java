@@ -21,7 +21,6 @@ import com.whatmedia.ttia.enums.ExchangeRate;
 import com.whatmedia.ttia.newresponse.data.ExchangeRateQueryData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.ExchangeRateData;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;

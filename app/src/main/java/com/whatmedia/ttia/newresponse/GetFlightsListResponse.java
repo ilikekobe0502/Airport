@@ -33,10 +33,20 @@ public class GetFlightsListResponse extends GetBaseResponse {
         return json;
     }
 
-    public String getDeleteJson() {
+    public String getListJson() {
         Gson gson = new Gson();
         HashMap<String, List<FlightsListData>> map = new HashMap<>();
-        map.put("flights", flightList);
+        map.put("flightList", flightList);
+
+        String json = flightList != null ? gson.toJson(map) : "";
+        Log.i(TAG, String.format("[Json] %s", json));
+        return json;
+    }
+
+    public String getDeleteJson(List<HashMap<String, String>> uploadList) {
+        Gson gson = new Gson();
+        HashMap<String, List<HashMap<String, String>>> map = new HashMap<>();
+        map.put("flights", uploadList);
 
         String json = gson.toJson(map);
         Log.i(TAG, String.format("[Json] %s", json));

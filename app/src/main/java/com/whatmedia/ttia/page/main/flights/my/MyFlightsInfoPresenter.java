@@ -10,6 +10,7 @@ import com.whatmedia.ttia.newresponse.data.FlightsListData;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -55,22 +56,22 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
 
     @Override
     public void deleteMyFlightsInfoAPI(List<FlightsListData> selectList) {
-        List<FlightsListData> uploadList = new ArrayList<>();
         GetFlightsListResponse uploadObject = new GetFlightsListResponse();
 
+        List<HashMap<String,String>> uploadList = new ArrayList<>();
         for (FlightsListData item : selectList) {
-            FlightsListData uploadData = new FlightsListData();
 
-            uploadData.setAirlineCode(!TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode() : "");
-            uploadData.setShifts(!TextUtils.isEmpty(item.getShifts()) ? item.getShifts() : "");
-            uploadData.setExpressDate(!TextUtils.isEmpty(item.getExpressDate()) ? item.getExpressDate() : "");
-            uploadData.setExpressTime(!TextUtils.isEmpty(item.getExpressTime()) ? item.getExpressTime() : "");
-            uploadList.add(uploadData);
+            HashMap<String,String> map = new HashMap<>();
+            map.put("airlineCode",!TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode() : "");
+            map.put("shifts",!TextUtils.isEmpty(item.getShifts()) ? item.getShifts() : "");
+            map.put("expressDate",!TextUtils.isEmpty(item.getExpressDate()) ? item.getExpressDate() : "");
+            map.put("expressTime",!TextUtils.isEmpty(item.getExpressTime()) ? item.getExpressTime() : "");
+            uploadList.add(map);
         }
 
-        uploadObject.setFlightList(uploadList);
+        uploadObject.getDeleteJson(uploadList);
 
-        mNewApiConnect.deleteMyFlights(uploadObject.getDeleteJson(), new NewApiConnect.MyCallback() {
+        mNewApiConnect.deleteMyFlights(uploadObject.getDeleteJson(uploadList), new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.deleteMyFlightsInfoFailed(e.toString(), timeout);

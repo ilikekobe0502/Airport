@@ -6,10 +6,8 @@ import android.content.Context;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetAchievementsDataResponse;
-import com.whatmedia.ttia.response.data.AchievementsData;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 

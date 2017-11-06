@@ -10,10 +10,6 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.ExchangeRate;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.response.data.AreaCodeData;
-import com.whatmedia.ttia.response.data.FloorCodeData;
-import com.whatmedia.ttia.response.data.RestaurantCodeData;
-import com.whatmedia.ttia.response.data.TerminalCodeData;
 
 import java.util.List;
 

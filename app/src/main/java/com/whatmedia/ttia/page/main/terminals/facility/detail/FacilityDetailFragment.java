@@ -2,36 +2,26 @@ package com.whatmedia.ttia.page.main.terminals.facility.detail;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
+import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.response.data.AirportFacilityData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +44,6 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static FacilityDetailFragment newInstance() {
         FacilityDetailFragment fragment = new FacilityDetailFragment();
         Bundle args = new Bundle();
@@ -79,49 +68,36 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
         View view = inflater.inflate(R.layout.fragment_facility_detail, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = FacilityDetailPresenter.getInstance(getContext(), this);
+        mPresenter = new FacilityDetailPresenter(getContext(), this);
 
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-//        final int width = dm.widthPixels;
-//        final int height = dm.heightPixels / 5;
-//        final float space = getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
 
         if (getArguments() != null && getArguments().getSerializable(FacilityDetailContract.TAG_DATA) != null) {
-            final AirportFacilityData facilityData = (AirportFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
-            mTextViewSubTitle.setText(facilityData.getFloorName());
-            final List<String> imageList = new ArrayList<>();
-            imageList.add(facilityData.getMainImgPath());
-            imageList.add(facilityData.getLegendImgPath());
-            imageList.add(facilityData.getClassImgPath());
+            final TerminalsFacilityData facilityData = (TerminalsFacilityData) getArguments().getSerializable(FacilityDetailContract.TAG_DATA);
+            mTextViewSubTitle.setText(!TextUtils.isEmpty(facilityData.getFloorName()) ? facilityData.getFloorName() : "");
 
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        String path = !TextUtils.isEmpty(facilityData.getLegendImgPath()) ? facilityData.getLegendImgPath() : "";
-                        Log.e(TAG, "img path:" + path);
-                        mBitmaps = getBitmap(getContext(), path);
+                        mBitmaps = getBitmap(getContext(), facilityData.getImgDetailUrl());
+                        if (isAdded() && !isDetached()) {
+                            mMainActivity.runOnUI(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mImagePicture.setImage(ImageSource.bitmap(mBitmaps));
+                                }
+                            });
+                        } else {
+                            Log.d(TAG, "Fragment is not add");
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if (isAdded() && !isDetached()) {
-                        mMainActivity.runOnUI(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (ImageSource.bitmap(mBitmaps) != null)
-                                    mImagePicture.setImage(ImageSource.bitmap(mBitmaps));
-                            }
-                        });
-                    } else {
-                        Log.d(TAG, "Fragment is not add");
-                    }
                 }
             });
-
             t.start();
-
-
         } else {
             Log.e(TAG, "getArguments() is error");
             showMessage(getString(R.string.data_error));
@@ -164,7 +140,7 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
     }
 
     public Bitmap getBitmap(Context context, String path) throws IOException {
-        Bitmap bitmap = Picasso.with(context).load(path)
+        Bitmap bitmap = Util.getHttpsPicasso(context).load(path)
                 .config(Bitmap.Config.ARGB_8888)
                 .priority(Picasso.Priority.HIGH)
                 .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)

@@ -21,8 +21,6 @@ import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultRecyclerViewAdapter;
 import com.whatmedia.ttia.response.data.DialogContentData;
-import com.whatmedia.ttia.response.data.FlightSearchData;
-import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;

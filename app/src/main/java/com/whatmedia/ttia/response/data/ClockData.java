@@ -1,5 +1,7 @@
 package com.whatmedia.ttia.response.data;
 
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class ClockData implements Serializable{
     private String timeString;
     private boolean notify;//是否開啟推播
     private boolean isCheck;//是否勾選刪除
-    private List<FlightsInfoData> flightsList;
+    private List<FlightsListData> flightsList;
 
     public int getId() {
         return id;
@@ -55,11 +57,11 @@ public class ClockData implements Serializable{
         this.isCheck = isCheck;
     }
 
-    public List<FlightsInfoData> getFlightsData() {
+    public List<FlightsListData> getFlightsData() {
         return flightsList;
     }
 
-    public void setFlightsData(List<FlightsInfoData> flightsList) {
+    public void setFlightsData(List<FlightsListData> flightsList) {
         this.flightsList = flightsList;
     }
 }

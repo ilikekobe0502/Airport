@@ -160,8 +160,8 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
 
         @OnClick(R.id.imageView_picture)
         public void onViewClicked(View view) {
-//            if (mListener != null)
-//                mListener.onClick(view);
+            if (mListener != null)
+                mListener.onClick(view);
         }
     }
 

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
-import com.whatmedia.ttia.response.data.StoreCodeData;
 
 import java.util.List;
 

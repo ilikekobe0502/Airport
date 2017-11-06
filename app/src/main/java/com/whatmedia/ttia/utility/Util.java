@@ -29,10 +29,9 @@ import com.squareup.picasso.Picasso;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.CornorTransform;
 import com.whatmedia.ttia.connect.HttpUtils;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
-import com.whatmedia.ttia.response.GetFlightsInfoResponse;
-import com.whatmedia.ttia.response.GetMyFlightsResponse;
 import com.whatmedia.ttia.response.data.ClockData;
 import com.whatmedia.ttia.response.GetClockDataResponse;
 import com.whatmedia.ttia.response.data.ClockTimeData;
@@ -322,7 +321,7 @@ public class Util {
      */
     public static void setAlertClock(Context context, ClockData data) {
         if (data != null && data.getFlightsData() != null) {
-            for (FlightsInfoData item : data.getFlightsData()) {
+            for (FlightsListData item : data.getFlightsData()) {
                 if (item.getNotificationTime() != null && item.getNotificationId() != 0) {
                     int sec = (int) item.getNotificationTime().getSec();
                     Integer id = item.getNotificationId();
@@ -330,7 +329,7 @@ public class Util {
                     cal1.add(Calendar.SECOND, sec);
                     Log.d(TAG, "ID : " + id + " 配置鬧終於" + sec + "秒後: " + cal1);
                     Gson gson = new Gson();
-                    String flightData = gson.toJson(item, FlightsInfoData.class);
+                    String flightData = gson.toJson(item, FlightsListData.class);
 
                     Intent intent = new Intent(context, FlightClockBroadcast.class);
                     intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA, flightData);
@@ -355,13 +354,14 @@ public class Util {
      * @param context
      * @param flightsInfoDataList
      */
-    public static void cancelAlertClock(Context context, List<FlightsInfoData> flightsInfoDataList) {
+    public static void cancelAlertClock(Context context, List<FlightsListData> flightsInfoDataList) {
         Intent intent = new Intent(context, FlightClockBroadcast.class);
-        for (FlightsInfoData item : flightsInfoDataList) {
+        for (FlightsListData item : flightsInfoDataList) {
             int id = item.getNotificationId();
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            am.cancel(pendingIntent);
+            if (am != null)
+                am.cancel(pendingIntent);
 
             Log.d(TAG, "cancel alert clock : " + id);
         }
@@ -374,12 +374,13 @@ public class Util {
      * @return
      */
     public static String getMarqueeSubMessage(Context context) {
-        List<FlightsInfoData> datas = GetFlightsInfoResponse.newInstance(Preferences.getMyFlightsData(context));
+        GetFlightsListResponse flightsListResponse = GetFlightsListResponse.getGson(Preferences.getMyFlightsData(context));
+        List<FlightsListData> datas = flightsListResponse != null ? flightsListResponse.getFlightList() : null;
 
         StringBuilder marqueeSubMessage = new StringBuilder();
 
         if (datas != null) {
-            for (FlightsInfoData item : datas) {
+            for (FlightsListData item : datas) {
                 if (marqueeSubMessage.length() > 0) {
                     marqueeSubMessage.append(", ");
                 }
@@ -393,21 +394,21 @@ public class Util {
 //                        .append(" ")
 //                        .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus() : "");
 
-                marqueeSubMessage.append(!TextUtils.isEmpty(item.getFlightCode()) ? item.getFlightCode().trim() : "")
+                marqueeSubMessage.append(!TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode().trim() : "")
                         .append(" ")
-                        .append(!TextUtils.isEmpty(item.getAirLineCName()) ? item.getAirLineCName().trim() : "")
+                        .append(!TextUtils.isEmpty(item.getAirlineName()) ? item.getAirlineName().trim() : "")
                         .append(" ")
                         .append(!TextUtils.isEmpty(item.getKinds()) ? item.getKinds().equals(FlightsInfoData.TAG_KIND_ARRIVE) ? context.getString(R.string.marquee_arrive) : context.getString(R.string.marquee_dexxxxx) : "")
                         .append(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "")
                         .append(" ")
                         .append(context.getString(R.string.marquee_ecpected_time))
-                        .append(!TextUtils.isEmpty(item.getCExpectedTime()) ? item.getCExpectedTime().trim() : "")
+                        .append(!TextUtils.isEmpty(item.getExpectedTime()) ? item.getExpectedTime().trim() : "")
                         .append(" ")
                         .append(context.getString(R.string.marquee_status))
                         .append(!TextUtils.isEmpty(item.getFlightStatus()) ? item.getFlightStatus().trim() : "")
                         .append(" ")
                         .append(context.getString(R.string.marquee_ecpress_time))
-                        .append(!TextUtils.isEmpty(item.getCExpressTime()) ? item.getCExpressTime().trim() : "")
+                        .append(!TextUtils.isEmpty(item.getExpressTime()) ? item.getExpressTime().trim() : "")
                         .append(" ")
                         .append(context.getString(R.string.marquee_terminal))
                         .append(!TextUtils.isEmpty(item.getTerminals()) ? item.getTerminals().trim() : "")
@@ -496,12 +497,12 @@ public class Util {
         String sourceTime = hourOfDay + ":" + minute;
         List<ClockData> clockDataList = GetClockDataResponse.newInstance(Preferences.getClockData(context));
         Gson gson = new Gson();
-        List<FlightsInfoData> myFlightDataList = GetMyFlightsResponse.newInstance(Preferences.getMyFlightsData(context));
+        List<FlightsListData> myFlightDataList = GetFlightsListResponse.getGson(Preferences.getMyFlightsData(context)).getFlightList();
         ClockData clockData = new ClockData();
 
         if (myFlightDataList != null) {
 
-            for (FlightsInfoData item : myFlightDataList) {
+            for (FlightsListData item : myFlightDataList) {
                 if (item.getNotificationId() == 0) {
                     ClockTimeData clockTimeData = new ClockTimeData();
                     HashMap<String, Long> diffTime = Util.getDifferentTimeWithNowTime(Util.getDifferentTime(sourceTime, item.getExpectedTime()));
@@ -541,13 +542,16 @@ public class Util {
         //取得原本佇列裡面就有的時間列表
         List<ClockData> clockDataList = GetClockDataResponse.newInstance(Preferences.getClockData(context));
         //取得原本佇列裡面就有的我的航班列表
-        List<FlightsInfoData> myFlightDataList = GetMyFlightsResponse.newInstance(Preferences.getMyFlightsData(context));
-
+        GetFlightsListResponse response = GetFlightsListResponse.getGson(Preferences.getMyFlightsData(context));
+        List<FlightsListData> myFlightDataList = null;
+        if (response != null) {
+            myFlightDataList = response.getFlightList();
+        }
         ClockData clockData = new ClockData();
 
         if (myFlightDataList != null && myFlightDataList.size() > 0) {
             //將所有MyFlights的資料設入暫存檔裡
-            for (FlightsInfoData item : myFlightDataList) {
+            for (FlightsListData item : myFlightDataList) {
                 ClockTimeData clockTimeData = new ClockTimeData();
                 //先計算出航班時間扣除設定時間
                 //再將上面的時間結果與現在時間取時間差

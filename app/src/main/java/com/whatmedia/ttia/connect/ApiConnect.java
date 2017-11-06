@@ -6,10 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.whatmedia.ttia.enums.LanguageSetting;
-import com.whatmedia.ttia.response.data.ExchangeRateData;
-import com.whatmedia.ttia.response.data.FlightSearchData;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
-import com.whatmedia.ttia.utility.Util;
 import com.whatmedia.ttia.utility.Preferences;
 
 import java.io.IOException;
@@ -202,37 +199,6 @@ public class ApiConnect extends StateCode {
         Log.d(TAG, request.url().toString());
     }
 
-    /**
-     * 搜尋航班資訊 by keyWord
-     *
-     * @param searchData
-     * @param callback
-     */
-    public static void getSearchFlightsInfoByKeyWord(FlightSearchData searchData, MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_flight_information")
-                .newBuilder()
-                .addQueryParameter("KeyWord", !TextUtils.isEmpty(searchData.getKeyWord()) ? searchData.getKeyWord() : "")
-                .addQueryParameter("lan", mLocaleApiError)
-                .addQueryParameter("QueryType", !TextUtils.isEmpty(searchData.getQueryType()) ? searchData.getQueryType() : "")
-                .build();
-        getApi(url, callback);
-    }
-
-    /**
-     * 搜尋航班資訊 by date
-     *
-     * @param searchData
-     * @param callback
-     */
-    public static void getSearchFlightsInfoByDate(FlightSearchData searchData, MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_flight_information")
-                .newBuilder()
-                .addQueryParameter("ExpressTime", !TextUtils.isEmpty(searchData.getExpressTime()) ? searchData.getExpressTime() : "")
-                .addQueryParameter("lan", mLocaleApiError)
-                .addQueryParameter("QueryType", !TextUtils.isEmpty(searchData.getQueryType()) ? searchData.getQueryType() : "")
-                .build();
-        getApi(url, callback);
-    }
 
     /**
      * Get my flights info
@@ -564,21 +530,6 @@ public class ApiConnect extends StateCode {
         getApi(url, callback);
     }
 
-    /**
-     * 稅率換算
-     *
-     * @param data
-     * @param callback
-     */
-    public void getExchangeRate(ExchangeRateData data, MyCallback callback) {
-        HttpUrl url = HttpUrl.parse(TAG_HOST + "get_exchange_rate")
-                .newBuilder()
-                .addQueryParameter("source", !TextUtils.isEmpty(data.getSource()) ? data.getSource() : "")
-                .addQueryParameter("target", !TextUtils.isEmpty(data.getTarget()) ? data.getTarget() : "")
-                .addQueryParameter("amount", !TextUtils.isEmpty(data.getAmount()) ? data.getAmount() : "")
-                .build();
-        getApi(url, callback);
-    }
 
     /**
      * 問卷調查題目

@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.newresponse.data;
 
 import com.google.gson.annotations.SerializedName;
+import com.whatmedia.ttia.response.data.ClockTimeData;
 
 /**
  * Created by neo_mac on 2017/10/29.
@@ -49,6 +50,8 @@ public class FlightsListData {
     private String counter;
 
     private boolean isCheck;//MyFlights page是否有被勾選
+    private int notificationId;//Notification ID
+    private ClockTimeData notificationTime;//Notification Time
 
     public String getTerminals() {
         return terminals;
@@ -216,5 +219,21 @@ public class FlightsListData {
 
     public void setIsCheck(boolean check) {
         isCheck = check;
+    }
+
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public ClockTimeData getNotificationTime() {
+        return notificationTime;
+    }
+
+    public void setNotificationTime(ClockTimeData notificationTime) {
+        this.notificationTime = notificationTime;
     }
 }
