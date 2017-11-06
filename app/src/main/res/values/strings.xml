@@ -664,6 +664,7 @@
     <!-- Timezone -->
     <string name="timezone_other_area">"其他地區"</string>
     <string name="timezone_other_area_dialog_title">"請選擇地區"</string>
+    <string name="timezone_combine">+%s</string>
 
     <!-- Restaurant & Store search -->
     <string name="restaurant_search_subtitle">餐廳查詢</string>
