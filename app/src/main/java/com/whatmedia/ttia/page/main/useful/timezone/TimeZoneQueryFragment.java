@@ -207,23 +207,9 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
             super.handleMessage(msg);
             switch (msg.what) {
                 case RUNNING:
-//                    long sysTime = System.currentTimeMillis();
-//                    CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
-//                    mTextTime.setText(sysTimeStr);
-//                    mClockView.setHour(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
-//                    mClockView.setMinute(Integer.valueOf(sysTimeStr.subSequence(3,5).toString()));
-//                    sysTimeStr = DateFormat.format("ss:hh:mm:", sysTime);
-//                    mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
 
                     Calendar c = Calendar.getInstance();
                     c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
-//                    long sysTime = c.getTimeInMillis();
-//                    CharSequence sysTimeStr = DateFormat.format("hh:mm:ss", sysTime);
-//                    mTextTime.setText(sysTimeStr);
-//                    mClockView.setHour(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
-//                    mClockView.setMinute(Integer.valueOf(sysTimeStr.subSequence(3,5).toString()));
-//                    sysTimeStr = DateFormat.format("ss:hh:mm:", sysTime);
-//                    mClockView.setSecond(Integer.valueOf(sysTimeStr.subSequence(0,2).toString()));
 
                     String hour = "0";
                     String min = "0";
@@ -368,6 +354,10 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         mTextCity.setText(mItems[mCountry]);
         String zoneName = mCountryName[mRegion] + "/" + mTownName[mCountry];
         mTimeStamp = String.valueOf(TimeUnit.MILLISECONDS.toHours(TimeZone.getTimeZone(zoneName).getRawOffset()));
+
+        if(mTimeStamp.charAt(0) != '-' && mTimeStamp.charAt(0) != '+'){
+            mTimeStamp = String.format(getString(R.string.timezone_combine),mTimeStamp);
+        }
 
         Log.e("TIMEZONE", zoneName + ":" + mTimeStamp);
 
