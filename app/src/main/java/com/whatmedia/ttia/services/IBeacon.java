@@ -178,7 +178,7 @@ public class IBeacon extends Service implements BeaconConsumer {
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 //success
-                Log.e("IBeacon", "registerUser() success, minorID:" + minorID);
+                Log.d("IBeacon", "registerUser() success, minorID:" + minorID);
                 mSend = false;
             }
         });

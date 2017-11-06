@@ -92,24 +92,33 @@ public class NewApiConnect {
                     GetBaseEncodeResponse baseEncodeResponse = new GetBaseEncodeResponse();//解析Encode資料
                     String result = response.body().string();
 
+                    if (result == null)
+                        result = "";
                     BaseEncodeData baseEncodeData = baseEncodeResponse.getGson(result);
-                    try {
-                        byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
-                        if (decryptBytes != null) {
-                            String responseString = new String(decryptBytes);
-                            Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
+                    if (baseEncodeData != null) {
+                        try {
+                            byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
+                            if (decryptBytes != null) {
+                                String responseString = new String(decryptBytes);
+                                Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
 
-                            baseResponse = baseResponse.getBaseGson(responseString);
-                            if (baseResponse.getResult().getCode() == 200) {
-                                callback.onResponse(call, responseString);
+                                baseResponse = baseResponse.getBaseGson(responseString);
+                                if (baseResponse.getResult().getCode() == 200) {
+                                    callback.onResponse(call, responseString);
+                                } else {
+                                    onFailure(call, new IOException(baseResponse.getResult().getMessage()));
+                                }
                             } else {
-                                onFailure(call, new IOException(baseResponse.getResult().getMessage()));
+                                onFailure(call, new IOException("Decrypt array is null"));
                             }
-                        } else {
-                            onFailure(call, new IOException("Decrypt array is null"));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                    } else if (!TextUtils.isEmpty(result)) {
+                        Log.i(TAG, "[Get response not Json]" + result);
+                        callback.onResponse(call, result);
+                    } else {
+                        onFailure(call, new IOException("response is error format"));
                     }
                 } catch (IOException e) {
                     onFailure(call, e);
@@ -612,7 +621,7 @@ public class NewApiConnect {
         HttpUrl url = HttpUrl.parse(createUrl("international_call"))
                 .newBuilder()
                 .build();
-        getApi(url,true, callback);
+        getApi(url, true, callback);
     }
 
     /**
@@ -624,7 +633,7 @@ public class NewApiConnect {
         HttpUrl url = HttpUrl.parse(TAG_HOST + "emergency_call")
                 .newBuilder()
                 .build();
-        getApi(url,true, callback);
+        getApi(url, true, callback);
     }
 
 
@@ -658,16 +667,18 @@ public class NewApiConnect {
     /**
      * 取得天氣狀況
      *
-     * @param json
+     * @param cityId
      * @param callback
      */
-    public void getWeather(String json, MyCallback callback) {
+    public void getWeather(String cityId, String queryType, MyCallback callback) {
         HttpUrl url = HttpUrl.parse(createUrl("weather"))
                 .newBuilder()
+                .addQueryParameter("deviceID", TAG_DEVICE_ID)
+                .addQueryParameter("cityId", cityId)
+                .addQueryParameter("queryType", queryType)
                 .build();
 
-        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
-        postApi(url, body, true, callback);
+        getApi(url, callback);
     }
 
     /**
