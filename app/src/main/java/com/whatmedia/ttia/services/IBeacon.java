@@ -141,7 +141,7 @@ public class IBeacon extends Service implements BeaconConsumer {
                 }
                 for (Beacon beacon : beacons) {
                     Log.e("IBeacon", beacon.toString() + ", RSSI:" + beacon.getRssi() + ", TxPower:" + beacon.getTxPower());
-                    if (!mSend && (beacon.getId1().toString().equals(BEACON_UUID_1) || beacon.getId1().toString().equals(BEACON_UUID_2)) && beacon.getRssi() > -90) {
+                    if (!mSend && (beacon.getId1().toString().toLowerCase().equals(BEACON_UUID_1) || beacon.getId1().toString().toLowerCase().equals(BEACON_UUID_2)) && beacon.getRssi() > -90) {
 
                         String minorID = beacon.getId3().toString();
                         if (!mMap.containsKey(minorID)) {
@@ -178,7 +178,7 @@ public class IBeacon extends Service implements BeaconConsumer {
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 //success
-                Log.e("IBeacon", "registerUser() success, minorID:" + minorID);
+                Log.d("IBeacon", "registerUser() success, minorID:" + minorID);
                 mSend = false;
             }
         });

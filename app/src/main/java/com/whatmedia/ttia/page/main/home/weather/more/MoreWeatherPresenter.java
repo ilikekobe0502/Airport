@@ -32,20 +32,8 @@ public class MoreWeatherPresenter implements MoreWeatherContract.Presenter {
 
     @Override
     public void getWeatherAPI(String cityId) {
-        WeatherQueryData queryData = new WeatherQueryData();
-        GetWeatherQueryResponse weatherQueryResponse = new GetWeatherQueryResponse();
 
-        queryData.setCityId(cityId);
-        queryData.setQueryType(WeatherQueryData.TAG_WEEK_WEATHER);
-        weatherQueryResponse.setData(queryData);
-
-        String json = weatherQueryResponse.getJson();
-        if (TextUtils.isEmpty(json)) {
-            mView.getApiFailed(mContext.getString(R.string.data_error), false);
-            return;
-        }
-
-        mNewApiConnect.getWeather(json, new NewApiConnect.MyCallback() {
+        mNewApiConnect.getWeather(cityId, WeatherQueryData.TAG_WEEK_WEATHER, new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.getApiFailed(mContext.getString(R.string.data_error), timeout);
