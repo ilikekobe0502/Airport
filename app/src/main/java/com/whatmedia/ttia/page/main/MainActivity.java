@@ -1,14 +1,19 @@
 package com.whatmedia.ttia.page.main;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -976,7 +981,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 500, this);
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1800000, 0, this);
         mPositionListening = true;
     }
 
