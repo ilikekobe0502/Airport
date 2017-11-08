@@ -75,7 +75,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             data = (RestaurantInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_RESTAURANT_RESULT);
             Log.d(TAG, data.toString());
 
-            mTextViewTitle.setText(!TextUtils.isEmpty(data.getRestaurantTypeName()) ? data.getRestaurantTypeName() : "");
+            mTextViewTitle.setText(!TextUtils.isEmpty(data.getName()) ? data.getName() : "");
 
             if (!TextUtils.isEmpty(data.getImgUrl())) {
                 String image = data.getImgUrl();
@@ -96,7 +96,7 @@ public class StoreSearchInfoFragment extends BaseFragment implements StoreSearch
             storeData = (com.whatmedia.ttia.newresponse.data.StoreInfoData) getArguments().getSerializable(StoreSearchInfoContract.TAG_STORE_RESULT);
             Log.d(TAG, storeData.toString());
 
-            mTextViewTitle.setText(!TextUtils.isEmpty(storeData.getStoreTypeName()) ? storeData.getStoreTypeName() : "");
+            mTextViewTitle.setText(!TextUtils.isEmpty(storeData.getName()) ? storeData.getName() : "");
 
             if (!TextUtils.isEmpty(storeData.getImgUrl())) {
                 String image = storeData.getImgUrl();

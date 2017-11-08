@@ -2,12 +2,15 @@ package com.whatmedia.ttia.page.main.home.weather.more;
 
 public interface MoreWeatherContract {
     interface View {
-        void getApiSucceed(String response);
+        void showWebView(String cityId);
 
-        void getApiFailed(String message, boolean timeout);
+        void getDeviceIdSucceed(String deviceId);
+
+        void getDeviceIdFailed(String error);
     }
 
     interface Presenter {
-        void getWeatherAPI(String cityId);
+
+        void getDeviceId();
     }
 }

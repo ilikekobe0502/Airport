@@ -57,7 +57,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
             holder.mTextViewTerminal.setText(!TextUtils.isEmpty(item.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, item.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(item.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, item.getFloorName()) : "");
-            holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getRestaurantTypeName()) ? item.getRestaurantTypeName() : "");
+            holder.mTextViewTitle.setText(!TextUtils.isEmpty(item.getName()) ? item.getName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
             String pictureUrl;
             if (!TextUtils.isEmpty(item.getImgUrl())) {
@@ -76,7 +76,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
 
             holder.mTextViewTerminal.setText(!TextUtils.isEmpty(storeItem.getTerminalsName()) ? StoreInfoData.getSimpleTerminalText(mContext, storeItem.getTerminalsName()) : "");
             holder.mTextViewFloor.setText(!TextUtils.isEmpty(storeItem.getFloorName()) ? StoreInfoData.getFloorShowText(mContext, storeItem.getFloorName()) : "");
-            holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getStoreTypeName()) ? storeItem.getStoreTypeName() : "");
+            holder.mTextViewTitle.setText(!TextUtils.isEmpty(storeItem.getName()) ? storeItem.getName() : "");
             holder.mTextViewContent.setText(!TextUtils.isEmpty(storeItem.getContent()) ? storeItem.getContent() : "");
             String pictureUrl;
             if (!TextUtils.isEmpty(storeItem.getImgUrl())) {

@@ -30,20 +30,4 @@ public class HomeWeatherInfoPresenter implements HomeWeatherInfoContract.Present
         mView = view;
         mContext = context;
     }
-
-    @Override
-    public void getWeatherAPI(String cityId) {
-
-        mNewApiConnect.getWeather(cityId, WeatherQueryData.TAG_NOW_WEATHER, new NewApiConnect.MyCallback() {
-            @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getApiFailed(mContext.getString(R.string.data_error), timeout);
-            }
-
-            @Override
-            public void onResponse(Call call, String response) throws IOException {
-                mView.getApiSucceed(response);
-            }
-        });
-    }
 }

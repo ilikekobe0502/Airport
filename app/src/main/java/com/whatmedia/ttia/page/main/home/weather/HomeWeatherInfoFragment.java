@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main.home.weather;
 
 import android.content.Context;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -28,7 +30,8 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     WebView mWebView;
 
     //    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
-    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
+//    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
+    private final static String mWeatherUrl = "https://59.127.195.228:11700/api/weather?deviceID=2c9ec8c3005feee0&cityId=ASI|TW|TW018|TAOYUAN&queryType=2";
     private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;
@@ -73,7 +76,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setSupportMultipleWindows(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mPresenter.getWeatherAPI("ASI|TW|TW018|TAOYUAN");
+//        mPresenter.getWeatherAPI("ASI|TW|TW018|TAOYUAN");
         //因為語系的字串跟查天氣送的字串不相同，所以我在此轉換一下(bug82)
 //        switch (mLocale) {
 //            case "zh_TW":
@@ -92,7 +95,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 //                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
 //                break;
 //        }
-//        mWebView.loadUrl(String.format(mWeatherUrl, mLocale));
+        mWebView.loadUrl(mWeatherUrl);
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -104,6 +107,11 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mLoadingView.goneLoadingView();
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
             }
         });
         return view;
@@ -140,24 +148,5 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void getApiSucceed(final String response) {
-        if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mWebView.loadData(response, "text/html; charset=UTF-8", "UTF-8");
-                }
-            });
-        } else {
-            Log.e(TAG, "[Fragment is not added]");
-        }
-    }
-
-    @Override
-    public void getApiFailed(String message, boolean timeout) {
-        mLoadingView.goneLoadingView();
     }
 }

@@ -1,13 +1,16 @@
 package com.whatmedia.ttia.page.main.home.weather.more;
 
 import android.content.Context;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -20,7 +23,6 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -41,9 +43,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @BindView(R.id.layout_ok)
     RelativeLayout mLayoutOk;
 
-    //    private static String mWeatherUrl = "http://210.241.14.99/weather/index.php?region=%1$s&lang=%2$s";
-    private static String mWeatherUrl = "http://125.227.250.187:8867/weather/index.php?region=%1$s&lang=%2$s";//先放舊的IP
-    private static String mLocale;
+    private String mWeatherUrl = "https://59.127.195.228:11700/api/weather?deviceID=%1$s&cityId=%2$s&queryType=1";
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -52,6 +52,8 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     private int mRegion = 0;
     private int mCountry = 1;
     private String[] mCodeArray;
+    private String mDeviceId;
+    private final static String mFirstCityId = "ASI|TW|TW018|TAOYUAN";
 
     public MoreWeatherFragment() {
         // Required empty public constructor
@@ -84,14 +86,8 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
         mPresenter = new MoreWeatherPresenter(getContext(), this);
 
         mLoadingView.showLoadingView();
-        mPresenter.getWeatherAPI("ASI|TW|TW018|TAOYUAN");
-
-//        if (TextUtils.isEmpty(mLocale))
-        mLocale = Preferences.getLocaleSetting(getContext());
-
         settingWebView();
-        switchRegion();
-//        showWebView();
+        mPresenter.getDeviceId();
 
         tool();
         return view;
@@ -215,40 +211,12 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
                 super.onReceivedError(view, request, error);
                 mLoadingView.goneLoadingView();
             }
-        });
-    }
 
-    /**
-     * Show select webView
-     */
-    private void showWebView() {
-        if (mCodeArray.length > mCountry) {
-//            if (TextUtils.equals(mLocale, Locale.TRADITIONAL_CHINESE.toString()))
-//                mLocale = "tw";
-//            else if (TextUtils.equals(mLocale, Locale.SIMPLIFIED_CHINESE.toString()))
-//                mLocale = "cn";
-//            mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], mLocale));
-            switch (mLocale) {
-                case "zh_TW":
-                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "tw"));
-                    break;
-                case "zh_CN":
-                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "ch"));
-                    break;
-                case "en":
-                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "en"));
-                    break;
-                case "ja":
-                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "jp"));
-                    break;
-                default:
-                    mWebView.loadUrl(String.format(mWeatherUrl, mCodeArray[mCountry], "tw"));
-                    break;
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
             }
-        } else {
-            Log.e(TAG, "mCodeArray.length <= mCountry");
-            showMessage(getString(R.string.data_error));
-        }
+        });
     }
 
     /**
@@ -300,30 +268,31 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 
     @OnClick(R.id.layout_ok)
     public void onClick() {
-//        showWebView();
         if (mCodeArray.length > mCountry) {
             mLoadingView.showLoadingView();
-            mPresenter.getWeatherAPI(mCodeArray[mCountry]);
+            showWebView(mCodeArray[mCountry]);
         }
         mLayoutSelector.setVisibility(View.GONE);
     }
 
     @Override
-    public void getApiSucceed(final String response) {
-        if (isAdded() && !isDetached()) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mWebView.loadData(response, "text/html; charset=UTF-8", "UTF-8");
-                }
-            });
-        } else {
-            Log.e(TAG, "[Fragment is not added]");
-        }
+    public void showWebView(String cityId) {
+        mWebView.loadUrl(String.format(mWeatherUrl, mDeviceId, cityId));
     }
 
     @Override
-    public void getApiFailed(String message, boolean timeout) {
+    public void getDeviceIdSucceed(String deviceId) {
+        mDeviceId = deviceId;
+        showWebView(mFirstCityId);
+    }
+
+    @Override
+    public void getDeviceIdFailed(String error) {
         mLoadingView.goneLoadingView();
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.note)
+                .setMessage(error)
+                .setPositiveButton(R.string.ok, null)
+                .show();
     }
 }
