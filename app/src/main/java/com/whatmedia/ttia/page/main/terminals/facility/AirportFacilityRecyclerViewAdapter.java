@@ -74,11 +74,12 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
             Util.getHttpsPicasso(mContext).load(item.getImgUrl()).into(holder.mImageViewPicture, new Callback() {
                 @Override
                 public void onSuccess() {
-
+                    holder.mTextViewLoading.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onError() {
+                    holder.mTextViewLoading.setVisibility(View.VISIBLE);
                     holder.mTextViewLoading.setText("ERROR");
                 }
             });
