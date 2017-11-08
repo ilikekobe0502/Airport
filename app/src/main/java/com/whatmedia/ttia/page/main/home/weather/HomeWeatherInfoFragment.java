@@ -31,7 +31,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 
     //    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
 //    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
-    private final static String mWeatherUrl = "https://59.127.195.228:11700/api/weather?deviceID=2c9ec8c3005feee0&cityId=ASI|TW|TW018|TAOYUAN&queryType=2";
+    private final static String mWeatherUrl = "https://59.127.195.228:11700/api/weather?deviceID=%1$s&cityId=ASI|TW|TW018|TAOYUAN&queryType=2";
     private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;
@@ -95,7 +95,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 //                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
 //                break;
 //        }
-        mWebView.loadUrl(mWeatherUrl);
+        mPresenter.getDeviceId();
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -148,5 +148,15 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void getDeviceIdSuccess(String deviceId) {
+        mWebView.loadUrl(String.format(mWeatherUrl, deviceId));
+    }
+
+    @Override
+    public void getDeviceIdFailed(String deviceId) {
+
     }
 }

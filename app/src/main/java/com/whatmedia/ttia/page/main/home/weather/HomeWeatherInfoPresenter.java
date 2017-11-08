@@ -20,14 +20,22 @@ import okhttp3.Call;
 public class HomeWeatherInfoPresenter implements HomeWeatherInfoContract.Presenter {
     private final static String TAG = HomeWeatherInfoPresenter.class.getSimpleName();
 
-    private NewApiConnect mNewApiConnect;
     private HomeWeatherInfoContract.View mView;
     private Context mContext;
 
 
     HomeWeatherInfoPresenter(Context context, HomeWeatherInfoContract.View view) {
-        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
         mContext = context;
+    }
+
+    @Override
+    public void getDeviceId() {
+        String deviceId = NewApiConnect.getDeviceID();
+        if (!TextUtils.isEmpty(deviceId)) {
+            mView.getDeviceIdSuccess(deviceId);
+        } else {
+            mView.getDeviceIdFailed(mContext.getString(R.string.data_error));
+        }
     }
 }

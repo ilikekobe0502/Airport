@@ -86,10 +86,12 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
                 break;
         }
-        if (TextUtils.equals(item.getKinds(), FlightsInfoData.TAG_KIND_ARRIVE))
+        if (TextUtils.equals(item.getKinds(), FlightsInfoData.TAG_KIND_ARRIVE)) {
             holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "");
-        else {
+            holder.mImageViewIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.baggage));
+        }else {
             holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getGate()) ? item.getGate().trim() : "");
+            holder.mImageViewIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.boarding));
         }
         if (!TextUtils.isEmpty(item.getTerminals())) {
             StringBuilder builder = new StringBuilder();
@@ -161,6 +163,8 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         TextView mTextViewTime;
         @BindView(R.id.imageView_logo)
         ImageView mImageViewLogo;
+        @BindView(R.id.imageView_icon)
+        ImageView mImageViewIcon;
         @BindView(R.id.imageView_check)
         ImageView mImageViewCheck;
         @BindView(R.id.textView_flight_code)
