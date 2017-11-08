@@ -288,11 +288,11 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
                 if (mFromPage == Page.TAG_STORE_OFFERS) {//商店資訊
-                    mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getName() : "",
+                    mPresenter.getStoreInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getId() : "",
                             mAreaCodeData != null ? mAreaCodeData.getId() : "", mStoreCodeData != null ? mStoreCodeData.getId() : ""
                             , mFloorCodeData != null ? mFloorCodeData.getId() : "");
                 } else {//餐廳資訊
-                    mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getName() : "",
+                    mPresenter.getRestaurantInfoAPI(mTerminalCodeData != null ? mTerminalCodeData.getId() : "",
                             mAreaCodeData != null ? mAreaCodeData.getId() : "", mRestaurantCodeData != null ? mRestaurantCodeData.getId() : ""
                             , mFloorCodeData != null ? mFloorCodeData.getId() : "");
                 }
