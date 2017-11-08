@@ -92,7 +92,14 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
             holder.mViewScore3.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
             holder.mViewScore4.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
             holder.mViewScore5.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_yes));
+        } else {
+            holder.mViewScore1.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
+            holder.mViewScore2.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
+            holder.mViewScore3.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
+            holder.mViewScore4.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
+            holder.mViewScore5.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.quest_05_06_no));
         }
+
         holder.mViewScore1.setOnClickListener(this);
         holder.mViewScore2.setOnClickListener(this);
         holder.mViewScore3.setOnClickListener(this);
@@ -109,7 +116,6 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
         } else {
             holder.mViewSend.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -184,17 +190,21 @@ public class QuestionnaireRecyclerViewAdapter extends RecyclerView.Adapter<Quest
             if (mListener != null)
                 mListener.onClick(view);
         }
+    }
 
-
+    boolean checkAnswer() {
+        for (QuestionnairesListData item : mItems) {
+            if (TextUtils.isEmpty(item.getAnswer()))
+                return false;
+        }
+        return true;
     }
 
     List<AnswerListData> getAnswer() {
         List<AnswerListData> answerListData = new ArrayList<>();
-        for(QuestionnairesListData item:mItems){
-            answerListData.add(new AnswerListData(item.getId(),TextUtils.isEmpty(item.getAnswer())?"1":item.getAnswer()));
+        for (QuestionnairesListData item : mItems) {
+            answerListData.add(new AnswerListData(item.getId(), item.getAnswer()));
         }
         return answerListData;
     }
-
-
 }

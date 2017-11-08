@@ -162,8 +162,19 @@ public class QuestionnaireFragment extends BaseFragment implements Questionnaire
 
     @Override
     public void onClick(View view) {
-        mLoadingView.showLoadingView();
-        mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
+        if (mQuestionnaireRecyclerViewAdapter.checkAnswer()) {
+            mLoadingView.showLoadingView();
+            mPresenter.sendQuestionnaireAPI(mQuestionnaireRecyclerViewAdapter.getAnswer());
+        } else {
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.useful_quest_no_finish)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        }
     }
 
     private void showSuccessDialog() {
