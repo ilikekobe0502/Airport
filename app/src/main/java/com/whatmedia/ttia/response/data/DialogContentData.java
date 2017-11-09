@@ -104,9 +104,9 @@ public class DialogContentData {
         /則只有[預計時間]需要顯示
         /並且將[實際時間]的欄位塞入預計時間
         */
-        if (TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_SCHEDULE_CHANGE) ||
-                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_DELAY) ||
-                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_CANCELLED)) {
+        if (data.getFlightStatus().contains(FlightsInfoData.TAG_SCHEDULE_CHANGE) ||
+                data.getFlightStatus().contains(FlightsInfoData.TAG_DELAY) ||
+                data.getFlightStatus().contains(FlightsInfoData.TAG_CANCELLED)) {
             //出發航班
             if (isDeparture) {
                 item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_exceptime));
@@ -125,8 +125,8 @@ public class DialogContentData {
             }
             item.setContent("");
             list.add(item);
-        } else if (TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_ARRIVED) ||
-                TextUtils.equals(FlightsInfoData.checkFlightShowText(context, data.getFlightStatus()), FlightsInfoData.TAG_DEPARTED)) {
+        } else if (data.getFlightStatus().contains(FlightsInfoData.TAG_ARRIVED) ||
+                data.getFlightStatus().contains(FlightsInfoData.TAG_DEPARTED)) {
             //出發航班
             if (isDeparture) {
                 item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_exceptime));
