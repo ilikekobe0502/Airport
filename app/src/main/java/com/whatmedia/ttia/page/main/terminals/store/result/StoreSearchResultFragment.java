@@ -70,13 +70,19 @@ public class StoreSearchResultFragment extends BaseFragment implements StoreSear
         List<RestaurantInfoData> list = null;
         List<StoreInfoData> storeList = null;
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT))) {
-            GetRestaurantInfoListResponse restaurantInfoListResponse = GetRestaurantInfoListResponse.getGson(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT));
-            if (restaurantInfoListResponse.getRestaurantList() != null)
-                list = restaurantInfoListResponse.getRestaurantList();
-        } else if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT))) {
-            GetStoreInfoListResponse storeInfoListResponse = GetStoreInfoListResponse.getGson(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT));
-            storeList = storeInfoListResponse.getStoreList();
+        if (getArguments()!=null) {
+            if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT))) {
+                GetRestaurantInfoListResponse restaurantInfoListResponse = GetRestaurantInfoListResponse.getGson(getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT));
+                if (restaurantInfoListResponse.getRestaurantList() != null)
+                    list = restaurantInfoListResponse.getRestaurantList();
+            } else if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT))) {
+                GetStoreInfoListResponse storeInfoListResponse = GetStoreInfoListResponse.getGson(getArguments().getString(StoreSearchResultContract.TAG_STORE_RESULT));
+                storeList = storeInfoListResponse.getStoreList();
+            }
+
+            if (!TextUtils.isEmpty(getArguments().getString(StoreSearchResultContract.TAG_TITLE))) {
+                mTextViewSubtitle.setText(getArguments().getString(StoreSearchResultContract.TAG_TITLE));
+            }
         }
         mAdapter = new StoreSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

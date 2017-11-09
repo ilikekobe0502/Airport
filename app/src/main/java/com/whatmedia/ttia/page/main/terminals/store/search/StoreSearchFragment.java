@@ -42,7 +42,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     TextView mTextViewFloor;
     @BindView(R.id.textView_restaurant)
     TextView mTextViewRestaurant;
-    
+
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private StoreSearchContract.Presenter mPresenter;
@@ -91,7 +91,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         if (getArguments() != null) {
             mFromPage = getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE);
         }
-        mPresenter =new StoreSearchPresenter(getContext(), this);
+        mPresenter = new StoreSearchPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getTerminalCodeAPI();
 
@@ -222,6 +222,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             mLoadingView.goneLoadingView();
             if (!TextUtils.isEmpty(response)) {
                 Bundle bundle = new Bundle();
+                bundle.putString(StoreSearchResultContract.TAG_TITLE, TextUtils.equals(mTextViewTerminal.getText().toString(), getString(R.string.restaurant_store_search_select_terminal)) ? mTerminalCodeList.get(0).getName() : mTextViewTerminal.getText().toString());
                 bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
                 mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
             } else {
@@ -271,6 +272,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 mLoadingView.goneLoadingView();
                 Bundle bundle = new Bundle();
                 bundle.putString(StoreSearchResultContract.TAG_STORE_RESULT, response);
+                bundle.putString(StoreSearchResultContract.TAG_TITLE, TextUtils.equals(mTextViewTerminal.getText().toString(), getString(R.string.restaurant_store_search_select_terminal)) ? mTerminalCodeList.get(0).getName() : mTextViewTerminal.getText().toString());
                 mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
             } else {
                 Log.e(TAG, "getRestaurantInfoSucceed response is null");
