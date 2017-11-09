@@ -8,6 +8,8 @@ import com.whatmedia.ttia.response.data.ClockTimeData;
  */
 
 public class FlightsListData {
+    public final static String TAG_KIND_ARRIVE = "A";
+    public final static String TAG_KIND_DEPARTURE = "D";
     @SerializedName("terminals")
     private String terminals;
     @SerializedName("kinds")

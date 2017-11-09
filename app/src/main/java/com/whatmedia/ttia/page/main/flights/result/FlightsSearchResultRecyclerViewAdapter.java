@@ -74,7 +74,12 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
             holder.mLayoutBackground.setLayoutParams(mParamsBackground);
         }
 
-        holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
+        if (TextUtils.equals(item.getKinds(), FlightsListData.TAG_KIND_ARRIVE)) {
+            holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ?  Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
+        }else {
+            holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpectedTime()) ?  Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpectedTime().trim()) : "");
+        }
+
         holder.mTextViewFlightCode.setText(String.format("%1$s %2$s",
                 !TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode().trim() : "",
                 !TextUtils.isEmpty(item.getShifts()) ? item.getShifts().trim() : ""));
@@ -95,7 +100,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
                 holder.mTextViewLocation.setText(!TextUtils.isEmpty(item.getContactsLocationChinese()) ? item.getContactsLocationChinese().trim() : "");
                 break;
         }
-        if (TextUtils.equals(item.getKinds(), FlightsInfoData.TAG_KIND_ARRIVE)) {
+        if (TextUtils.equals(item.getKinds(), FlightsListData.TAG_KIND_ARRIVE)) {
             holder.mTextViewGate.setText(!TextUtils.isEmpty(item.getLuggageCarousel()) ? item.getLuggageCarousel().trim() : "");
             holder.mImageViewIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.baggage));
         } else {

@@ -228,7 +228,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    showMessage(!TextUtils.isEmpty(message) ? message : "");
+//                    showMessage(!TextUtils.isEmpty(message) ? message : "");
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
                     mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
