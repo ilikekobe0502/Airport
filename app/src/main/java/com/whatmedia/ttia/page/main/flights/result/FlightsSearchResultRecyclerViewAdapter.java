@@ -74,11 +74,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
             holder.mLayoutBackground.setLayoutParams(mParamsBackground);
         }
 
-        if (TextUtils.equals(item.getKinds(), FlightsListData.TAG_KIND_ARRIVE)) {
-            holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ?  Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
-        }else {
-            holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpectedTime()) ?  Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpectedTime().trim()) : "");
-        }
+        holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
 
         holder.mTextViewFlightCode.setText(String.format("%1$s %2$s",
                 !TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode().trim() : "",
