@@ -23,6 +23,7 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.IndoorMap.IndoorMapActivity;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatmedia.ttia.response.data.FlightsInfoData;
 import com.whatmedia.ttia.utility.Util;
@@ -30,7 +31,7 @@ import com.whatmedia.ttia.utility.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends BaseFragment implements HomeContract.View, IOnItemClickListener, ViewPager.OnPageChangeListener {
+public class HomeFragment extends BaseFragment implements HomeContract.View, IOnItemClickListener, ViewPager.OnPageChangeListener, ArriveFlightsFragment.IOnSetCurrentPositionListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     @BindView(R.id.viewPager_info)
@@ -48,6 +49,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private HomePresenter mPresenter;
+
+    @Override
+    public void setCurrentPosition(int position) {
+        mViewPagerInfo.setCurrentItem(position);
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -73,6 +79,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mPresenter.getLanguageList();
 
         mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
+        mInfoAdapter.setCurrentPositionListener(this);
         mViewPagerInfo.setAdapter(mInfoAdapter);
 
         mTabInfoIndicator.setupWithViewPager(mViewPagerInfo, true);

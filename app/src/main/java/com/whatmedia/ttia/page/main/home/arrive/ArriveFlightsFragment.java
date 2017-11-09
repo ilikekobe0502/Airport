@@ -40,7 +40,16 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private int mRetryCount = 0;
+    private IOnSetCurrentPositionListener mListener;
 
+
+    public interface IOnSetCurrentPositionListener {
+        void setCurrentPosition(int position);
+    }
+
+    public void setListener(IOnSetCurrentPositionListener listener) {
+        mListener = listener;
+    }
 
     public ArriveFlightsFragment() {
         // Required empty public constructor
@@ -156,6 +165,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
+                    mListener.setCurrentPosition(0);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
                     mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);

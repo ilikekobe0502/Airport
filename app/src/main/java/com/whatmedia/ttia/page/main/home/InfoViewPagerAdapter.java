@@ -34,6 +34,8 @@ import butterknife.ButterKnife;
 public class InfoViewPagerAdapter extends FragmentPagerAdapter {
     private final static String TAG = InfoViewPagerAdapter.class.getSimpleName();
 
+    private ArriveFlightsFragment.IOnSetCurrentPositionListener mListener;
+
     public InfoViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -47,13 +49,20 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 4;
     }
+
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0://出發航班
                 return DepartureFlightsFragment.newInstance();
             case 1://抵達航班
-                return ArriveFlightsFragment.newInstance();
+                ArriveFlightsFragment fragment = ArriveFlightsFragment.newInstance();
+                if (mListener != null) {
+                    fragment.setListener(mListener);
+                } else {
+                    fragment.setListener(null);
+                }
+                return fragment;
             case 2://停車資訊
                 return HomeParkingInfoFragment.newInstance();
             case 3://天氣資訊
@@ -61,6 +70,10 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
             default:
                 return DepartureFlightsFragment.newInstance();
         }
+    }
+
+    public void setCurrentPositionListener(ArriveFlightsFragment.IOnSetCurrentPositionListener listener) {
+        mListener = listener;
     }
 //
 //    @Override
