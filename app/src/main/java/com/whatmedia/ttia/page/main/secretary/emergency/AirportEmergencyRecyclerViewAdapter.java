@@ -56,7 +56,7 @@ public class AirportEmergencyRecyclerViewAdapter extends RecyclerView.Adapter<Ai
         }
 
         holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getPushTime()) ? Util.justShowDate(item.getPushTime()) : "");
-        holder.mTextViewMessage.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
+        holder.mTextViewMessage.setText(!TextUtils.isEmpty(item.getTitle()) ? item.getTitle() : "");
 
         if ((position + 1) % 2 != 0) {
             holder.mLayoutFrame.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black0_25));
