@@ -5,7 +5,7 @@ android {
         ttia {
             keyAlias 'De$1gnL@b'
             keyPassword 'De$1gnL@b'
-            storeFile file('/Users/neo/workdir/Airport/ttia.keystore')
+            storeFile file('/Users/neo_mac/WorkDir/Android/Airport/ttia.keystore')
             storePassword 'De$1gnL@b'
         }
     }
