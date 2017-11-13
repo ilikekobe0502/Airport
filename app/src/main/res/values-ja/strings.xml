@@ -598,6 +598,7 @@
     <!-- Timezone -->
     <string name="timezone_other_area">"その他の区域"</string>
     <string name="timezone_other_area_dialog_title">"地域を選択してください"</string>
+    <string name="timezone_combine">+%s</string>
 
     <!-- Restaurant & Store search -->
     <string name="restaurant_search_subtitle">レストラン検索</string>
@@ -720,6 +721,16 @@
     <string name="language_setting_japanese">"日本語"</string>
     <string name="language_setting_english">"英語"</string>
 
+    <string name="marquee_arrive">飛自</string>
+    <string name="marquee_dexxxxx">飛往</string>
+    <string name="marquee_ecpected_time">預計時間：</string>
+    <string name="marquee_status">狀態：</string>
+    <string name="marquee_ecpress_time">實際時間：</string>
+    <string name="marquee_terminal">航廈：</string>
+    <string name="marquee_gate">登機門：</string>
+    <string name="marquee_gt">報告櫃檯：</string>
+    <string name="marquee_luggage">行李轉盤：</string>
+
     <string name="store_terminal_1">T1</string>
     <string name="store_terminal_2">T2</string>
 
@@ -772,10 +783,24 @@
     <string name="indoor_search_sub_title">ロードマップ</string>
     <string name="indoor_search_start_text">開始：%d</string>
     <string name="indoor_search_end_text">終了：%d</string>
+    <string name="route_string">Route to %1$s</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="str_from">From</string>
+    <string name="str_to">To</string>
+    <string name="str_done">Done</string>
+    <string name="str_error">Error</string>
+    <string name="search_hint">Search for places</string>
+    <string name="menu_search">Search</string>
+    <string name="directions">Directions</string>
+    <string name="level_string">Level %1$d</string>
+    <string name="directions_route">Route</string>
+    <string name="current_location">Current location</string>
 
     <string name="directions_from">Start:</string>
     <string name="directions_to">End:</string>
     <string name="directions_from_hint">Please enter your location</string>
     <string name="directions_to_hint">Please enter your destination</string>
     <string name="timeout_message">ネットワークの問題に起因した情報を取得できません。</string>
+
+    <string name="register_user_error">登録ユーザーが失敗しました</string>
 </resources>
