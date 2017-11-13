@@ -144,6 +144,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 case TAG_AIRPORT_SECRETARY://機場秘書
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
+                    /*
                 case TAG_INDOOR_MAP://室內地圖導航
                     try {
                         Intent i = new Intent(getContext(), IndoorMapActivity.class);
@@ -156,6 +157,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 case TAG_AIRPORT_ACHIEVEMENT://機場成就
                     mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);
                     break;
+                    */
             }
         } else {
             Log.e(TAG, "view.getTag is not instance of HomeFeature");

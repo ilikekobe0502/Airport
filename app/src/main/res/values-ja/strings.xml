@@ -654,7 +654,7 @@
     <string name="home_more_flights">その他の便</string>
     <string name="home_terminal_info_title">ターミナル情報</string>
     <string name="home_store_offers_title">店舗申し出</string>
-    <string name="home_language_setting_title">言語設定</string>
+    <string name="home_language_setting_title">情報/設定</string>
     <string name="home_airport_secretary_title">空港セクレタリー</string>
     <string name="home_indoor_map_title">室内ガイド</string>
     <string name="home_airport_achievement_title">空港としての成就</string>

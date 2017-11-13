@@ -2,6 +2,7 @@ package com.whatmedia.ttia.page.main.language;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.LanguageSetting;
@@ -28,6 +30,8 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.textView_version)
+    TextView mTextViewVersion;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -76,6 +80,15 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
     @Override
     public void onStart() {
         super.onStart();
+        String versionName = "";
+        int versionCode = 0;
+        try {
+            versionName = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
+            versionCode = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        mTextViewVersion.setText(String.format("Version%1$s (build %2$d)", versionName, versionCode));
     }
 
     @Override

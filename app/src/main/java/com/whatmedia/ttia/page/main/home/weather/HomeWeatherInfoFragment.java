@@ -31,7 +31,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 
     //    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
 //    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
-    private final static String mWeatherUrl = "https://59.127.195.228:11700/api/weather?deviceID=%1$s&cityId=ASI|TW|TW018|TAOYUAN&queryType=2";
+    private final static String mWeatherUrl = "http://210.241.14.99weather?deviceID=%1$s&cityId=ASI|TW|TW018|TAOYUAN&queryType=2";
     private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;

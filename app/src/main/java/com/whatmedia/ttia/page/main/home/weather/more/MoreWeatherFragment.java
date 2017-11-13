@@ -43,7 +43,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @BindView(R.id.layout_ok)
     RelativeLayout mLayoutOk;
 
-    private String mWeatherUrl = "https://59.127.195.228:11700/api/weather?deviceID=%1$s&cityId=%2$s&queryType=1";
+    private String mWeatherUrl = "http://210.241.14.99/weather?deviceID=%1$s&cityId=%2$s&queryType=1";
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
