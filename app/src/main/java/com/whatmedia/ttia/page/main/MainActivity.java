@@ -50,6 +50,7 @@ import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultFragment;
 import com.whatmedia.ttia.page.main.flights.search.FlightsSearchFragment;
+import com.whatmedia.ttia.page.main.home.HomeContract;
 import com.whatmedia.ttia.page.main.home.HomeFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsFragment;
@@ -101,6 +102,10 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String TAG_DEVICE_NAME = android.os.Build.MODEL;
 
+    private static final String TAG_NOTIFICATION = "type";
+    private static final String TAG_DEFAULT = "-1";
+
+
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     public final static String TAG_DATA = "data";
 
@@ -143,9 +148,9 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         setMarqueeHomeState();
 
-        Page.clearBackStack(MainActivity.this);
+
         Page.setBackStackChangedListener(this, this);
-        addFragment(Page.TAG_HOME, null, false);
+        gotoFistPage(TAG_DEFAULT);
 
         mImageViewHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,8 +158,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 if (mLoadingView != null && mImageViewHome.isShown()) {
                     mLoadingView.setVisibility(View.GONE);
                 }
-                Page.clearBackStack(MainActivity.this);
-                addFragment(Page.TAG_HOME, null, false);
+                gotoFistPage(TAG_DEFAULT);
             }
         });
 
@@ -208,6 +212,17 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     protected void onResume() {
         setPositionListener();
         super.onResume();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (!TextUtils.isEmpty(extras.getString(TAG_NOTIFICATION))) {
+                String type = extras.getString(TAG_NOTIFICATION);
+                gotoFistPage(type);
+            }
+        }
     }
 
     @Override
@@ -981,6 +996,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        // TODO: 2017/11/16 30分鐘上傳一次，現在好像會Timeout要試試看 
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1800000, 0, this);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1800000, 0, this);
         mPositionListening = true;
     }
@@ -1025,5 +1042,19 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    /**
+     * 切換第一頁
+     * @param type
+     */
+    private void gotoFistPage(String type) {
+        Page.clearBackStack(MainActivity.this);
+        Bundle bundle = null;
+        if (!TextUtils.equals(type, "-1")) {
+            bundle = new Bundle();
+            bundle.putString(HomeContract.TAG_TYPE, type);
+        }
+        addFragment(Page.TAG_HOME, bundle, false);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
@@ -24,6 +25,11 @@ public class FCMMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d("FCM", "onMessageReceived:" + remoteMessage.getFrom());
+
+        // TODO: 2017/11/16 接Server來的Type資料
+        String type = "5";
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
 
         Notification.Builder builder = new Notification.Builder(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -44,8 +50,11 @@ public class FCMMessageService extends FirebaseMessagingService {
         }
 
         //Click intent
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP), PendingIntent.FLAG_UPDATE_CURRENT);
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
 
         Notification notificationCompat = builder.build();

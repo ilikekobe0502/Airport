@@ -1,14 +1,13 @@
 package com.whatmedia.ttia.page.main.home;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetLanguageListResponse;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.IndoorMap.IndoorMapActivity;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
@@ -42,6 +40,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     TabLayout mTabIndicator;
     @BindView(R.id.tab_info_indicator)
     TabLayout mTabInfoIndicator;
+
+    private static final String TAG_MY_FLIGHTS = "1";
+    private static final String TAG_SWEET_NOTIFICATION = "2";
+    private static final String TAG_NEWS = "3";
+    private static final String TAG_URGENT = "4";
+    private static final String TAG_ACHIEVEMENT = "5";
 
     private FeatureViewPagerAdapter mFeatureAdapter = new FeatureViewPagerAdapter();
     private InfoViewPagerAdapter mInfoAdapter;
@@ -90,6 +94,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mViewPagerFeature.setAdapter(mFeatureAdapter);
         mFeatureAdapter.setClickListener(this);
         mTabIndicator.setupWithViewPager(mViewPagerFeature, true);
+
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(HomeContract.TAG_TYPE)))
+            goToNotificationPage(getArguments().getString(HomeContract.TAG_TYPE));
         return view;
     }
 
@@ -295,5 +302,25 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 Log.d(TAG, "Fragment is not add");
             }
         }
+    }
+
+    @Override
+    public void goToNotificationPage(String type) {
+        mViewPagerInfo.setCurrentItem(0);
+        int page;
+        if (TextUtils.equals(type, TAG_MY_FLIGHTS)) {
+            page = Page.TAG_MY_FIGHTS_INFO;
+        } else if (TextUtils.equals(type, TAG_SWEET_NOTIFICATION)) {
+            page = Page.TAG_AIRPORT_SWEET_NOTIFY;
+        } else if (TextUtils.equals(type, TAG_NEWS)) {
+            page = Page.TAG_AIRPORT_USER_NEWS;
+        } else if (TextUtils.equals(type, TAG_URGENT)) {
+            page = Page.TAG_AIRPORT_EMERGENCY;
+        } else if (TextUtils.equals(type, TAG_ACHIEVEMENT)) {
+            page = Page.TAG_ACHIEVEMENT;
+        } else {
+            return;
+        }
+        mMainActivity.addFragment(page, null, true);
     }
 }

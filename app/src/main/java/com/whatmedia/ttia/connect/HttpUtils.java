@@ -35,8 +35,8 @@ public class HttpUtils {
         mBuilder.sslSocketFactory(createSSLSocketFactory(), mMyTrustManager)
                 .hostnameVerifier(new TrustAllHostnameVerifier())
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(3000, TimeUnit.MILLISECONDS)
-                .writeTimeout(3000, TimeUnit.MILLISECONDS);
+                .readTimeout(4000, TimeUnit.MILLISECONDS)
+                .writeTimeout(4000, TimeUnit.MILLISECONDS);
         return mBuilder.build();
     }
 }

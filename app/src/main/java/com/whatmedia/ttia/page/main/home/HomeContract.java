@@ -7,10 +7,14 @@ import com.whatmedia.ttia.newresponse.GetLanguageListResponse;
  */
 
 public interface HomeContract {
+    String TAG_TYPE = "com.whatmedia.ttia.page.main.home.type";
+
     interface View {
         void getLanguageListSuccess(GetLanguageListResponse response);
 
         void getLanguageListFailed(String e, boolean timeout);
+
+        void goToNotificationPage(String type);
     }
 
     interface Presenter {
