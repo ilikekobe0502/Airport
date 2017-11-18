@@ -1,19 +1,14 @@
 package com.whatmedia.ttia.page.main;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -92,7 +87,6 @@ import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,7 +96,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String TAG_DEVICE_NAME = android.os.Build.MODEL;
 
-    private static final String TAG_NOTIFICATION = "type";
+    public static final String TAG_NOTIFICATION = "type";
     private static final String TAG_DEFAULT = "-1";
 
 
@@ -150,7 +144,10 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
 
         Page.setBackStackChangedListener(this, this);
-        gotoFistPage(TAG_DEFAULT);
+        if (getIntent() != null && getIntent().getExtras() != null && !TextUtils.isEmpty(getIntent().getExtras().getString(MainActivity.TAG_NOTIFICATION))) {
+            gotoFistPage(getIntent().getExtras().getString(MainActivity.TAG_NOTIFICATION), false);
+        } else
+            gotoFistPage(TAG_DEFAULT, true);
 
         mImageViewHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +155,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 if (mLoadingView != null && mImageViewHome.isShown()) {
                     mLoadingView.setVisibility(View.GONE);
                 }
-                gotoFistPage(TAG_DEFAULT);
+                gotoFistPage(TAG_DEFAULT, true);
             }
         });
 
@@ -220,7 +217,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         if (extras != null) {
             if (!TextUtils.isEmpty(extras.getString(TAG_NOTIFICATION))) {
                 String type = extras.getString(TAG_NOTIFICATION);
-                gotoFistPage(type);
+                gotoFistPage(type, false);
             }
         }
     }
@@ -1046,10 +1043,13 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
     /**
      * 切換第一頁
+     *
      * @param type
+     * @param clear
      */
-    private void gotoFistPage(String type) {
-        Page.clearBackStack(MainActivity.this);
+    private void gotoFistPage(String type, boolean clear) {
+        if (clear)
+            Page.clearBackStack(MainActivity.this);
         Bundle bundle = null;
         if (!TextUtils.equals(type, "-1")) {
             bundle = new Bundle();

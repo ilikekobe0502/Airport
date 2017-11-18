@@ -27,9 +27,9 @@ public class FCMMessageService extends FirebaseMessagingService {
         Log.d("FCM", "onMessageReceived:" + remoteMessage.getFrom());
 
         // TODO: 2017/11/16 接Server來的Type資料
-        String type = "5";
+        String type = remoteMessage.getData().get(MainActivity.TAG_NOTIFICATION);
         Bundle bundle = new Bundle();
-        bundle.putString("type", type);
+        bundle.putString(MainActivity.TAG_NOTIFICATION, type);
 
         Notification.Builder builder = new Notification.Builder(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
