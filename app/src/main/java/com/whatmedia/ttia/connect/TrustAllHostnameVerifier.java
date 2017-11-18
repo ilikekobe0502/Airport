@@ -11,6 +11,6 @@ import javax.net.ssl.SSLSession;
 public class TrustAllHostnameVerifier implements HostnameVerifier {
     @Override
     public boolean verify(String hostname, SSLSession session) {
-        return (hostname.equals("59.127.195.228"));
+        return (hostname.equals("59.127.195.228") || hostname.equals("210.241.14.99"));
     }
 }
