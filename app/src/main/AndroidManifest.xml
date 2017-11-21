@@ -86,6 +86,10 @@
             android:name=".services.IBeacon"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".services.MyLocationService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity
             android:name=".page.IndoorMap.IndoorSearchActivity"
@@ -94,6 +98,12 @@
         <activity
             android:name=".page.IndoorMap.IndoorInfoActivity"
             android:screenOrientation="portrait"></activity>
+
+        <receiver android:name=".utility.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name=".utility.MyCustomSuggestionProvider"
