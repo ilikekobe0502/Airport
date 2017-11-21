@@ -95,8 +95,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mFeatureAdapter.setClickListener(this);
         mTabIndicator.setupWithViewPager(mViewPagerFeature, true);
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(HomeContract.TAG_TYPE)))
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(HomeContract.TAG_TYPE))) {
             goToNotificationPage(getArguments().getString(HomeContract.TAG_TYPE));
+        }
         return view;
     }
 
@@ -322,5 +323,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             return;
         }
         mMainActivity.addFragment(page, null, true);
+        getArguments().putString(HomeContract.TAG_TYPE,"");
     }
 }

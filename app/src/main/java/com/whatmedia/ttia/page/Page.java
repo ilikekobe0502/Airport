@@ -187,7 +187,8 @@ public class Page {
      * @param activity
      */
     public static void clearBackStack(AppCompatActivity activity) {
-        activity.getSupportFragmentManager().popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (activity != null && activity.getSupportFragmentManager() != null)
+            activity.getSupportFragmentManager().popBackStackImmediate(0, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     private static android.support.v4.app.Fragment getFragment(int page) {
