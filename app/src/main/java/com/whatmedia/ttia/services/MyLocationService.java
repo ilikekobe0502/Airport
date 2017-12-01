@@ -9,17 +9,27 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
+
+import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetLocationQueryResponse;
+import com.whatmedia.ttia.newresponse.data.LocationQueryData;
+
+import java.io.IOException;
+
+import okhttp3.Call;
 
 /**
  * Created by neo on 2017/11/7.
  */
 
 public class MyLocationService extends Service {
+    //getLastKnownLocation
     private static final String TAG = "MyLocationService";
     private LocationManager mLocationManager = null;
-    private static final int LOCATION_INTERVAL = 1000;
-    private static final float LOCATION_DISTANCE = 10f;
+    private static final int LOCATION_INTERVAL = 1500000;
+    private static final float LOCATION_DISTANCE = 0;
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
@@ -33,6 +43,30 @@ public class MyLocationService extends Service {
         public void onLocationChanged(Location location) {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
+
+            LocationQueryData locationQueryData = new LocationQueryData();
+            GetLocationQueryResponse response = new GetLocationQueryResponse();
+            locationQueryData.setLatitude(String.valueOf(location.getLatitude()));
+            locationQueryData.setLongitude(String.valueOf(location.getLongitude()));
+            response.setData(locationQueryData);
+
+            String json = response.getJson();
+            if (TextUtils.isEmpty(json)) {
+                Log.e(TAG, "json is empty");
+                return;
+            }
+
+            new NewApiConnect().sentEditLocation(json, new NewApiConnect.MyCallback() {
+                @Override
+                public void onFailure(Call call, IOException e, boolean timeout) {
+                    Log.e(TAG, "sentEditLocation response failure = " + e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, String response) throws IOException {
+                    Log.d(TAG, "sentEditLocation response success = " + response);
+                }
+            });
         }
 
         @Override
@@ -51,16 +85,13 @@ public class MyLocationService extends Service {
         }
     }
 
-    /*
+
     LocationListener[] mLocationListeners = new LocationListener[]{
             new LocationListener(LocationManager.GPS_PROVIDER),
             new LocationListener(LocationManager.NETWORK_PROVIDER)
     };
-    */
 
-    LocationListener[] mLocationListeners = new LocationListener[]{
-            new LocationListener(LocationManager.PASSIVE_PROVIDER)
-    };
+
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -83,7 +114,7 @@ public class MyLocationService extends Service {
 
         try {
             mLocationManager.requestLocationUpdates(
-                    LocationManager.PASSIVE_PROVIDER,
+                    LocationManager.GPS_PROVIDER,
                     LOCATION_INTERVAL,
                     LOCATION_DISTANCE,
                     mLocationListeners[0]
@@ -94,9 +125,9 @@ public class MyLocationService extends Service {
             Log.d(TAG, "network provider does not exist, " + ex.getMessage());
         }
 
-        /*try {
+        try {
             mLocationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
+                    LocationManager.NETWORK_PROVIDER,
                     LOCATION_INTERVAL,
                     LOCATION_DISTANCE,
                     mLocationListeners[1]
@@ -105,7 +136,7 @@ public class MyLocationService extends Service {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
-        }*/
+        }
     }
 
     @Override
