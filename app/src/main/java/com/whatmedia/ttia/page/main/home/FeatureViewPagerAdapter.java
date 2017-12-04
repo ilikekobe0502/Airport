@@ -29,7 +29,7 @@ public class FeatureViewPagerAdapter extends PagerAdapter implements IOnItemClic
 
     @Override
     public int getCount() {
-        return 1;
+        return mItems.size() % 8;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FeatureViewPagerAdapter extends PagerAdapter implements IOnItemClic
     public void destroyItem(ViewGroup container, int position, Object object) {
 //        super.destroyItem(container, position, object);
         container.removeView((View) object);
-        object=null;
+        object = null;
     }
 
     class ViewHolder {

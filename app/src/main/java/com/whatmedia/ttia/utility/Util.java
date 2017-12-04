@@ -803,7 +803,7 @@ public class Util {
      * @param view
      */
     public static void setTextFont(Context context, TextView view, String type) {
-        view.setTypeface(Typeface.createFromAsset(context.getAssets(), String.format("fonts/%s", type);
+        view.setTypeface(Typeface.createFromAsset(context.getAssets(), String.format("fonts/%s", type)));
     }
 
     /**

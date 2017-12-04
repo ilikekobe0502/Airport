@@ -156,7 +156,7 @@ public class AirportFacilityRecyclerViewAdapter extends RecyclerView.Adapter<Air
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            Util.setTextFont(mContext, mTextViewLoading);
+            Util.setTextFont(mContext, mTextViewLoading, Util.TAG_ARIAL);
         }
 
         @OnClick(R.id.imageView_picture)
