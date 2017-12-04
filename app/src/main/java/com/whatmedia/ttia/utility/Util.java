@@ -77,6 +77,9 @@ public class Util {
     public final static String TAG_MIN = "min";
     public final static String TAG_SEC = "sec";
 
+    public final static String TAG_BLACK = "black";
+    public final static String TAG_ARIAL = "arial.ttf";
+
     /**
      * Get now data
      *
@@ -799,8 +802,8 @@ public class Util {
      * @param context
      * @param view
      */
-    public static void setTextFont(Context context, TextView view) {
-        view.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Times_New_Roman.ttf"));
+    public static void setTextFont(Context context, TextView view, String type) {
+        view.setTypeface(Typeface.createFromAsset(context.getAssets(), String.format("fonts/%s", type);
     }
 
     /**
