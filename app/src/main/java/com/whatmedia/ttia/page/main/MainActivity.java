@@ -102,6 +102,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     MyMarquee mMyMarquee;
     @BindView(R.id.imageView_home)
     ImageView mImageViewHome;
+    @BindView(R.id.view_top)
+    View mViewTop;
 
     private String mMarqueeMessage;
     private boolean mPositionListening;
@@ -984,5 +986,13 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             bundle.putString(HomeContract.TAG_TYPE, type);
         }
         addFragment(Page.TAG_HOME, bundle, false);
+    }
+
+    /**
+     * 設置最上面的View顏色
+     * @param color
+     */
+    private void setTopViewColor(int color) {
+        mViewTop.setBackgroundColor(color);
     }
 }

@@ -23,15 +23,15 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_pixel_5"
         android:layout_toRightOf="@+id/imageView_back"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorHomeLeftTitle"
         android:textSize="@dimen/sp_pixel_18"
         android:textStyle="bold"
         android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView_icon"
-        android:layout_width="@dimen/dp_pixel_30"
-        android:layout_height="@dimen/dp_pixel_30"
+        android:layout_width="@dimen/dp_pixel_36"
+        android:layout_height="@dimen/dp_pixel_36"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_pixel_5"
         android:layout_toRightOf="@+id/textView_left"
@@ -51,8 +51,8 @@
 
     <RelativeLayout
         android:id="@+id/layout_more"
-        android:layout_width="@dimen/dp_pixel_100"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_pixel_68"
+        android:layout_height="@dimen/dp_pixel_32"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:visibility="visible">
@@ -63,14 +63,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@color/colorMoreFrame"
+            android:background="@drawable/more_bg"
             android:padding="@dimen/dp_pixel_4"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageView_more"
-                android:layout_width="@dimen/dp_pixel_12"
-                android:layout_height="@dimen/dp_pixel_12"
+                android:layout_width="@dimen/dp_pixel_16"
+                android:layout_height="@dimen/dp_pixel_16"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_pixel_8"
                 android:scaleType="centerCrop" />
@@ -82,8 +82,8 @@
                 android:layout_centerInParent="true"
                 android:layout_toRightOf="@+id/imageView_more"
                 android:text="@string/home_more"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_13" />
+                android:textColor="@color/colorMainTop"
+                android:textSize="@dimen/sp_pixel_15" />
         </RelativeLayout>
 
         <RelativeLayout

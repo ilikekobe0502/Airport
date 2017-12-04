@@ -193,7 +193,7 @@ public class MyToolbar extends RelativeLayout {
         mLeftListener = null;
         mMoreListener = null;
         mAreaListener = null;
-        mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
+//        mLayoutRight.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorMoreFrame));
 //        mLayoutFrame.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         return this;
     }

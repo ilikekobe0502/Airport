@@ -107,6 +107,7 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mLoadingView.goneLoadingView();
+                mWebView.setVisibility(View.VISIBLE);
             }
 
             @Override

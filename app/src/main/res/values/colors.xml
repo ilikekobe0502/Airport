@@ -5,12 +5,12 @@
     <color name="colorAccent">#FF4081</color>
 
 
-    <color name="colorMarquee">#3e4e7f</color>
+    <color name="colorMarquee">#9FA0A0</color>
     <color name="colorMoreFrame">#333b4e</color>
     <color name="colorTextStore">#333b50</color>
     <color name="colorIndicatorDefault">#3e4e7f</color>
     <color name="colorSubTitle">#3f4f8a</color>
-    <color name="colorHomeWeather">#48a6e3</color>
+    <color name="colorHomeWeather">#dddbdc</color>
     <color name="colorText">#313a43</color>
     <color name="colorTextSecond">#0164a8</color>
     <color name="colorLine">#9c9b9b</color>
@@ -36,4 +36,9 @@
     <color name="colorPurpleToolbarRightBackground">#6657dd</color>
     <color name="colorMapSearchBg">#dcdcdc</color>
     <color name="colorFlightItemGate">#FF878789</color>
+
+    <color name="colorMainTop">#FFA200</color>
+    <color name="colorHomeLeftTitle">#17304B</color>
+    <color name="colorDotSelect">#F5C81D</color>
+    <color name="colorDotNonSelect">#21547F</color>
 </resources>

@@ -24,9 +24,9 @@
             android:id="@+id/tab_info_indicator"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_pixel_10"
-            android:layout_marginBottom="@dimen/dp_pixel_3"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_pixel_3"
             app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorHeight="0dp" />
     </RelativeLayout>
@@ -36,8 +36,8 @@
         android:layout_height="0dp"
         android:layout_below="@+id/layout_info"
         android:layout_weight="4"
-        android:weightSum="12"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="12">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager_feature"
@@ -50,10 +50,10 @@
             android:id="@+id/tab_indicator"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorHeight="0dp" />
     </LinearLayout>

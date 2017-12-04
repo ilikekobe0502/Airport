@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_pixel_30"
+    android:layout_height="@dimen/dp_pixel_42"
     android:background="@color/colorMarquee"
     android:paddingLeft="@dimen/dp_pixel_10">
 
     <ImageView
         android:id="@+id/imageView_icon"
-        android:layout_width="@dimen/dp_pixel_30"
-        android:layout_height="@dimen/dp_pixel_30"
+        android:layout_width="@dimen/dp_pixel_26"
+        android:layout_height="@dimen/dp_pixel_26"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/dp_pixel_2"
         android:scaleType="fitCenter"
@@ -28,5 +28,5 @@
         android:marqueeRepeatLimit="-1"
         android:singleLine="true"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_14" />
 </RelativeLayout>
