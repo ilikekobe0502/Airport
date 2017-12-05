@@ -366,7 +366,7 @@ public class Util {
             if (am != null)
                 am.cancel(pendingIntent);
 
-            Log.d(TAG, "cancel alert clock : " + id);
+            Log.d(TAG, "indoor_cancel alert clock : " + id);
         }
     }
 

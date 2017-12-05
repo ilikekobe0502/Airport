@@ -20,7 +20,7 @@
     <color name="colorTextSpecial">#ff0100</color>
     <color name="colorTextResultHint">#242a36</color>
     <color name="colorTextHomeParkingInfoFull">#FE0201</color>
-    <color name="colorTextDialogContent">#323a4d</color>
+    <color name="colorTextDialogContent">#333B50</color>
     <color name="colorTextStoreInfoTitle">#ffff00</color>
     <color name="colorTextHomeParkingInfoName">#fffc00</color>
     <color name="colorTextUserNewsDate">#ffff01</color>
@@ -32,6 +32,7 @@
     <color name="colorTextParkingFull">#d40a00</color>
     <color name="black0.25">#3f000000</color>
     <color name="black0.6">#99000000</color>
+    <color name="black0.9">#e6000000</color>
     <color name="white0.1">#1affffff</color>
     <color name="colorPurpleToolbarRightBackground">#6657dd</color>
     <color name="colorMapSearchBg">#dcdcdc</color>
@@ -44,4 +45,5 @@
     <color name="colorDotNonSelect">#21547F</color>
     <color name="colorToolbarBgStart">#051E3A</color>
     <color name="colorToolbarBgEnd">#112e56</color>
+    <color name="colorDetailBar">#184d7a</color>
 </resources>

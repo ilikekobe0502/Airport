@@ -2,6 +2,7 @@ package com.whatmedia.ttia.page;
 
 import android.view.ViewStub;
 
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 
@@ -34,6 +35,8 @@ public interface IActivityTools {
          * @param color
          */
         void setTopViewColor(int color);
+
+        MyFlightsDetailInfo getFlightsDetailInfo();
     }
 
     interface IIndoorMapActivity {

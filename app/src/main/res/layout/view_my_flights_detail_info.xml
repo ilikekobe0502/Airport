@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black0.9"
+    android:clickable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dp_pixel_70"
+        android:background="@drawable/frame_dialog">
+
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/frame_dialog_title">
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_pixel_54"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_pixel_16"
+                android:text="213245465"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_21" />
+
+            <ImageView
+                android:id="@+id/imageView_close"
+                android:layout_width="@dimen/dp_pixel_30"
+                android:layout_height="@dimen/dp_pixel_30"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_pixel_16"
+                android:background="@drawable/cancel" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerView"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_pixel_37"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/sp_pixel_15"
+                    android:layout_marginEnd="@dimen/dp_pixel_10"
+                    android:layout_marginTop="@dimen/dp_pixel_4"
+                    android:background="@drawable/frame_dialog_button"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_pixel_20"
+                    android:paddingRight="@dimen/dp_pixel_20"
+                    android:text="@string/alert_btn_cancel"
+                    android:textColor="@color/colorHomeLeftTitle"
+                    android:textSize="@dimen/sp_pixel_17" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_pixel_37"
+                    android:layout_marginBottom="@dimen/sp_pixel_15"
+                    android:layout_marginStart="@dimen/dp_pixel_10"
+                    android:layout_marginTop="@dimen/dp_pixel_4"
+                    android:background="@drawable/frame_dialog_button"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_pixel_10"
+                    android:paddingRight="@dimen/dp_pixel_10"
+                    android:text="@string/navi_title_flight_notify"
+                    android:textColor="@color/colorHomeLeftTitle"
+                    android:textSize="@dimen/sp_pixel_17" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.splunk.mint.Mint;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.enums.FlightInfo;
@@ -104,6 +105,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     ImageView mImageViewHome;
     @BindView(R.id.view_top)
     View mViewTop;
+    @BindView(R.id.flights_detail_info)
+    MyFlightsDetailInfo mFlightsDetailInfo;
 
     private String mMarqueeMessage;
     private boolean mPositionListening;
@@ -276,6 +279,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     public void setTopViewColor(int color) {
         mViewTop.setBackgroundColor(color);
+    }
+
+    @Override
+    public MyFlightsDetailInfo getFlightsDetailInfo() {
+        return mFlightsDetailInfo;
     }
 
 
@@ -943,15 +951,19 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
     @Override
     public void onBackPressed() {
-        if (mLoadingView != null) {
-            if (!mLoadingView.isShown())
+        if (mFlightsDetailInfo != null && mFlightsDetailInfo.isShown()) {
+            mFlightsDetailInfo.setVisibility(View.GONE);
+        }else {
+            if (mLoadingView != null) {
+                if (!mLoadingView.isShown())
+                    super.onBackPressed();
+                else {
+                    mLoadingView.setVisibility(View.GONE);
+                    super.onBackPressed();
+                }
+            } else
                 super.onBackPressed();
-            else {
-                mLoadingView.setVisibility(View.GONE);
-                super.onBackPressed();
-            }
-        } else
-            super.onBackPressed();
+        }
     }
 
     public void checkLayoutMode() {

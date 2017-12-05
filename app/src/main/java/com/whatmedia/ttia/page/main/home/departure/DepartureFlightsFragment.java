@@ -201,31 +201,27 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
 
-                    final MyDialog myDialog = MyDialog.newInstance();
-                    if (!myDialog.isAdded()) {
-                        myDialog.setTitle(getString(R.string.flight_dialog_title))
-                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                                .setRightClickListener(new IOnItemClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if (tag != null &&
-                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
-                                                !TextUtils.isEmpty(tag.getShifts()) &&
-                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
-                                                !TextUtils.isEmpty(tag.getExpressTime())) {
-                                            mLoadingView.showLoadingView();
-                                            mPresenter.saveMyFlightsAPI(tag);
-                                        } else {
-                                            Log.e(TAG, "view.getTag() content is error");
-                                            showMessage(getString(R.string.data_error));
-                                        }
+                    mMainActivity.getFlightsDetailInfo()
+                            .setTitle(getString(R.string.flight_dialog_title))
+                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (tag != null &&
+                                            !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                            !TextUtils.isEmpty(tag.getShifts()) &&
+                                            !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                            !TextUtils.isEmpty(tag.getExpressTime())) {
+                                        mLoadingView.showLoadingView();
+                                        mPresenter.saveMyFlightsAPI(tag);
+                                    } else {
+                                        Log.e(TAG, "view.getTag() content is error");
+                                        showMessage(getString(R.string.data_error));
                                     }
-                                });
-                        myDialog.show(getActivity().getFragmentManager(), "dialog");
-                    }
-                } else {
-                    Log.e(TAG, "recycler view.getTag is error");
-                    showMessage(getString(R.string.data_error));
+                                    mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
+                                }
+                            })
+                            .show();
                 }
         }
 
