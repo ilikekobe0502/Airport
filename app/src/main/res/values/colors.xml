@@ -16,17 +16,17 @@
     <color name="colorLine">#9c9b9b</color>
     <color name="colorFragmentLine">#1a3d63</color>
     <color name="colorDialogLine">#e5e5e5</color>
-    <color name="colorHomeParkingInfoLine">#4a7945</color>
+    <color name="colorHomeParkingInfoLine">#3d6436</color>
     <color name="colorTextSpecial">#ff0100</color>
     <color name="colorTextResultHint">#242a36</color>
-    <color name="colorTextHomeParkingInfoFull">#f10201</color>
+    <color name="colorTextHomeParkingInfoFull">#FE0201</color>
     <color name="colorTextDialogContent">#323a4d</color>
     <color name="colorTextStoreInfoTitle">#ffff00</color>
-    <color name="colorTextHomeParkingInfoName">#fffb01</color>
+    <color name="colorTextHomeParkingInfoName">#fffc00</color>
     <color name="colorTextUserNewsDate">#ffff01</color>
     <color name="colorBackgroundHomeDeparture">#96a0d7</color>
     <color name="colorBackgroundHomeArrive">#72aad7</color>
-    <color name="colorBackgroundHomeParkingInfo">#64b63a</color>
+    <color name="colorBackgroundHomeParkingInfo">#F5A000</color>
     <color name="colorTextParkingMuch">#49b600</color>
     <color name="colorTextParkingEnough">#0096da</color>
     <color name="colorTextParkingFull">#d40a00</color>
@@ -38,6 +38,7 @@
     <color name="colorFlightItemGate">#FF878789</color>
 
     <color name="colorMainTop">#FFA200</color>
+    <color name="colorMainTopSecondary">#0B315C</color>
     <color name="colorHomeLeftTitle">#17304B</color>
     <color name="colorDotSelect">#F5C81D</color>
     <color name="colorDotNonSelect">#21547F</color>

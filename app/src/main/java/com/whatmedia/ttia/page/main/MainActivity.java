@@ -273,6 +273,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         runOnUiThread(runnable);
     }
 
+    @Override
+    public void setTopViewColor(int color) {
+        mViewTop.setBackgroundColor(color);
+    }
+
 
     @Override
     public void onBackStackChanged() {
@@ -986,13 +991,5 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             bundle.putString(HomeContract.TAG_TYPE, type);
         }
         addFragment(Page.TAG_HOME, bundle, false);
-    }
-
-    /**
-     * 設置最上面的View顏色
-     * @param color
-     */
-    private void setTopViewColor(int color) {
-        mViewTop.setBackgroundColor(color);
     }
 }

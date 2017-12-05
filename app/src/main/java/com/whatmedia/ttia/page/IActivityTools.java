@@ -27,6 +27,13 @@ public interface IActivityTools {
         void backPress();
 
         void runOnUI(Runnable runnable);
+
+        /**
+         * 設置最上面view的顏色
+         *
+         * @param color
+         */
+        void setTopViewColor(int color);
     }
 
     interface IIndoorMapActivity {

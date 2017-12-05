@@ -10,8 +10,10 @@
     <dimen name="sp_pixel_14">25sp</dimen>
     <dimen name="sp_pixel_15">26sp</dimen>
     <dimen name="sp_pixel_16">28sp</dimen>
+    <dimen name="sp_pixel_17">30sp</dimen>
     <dimen name="sp_pixel_18">32sp</dimen>
     <dimen name="sp_pixel_21">37sp</dimen>
+    <dimen name="sp_pixel_23">40sp</dimen>
     <dimen name="sp_pixel_22">39sp</dimen>
     <dimen name="sp_pixel_24">42sp</dimen>
     <dimen name="sp_pixel_30">53sp</dimen>

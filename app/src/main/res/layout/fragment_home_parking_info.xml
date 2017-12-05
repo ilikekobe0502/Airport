@@ -56,7 +56,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/parking_info_parking_space_P1"
                                 android:textColor="@color/colorTextHomeParkingInfoName"
-                                android:textSize="@dimen/sp_pixel_21"
+                                android:textSize="@dimen/sp_pixel_23"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -69,7 +69,7 @@
                             android:gravity="center_horizontal"
                             android:minEms="4"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/sp_pixel_15" />
+                            android:textSize="@dimen/sp_pixel_17" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -105,7 +105,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/parking_info_parking_space_P2"
                                 android:textColor="@color/colorTextHomeParkingInfoName"
-                                android:textSize="@dimen/sp_pixel_21"
+                                android:textSize="@dimen/sp_pixel_23"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -118,7 +118,7 @@
                             android:gravity="center_horizontal"
                             android:minEms="4"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/sp_pixel_15" />
+                            android:textSize="@dimen/sp_pixel_17" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -154,7 +154,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/parking_info_parking_space_P4"
                                 android:textColor="@color/colorTextHomeParkingInfoName"
-                                android:textSize="@dimen/sp_pixel_21"
+                                android:textSize="@dimen/sp_pixel_23"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -163,7 +163,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/parking_info_parking_space_B1_B2"
                                 android:textColor="@color/colorTextHomeParkingInfoName"
-                                android:textSize="@dimen/sp_pixel_10"
+                                android:textSize="@dimen/sp_pixel_13"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -175,7 +175,7 @@
                             android:gravity="center_horizontal"
                             android:minEms="4"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/sp_pixel_15" />
+                            android:textSize="@dimen/sp_pixel_17" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -211,7 +211,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/parking_info_parking_space_P4"
                                 android:textColor="@color/colorTextHomeParkingInfoName"
-                                android:textSize="@dimen/sp_pixel_21"
+                                android:textSize="@dimen/sp_pixel_23"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -220,7 +220,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/parking_info_parking_space_1F"
                                 android:textColor="@color/colorTextHomeParkingInfoName"
-                                android:textSize="@dimen/sp_pixel_10"
+                                android:textSize="@dimen/sp_pixel_13"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -232,7 +232,7 @@
                             android:gravity="center_horizontal"
                             android:minEms="4"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/sp_pixel_15" />
+                            android:textSize="@dimen/sp_pixel_17" />
                     </LinearLayout>
                 </RelativeLayout>
 

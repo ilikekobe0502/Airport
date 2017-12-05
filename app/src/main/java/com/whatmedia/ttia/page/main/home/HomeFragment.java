@@ -1,6 +1,8 @@
 package com.whatmedia.ttia.page.main.home;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -20,6 +22,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetLanguageListResponse;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.IndoorMap.IndoorMapActivity;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
@@ -152,7 +155,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 case TAG_AIRPORT_SECRETARY://機場秘書
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
-                    /*
                 case TAG_INDOOR_MAP://室內地圖導航
                     try {
                         Intent i = new Intent(getContext(), IndoorMapActivity.class);
@@ -165,7 +167,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 case TAG_AIRPORT_ACHIEVEMENT://機場成就
                     mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);
                     break;
-                    */
             }
         } else {
             Log.e(TAG, "view.getTag is not instance of HomeFeature");
@@ -205,6 +206,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         mInfoAdapter.notifyDataSetChanged();
                     }
                 });
+
+                mMainActivity.setTopViewColor(ContextCompat.getColor(getContext(), R.color.colorMainTop));
                 break;
             case 2://停車場資訊
                 mMainActivity.getMyToolbar().clearState()
@@ -225,6 +228,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         mInfoAdapter.notifyDataSetChanged();
                     }
                 });
+
+                mMainActivity.setTopViewColor(ContextCompat.getColor(getContext(), R.color.colorMainTopSecondary));
                 break;
             case 3://天氣資訊
                 mMainActivity.getMyToolbar().clearState()
@@ -245,6 +250,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                         mInfoAdapter.notifyDataSetChanged();
                     }
                 });
+
+                mMainActivity.setTopViewColor(ContextCompat.getColor(getContext(), R.color.colorMainTop));
                 break;
         }
     }
@@ -279,6 +286,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 mInfoAdapter.notifyDataSetChanged();
             }
         });
+
+        mMainActivity.setTopViewColor(ContextCompat.getColor(getContext(), R.color.colorMainTop));
     }
 
     @Override
@@ -323,6 +332,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             return;
         }
         mMainActivity.addFragment(page, null, true);
-        getArguments().putString(HomeContract.TAG_TYPE,"");
+        getArguments().putString(HomeContract.TAG_TYPE, "");
     }
 }
