@@ -239,6 +239,11 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
         }
     }
 
+    /**
+     * Set Top Frame Height
+     *
+     * @param height
+     */
     public void setTopFrameHeight(int height) {
         mTopFrameHeight = height;
     }

@@ -56,7 +56,9 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0://出發航班
-                return DepartureFlightsFragment.newInstance();
+                DepartureFlightsFragment departureFlightsFragment = DepartureFlightsFragment.newInstance();
+                departureFlightsFragment.setTopFrameHeight(mTopFrameHeight);
+                return departureFlightsFragment;
             case 1://抵達航班
                 ArriveFlightsFragment fragment = ArriveFlightsFragment.newInstance();
                 if (mListener != null) {

@@ -225,29 +225,16 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         Log.d("TAG", "H = " + dm.heightPixels);
         Log.d("TAG", "dx53 = " + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53));
 
-        int count = (height + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_8) + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_50));
-        Log.d("TAG", "FinalFH = " + count);
+        Double count = Double.valueOf(height);
         count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
-        Log.d("TAG", "FinalFH Without Dot = " + count);
-        count = count / 4;
-        Log.d("TAG", "Item Height with space = " + count);
-        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53);
-        Log.d("TAG", "Item space Height = " + count);
-        count = count / 2;
-        Log.d("TAG", "Item half space Height = " + count);
+        count = count - (4 * mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53));
+        count = count / 8;
 
-        int cc = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53);
-        Log.d("TAG", "rate  = " + (float) (53 /cc ));
-
-        count = 53 / mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53) * count;
-        Log.d("TAG", "Final space = " + count);
-
-//        int a = ((-(mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53) * 4)) / 4) / 2;
-//        Log.d("TAG", "a = " + a);
+        int finalSpaceHeight = count.intValue();
 
         mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
-        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), count
-                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), count);
+        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight
+                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight);
 
         mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
         mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);

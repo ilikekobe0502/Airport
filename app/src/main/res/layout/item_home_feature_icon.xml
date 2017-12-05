@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp_pixel_2">
+    android:paddingBottom="@dimen/dp_pixel_2"
+    android:paddingLeft="@dimen/dp_pixel_2"
+    android:paddingRight="@dimen/dp_pixel_2">
 
     <ImageView
         android:id="@+id/imageView_icon"
@@ -20,5 +22,5 @@
         android:maxEms="7"
         android:maxLines="2"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_pixel_8" />
+        android:textSize="@dimen/sp_pixel_14" />
 </RelativeLayout>

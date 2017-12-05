@@ -67,6 +67,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
     private int mQueryType;
+    private int mTopFrameHeight = 0;
     private boolean mToday = true;
 
 
@@ -120,7 +121,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), 0);
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mTopFrameHeight);
         mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -370,5 +371,14 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
             mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_off));
             mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
         }
+    }
+
+    /**
+     * Set Top Frame Height
+     *
+     * @param height
+     */
+    public void setTopFrameHeight(int height) {
+        mTopFrameHeight = height;
     }
 }
