@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
@@ -43,6 +44,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     TabLayout mTabIndicator;
     @BindView(R.id.tab_info_indicator)
     TabLayout mTabInfoIndicator;
+    @BindView(R.id.layout_info)
+    RelativeLayout mTabInfoInfo;
 
     private static final String TAG_MY_FLIGHTS = "1";
     private static final String TAG_SWEET_NOTIFICATION = "2";
@@ -56,6 +59,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private HomePresenter mPresenter;
+    private int mTopFrameHeight = 0;
+    private ArriveFlightsFragment.IOnSetCurrentPositionListener mPositionListener = this;
 
     @Override
     public void setCurrentPosition(int position) {
@@ -85,10 +90,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mPresenter = new HomePresenter(getContext(), this);
         mPresenter.getLanguageList();
 
-        mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
-        mInfoAdapter.setCurrentPositionListener(this);
-        mViewPagerInfo.setAdapter(mInfoAdapter);
-
         mTabInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
         mViewPagerInfo.addOnPageChangeListener(this);
         //Init toolbar
@@ -102,6 +103,22 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             goToNotificationPage(getArguments().getString(HomeContract.TAG_TYPE));
         }
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mTabInfoInfo.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("TAG", "FrameH = " + mTabInfoInfo.getHeight());
+                mTopFrameHeight = mTabInfoInfo.getHeight();
+
+                mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager(), mTopFrameHeight);
+                mInfoAdapter.setCurrentPositionListener(mPositionListener);
+                mViewPagerInfo.setAdapter(mInfoAdapter);
+            }
+        });
     }
 
     @Override

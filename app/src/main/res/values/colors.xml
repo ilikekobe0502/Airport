@@ -11,9 +11,9 @@
     <color name="colorIndicatorDefault">#3e4e7f</color>
     <color name="colorSubTitle">#3f4f8a</color>
     <color name="colorHomeWeather">#dddbdc</color>
-    <color name="colorText">#313a43</color>
-    <color name="colorTextSecond">#0164a8</color>
-    <color name="colorLine">#9c9b9b</color>
+    <color name="colorText">#323942</color>
+    <color name="colorTextSecond">#0064A7</color>
+    <color name="colorFlightsLine">#B0B0B0</color>
     <color name="colorFragmentLine">#1a3d63</color>
     <color name="colorDialogLine">#e5e5e5</color>
     <color name="colorHomeParkingInfoLine">#3d6436</color>
@@ -24,8 +24,8 @@
     <color name="colorTextStoreInfoTitle">#ffff00</color>
     <color name="colorTextHomeParkingInfoName">#fffc00</color>
     <color name="colorTextUserNewsDate">#ffff01</color>
-    <color name="colorBackgroundHomeDeparture">#96a0d7</color>
-    <color name="colorBackgroundHomeArrive">#72aad7</color>
+    <color name="colorBackgroundHomeDeparture">#DDDBDC</color>
+    <color name="colorBackgroundHomeArrive">#DDDBDC</color>
     <color name="colorBackgroundHomeParkingInfo">#F5A000</color>
     <color name="colorTextParkingMuch">#49b600</color>
     <color name="colorTextParkingEnough">#0096da</color>
@@ -35,7 +35,7 @@
     <color name="white0.1">#1affffff</color>
     <color name="colorPurpleToolbarRightBackground">#6657dd</color>
     <color name="colorMapSearchBg">#dcdcdc</color>
-    <color name="colorFlightItemGate">#FF878789</color>
+    <color name="colorFlightItemGate">#9E9E9F</color>
 
     <color name="colorMainTop">#FFA200</color>
     <color name="colorMainTopSecondary">#0B315C</color>

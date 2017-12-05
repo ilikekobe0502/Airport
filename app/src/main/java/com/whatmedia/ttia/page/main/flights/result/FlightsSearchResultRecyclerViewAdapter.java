@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,20 +41,21 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     private boolean isScreen34Mode;
     private RelativeLayout.LayoutParams mParamsFrame;
     private RelativeLayout.LayoutParams mParamsBackground;
+    private int mTopFrameHeight;
 
     public FlightsSearchResultRecyclerViewAdapter(Context context, List<FlightsListData> data) {
         mContext = context;
         mItems = data;
         mLocale = Preferences.getLocaleSetting(context);
         isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
-        initParams();
+        initParams(0);
     }
 
-    public FlightsSearchResultRecyclerViewAdapter(Context context) {
+    public FlightsSearchResultRecyclerViewAdapter(Context context, int height) {
         mContext = context;
         mLocale = Preferences.getLocaleSetting(context);
         isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
-        initParams();
+        initParams(height);
     }
 
     @Override
@@ -125,10 +128,13 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
             holder.mTextViewTerminal.setText("");
 
         if (!TextUtils.isEmpty(item.getFlightStatus())) {
-            if (checkFlightState(item.getFlightStatus()))
+            if (checkFlightState(item.getFlightStatus())) {
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorText));
-            else
+                holder.mTextViewState.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimension(R.dimen.sp_pixel_12));
+            } else {
                 holder.mTextViewState.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextSpecial));
+                holder.mTextViewState.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimension(R.dimen.sp_pixel_10));
+            }
             holder.mTextViewState.setText(FlightsInfoData.checkFlightShowText(mContext, item.getFlightStatus()));
         } else
             holder.mTextViewState.setText("");
@@ -208,17 +214,42 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         return false;
     }
 
-    public void initParams() {
+    public void initParams(int height) {
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
 
-        mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
-        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0
-                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0);
 
-        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_70));
+        Log.d("TAG", "FH = " + height);
+        Log.d("TAG", "H = " + dm.heightPixels);
+        Log.d("TAG", "dx53 = " + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53));
+
+        int count = (height + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_8) + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_50));
+        Log.d("TAG", "FinalFH = " + count);
+        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
+        Log.d("TAG", "FinalFH Without Dot = " + count);
+        count = count / 4;
+        Log.d("TAG", "Item Height with space = " + count);
+        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53);
+        Log.d("TAG", "Item space Height = " + count);
+        count = count / 2;
+        Log.d("TAG", "Item half space Height = " + count);
+
+        int cc = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53);
+        Log.d("TAG", "rate  = " + (float) (53 /cc ));
+
+        count = 53 / mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53) * count;
+        Log.d("TAG", "Final space = " + count);
+
+//        int a = ((-(mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53) * 4)) / 4) / 2;
+//        Log.d("TAG", "a = " + a);
+
+        mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
+        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), count
+                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), count);
+
+        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
         mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
     }
 }

@@ -55,12 +55,15 @@
     <dimen name="dp_pixel_42">71dp</dimen>
     <dimen name="dp_pixel_45">76dp</dimen>
     <dimen name="dp_pixel_46">77dp</dimen>
+    <dimen name="dp_pixel_47">79dp</dimen>
     <dimen name="dp_pixel_48">81dp</dimen>
     <dimen name="dp_pixel_50">84dp</dimen>
     <dimen name="dp_pixel_51">86dp</dimen>
     <dimen name="dp_pixel_52">87dp</dimen>
+    <dimen name="dp_pixel_53">89dp</dimen>
     <dimen name="dp_pixel_54">91dp</dimen>
     <dimen name="dp_pixel_55">92dp</dimen>
+    <dimen name="dp_pixel_56">94dp</dimen>
     <dimen name="dp_pixel_58">97dp</dimen>
     <dimen name="dp_pixel_60">101dp</dimen>
     <dimen name="dp_pixel_62">104dp</dimen>
@@ -106,6 +109,7 @@
     <dimen name="dp_pixel_275">462dp</dimen>
     <dimen name="dp_pixel_282">474dp</dimen>
     <dimen name="dp_pixel_325">546dp</dimen>
+    <dimen name="dp_pixel_350">588dp</dimen>
     <dimen name="dp_pixel_375">630dp</dimen>
 
     <dimen name="dp_pixel_n5">-8dp</dimen>

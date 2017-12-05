@@ -67,7 +67,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
         mPresenter.getDepartureFlightAPI();
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), 0);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);

@@ -40,6 +40,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private int mRetryCount = 0;
+    private int mTopFrameHeight = 0;
     private IOnSetCurrentPositionListener mListener;
 
 
@@ -75,7 +76,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
         mPresenter = new ArriveFlightsPresenter(getContext(), this);
         mPresenter.getArriveFlightAPI();
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mTopFrameHeight);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
@@ -236,5 +237,9 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
                     showMessage(getString(R.string.data_error));
                 }
         }
+    }
+
+    public void setTopFrameHeight(int height) {
+        mTopFrameHeight = height;
     }
 }

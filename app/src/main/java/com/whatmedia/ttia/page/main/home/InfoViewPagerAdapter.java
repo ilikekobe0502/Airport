@@ -35,9 +35,11 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
     private final static String TAG = InfoViewPagerAdapter.class.getSimpleName();
 
     private ArriveFlightsFragment.IOnSetCurrentPositionListener mListener;
+    private int mTopFrameHeight;
 
-    public InfoViewPagerAdapter(FragmentManager fm) {
+    public InfoViewPagerAdapter(FragmentManager fm, int topFrameHeight) {
         super(fm);
+        mTopFrameHeight = topFrameHeight;
     }
 
     @Override
@@ -62,6 +64,7 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
                 } else {
                     fragment.setListener(null);
                 }
+                fragment.setTopFrameHeight(mTopFrameHeight);
                 return fragment;
             case 2://停車資訊
                 return HomeParkingInfoFragment.newInstance();
