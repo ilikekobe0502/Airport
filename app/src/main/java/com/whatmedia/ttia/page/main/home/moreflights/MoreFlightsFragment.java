@@ -67,7 +67,6 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
     private int mQueryType;
-    private int mTopFrameHeight = 0;
     private boolean mToday = true;
 
 
@@ -95,7 +94,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mPresenter = new MoreFlightsPresenter(getContext(), this);
 
         mMainActivity.getMyToolbar().clearState()
-                .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
                 .setBackVisibility(View.VISIBLE)
                 .setOnBackClickListener(new MyToolbar.OnClickListener() {
                     @Override
@@ -121,7 +120,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mTopFrameHeight);
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), -1);
         mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -282,12 +281,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mPresenter.getFlightByQueryTypeAPI(mQueryType);
                 break;
             case R.id.textView_last:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
 
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
@@ -296,12 +292,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_now:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
                 mToday = true;
@@ -309,12 +302,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_next:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
 
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;
@@ -373,12 +363,4 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         }
     }
 
-    /**
-     * Set Top Frame Height
-     *
-     * @param height
-     */
-    public void setTopFrameHeight(int height) {
-        mTopFrameHeight = height;
-    }
 }

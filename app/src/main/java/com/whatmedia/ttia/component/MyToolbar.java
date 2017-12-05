@@ -77,6 +77,11 @@ public class MyToolbar extends RelativeLayout {
         return this;
     }
 
+    public MyToolbar setToolbarBackground(Drawable drawable) {
+        mLayoutFrame.setBackground(drawable);
+        return this;
+    }
+
 
     public MyToolbar setTitleText(String title) {
         if (!TextUtils.isEmpty(title)) {
