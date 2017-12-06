@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.dialog.MyDialog;
@@ -37,6 +39,16 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     RecyclerView mRecyclerView;
     @BindView(R.id.layout_delete)
     RelativeLayout mLayoutDelete;
+    @BindView(R.id.textView_cancel)
+    TextView mTextViewCancel;
+    @BindView(R.id.textView_ok)
+    TextView mTextViewOk;
+    @BindView(R.id.number_picker_left)
+    NumberPicker mNumberPickerLeft;
+    @BindView(R.id.number_picker_right)
+    NumberPicker mNumberPickerRight;
+    @BindView(R.id.layout_selector)
+    RelativeLayout mLayoutSelector;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -239,16 +251,35 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
             case R.id.layout_frame:
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
-                    if (tag != null) {
-                        final MyDialog myDialog = MyDialog.newInstance()
-                                .setTitle(getString(R.string.flight_dialog_title))
-                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                                .setRightText(getString(R.string.ok))
-                                .setLeftVisibility(View.GONE);
-                        myDialog.show(getActivity().getFragmentManager(), "dialog");
-                    } else {
-                        Log.d(TAG, "recycler view.getTag() = null");
-                    }
+                    mMainActivity.getFlightsDetailInfo()
+                            .setTitle(getString(R.string.flight_dialog_title))
+                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setLeftText(getString(R.string.alert_btn_cancel))
+                            .setRightText(getString(R.string.cell_btn_delete))
+                            .setClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    switch (view.getId()) {
+                                        case R.id.textView_left://取消按鈕
+                                            break;
+                                        case R.id.textView_right://刪除按鈕
+//                                            if (tag != null &&
+//                                                    !TextUtils.isEmpty(tag.getAirlineCode()) &&
+//                                                    !TextUtils.isEmpty(tag.getShifts()) &&
+//                                                    !TextUtils.isEmpty(tag.getExpressDate()) &&
+//                                                    !TextUtils.isEmpty(tag.getExpressTime())) {
+//                                                mLoadingView.showLoadingView();
+//                                                mPresenter.saveMyFlightsAPI(tag);
+//                                            } else {
+//                                                Log.e(TAG, "view.getTag() content is error");
+//                                                showMessage(getString(R.string.data_error));
+//                                            }
+//                                            mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
+                                            break;
+                                    }
+                                }
+                            })
+                            .show();
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));
@@ -282,6 +313,16 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
             });
         } else {
             Log.d(TAG, "Fragment is not add");
+        }
+    }
+
+    @OnClick({R.id.textView_cancel, R.id.textView_ok})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.textView_cancel:
+                break;
+            case R.id.textView_ok:
+                break;
         }
     }
 }

@@ -58,7 +58,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView_cancel"
+                    android:id="@+id/textView_left"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_pixel_37"
                     android:layout_alignParentEnd="true"
@@ -80,7 +80,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView_ok"
+                    android:id="@+id/textView_right"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_pixel_37"
                     android:layout_marginBottom="@dimen/sp_pixel_15"
