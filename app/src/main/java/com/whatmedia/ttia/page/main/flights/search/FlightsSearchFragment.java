@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -29,6 +30,8 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     EditText mEditTextSearch;
     @BindView(R.id.layout_search)
     RelativeLayout mLayoutSearch;
+    @BindView(R.id.textView_explain)
+    TextView mTextViewExplain;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
