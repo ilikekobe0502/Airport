@@ -42,4 +42,6 @@
     <color name="colorHomeLeftTitle">#17304B</color>
     <color name="colorDotSelect">#F5C81D</color>
     <color name="colorDotNonSelect">#21547F</color>
+
+    <color name="colorTextFinal">#17304b</color>
 </resources>

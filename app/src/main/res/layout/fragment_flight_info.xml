@@ -6,6 +6,16 @@
     android:clickable="true"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/infoView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_188"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_03"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
