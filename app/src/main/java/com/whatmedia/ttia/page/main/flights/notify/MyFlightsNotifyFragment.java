@@ -105,7 +105,7 @@ public class MyFlightsNotifyFragment extends BaseFragment implements MyFlightsNo
 
         mMainActivity.getMyToolbar().clearState()
                 .setTitleText(getString(R.string.title_flight_notify))
-                .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
                 .setBackVisibility(View.VISIBLE)
                 .setOnBackClickListener(new MyToolbar.OnClickListener() {
                     @Override
