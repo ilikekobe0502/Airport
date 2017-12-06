@@ -48,9 +48,8 @@
     <color name="colorDetailBar">#184d7a</color>
 
     <!-- 翻新版本 預設字體顏色 -->
-    <color name="colorTextFinal">#17304b</color>
+    <color name="colorTextDefault">#17304b</color>
+    <color name="colorDateDefault">#E60012</color>
+    <color name="colorBlockDefault">#a6aab3</color>
 
-    <!-- 機場成就 -->
-    <color name="colorAchievementDate">#E60012</color>
-    <color name="colorAchievementBlock">#a6aab3</color>
 </resources>

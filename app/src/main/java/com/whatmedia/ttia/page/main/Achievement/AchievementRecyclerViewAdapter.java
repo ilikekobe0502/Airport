@@ -64,7 +64,7 @@ public class AchievementRecyclerViewAdapter extends RecyclerView.Adapter<Achieve
         }
 
         if(position%2 == 0){
-            holder.mView.setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorAchievementBlock));
+            holder.mView.setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorBlockDefault));
         }else{
             holder.mView.setBackgroundColor(Color.TRANSPARENT);
         }
