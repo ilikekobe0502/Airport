@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-
     <color name="colorMarquee">#9FA0A0</color>
     <color name="colorMoreFrame">#333b4e</color>
     <color name="colorTextStore">#333b50</color>
@@ -43,7 +42,14 @@
     <color name="colorHomeLeftTitle">#17304B</color>
     <color name="colorDotSelect">#F5C81D</color>
     <color name="colorDotNonSelect">#21547F</color>
+
     <color name="colorToolbarBgStart">#051E3A</color>
     <color name="colorToolbarBgEnd">#112e56</color>
     <color name="colorDetailBar">#184d7a</color>
+
+    <!-- 翻新版本 預設字體顏色 -->
+    <color name="colorTextDefault">#17304b</color>
+    <color name="colorDateDefault">#E60012</color>
+    <color name="colorBlockDefault">#a6aab3</color>
+
 </resources>

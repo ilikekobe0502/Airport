@@ -35,6 +35,11 @@ public class AirportTrafficRecyclerViewAdapter extends RecyclerView.Adapter<Airp
         mContext = context;
     }
 
+    public AirportTrafficRecyclerViewAdapter(Context context,List<AirportTraffic> items) {
+        mContext = context;
+        mItems = items;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feature, parent, false);

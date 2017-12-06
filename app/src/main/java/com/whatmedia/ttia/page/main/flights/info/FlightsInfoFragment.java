@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.FlightInfo;
@@ -25,6 +26,8 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.infoView)
+    ImageView mInfoView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -61,7 +64,7 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
         ButterKnife.bind(this, view);
 
         mPresenter = FlightsInfoPresenter.getInstance(getContext(), this);
-
+        mInfoView.setImageResource(R.drawable.bg_02);
         mAdapter = new FlightsInfoRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mAdapter);
@@ -114,9 +117,9 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
                 case TAG_MY_FLIGHTS://我的航班
                     page = Page.TAG_MY_FIGHTS_INFO;
                     break;
-                case TAG_FLIGHTS_NOTIFY://航班提醒
-                    page = Page.TAG_MY_FIGHTS_NOTIFY;
-                    break;
+//                case TAG_FLIGHTS_NOTIFY://航班提醒
+//                    page = Page.TAG_MY_FIGHTS_NOTIFY;
+//                    break;
             }
 
             if (page != -1)

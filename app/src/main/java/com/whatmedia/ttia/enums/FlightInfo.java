@@ -11,8 +11,8 @@ import java.util.List;
 
 public enum FlightInfo {
     TAG_SEARCH_FLIGHTS(R.string.title_flight_search, R.drawable.flights_02_01),
-    TAG_MY_FLIGHTS(R.string.title_my_flight, R.drawable.flights_02_02),
-    TAG_FLIGHTS_NOTIFY(R.string.title_flight_notify, R.drawable.flights_02_03);
+    TAG_MY_FLIGHTS(R.string.title_my_flight, R.drawable.flights_02_02);
+//    TAG_FLIGHTS_NOTIFY(R.string.title_flight_notify, R.drawable.flights_02_03);
 
     private int title;
     private int icon;

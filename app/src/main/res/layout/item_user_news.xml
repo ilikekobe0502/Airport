@@ -15,7 +15,7 @@
         android:text="123456"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dp_pixel_8"
-        android:textColor="@color/colorTextUserNewsDate"
+        android:textColor="@color/colorDateDefault"
         android:textSize="@dimen/sp_pixel_13" />
 
     <TextView
@@ -24,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorTextDefault"
         android:textSize="@dimen/sp_pixel_13" />
 </LinearLayout>

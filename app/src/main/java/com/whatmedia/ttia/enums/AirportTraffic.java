@@ -65,4 +65,20 @@ public enum AirportTraffic {
         }
         return list;
     }
+
+    public static List<List<AirportTraffic>> getPageList() {
+        List<List<AirportTraffic>> list = new ArrayList<>();
+        List<AirportTraffic> first = new ArrayList<>();
+        List<AirportTraffic> second = new ArrayList<>();
+
+        for (AirportTraffic item : AirportTraffic.values()) {
+            if (first.size() >= 4)
+                second.add(item);
+            else
+                first.add(item);
+        }
+        list.add(first);
+        list.add(second);
+        return list;
+    }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.CommunicationService;
@@ -26,6 +27,8 @@ public class CommunicationFragment extends BaseFragment implements Communication
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.infoView)
+    ImageView mInfoView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -58,11 +61,11 @@ public class CommunicationFragment extends BaseFragment implements Communication
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_communication_service_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
         ButterKnife.bind(this, view);
 
         mPresenter = CommunicationPresenter.getInstance(getContext(), this);
-
+        mInfoView.setImageResource(R.drawable.bg_07);
         mAdapter = new CommunicationRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mAdapter);

@@ -12,10 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.enums.TerminalInfo;
 import com.whatmedia.ttia.enums.UsefulInfo;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.page.main.terminals.info.TerminalInfoRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -26,12 +24,17 @@ import butterknife.OnClick;
 public class UsefulInfoRecyclerViewAdapter extends RecyclerView.Adapter<UsefulInfoRecyclerViewAdapter.ViewHolder> {
     private final static String TAG = UsefulInfoRecyclerViewAdapter.class.getSimpleName();
 
-    private List<UsefulInfo> mItems = UsefulInfo.getPage();
+    private List<UsefulInfo> mItems;
     private Context mContext;
     private IOnItemClickListener mListener;
 
     public UsefulInfoRecyclerViewAdapter(Context context) {
         mContext = context;
+    }
+
+    public UsefulInfoRecyclerViewAdapter(Context context, List<UsefulInfo> items) {
+        mContext = context;
+        mItems = items;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class UsefulInfoRecyclerViewAdapter extends RecyclerView.Adapter<UsefulIn
         mListener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)

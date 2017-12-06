@@ -61,4 +61,20 @@ public enum UsefulInfo {
         }
         return list;
     }
+
+    public static List<List<UsefulInfo>> getPageList() {
+        List<List<UsefulInfo>> list = new ArrayList<>();
+        List<UsefulInfo> first = new ArrayList<>();
+        List<UsefulInfo> second = new ArrayList<>();
+
+        for (UsefulInfo item : UsefulInfo.values()) {
+            if (first.size() >= 4)
+                second.add(item);
+            else
+                first.add(item);
+        }
+        list.add(first);
+        list.add(second);
+        return list;
+    }
 }

@@ -3,12 +3,15 @@ package com.whatmedia.ttia.page.main.traffic;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.AirportTraffic;
@@ -23,14 +26,17 @@ import butterknife.ButterKnife;
 public class AirportTrafficFragment extends BaseFragment implements AirportTrafficContract.View, IOnItemClickListener {
     private static final String TAG = AirportTrafficFragment.class.getSimpleName();
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.viewPager_useful)
+    ViewPager mViewPagerInfo;
+    @BindView(R.id.info_indicator)
+    TabLayout mInfoIndicator;
+    @BindView(R.id.infoView)
+    ImageView mInfoView;
 
-    private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private AirportTrafficContract.Presenter mPresenter;
 
-    private AirportTrafficRecyclerViewAdapter mAdapter;
+    private AirportTrafficPagerAdapter mPageAdapter = new AirportTrafficPagerAdapter();
 
     public AirportTrafficFragment() {
         // Required empty public constructor
@@ -57,15 +63,34 @@ public class AirportTrafficFragment extends BaseFragment implements AirportTraff
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_usefull, container, false);
         ButterKnife.bind(this, view);
 
         mPresenter = AirportTrafficPresenter.getInstance(getContext(), this);
+        mInfoView.setImageResource(R.drawable.bg_04);
+        mViewPagerInfo.setAdapter(mPageAdapter);
+        mInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
+        mPageAdapter.setClickListener(this);
+        mViewPagerInfo.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        mAdapter = new AirportTrafficRecyclerViewAdapter(getContext());
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setClickListener(this);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    mInfoView.setImageResource(R.drawable.bg_04);
+                }else{
+                    mInfoView.setImageResource(R.drawable.bg_04a);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return view;
     }
 
