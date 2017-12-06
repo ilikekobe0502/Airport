@@ -43,9 +43,14 @@
     <color name="colorDotSelect">#F5C81D</color>
     <color name="colorDotNonSelect">#21547F</color>
 
-    <color name="colorTextFinal">#17304b</color>
-
     <color name="colorToolbarBgStart">#051E3A</color>
     <color name="colorToolbarBgEnd">#112e56</color>
     <color name="colorDetailBar">#184d7a</color>
+
+    <!-- 翻新版本 預設字體顏色 -->
+    <color name="colorTextFinal">#17304b</color>
+
+    <!-- 機場成就 -->
+    <color name="colorAchievementDate">#E60012</color>
+    <color name="colorAchievementBlock">#a6aab3</color>
 </resources>

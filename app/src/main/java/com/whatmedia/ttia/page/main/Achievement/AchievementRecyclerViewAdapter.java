@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.Achievement;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,7 +64,7 @@ public class AchievementRecyclerViewAdapter extends RecyclerView.Adapter<Achieve
         }
 
         if(position%2 == 0){
-            holder.mView.setBackgroundColor(Color.parseColor("#3c000000"));
+            holder.mView.setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorAchievementBlock));
         }else{
             holder.mView.setBackgroundColor(Color.TRANSPARENT);
         }
