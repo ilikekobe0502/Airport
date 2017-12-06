@@ -22,12 +22,12 @@
         android:layout_marginLeft="@dimen/dp_pixel_90"
         android:layout_marginRight="@dimen/dp_pixel_90"
         android:layout_marginTop="@dimen/dp_pixel_30"
-        android:background="@drawable/but_bg_mdpi"
+        android:background="@drawable/but01_bg"
         android:gravity="center"
         android:paddingBottom="@dimen/dp_pixel_15"
         android:paddingTop="@dimen/dp_pixel_15"
         android:text="@string/roaming_detail_query"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorTextDefault"
         android:textSize="@dimen/sp_pixel_21" />
 
 </RelativeLayout>
