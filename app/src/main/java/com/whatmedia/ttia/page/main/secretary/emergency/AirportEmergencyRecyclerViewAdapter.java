@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main.secretary.emergency;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -59,9 +60,9 @@ public class AirportEmergencyRecyclerViewAdapter extends RecyclerView.Adapter<Ai
         holder.mTextViewMessage.setText(!TextUtils.isEmpty(item.getTitle()) ? item.getTitle() : "");
 
         if ((position + 1) % 2 != 0) {
-            holder.mLayoutFrame.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black0_25));
+            holder.mLayoutFrame.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBlockDefault));
         } else {
-            holder.mLayoutFrame.setBackgroundColor(0x00000000);
+            holder.mLayoutFrame.setBackgroundColor(Color.TRANSPARENT);
         }
 
         holder.mLayoutFrame.setTag(item);
