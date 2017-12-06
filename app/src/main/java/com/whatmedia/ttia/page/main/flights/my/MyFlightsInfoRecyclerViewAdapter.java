@@ -132,6 +132,17 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
             holder.mImageViewLogo.setVisibility(View.INVISIBLE);
         }
 
+        String time = "";
+        if (item.getNotificationTime() != null) {
+            holder.mImageViewNotification.setBackground(ContextCompat.getDrawable(mContext, R.drawable.remind_yes));
+            time = String.format("%1$s:%2$s", !TextUtils.isEmpty(item.getNotificationTime().getShowHour()) ? item.getNotificationTime().getShowHour() : ""
+                    , !TextUtils.isEmpty(item.getNotificationTime().getShowMinute()) ? item.getNotificationTime().getShowMinute() : "");
+        } else {
+            holder.mImageViewNotification.setBackground(ContextCompat.getDrawable(mContext, R.drawable.remind_no));
+            time = String.format("%1$s:%2$s", "00", "00");
+        }
+        holder.mTextViewClock.setText(time);
+
 //        if (item.getIsCheck()) {
 //            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
 //        } else {
@@ -140,6 +151,7 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
 
 //        holder.mImageViewCheck.setTag(item);
         holder.mLayoutFrame.setTag(item);
+        holder.mLayoutNotification.setTag(position);
     }
 
     @Override
@@ -155,6 +167,10 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
 
     public void setClickListener(IOnItemClickListener listener) {
         mListener = listener;
+    }
+
+    public void setNotification(boolean notification) {
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -192,6 +208,8 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.layout_notification:
+                    if (mListener != null)
+                        mListener.onClick(view);
 //                    if (view.getTag() != null) {
 //                        FlightsListData selectData = (FlightsListData) view.getTag();
 //                        if (selectData.getIsCheck()) {//yes to no

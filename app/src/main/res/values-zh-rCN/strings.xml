@@ -82,6 +82,31 @@
     <string name="notify_alerm_info">航班：    </string>
     <string name="notify_alerm_info2">时间：  </string>
     <string name="notify_alerm_title">航班提醒通知</string>
+    <string name="notify_alerm_selector_title">%1$s%2$s 航班提醒设定</string>
+    <string-array name="hours_array">
+        <item>"0 小时"</item>
+        <item>"1 小时"</item>
+        <item>"2 小时"</item>
+        <item>"3 小时"</item>
+        <item>"4 小时"</item>
+        <item>"5 小时"</item>
+        <item>"6 小时"</item>
+        <item>"7 小时"</item>
+        <item>"8 小时"</item>
+        <item>"9 小时"</item>
+        <item>"10 小时"</item>
+        <item>"11 小时"</item>
+        <item>"12 小时"</item>
+    </string-array>
+
+    <string-array name="minutes_array">
+        <item>"0 分钟"</item>
+        <item>"10 分钟"</item>
+        <item>"20 分钟"</item>
+        <item>"30 分钟"</item>
+        <item>"40 分钟"</item>
+        <item>"50 分钟"</item>
+    </string-array>
 
     <string name="title_flight">航班资讯</string>
     <string name="title_nearby">附近资讯</string>

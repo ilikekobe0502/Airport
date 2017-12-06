@@ -95,6 +95,12 @@ public class MyFlightsDetailInfo extends RelativeLayout {
         return this;
     }
 
+    public MyFlightsDetailInfo restore() {
+        mTextViewLeft.setText(getContext().getString(R.string.alert_btn_cancel));
+        mTextViewRight.setText(getContext().getString(R.string.navi_title_flight_notify));
+        return this;
+    }
+
     @OnClick({R.id.imageView_close, R.id.textView_left, R.id.textView_right})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -116,5 +122,6 @@ public class MyFlightsDetailInfo extends RelativeLayout {
                 this.setVisibility(GONE);
                 break;
         }
+        restore();
     }
 }

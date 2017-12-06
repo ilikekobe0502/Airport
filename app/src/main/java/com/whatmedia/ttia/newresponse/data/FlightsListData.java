@@ -51,6 +51,7 @@ public class FlightsListData {
     @SerializedName("counter")
     private String counter;
 
+    private boolean isOpen;//Clock是否有被開啟
     private boolean isCheck;//MyFlights page是否有被勾選
     private int notificationId;//Notification ID
     private ClockTimeData notificationTime;//Notification Time
@@ -237,5 +238,13 @@ public class FlightsListData {
 
     public void setNotificationTime(ClockTimeData notificationTime) {
         this.notificationTime = notificationTime;
+    }
+
+    public boolean getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(boolean open) {
+        isOpen = open;
     }
 }

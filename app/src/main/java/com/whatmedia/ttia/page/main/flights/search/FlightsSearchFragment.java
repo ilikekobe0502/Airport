@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
@@ -111,7 +112,9 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             if (!TextUtils.isEmpty(response)) {
-                mBundle.putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, response);
+                if (GetFlightsListResponse.getGson(response).getFlightList().size() != 0) {
+                    mBundle.putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, response);
+                }
             } else {
                 Log.e(TAG, "departure response is null");
             }

@@ -15,6 +15,10 @@ public interface MyFlightsInfoContract {
         void deleteMyFlightsInfoSucceed();
 
         void deleteMyFlightsInfoFailed(String message, boolean timeout);
+
+        void addNotification(FlightsListData data);
+
+        void deleteNotification();
     }
 
     interface Presenter {
