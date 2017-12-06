@@ -338,6 +338,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                                 }
                             })
                             .show();
+                } else {
+                    Log.e(TAG, "recycler view.getTag is error");
+                    showMessage(getString(R.string.data_error));
                 }
         }
     }

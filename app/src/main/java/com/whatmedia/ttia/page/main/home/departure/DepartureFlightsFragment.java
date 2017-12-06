@@ -222,6 +222,9 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                                 }
                             })
                             .show();
+                } else {
+                    Log.e(TAG, "recycler view.getTag is error");
+                    showMessage(getString(R.string.data_error));
                 }
         }
 

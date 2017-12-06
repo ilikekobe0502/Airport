@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main.flights.result;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -109,18 +110,36 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
         mFilterData.clear();
-        for (FlightsListData item : mDepartureList) {
-            if (item.getExpressDate().contains(mNowShowDate)) {
-                mFilterData.add(item);
+        if (mDepartureList != null && mDepartureList.size() > 0) {
+            for (FlightsListData item : mDepartureList) {
+                if (item.getExpressDate().contains(mNowShowDate)) {
+                    mFilterData.add(item);
+                }
             }
-        }
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mFilterData);
-        mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mManager);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setClickListener(this);
+            mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mFilterData);
+            mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            mRecyclerView.setLayoutManager(mManager);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setClickListener(this);
 
-        goToCurrentPosition(mFilterData);
+            goToCurrentPosition(mFilterData);
+        } else {
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.flights_search_not_found_flights_message)
+                    .setPositiveButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .show();
+        }
         return view;
     }
 
@@ -188,28 +207,27 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
 
-                    final MyDialog myDialog = MyDialog.newInstance();
-                    if (!myDialog.isAdded()) {
-                        myDialog.setTitle(getString(R.string.flight_dialog_title))
-                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                                .setRightClickListener(new IOnItemClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if (tag != null &&
-                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
-                                                !TextUtils.isEmpty(tag.getShifts()) &&
-                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
-                                                !TextUtils.isEmpty(tag.getExpressTime())) {
-                                            mLoadingView.showLoadingView();
-                                            mPresenter.saveMyFlightsAPI(tag);
-                                        } else {
-                                            Log.e(TAG, "view.getTag() content is error");
-                                            showMessage(getString(R.string.data_error));
-                                        }
+                    mMainActivity.getFlightsDetailInfo()
+                            .setTitle(getString(R.string.flight_dialog_title))
+                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (tag != null &&
+                                            !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                            !TextUtils.isEmpty(tag.getShifts()) &&
+                                            !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                            !TextUtils.isEmpty(tag.getExpressTime())) {
+                                        mLoadingView.showLoadingView();
+                                        mPresenter.saveMyFlightsAPI(tag);
+                                    } else {
+                                        Log.e(TAG, "view.getTag() content is error");
+                                        showMessage(getString(R.string.data_error));
                                     }
-                                });
-                        myDialog.show(getActivity().getFragmentManager(), "dialog");
-                    }
+                                    mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
+                                }
+                            })
+                            .show();
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));

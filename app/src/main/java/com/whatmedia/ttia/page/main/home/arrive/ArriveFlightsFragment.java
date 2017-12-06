@@ -230,6 +230,9 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
                                 }
                             })
                             .show();
+                } else {
+                    Log.e(TAG, "recycler view.getTag is error");
+                    showMessage(getString(R.string.data_error));
                 }
         }
     }

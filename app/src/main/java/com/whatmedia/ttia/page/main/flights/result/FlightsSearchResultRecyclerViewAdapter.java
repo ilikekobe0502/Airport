@@ -41,14 +41,13 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     private boolean isScreen34Mode;
     private RelativeLayout.LayoutParams mParamsFrame;
     private RelativeLayout.LayoutParams mParamsBackground;
-    private int mTopFrameHeight;
 
     public FlightsSearchResultRecyclerViewAdapter(Context context, List<FlightsListData> data) {
         mContext = context;
         mItems = data;
         mLocale = Preferences.getLocaleSetting(context);
         isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
-        initParams(0);
+        initParams(-1);
     }
 
     public FlightsSearchResultRecyclerViewAdapter(Context context, int height) {
