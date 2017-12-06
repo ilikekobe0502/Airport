@@ -32,8 +32,8 @@
 
     <ImageView
         android:id="@+id/imageView_home"
-        android:layout_width="@dimen/dp_pixel_50"
-        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_width="@dimen/dp_pixel_62"
+        android:layout_height="@dimen/dp_pixel_62"
         android:layout_alignParentBottom="true"
         android:background="@drawable/home" />
 
@@ -51,4 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
     </FrameLayout>
+
+    <com.whatmedia.ttia.component.MyFlightsDetailInfo
+        android:id="@+id/flights_detail_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </RelativeLayout>

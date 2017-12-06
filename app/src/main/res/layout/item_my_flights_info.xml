@@ -38,7 +38,7 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/textView_time"
-            android:background="@color/colorLine" />
+            android:background="@color/colorFlightsLine" />
 
         <RelativeLayout
             android:id="@+id/layout_logo"
@@ -61,7 +61,7 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/layout_logo"
-            android:background="@color/colorLine" />
+            android:background="@color/colorFlightsLine" />
 
 
         <LinearLayout
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_centerInParent="true"
-                android:background="@color/colorLine" />
+                android:background="@color/colorFlightsLine" />
 
             <TextView
                 android:id="@+id/textView_terminal"

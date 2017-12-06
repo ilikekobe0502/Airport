@@ -4,5 +4,5 @@
     <corners
         android:topLeftRadius="@dimen/dp_pixel_18"
         android:topRightRadius="@dimen/dp_pixel_18" />
-    <solid android:color="@color/colorSubTitle" />
+    <solid android:color="@color/colorDetailBar" />
 </shape>

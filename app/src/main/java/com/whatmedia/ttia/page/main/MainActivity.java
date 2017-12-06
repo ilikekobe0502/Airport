@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.splunk.mint.Mint;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.component.MyMarquee;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.enums.FlightInfo;
@@ -104,6 +105,8 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     ImageView mImageViewHome;
     @BindView(R.id.view_top)
     View mViewTop;
+    @BindView(R.id.flights_detail_info)
+    MyFlightsDetailInfo mFlightsDetailInfo;
 
     private String mMarqueeMessage;
     private boolean mPositionListening;
@@ -278,6 +281,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
         mViewTop.setBackgroundColor(color);
     }
 
+    @Override
+    public MyFlightsDetailInfo getFlightsDetailInfo() {
+        return mFlightsDetailInfo;
+    }
+
 
     @Override
     public void onBackStackChanged() {
@@ -315,7 +323,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof FlightsInfoFragment) {//航班資訊
                 mMyToolbar.clearState()
                         .setTitleText(getString(HomeFeature.TAG_FLIGHTS_INFO.getTitle()))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -330,7 +338,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof FlightsSearchFragment) {//航班搜尋
                 mMyToolbar.clearState()
                         .setTitleText(getString(FlightInfo.TAG_SEARCH_FLIGHTS.getTitle()))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -345,7 +353,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof FlightsSearchResultFragment) {//航班搜尋結果
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -360,7 +368,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof TerminalInfoFragment) {//航廈資訊
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.home_terminal_info_title))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -375,7 +383,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof PublicToiletFragment) {//公共廁所
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_restroom))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -390,7 +398,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportFacilityFragment) {//機場設施
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_airport_facility))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -407,7 +415,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         .setTitleText((fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) != 0 &&
                                 fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) == Page.TAG_STORE_OFFERS) ?
                                 getString(R.string.store_offers_info) : getString(R.string.title_restaurant))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -423,7 +431,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof StoreSearchResultFragment) {//餐廳與商店搜尋結果
                 mMyToolbar.clearState()
                         .setTitleText(!TextUtils.isEmpty(fragment.getArguments().getString(StoreSearchResultContract.TAG_RESTAURANT_RESULT)) ? getString(R.string.restaurant_store_search_restaurant_result_subtitle) : getString(R.string.restaurant_store_search_result_subtitle))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -439,7 +447,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportTrafficFragment) {//機場交通
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_traffic))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -455,7 +463,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportBusFragment) {//機場巴士
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_airport_bus))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -471,7 +479,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof RoadsideAssistanceFragment) {//道路救援服務
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_road_rescue))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -487,7 +495,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof TaxiFragment) {//計程車
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_taxi))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -503,7 +511,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof TourBusFragment) {//巡迴巴士
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_tourist_bus))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -519,7 +527,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportMrtFragment) {//機場高鐵/捷運
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_mrt_hsr))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -534,7 +542,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof SkyTrainFragment) {//電車
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_tram_car))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -549,7 +557,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof ParkingInfoFragment) {//停車資訊
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_parking_infomation))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -564,7 +572,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportSecretaryFragment) {//機場秘書
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.home_airport_secretary_title))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -581,7 +589,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportUserNewsFragment) {//使用者最新消息
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_news))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -596,7 +604,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportEmergencyFragment) {//使用者緊急通知
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_emergency))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -611,7 +619,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AirportSweetNotifyFragment) {//使用者貼心提醒
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_notify))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -634,7 +642,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof MyFlightsInfoFragment) {//我的航班
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_my_flight))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -652,7 +660,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         .setTitleText(TextUtils.equals(fragment.getArguments().getString(MoreFlightsContract.TAG_KIND), FlightsInfoData.TAG_KIND_DEPARTURE) ?
                                 getString(R.string.tableview_header_takeoff, date) :
                                 getString(R.string.tableview_header_arrival, date))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -667,7 +675,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof NewsDetailFragment) {//最新訊息(詳細資料)
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_news))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -682,7 +690,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof EmergencyDetailFragment) {//緊急通知(詳細資料)
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_emergency))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -697,7 +705,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof SweetNotifyDetailFragment) {//貼心提醒(詳細資料)
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.airport_secretary_notify))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -712,7 +720,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof UsefulInfoFragment) {//實用資訊(目錄)
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_utility))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -727,7 +735,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof StoreOffersFragment) {//商店優惠
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.home_store_offers_title))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -742,7 +750,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof LostAndFoundFragment) {//失物協尋
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_lost_found))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -757,7 +765,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof CommunicationFragment) {//通訊服務
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_communication))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -772,7 +780,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof CurrencyConversionFragment) {//匯率換算
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_currency))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -788,7 +796,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof QuestionnaireFragment) {//問卷調查
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_feedback))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -803,7 +811,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof TravelLanguageFragment) {//旅行外文
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_conversation))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -819,7 +827,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof InternationalCallFragment) {//國際電話
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_international_call))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -834,7 +842,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof EmergencyCallFragment) {//緊急電話
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_emergency_phone))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -849,7 +857,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof RoamingServiceFragment) {//漫遊服務
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_roaming_service))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -864,7 +872,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof LanguageSettingFragment) {//語言
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.home_language_setting_title))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -879,7 +887,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof SouvenirAreaFragment) {//紀念品專區
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_souvenirs))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -894,7 +902,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             } else if (fragment instanceof AchievementFragment || fragment instanceof AchievementDetailFragment) {//紀念品專區
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.home_airport_achievement_title))
-                        .setBackground(ContextCompat.getColor(getApplicationContext(), R.color.colorSubTitle))
+                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
                             @Override
@@ -943,15 +951,19 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
     @Override
     public void onBackPressed() {
-        if (mLoadingView != null) {
-            if (!mLoadingView.isShown())
+        if (mFlightsDetailInfo != null && mFlightsDetailInfo.isShown()) {
+            mFlightsDetailInfo.setVisibility(View.GONE);
+        }else {
+            if (mLoadingView != null) {
+                if (!mLoadingView.isShown())
+                    super.onBackPressed();
+                else {
+                    mLoadingView.setVisibility(View.GONE);
+                    super.onBackPressed();
+                }
+            } else
                 super.onBackPressed();
-            else {
-                mLoadingView.setVisibility(View.GONE);
-                super.onBackPressed();
-            }
-        } else
-            super.onBackPressed();
+        }
     }
 
     public void checkLayoutMode() {

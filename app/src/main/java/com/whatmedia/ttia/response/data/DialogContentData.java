@@ -82,7 +82,9 @@ public class DialogContentData {
         list.add(item);
         item = new DialogContentData();
         item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_airnumber));
-        item.setContent(!TextUtils.isEmpty(data.getAirlineCode()) ? data.getAirlineCode().trim() : "");
+        item.setContent(!TextUtils.isEmpty(data.getAirlineCode()) ?
+                !TextUtils.isEmpty(data.getShifts()) ? String.format("%1$s%2$s", data.getAirlineCode().trim(), data.getShifts()) : data.getAirlineCode()
+                : "");
         list.add(item);
         item = new DialogContentData();
 
@@ -154,7 +156,7 @@ public class DialogContentData {
                 item.setTitle(context.getString(R.string.flight_arrival_detail_dialog_actualtime));
             }
 
-            
+
             item.setContent(String.format("%1$s %2$s", !TextUtils.isEmpty(data.getExpectedDate()) ? data.getExpectedDate().trim() : ""
                     , !TextUtils.isEmpty(data.getExpectedTime()) ? data.getExpectedTime().trim() : ""));
             list.add(item);

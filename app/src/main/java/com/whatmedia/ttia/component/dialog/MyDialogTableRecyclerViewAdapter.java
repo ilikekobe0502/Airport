@@ -27,6 +27,10 @@ public class MyDialogTableRecyclerViewAdapter extends RecyclerView.Adapter<MyDia
         mItems = mList;
     }
 
+    public MyDialogTableRecyclerViewAdapter() {
+
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_dialog, parent, false);
@@ -56,6 +60,10 @@ public class MyDialogTableRecyclerViewAdapter extends RecyclerView.Adapter<MyDia
     @Override
     public int getItemCount() {
         return mItems != null ? mItems.size() : 0;
+    }
+
+    public void setData(List<DialogContentData> data) {
+        mItems = data;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

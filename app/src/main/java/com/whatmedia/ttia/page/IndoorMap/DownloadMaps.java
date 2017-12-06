@@ -402,7 +402,7 @@ class DownloadMaps
 
     void downloadMapId(String mapId)
     {
-        // ktodo cancel downloads
+        // ktodo indoor_cancel downloads
 
         new MyCheckTask(m_context, mapId).execute();
     }

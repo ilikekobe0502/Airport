@@ -152,7 +152,7 @@ public class SouvenirDetailFragment extends BaseFragment implements SouvenirDeta
     public void init() {
         mMainActivity.getMyToolbar().clearState()
                 .setTitleText(textName)
-                .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
                 .setBackVisibility(View.VISIBLE)
                 .setOnBackClickListener(new MyToolbar.OnClickListener() {
                     @Override

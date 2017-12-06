@@ -4,38 +4,38 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-
     <color name="colorMarquee">#9FA0A0</color>
     <color name="colorMoreFrame">#333b4e</color>
     <color name="colorTextStore">#333b50</color>
     <color name="colorIndicatorDefault">#3e4e7f</color>
     <color name="colorSubTitle">#3f4f8a</color>
     <color name="colorHomeWeather">#dddbdc</color>
-    <color name="colorText">#313a43</color>
-    <color name="colorTextSecond">#0164a8</color>
-    <color name="colorLine">#9c9b9b</color>
+    <color name="colorText">#323942</color>
+    <color name="colorTextSecond">#0064A7</color>
+    <color name="colorFlightsLine">#B0B0B0</color>
     <color name="colorFragmentLine">#1a3d63</color>
     <color name="colorDialogLine">#e5e5e5</color>
     <color name="colorHomeParkingInfoLine">#3d6436</color>
     <color name="colorTextSpecial">#ff0100</color>
     <color name="colorTextResultHint">#242a36</color>
     <color name="colorTextHomeParkingInfoFull">#FE0201</color>
-    <color name="colorTextDialogContent">#323a4d</color>
+    <color name="colorTextDialogContent">#333B50</color>
     <color name="colorTextStoreInfoTitle">#ffff00</color>
     <color name="colorTextHomeParkingInfoName">#fffc00</color>
     <color name="colorTextUserNewsDate">#ffff01</color>
-    <color name="colorBackgroundHomeDeparture">#96a0d7</color>
-    <color name="colorBackgroundHomeArrive">#72aad7</color>
+    <color name="colorBackgroundHomeDeparture">#DDDBDC</color>
+    <color name="colorBackgroundHomeArrive">#DDDBDC</color>
     <color name="colorBackgroundHomeParkingInfo">#F5A000</color>
     <color name="colorTextParkingMuch">#49b600</color>
     <color name="colorTextParkingEnough">#0096da</color>
     <color name="colorTextParkingFull">#d40a00</color>
     <color name="black0.25">#3f000000</color>
     <color name="black0.6">#99000000</color>
+    <color name="black0.9">#e6000000</color>
     <color name="white0.1">#1affffff</color>
     <color name="colorPurpleToolbarRightBackground">#6657dd</color>
     <color name="colorMapSearchBg">#dcdcdc</color>
-    <color name="colorFlightItemGate">#FF878789</color>
+    <color name="colorFlightItemGate">#9E9E9F</color>
 
     <color name="colorMainTop">#FFA200</color>
     <color name="colorMainTopSecondary">#0B315C</color>
@@ -44,4 +44,8 @@
     <color name="colorDotNonSelect">#21547F</color>
 
     <color name="colorTextFinal">#17304b</color>
+
+    <color name="colorToolbarBgStart">#051E3A</color>
+    <color name="colorToolbarBgEnd">#112e56</color>
+    <color name="colorDetailBar">#184d7a</color>
 </resources>

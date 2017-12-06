@@ -40,6 +40,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private int mRetryCount = 0;
+    private int mTopFrameHeight = 0;
     private IOnSetCurrentPositionListener mListener;
 
 
@@ -75,7 +76,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
         mPresenter = new ArriveFlightsPresenter(getContext(), this);
         mPresenter.getArriveFlightAPI();
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mTopFrameHeight);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
@@ -208,33 +209,40 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
             case R.id.layout_frame:
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
-
-                    final MyDialog myDialog = MyDialog.newInstance();
-                    if (!myDialog.isAdded()) {
-                        myDialog.setTitle(getString(R.string.flight_dialog_title))
-                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                                .setRightClickListener(new IOnItemClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if (tag != null &&
-                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
-                                                !TextUtils.isEmpty(tag.getShifts()) &&
-                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
-                                                !TextUtils.isEmpty(tag.getExpressTime())) {
-                                            mLoadingView.showLoadingView();
-                                            mPresenter.saveMyFlightsAPI(tag);
-                                        } else {
-                                            Log.e(TAG, "view.getTag() content is error");
-                                            showMessage(getString(R.string.data_error));
-                                        }
+                    mMainActivity.getFlightsDetailInfo()
+                            .setTitle(getString(R.string.flight_dialog_title))
+                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (tag != null &&
+                                            !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                            !TextUtils.isEmpty(tag.getShifts()) &&
+                                            !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                            !TextUtils.isEmpty(tag.getExpressTime())) {
+                                        mLoadingView.showLoadingView();
+                                        mPresenter.saveMyFlightsAPI(tag);
+                                    } else {
+                                        Log.e(TAG, "view.getTag() content is error");
+                                        showMessage(getString(R.string.data_error));
                                     }
-                                });
-                        myDialog.show(getActivity().getFragmentManager(), "dialog");
-                    }
+                                    mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
+                                }
+                            })
+                            .show();
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));
                 }
         }
+    }
+
+    /**
+     * Set Top Frame Height
+     *
+     * @param height
+     */
+    public void setTopFrameHeight(int height) {
+        mTopFrameHeight = height;
     }
 }

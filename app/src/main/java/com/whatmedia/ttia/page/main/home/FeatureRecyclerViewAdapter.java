@@ -67,7 +67,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         switch (mLocale){
             case "zh_TW":
             case "zh_CN":
-                holder.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13));
+                holder.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_14));
                 break;
             default:
                 holder.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_8));

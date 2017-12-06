@@ -697,7 +697,7 @@
     <string name="flights_search_footer_hint">請輸入欲查詢之航班代號、航空公司或城市關鍵字</string>
     <string name="flights_search_search">搜尋</string>
     <string name="flights_search_edit_text_hint">請輸入關鍵字</string>
-    <string name="flights_search_not_found_flights_message">找不到航班</string>
+    <string name="flights_search_not_found_flights_message">搜尋不到航班</string>
     <string name="flights_search_tag_on_time_show_text">準時</string>
     <string name="flights_search_tag_delay_show_text">延遲</string>
     <string name="flights_search_tag_arrived_show_text">已到</string>

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.component.dialog.MyDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
@@ -94,7 +95,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mPresenter = new MoreFlightsPresenter(getContext(), this);
 
         mMainActivity.getMyToolbar().clearState()
-                .setBackground(ContextCompat.getColor(getContext(), R.color.colorSubTitle))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
                 .setBackVisibility(View.VISIBLE)
                 .setOnBackClickListener(new MyToolbar.OnClickListener() {
                     @Override
@@ -120,13 +121,14 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), -1);
         mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
         return view;
     }
+
 
     @Override
     public void onStart() {
@@ -281,12 +283,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mPresenter.getFlightByQueryTypeAPI(mQueryType);
                 break;
             case R.id.textView_last:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
 
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
@@ -295,12 +294,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_now:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
                 mToday = true;
@@ -308,12 +304,9 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_next:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
 
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;
@@ -324,29 +317,27 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
             case R.id.layout_frame:
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
-
-                    final MyDialog myDialog = MyDialog.newInstance();
-                    if (!myDialog.isAdded()) {
-                        myDialog.setTitle(getString(R.string.flight_dialog_title))
-                                .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
-                                .setRightClickListener(new IOnItemClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        if (tag != null &&
-                                                !TextUtils.isEmpty(tag.getAirlineCode()) &&
-                                                !TextUtils.isEmpty(tag.getShifts()) &&
-                                                !TextUtils.isEmpty(tag.getExpressDate()) &&
-                                                !TextUtils.isEmpty(tag.getExpressTime())) {
-                                            mLoadingView.showLoadingView();
-                                            mPresenter.saveMyFlightsAPI(tag);
-                                        } else {
-                                            Log.e(TAG, "view.getTag() content is error");
-                                            showMessage(getString(R.string.data_error));
-                                        }
+                    mMainActivity.getFlightsDetailInfo()
+                            .setTitle(getString(R.string.flight_dialog_title))
+                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setClickListener(new IOnItemClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (tag != null &&
+                                            !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                            !TextUtils.isEmpty(tag.getShifts()) &&
+                                            !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                            !TextUtils.isEmpty(tag.getExpressTime())) {
+                                        mLoadingView.showLoadingView();
+                                        mPresenter.saveMyFlightsAPI(tag);
+                                    } else {
+                                        Log.e(TAG, "view.getTag() content is error");
+                                        showMessage(getString(R.string.data_error));
                                     }
-                                });
-                        myDialog.show(getActivity().getFragmentManager(), "dialog");
-                    }
+                                    mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
+                                }
+                            })
+                            .show();
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));
@@ -371,4 +362,5 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
             mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
         }
     }
+
 }
