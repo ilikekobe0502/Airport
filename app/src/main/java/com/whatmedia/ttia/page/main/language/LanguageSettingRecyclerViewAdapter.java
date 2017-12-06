@@ -2,6 +2,7 @@ package com.whatmedia.ttia.page.main.language;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,8 +57,11 @@ public class LanguageSettingRecyclerViewAdapter extends RecyclerView.Adapter<Lan
 
         if (mSelectLocale.equals(item.getLocale().toString())) {
             holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, R.drawable.language_setting_08_no));
-        } else
+            holder.mTextViewTitle.setTextColor(ContextCompat.getColor(mContext,R.color.colorTextDefault));
+        } else {
             holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, R.drawable.language_setting_08_off));
+            holder.mTextViewTitle.setTextColor(Color.WHITE);
+        }
 
         holder.mTextViewTitle.setText(item.getTitle());
 
