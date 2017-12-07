@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_20"></LinearLayout>
 
     <RelativeLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/image_bg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/but_bg_mdpi"
-            android:layout_marginLeft="@dimen/dp_pixel_110"
-            android:layout_marginRight="@dimen/dp_pixel_110"
-            android:padding="@dimen/dp_pixel_22"
-            android:layout_centerInParent="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_50"
+        android:layout_marginLeft="@dimen/dp_pixel_110"
+        android:layout_marginRight="@dimen/dp_pixel_110"
+        android:background="@drawable/but_bg_mdpi"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_pixel_10"
-            android:textColor="@android:color/white"
-            android:text="遠傳電信"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/image_line"
+            android:layout_marginBottom="@dimen/dp_pixel_10"
             android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/image_bg"
-            android:layout_alignRight="@+id/image_line"
-            android:layout_marginTop="@dimen/dp_pixel_20"
-            android:layout_marginBottom="@dimen/dp_pixel_20"
-            />
+            android:text="遠傳電信"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_pixel_10" />
 
         <ImageView
             android:id="@+id/image_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/roaming_07_03_01"
-            android:layout_margin="@dimen/dp_pixel_10"
-            android:layout_alignRight="@+id/image_bg"
-            android:layout_centerVertical="true"/>
+            android:layout_width="@dimen/dp_pixel_25"
+            android:layout_height="@dimen/dp_pixel_25"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_pixel_8"
+            android:layout_marginBottom="@dimen/dp_pixel_15"
+            android:layout_marginRight="@dimen/dp_pixel_10"
+            android:layout_marginLeft="@dimen/dp_pixel_10"
+            android:src="@drawable/roaming_07_03_01" />
 
         <ImageView
             android:id="@+id/image_line"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/roaming_07_03_02"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/dp_pixel_1"
+            android:layout_marginBottom="@dimen/dp_pixel_10"
+            android:scaleType="fitXY"
             android:layout_toLeftOf="@+id/image_icon"
-            android:layout_alignTop="@+id/image_bg"
-            android:layout_alignBottom="@+id/image_bg"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/dp_pixel_8"
+            android:src="@drawable/roaming_07_03_02"
 
             />
 

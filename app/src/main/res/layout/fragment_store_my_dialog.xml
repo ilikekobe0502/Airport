@@ -11,35 +11,51 @@
         android:background="@drawable/frame_dialog">
 
 
-        <TextView
-            android:id="@+id/textView_title"
+        <RelativeLayout
+            android:id="@+id/layout_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_pixel_50"
-            android:background="@drawable/frame_dialog_title"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_pixel_16"
-            android:text="詳細資訊"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_pixel_18" />
+            android:layout_height="@dimen/dp_pixel_50">
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_pixel_50"
+                android:background="@drawable/frame_dialog_title"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_pixel_16"
+                android:text="詳細資訊"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_18" />
+
+            <ImageView
+                android:id="@+id/view_delete"
+                android:layout_width="@dimen/dp_pixel_25"
+                android:layout_height="@dimen/dp_pixel_25"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_pixel_10"
+                android:src="@drawable/cancel"/>
+
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/button_cancel"
-            android:layout_below="@+id/textView_title"
+            android:layout_below="@+id/layout_title"
             android:paddingBottom="@dimen/dp_pixel_10" />
 
         <Button
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_pixel_30"
             android:id="@+id/button_cancel"
             android:layout_width="@dimen/dp_pixel_95"
             android:layout_height="@dimen/dp_pixel_50"
-            android:background="@drawable/frame_dialog_button"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="31dp"
+            android:background="@drawable/but01_bg"
             android:text="@string/alert_btn_cancel"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_15" />
     </RelativeLayout>
 </RelativeLayout>
