@@ -69,10 +69,11 @@ public class MyStoreDialog extends DialogFragment {
     }
 
 
-    @OnClick({R.id.button_cancel})
+    @OnClick({R.id.button_cancel,R.id.view_delete})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_cancel:
+            case R.id.view_delete:
                 if (mCancelListener != null)
                     mCancelListener.onClick(view);
                 dismiss();

@@ -34,7 +34,7 @@
             android:layout_marginTop="@dimen/dp_pixel_10"
             android:text="桃園機場捷運限量紀念品"
             android:minLines="2"
-            android:textColor="#323a4d"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_13" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_below="@+id/text_name"
             android:layout_marginTop="@dimen/dp_pixel_10"
             android:text="NT$200"
-            android:textColor="#c62829"
+            android:textColor="#c62828"
             android:textSize="@dimen/sp_pixel_13" />
 
         <Button
@@ -58,9 +58,9 @@
             android:layout_below="@+id/text_price"
             android:layout_marginBottom="@dimen/dp_pixel_15"
             android:layout_marginTop="@dimen/dp_pixel_10"
-            android:background="@drawable/but_bg_mdpi"
+            android:background="@drawable/but01_bg"
             android:text="@string/souvenir_button_des"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_13" />
     </RelativeLayout>
 
