@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.newresponse.data.TravelTypeListData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +50,36 @@ public class TravelLanguageRecyclerViewAdapter extends RecyclerView.Adapter<Trav
         holder.mTextViewTitle.setText(item.getName());
 
         holder.mLayoutFrame.setTag(item);
+
+        switch (position){
+            case 0:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01a);
+                break;
+            case 1:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01b);
+                break;
+            case 2:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01c);
+                break;
+            case 3:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01d);
+                break;
+            case 4:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01e);
+                break;
+            case 5:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01f);
+                break;
+            case 6:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01g);
+                break;
+            case 7:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01h);
+                break;
+            default:
+                holder.mImageViewBackground.setImageResource(R.drawable.n05_01a);
+                break;
+        }
     }
 
     @Override
@@ -70,7 +102,7 @@ public class TravelLanguageRecyclerViewAdapter extends RecyclerView.Adapter<Trav
         @BindView(R.id.textView_title)
         TextView mTextViewTitle;
         @BindView(R.id.layout_frame)
-        RelativeLayout mLayoutFrame;
+        LinearLayout mLayoutFrame;
 
         ViewHolder(View view) {
             super(view);

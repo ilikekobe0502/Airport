@@ -51,7 +51,7 @@
 
     <RelativeLayout
         android:id="@+id/layout_more"
-        android:layout_width="@dimen/dp_pixel_68"
+        android:layout_width="@dimen/dp_pixel_100"
         android:layout_height="@dimen/dp_pixel_32"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
