@@ -132,14 +132,26 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
             holder.mImageViewLogo.setVisibility(View.INVISIBLE);
         }
 
-        if (item.getIsCheck()) {
-            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+        String time = "";
+        if (item.getNotificationTime() != null) {
+            holder.mImageViewNotification.setBackground(ContextCompat.getDrawable(mContext, R.drawable.remind_yes));
+            time = String.format("%1$s:%2$s", !TextUtils.isEmpty(item.getNotificationTime().getShowHour()) ? item.getNotificationTime().getShowHour() : ""
+                    , !TextUtils.isEmpty(item.getNotificationTime().getShowMinute()) ? item.getNotificationTime().getShowMinute() : "");
         } else {
-            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+            holder.mImageViewNotification.setBackground(ContextCompat.getDrawable(mContext, R.drawable.remind_no));
+            time = String.format("%1$s:%2$s", "00", "00");
         }
+        holder.mTextViewClock.setText(time);
 
-        holder.mImageViewCheck.setTag(item);
+//        if (item.getIsCheck()) {
+//            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+//        } else {
+//            holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+//        }
+
+//        holder.mImageViewCheck.setTag(item);
         holder.mLayoutFrame.setTag(item);
+        holder.mLayoutNotification.setTag(position);
     }
 
     @Override
@@ -157,51 +169,59 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
         mListener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.layout_frame)
-        RelativeLayout mLayoutFrame;
+    public void setNotification(boolean notification) {
+        notifyDataSetChanged();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textView_time)
         TextView mTextViewTime;
         @BindView(R.id.imageView_logo)
         ImageView mImageViewLogo;
-        @BindView(R.id.imageView_icon)
-        ImageView mImageViewIcon;
-        @BindView(R.id.imageView_check)
-        ImageView mImageViewCheck;
         @BindView(R.id.textView_flight_code)
         TextView mTextViewFlightCode;
         @BindView(R.id.textView_location)
         TextView mTextViewLocation;
+        @BindView(R.id.textView_state)
+        TextView mTextViewState;
         @BindView(R.id.textView_terminal)
         TextView mTextViewTerminal;
         @BindView(R.id.textView_gate)
         TextView mTextViewGate;
-        @BindView(R.id.layout_terminal)
-        RelativeLayout mLayoutTerminal;
-        @BindView(R.id.textView_state)
-        TextView mTextViewState;
+        @BindView(R.id.imageView_icon)
+        ImageView mImageViewIcon;
+        @BindView(R.id.imageView_notification)
+        ImageView mImageViewNotification;
+        @BindView(R.id.textView_clock)
+        TextView mTextViewClock;
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
+        @BindView(R.id.layout_notification)
+        RelativeLayout mLayoutNotification;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
-        @OnClick({R.id.imageView_check, R.id.layout_frame})
+        @OnClick({R.id.layout_frame, R.id.layout_notification})
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.imageView_check:
-                    if (view.getTag() != null) {
-                        FlightsListData selectData = (FlightsListData) view.getTag();
-                        if (selectData.getIsCheck()) {//yes to no
-                            selectData.setIsCheck(false);
-                            mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
-                        } else {// no to yes
-                            mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
-                            selectData.setIsCheck(true);
-                        }
-                    } else {
-                        Log.e(TAG, "view.getTag() is null");
-                    }
+                case R.id.layout_notification:
+                    if (mListener != null)
+                        mListener.onClick(view);
+//                    if (view.getTag() != null) {
+//                        FlightsListData selectData = (FlightsListData) view.getTag();
+//                        if (selectData.getIsCheck()) {//yes to no
+//                            selectData.setIsCheck(false);
+//                            mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_no));
+//                        } else {// no to yes
+//                            mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.my_flight_02_02_yes));
+//                            selectData.setIsCheck(true);
+//                        }
+//                    } else {
+//                        Log.e(TAG, "view.getTag() is null");
+//                    }
                     break;
                 case R.id.layout_frame:
                     if (mListener != null)
@@ -209,7 +229,6 @@ public class MyFlightsInfoRecyclerViewAdapter extends RecyclerView.Adapter<MyFli
                     break;
             }
         }
-
     }
 
     /**

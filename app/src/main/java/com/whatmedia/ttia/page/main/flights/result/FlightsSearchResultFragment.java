@@ -234,12 +234,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 }
                 break;
             case R.id.textView_last:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
 
                 mQueryDate = mLastDate;
                 mShowDate = mLastShowDate;
@@ -249,12 +246,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_now:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
 
                 mQueryDate = mNowDate;
                 mShowDate = mNowShowDate;
@@ -264,12 +258,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mPresenter.getFlightByDateAPI(mQueryDate);
                 break;
             case R.id.textView_next:
-                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewLast.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg));
-                mTextViewNow.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_bg01));
-                mTextViewNext.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mTextViewLast.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNow.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
+                mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
 
                 mQueryDate = mNextDate;
                 mShowDate = mNextShowDate;

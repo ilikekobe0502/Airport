@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_bg"
+    android:background="@color/colorBackgroundHomeDeparture"
     android:clickable="true">
 
     <ScrollView
@@ -39,7 +39,7 @@
 
             <RelativeLayout
                 android:id="@+id/layout_terminal"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_pixel_330"
                 android:layout_height="@dimen/dp_pixel_50"
                 android:layout_below="@+id/line"
                 android:layout_centerHorizontal="true"
@@ -51,7 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_pixel_5"
                     android:background="@drawable/input_background"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/dp_pixel_8"
@@ -60,15 +59,15 @@
                     android:textSize="@dimen/sp_pixel_15" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/dp_pixel_38"
+                    android:layout_height="@dimen/dp_pixel_50"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/input_01" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_area"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_pixel_330"
                 android:layout_height="@dimen/dp_pixel_50"
                 android:layout_below="@+id/layout_terminal"
                 android:layout_centerHorizontal="true"
@@ -80,7 +79,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_pixel_5"
                     android:background="@drawable/input_background"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/dp_pixel_8"
@@ -89,15 +87,15 @@
                     android:textSize="@dimen/sp_pixel_15" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/dp_pixel_38"
+                    android:layout_height="@dimen/dp_pixel_50"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/input_01" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_floor"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_pixel_330"
                 android:layout_height="@dimen/dp_pixel_50"
                 android:layout_below="@+id/layout_area"
                 android:layout_centerHorizontal="true"
@@ -109,7 +107,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_pixel_5"
                     android:background="@drawable/input_background"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/dp_pixel_8"
@@ -119,15 +116,15 @@
 
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/dp_pixel_38"
+                    android:layout_height="@dimen/dp_pixel_50"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/input_01" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_restaurant"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_pixel_330"
                 android:layout_height="@dimen/dp_pixel_50"
                 android:layout_below="@+id/layout_floor"
                 android:layout_centerHorizontal="true"
@@ -138,9 +135,7 @@
                     android:id="@+id/textView_restaurant"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_pixel_5"
                     android:background="@drawable/input_background"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/dp_pixel_8"
@@ -149,8 +144,8 @@
                     android:textSize="@dimen/sp_pixel_15" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/dp_pixel_38"
+                    android:layout_height="@dimen/dp_pixel_50"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/input_01" />
             </RelativeLayout>
@@ -167,8 +162,8 @@
 
                 <ImageView
                     android:id="@+id/imageView_search"
-                    android:layout_width="@dimen/dp_pixel_28"
-                    android:layout_height="@dimen/dp_pixel_28"
+                    android:layout_width="@dimen/dp_pixel_29"
+                    android:layout_height="@dimen/dp_pixel_33"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_pixel_10"
                     android:background="@drawable/magnifier" />

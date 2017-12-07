@@ -236,6 +236,66 @@ public class Util {
     }
 
     /**
+     * 用Timestamp 計算跟現在的時間差
+     *
+     * @param time
+     * @return
+     */
+    public static HashMap<String, Long> getDifferentTimeWithNowTime(long time) {
+        DateFormat df = new SimpleDateFormat(TAG_FORMAT_ALL);
+        long hours = 0;
+        long minutes = 0;
+        long diff = time - Calendar.getInstance().getTime().getTime();
+        if (diff < 0) {
+            return null;
+        }
+        try {
+            Date date = df.parse(df.format(diff));
+            diff = date.getTime();
+            long days = diff / (1000 * 60 * 60 * 24);
+            hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Long> diffTime = new HashMap<>();
+        diffTime.put(TAG_HOUR, hours);
+        diffTime.put(TAG_MIN, minutes);
+        diffTime.put(TAG_SEC, diff / 1000);
+        return diffTime;
+    }
+
+    /**
+     * 計算扣除時間
+     *
+     * @param sourceTime
+     * @param hour
+     * @param min
+     * @return
+     */
+    public static long reduceTime(String sourceTime, int hour, int min) {
+        DateFormat sdf = new SimpleDateFormat(TAG_FORMAT_ALL);
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(sourceTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (hour > 0)
+            calendar.add(Calendar.HOUR, -hour);
+        if (min > 0) {
+            calendar.add(Calendar.MINUTE, -min);
+        }
+
+        return calendar.getTimeInMillis();
+    }
+
+    public static void transformateTimeStamp(long time) {
+        DateFormat sdf = new SimpleDateFormat(TAG_FORMAT_ALL);
+    }
+
+    /**
      * Get Now time
      *
      * @return

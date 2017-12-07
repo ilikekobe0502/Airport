@@ -81,6 +81,31 @@
     <string name="notify_alerm_info">フライト番号：    </string>
     <string name="notify_alerm_info2">定刻：  </string>
     <string name="notify_alerm_title">フライト通知</string>
+    <string name="notify_alerm_selector_title">%1$s%2$s フライトリマインダーの設定</string>
+    <string-array name="hours_array">
+        <item>"0 時間"</item>
+        <item>"1 時間"</item>
+        <item>"2 時間"</item>
+        <item>"3 時間"</item>
+        <item>"4 時間"</item>
+        <item>"5 時間"</item>
+        <item>"6 時間"</item>
+        <item>"7 時間"</item>
+        <item>"8 時間"</item>
+        <item>"9 時間"</item>
+        <item>"10 時間"</item>
+        <item>"11 時間"</item>
+        <item>"12 時間"</item>
+    </string-array>
+
+    <string-array name="minutes_array">
+        <item>"0 分"</item>
+        <item>"10 分"</item>
+        <item>"20 分"</item>
+        <item>"30 分"</item>
+        <item>"40 分"</item>
+        <item>"50 分"</item>
+    </string-array>
 
     <string name="title_flight">フライト情報</string>
     <string name="title_nearby">近所の情報</string>

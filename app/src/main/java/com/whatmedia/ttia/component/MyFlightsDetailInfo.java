@@ -33,10 +33,10 @@ public class MyFlightsDetailInfo extends RelativeLayout {
     RecyclerView mRecyclerView;
     @BindView(R.id.imageView_close)
     ImageView mImageViewClose;
-    @BindView(R.id.textView_cancel)
-    TextView mTextViewCancel;
-    @BindView(R.id.textView_ok)
-    TextView mTextViewOk;
+    @BindView(R.id.textView_left)
+    TextView mTextViewLeft;
+    @BindView(R.id.textView_right)
+    TextView mTextViewRight;
 
     private MyDialogTableRecyclerViewAdapter mAdapter = new MyDialogTableRecyclerViewAdapter();
     private IOnItemClickListener mListener;
@@ -85,7 +85,23 @@ public class MyFlightsDetailInfo extends RelativeLayout {
         return this;
     }
 
-    @OnClick({R.id.imageView_close, R.id.textView_cancel, R.id.textView_ok})
+    public MyFlightsDetailInfo setLeftText(String title) {
+        mTextViewLeft.setText(title);
+        return this;
+    }
+
+    public MyFlightsDetailInfo setRightText(String title) {
+        mTextViewRight.setText(title);
+        return this;
+    }
+
+    public MyFlightsDetailInfo restore() {
+        mTextViewLeft.setText(getContext().getString(R.string.alert_btn_cancel));
+        mTextViewRight.setText(getContext().getString(R.string.navi_title_flight_notify));
+        return this;
+    }
+
+    @OnClick({R.id.imageView_close, R.id.textView_left, R.id.textView_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
@@ -93,14 +109,19 @@ public class MyFlightsDetailInfo extends RelativeLayout {
             case R.id.imageView_close:
                 this.setVisibility(GONE);
                 break;
-            case R.id.textView_cancel:
-                this.setVisibility(GONE);
-                break;
-            case R.id.textView_ok:
+            case R.id.textView_left:
                 if (mListener != null) {
                     mListener.onClick(view);
                 }
+                this.setVisibility(GONE);
+                break;
+            case R.id.textView_right:
+                if (mListener != null) {
+                    mListener.onClick(view);
+                }
+                this.setVisibility(GONE);
                 break;
         }
+        restore();
     }
 }

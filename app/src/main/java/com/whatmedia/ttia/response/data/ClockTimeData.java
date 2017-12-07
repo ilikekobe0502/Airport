@@ -7,6 +7,8 @@ import com.google.gson.Gson;
  */
 
 public class ClockTimeData {
+    private String showHour;
+    private String showMinute;
     private long hour;
     private long min;
     private long sec;
@@ -38,5 +40,21 @@ public class ClockTimeData {
     public static ClockTimeData getInstance(String data) {
         Gson gson = new Gson();
         return gson.fromJson(data, ClockTimeData.class);
+    }
+
+    public String getShowHour() {
+        return showHour;
+    }
+
+    public void setShowHour(String showHour) {
+        this.showHour = showHour;
+    }
+
+    public String getShowMinute() {
+        return showMinute;
+    }
+
+    public void setShowMinute(String showMinute) {
+        this.showMinute = showMinute;
     }
 }

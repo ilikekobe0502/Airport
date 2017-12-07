@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dp_pixel_2"
-    android:paddingTop="@dimen/dp_pixel_2">
-
-    <ImageView
-        android:id="@+id/imageView_check"
-        android:layout_width="@dimen/dp_pixel_35"
-        android:layout_height="@dimen/dp_pixel_35"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_pixel_4"
-        android:background="@drawable/my_flight_02_02_no" />
+    android:layout_marginBottom="@dimen/dp_pixel_5"
+    android:layout_marginTop="@dimen/dp_pixel_5">
 
     <RelativeLayout
-        android:id="@+id/layout_frame"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_pixel_60"
-        android:layout_marginLeft="@dimen/dp_pixel_7"
-        android:layout_marginRight="@dimen/dp_pixel_7"
-        android:layout_toRightOf="@+id/imageView_check"
-        android:background="@drawable/flight_background">
+        android:layout_width="@dimen/dp_pixel_350"
+        android:layout_height="@dimen/dp_pixel_53"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/flight_bg">
 
         <TextView
             android:id="@+id/textView_time"
-            android:layout_width="@dimen/dp_pixel_60"
+            android:layout_width="@dimen/dp_pixel_47"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/sp_pixel_13"
-            android:textStyle="bold" />
+            android:textSize="@dimen/sp_pixel_12" />
 
         <View
             android:id="@+id/line1"
@@ -43,14 +31,14 @@
         <RelativeLayout
             android:id="@+id/layout_logo"
             android:layout_width="@dimen/dp_pixel_50"
-            android:layout_height="@dimen/dp_pixel_50"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/line1">
 
             <ImageView
                 android:id="@+id/imageView_logo"
-                android:layout_width="@dimen/dp_pixel_20"
-                android:layout_height="@dimen/dp_pixel_20"
+                android:layout_width="@dimen/dp_pixel_38"
+                android:layout_height="@dimen/dp_pixel_38"
                 android:layout_centerInParent="true"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY" />
@@ -65,7 +53,8 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/layout_flights_info"
+            android:layout_width="@dimen/dp_pixel_102"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/line2"
@@ -85,14 +74,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorTextSecond"
-                android:textSize="@dimen/sp_pixel_13" />
+                android:textSize="@dimen/sp_pixel_14" />
         </LinearLayout>
+
+        <View
+            android:id="@+id/line4"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/layout_flights_info"
+            android:background="@color/colorFlightsLine" />
+
+        <TextView
+            android:id="@+id/textView_state"
+            android:layout_width="@dimen/dp_pixel_56"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/line4"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/sp_pixel_13"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/layout_terminal"
-            android:layout_width="@dimen/dp_pixel_50"
+            android:layout_width="@dimen/dp_pixel_52"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/textView_state"
+            android:layout_toEndOf="@+id/textView_state"
             android:background="@drawable/bg_flight_gate">
 
             <View
@@ -107,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/line3"
+                android:layout_marginStart="@dimen/dp_pixel_2"
                 android:gravity="start|center_vertical"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_pixel_14"
@@ -133,24 +141,58 @@
 
                 <ImageView
                     android:id="@+id/imageView_icon"
-                    android:layout_width="@dimen/dp_pixel_18"
-                    android:layout_height="@dimen/dp_pixel_20"
+                    android:layout_width="@dimen/dp_pixel_19"
+                    android:layout_height="@dimen/dp_pixel_21"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_pixel_2" />
             </RelativeLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView_state"
-            android:layout_width="@dimen/dp_pixel_80"
+        <RelativeLayout
+            android:id="@+id/layout_notification"
+            android:layout_width="@dimen/dp_pixel_52"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:paddingRight="@dimen/dp_pixel_10"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/sp_pixel_13"
-            android:textStyle="bold" />
+            android:layout_toEndOf="@+id/layout_terminal">
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/line5"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView_notification"
+                    android:layout_width="@dimen/dp_pixel_26"
+                    android:layout_height="@dimen/dp_pixel_24"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/remind_no" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/line5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_clock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_pixel_2"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    android:text="00:00"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/sp_pixel_14" />
+            </RelativeLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
