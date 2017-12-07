@@ -63,7 +63,7 @@ public class TravelLanguageResultRecyclerViewAdapter extends RecyclerView.Adapte
         holder.mText4.setText(en);
 
         if (position % 2 == 1) {
-            holder.layout_bg.setBackgroundColor(Color.parseColor("#40000000"));
+            holder.layout_bg.setBackgroundColor(Color.parseColor("#abaeb5"));
         } else {
             holder.layout_bg.setBackgroundColor(Color.TRANSPARENT);
         }

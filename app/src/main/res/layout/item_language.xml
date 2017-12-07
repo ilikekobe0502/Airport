@@ -16,7 +16,7 @@
             android:layout_marginTop="@dimen/dp_pixel_15"
             android:gravity="center"
             android:text="ttt"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_16" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_marginTop="@dimen/dp_pixel_10"
             android:gravity="center"
             android:text="ttt"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_16" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginTop="@dimen/dp_pixel_10"
             android:gravity="center"
             android:text="ttt"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_16" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_marginTop="@dimen/dp_pixel_10"
             android:gravity="center"
             android:text="ttt"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_16" />
 
     </LinearLayout>

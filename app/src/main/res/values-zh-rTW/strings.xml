@@ -896,4 +896,6 @@
     <string name="timeout_message">網路異常,暫時無法取得資訊</string>
 
     <string name="register_user_error">註冊使用者失敗</string>
+
+    <string name="currencyConversion_helper"></string>
 </resources>
