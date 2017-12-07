@@ -418,16 +418,25 @@ public class Util {
      * @param flightsInfoDataList
      */
     public static void cancelAlertClock(Context context, List<FlightsListData> flightsInfoDataList) {
-        Intent intent = new Intent(context, FlightClockBroadcast.class);
         for (FlightsListData item : flightsInfoDataList) {
-            int id = item.getNotificationId();
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
-            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            if (am != null)
-                am.cancel(pendingIntent);
-
-            Log.d(TAG, "indoor_cancel alert clock : " + id);
+            cancelAlertClock(context, item.getNotificationId());
         }
+    }
+
+    /**
+     * Cancel Single Alert Clock
+     *
+     * @param context
+     * @param id
+     */
+    public static void cancelAlertClock(Context context, int id) {
+        Intent intent = new Intent(context, FlightClockBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (am != null)
+            am.cancel(pendingIntent);
+
+        Log.d(TAG, "indoor_cancel alert clock : " + id);
     }
 
     /**

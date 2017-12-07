@@ -35,7 +35,6 @@ import com.whatmedia.ttia.utility.Util;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -60,6 +59,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     NumberPicker mNumberPickerRight;
     @BindView(R.id.layout_selector)
     RelativeLayout mLayoutSelector;
+    @BindView(R.id.layout_selector_mask)
+    RelativeLayout mLayoutSelectorMask;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -161,21 +162,12 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 Log.e(TAG, "getMyFlightsInfoSucceed response is null");
             } else {
                 mResponse = response;
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.setData(mResponse);
-                    }
-                });
 
-                GetFlightsListResponse flightsListResponse = new GetFlightsListResponse();
-                flightsListResponse.setFlightList(response);
-                String json = flightsListResponse.getListJson();
-                if (!TextUtils.isEmpty(json)) {
-                    Preferences.saveMyFlightsData(getContext(), json);
-                }
-                if (mIsInsert)
-                    Util.resetNotification(getContext(), response);
+
+                marginDisplayData();
+
+//                if (mIsInsert)
+//                    Util.resetNotification(getContext(), response);
 
                 mMainActivity.setMarqueeMessage(Util.getMarqueeSubMessage(getContext()));
 
@@ -243,11 +235,22 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void addNotification(FlightsListData data) {
+    public boolean addNotification(FlightsListData data) {
+        Gson gson = new Gson();
+        String flightData;
+        List<FlightsListData> cacheNotificationList;
+        FlightsListData cacheNotificationData = new FlightsListData();
+        cacheNotificationData.setExpressDate(data.getExpressDate());
+        cacheNotificationData.setExpressTime(data.getExpressTime());
+        cacheNotificationData.setShifts(data.getShifts());
+        cacheNotificationData.setAirlineCode(data.getAirlineCode());
+
         //step1. 計算出提醒時間的實際時間
         long timeDiff = Util.reduceTime(String.format("%1$s %2$s", data.getExpressDate(), data.getExpressTime()), Integer.parseInt(mHour), Integer.parseInt(mMinute));
+
         //step2. 計算與手機當前時間的時間差
         HashMap<String, Long> nowTimeDiff = Util.getDifferentTimeWithNowTime(timeDiff);
+
         //step3. 將時間數據存錄item中
         ClockTimeData clockTimeData = new ClockTimeData();
         clockTimeData.setShowHour(mHour);
@@ -258,19 +261,46 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
             clockTimeData.setSec(nowTimeDiff.get(Util.TAG_SEC));
         } else {
             mAdapter.setData(mResponse);
-            return;
+            return false;
         }
         data.setNotificationTime(clockTimeData);
+        cacheNotificationData.setNotificationTime(clockTimeData);
+
         //step4. 產出此則提醒的ID並存入item中
         data.setNotificationId(new Random().nextInt(9000) + 65);
+        cacheNotificationData.setNotificationId(data.getNotificationId());
+
+        //step5. 將Preference clockCache data拉出來做檢查若有資料則直接往上加
+        String clockData = Preferences.getClockData(getContext());
+        if (!TextUtils.isEmpty(clockData)) {
+            cacheNotificationList = GetFlightsListResponse.getGson(clockData).getFlightList();
+        } else {
+            cacheNotificationList = new ArrayList<>();
+        }
+        //將航班cacheNotificationList轉換成json
+        cacheNotificationList.add(cacheNotificationData);
+        GetFlightsListResponse cacheNotificationObject = new GetFlightsListResponse();
+        cacheNotificationObject.setFlightList(cacheNotificationList);
+        String cacheNotificationJson = cacheNotificationObject.getListJson();
+        Log.d("TAG", "cacheNotificationJson : " + cacheNotificationJson);
+
+        // 將航班object轉換成json
+        GetFlightsListResponse flightsListResponse = new GetFlightsListResponse();
+        flightsListResponse.setFlightList(mResponse);
+        String json = flightsListResponse.getListJson();
+        Log.d("TAG", "將航班object轉換成json = " + json);
+        if (!TextUtils.isEmpty(json)) {
+            Preferences.saveMyFlightsData(getContext(), json);
+        }
+
+        flightData = gson.toJson(data, FlightsListData.class);
+
         //step6. 設置提醒
         int sec = (int) data.getNotificationTime().getSec();
         Integer id = data.getNotificationId();
         Calendar cal1 = Calendar.getInstance();
         cal1.add(Calendar.SECOND, sec);
         Log.d(TAG, "ID : " + id + " 配置鬧終於" + sec + "秒後: " + cal1.getTime());
-        Gson gson = new Gson();
-        String flightData = gson.toJson(data, FlightsListData.class);
 
         Intent intent = new Intent(getContext(), FlightClockBroadcast.class);
         intent.putExtra(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA, flightData);
@@ -279,15 +309,90 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), id, intent, 0);
 
         AlarmManager am = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        if (am != null) {
+        if (am == null) {
+            Log.e(TAG, "AlarmManager is null");
+            return false;
+        } else {
             am.set(AlarmManager.RTC_WAKEUP, cal1.getTimeInMillis(), pendingIntent);
-            Preferences.saveMyFlightsData(getContext(), flightData);
+        }
+
+        //step7. 將自組鬧鐘資料存入暫存給未來mapping使用
+        Preferences.saveClockData(getContext(), cacheNotificationJson);
+
+        return true;
+    }
+
+    @Override
+    public void deleteNotification(int notificationId) {
+        //step1. 將Share Preferences 的 Notification cache data 取出做比對
+        //若有相符則刪除推播
+        String clockData = Preferences.getClockData(getContext());
+        List<FlightsListData> clockCacheData;
+        if (!TextUtils.isEmpty(clockData)) {
+            clockCacheData = GetFlightsListResponse.getGson(clockData).getFlightList();
+
+            for (FlightsListData clock : clockCacheData) {
+                if (clock.getNotificationId() == notificationId) {
+                    Util.cancelAlertClock(getContext(), notificationId);
+                    clockCacheData.remove(clock);
+
+                    Log.d("TAG", "Delete Notification id = " + notificationId);
+                    break;
+                }
+            }
+            GetFlightsListResponse cacheNotificationObject = new GetFlightsListResponse();
+            cacheNotificationObject.setFlightList(clockCacheData);
+            String cacheNotificationJson = cacheNotificationObject.getListJson();
+
+            Preferences.saveClockData(getContext(), cacheNotificationJson);
         }
     }
 
     @Override
-    public void deleteNotification() {
+    public void modifyNotification(FlightsListData data) {
+        Log.d("TAG", "modifyNotification id  = " + data.getNotificationId());
+        deleteNotification(data.getNotificationId());
+        addNotification(data);
+    }
 
+    @Override
+    public void marginDisplayData() {
+        //step1. 將Response 解析出來
+        GetFlightsListResponse flightsListResponse = new GetFlightsListResponse();
+        flightsListResponse.setFlightList(mResponse);
+
+        //step2. 將ClockCacheDate取出來做比對,將mapping到的資料把clock塞入
+        String clockData = Preferences.getClockData(getContext());
+        if (!TextUtils.isEmpty(clockData)) {
+            List<FlightsListData> clockCacheData = GetFlightsListResponse.getGson(clockData).getFlightList();
+
+            for (FlightsListData clock : clockCacheData) {
+                for (FlightsListData response : mResponse) {
+                    if (TextUtils.equals(clock.getAirlineCode(), response.getAirlineCode()) &&
+                            TextUtils.equals(clock.getShifts(), response.getShifts()) &&
+                            TextUtils.equals(clock.getExpressDate(), response.getExpressDate()) &&
+                            TextUtils.equals(clock.getExpressTime(), response.getExpressTime())) {
+                        response.setNotificationTime(clock.getNotificationTime());
+                        response.setNotificationId(clock.getNotificationId());
+                    }
+                }
+            }
+        }
+
+        //step3. 將margin過的資料存入preference
+        String json = flightsListResponse.getListJson();
+        Log.d("TAG", "Step3 json = " + json);
+        if (!TextUtils.isEmpty(json)) {
+            Preferences.saveMyFlightsData(getContext(), json);
+        }
+
+        //step4. 顯示資料
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.setData(mResponse);
+            }
+        });
     }
 
     @Override
@@ -309,6 +414,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                                             break;
                                         case R.id.textView_right://刪除按鈕
                                             mSelectList.add(tag);
+                                            if (tag.getNotificationId() != 0)
+                                                deleteNotification(tag.getNotificationId());
                                             deleteData();
                                             break;
                                     }
@@ -324,7 +431,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 if (view.getTag() instanceof Integer) {
                     mSelectPosition = (int) view.getTag();
                     FlightsListData data = mResponse.get(mSelectPosition);
-                    mLayoutSelector.setVisibility(View.VISIBLE);
+                    mLayoutSelectorMask.setVisibility(View.VISIBLE);
                     mTextViewSelectTitle.setText(getString(R.string.notify_alerm_selector_title,
                             !TextUtils.isEmpty(data.getAirlineCode()) ? data.getAirlineCode() : ""
                             , !TextUtils.isEmpty(data.getShifts()) ? data.getShifts() : ""));
@@ -367,20 +474,33 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         }
     }
 
-    @OnClick({R.id.textView_cancel, R.id.textView_ok})
+    @OnClick({R.id.textView_cancel, R.id.textView_ok, R.id.layout_selector, R.id.layout_selector_mask})
     public void onViewClicked(View view) {
         FlightsListData data = mResponse.get(mSelectPosition);
         switch (view.getId()) {
+            case R.id.layout_selector:
+                break;
+            case R.id.layout_selector_mask:
+                mLayoutSelectorMask.setVisibility(View.GONE);
+                break;
             case R.id.textView_cancel:
-                mLayoutSelector.setVisibility(View.GONE);
+                mLayoutSelectorMask.setVisibility(View.GONE);
+                deleteNotification(data.getNotificationId());
                 data.setNotificationTime(null);
                 mAdapter.setData(mResponse);
                 break;
             case R.id.textView_ok:
-                mLayoutSelector.setVisibility(View.GONE);
+                mLayoutSelectorMask.setVisibility(View.GONE);
 
-                addNotification(data);
-                mAdapter.setData(mResponse);
+                if (addNotification(data))
+                    mAdapter.setData(mResponse);
+                else {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.note)
+                            .setMessage(R.string.my_flights_notify_set_error)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                }
                 break;
         }
     }

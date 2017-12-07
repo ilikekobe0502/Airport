@@ -14,6 +14,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
+import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.main.MainActivity;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyContract;
 import com.whatmedia.ttia.response.data.ClockData;
@@ -53,17 +55,18 @@ public class FlightClockIntentService extends IntentService {
             int id = intent.getExtras().getInt(MyFlightsNotifyContract.TAG_NOTIFY_ID);
 
 
-            FlightsInfoData flightsInfoData = getFlightsInfo(intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA));
+            FlightsListData flightslistData = getFlightsInfo(intent.getExtras().getString(MyFlightsNotifyContract.TAG_NOTIFY_Flight_DATA));
 
             //Notification message
             Notification.Builder builder = new Notification.Builder(this);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 builder.setContentTitle(getString(R.string.title_flight_notify))
                         .setContentText(getString(R.string.my_flights_notify_message,
-                                !TextUtils.isEmpty(flightsInfoData.getAirLineCName()) ? flightsInfoData.getAirLineCName().trim() : "",
-                                !TextUtils.isEmpty(flightsInfoData.getFlightCode()) ? flightsInfoData.getFlightCode().trim() : "",
-                                !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
-                                !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
+                                !TextUtils.isEmpty(flightslistData.getAirlineName()) ? flightslistData.getAirlineName().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getAirlineCode()) ? flightslistData.getAirlineCode().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getShifts()) ? flightslistData.getShifts().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getExpectedTime()) ? flightslistData.getExpectedTime().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getContactsLocation()) ? flightslistData.getContactsLocation().trim() : ""))
                         .setDefaults(Notification.DEFAULT_VIBRATE)
                         .setLargeIcon(Icon.createWithResource(this, R.mipmap.ic_launcher))
                         .setSmallIcon(R.mipmap.icon)
@@ -72,10 +75,11 @@ public class FlightClockIntentService extends IntentService {
             } else {
                 builder.setContentTitle(getString(R.string.title_flight_notify))
                         .setContentText(getString(R.string.my_flights_notify_message,
-                                !TextUtils.isEmpty(flightsInfoData.getAirLineCName()) ? flightsInfoData.getAirLineCName().trim() : "",
-                                !TextUtils.isEmpty(flightsInfoData.getFlightCode()) ? flightsInfoData.getFlightCode().trim() : "",
-                                !TextUtils.isEmpty(flightsInfoData.getCExpectedTime()) ? flightsInfoData.getCExpectedTime().trim() : "",
-                                !TextUtils.isEmpty(flightsInfoData.getContactsLocation()) ? flightsInfoData.getContactsLocation().trim() : ""))
+                                !TextUtils.isEmpty(flightslistData.getAirlineName()) ? flightslistData.getAirlineName().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getAirlineCode()) ? flightslistData.getAirlineCode().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getShifts()) ? flightslistData.getShifts().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getExpectedTime()) ? flightslistData.getExpectedTime().trim() : "",
+                                !TextUtils.isEmpty(flightslistData.getContactsLocation()) ? flightslistData.getContactsLocation().trim() : ""))
                         .setDefaults(Notification.DEFAULT_VIBRATE)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
@@ -122,10 +126,9 @@ public class FlightClockIntentService extends IntentService {
      * @param flightsData
      * @return
      */
-    private FlightsInfoData getFlightsInfo(String flightsData) {
+    private FlightsListData getFlightsInfo(String flightsData) {
         if (mGson == null)
             mGson = new Gson();
-        FlightsInfoData flightsInfoData = mGson.fromJson(flightsData, FlightsInfoData.class);
-        return flightsInfoData;
+        return mGson.fromJson(flightsData, FlightsListData.class);
     }
 }
