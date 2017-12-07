@@ -15,12 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
@@ -61,6 +63,8 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     RelativeLayout mLayoutSelector;
     @BindView(R.id.layout_selector_mask)
     RelativeLayout mLayoutSelectorMask;
+    @BindView(R.id.imageView_teach)
+    ImageView mImageViewTeach;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -71,11 +75,13 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     private MyFlightsInfoRecyclerViewAdapter mAdapter;
 
+    private int mTeachCount;//被點選教學次數
     private int mSelectPosition;//被點選的item position
     private String[] mHours;
     private String[] mMinutes;
     private String mHour = "00";//被選取的小時
     private String mMinute = "00";//被選取的分
+    private boolean mLoaded;//判斷api讀取完了沒
 
     public MyFlightsInfoFragment() {
         // Required empty public constructor
@@ -118,6 +124,12 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
         mHours = getResources().getStringArray(R.array.hours_array);
         mMinutes = getResources().getStringArray(R.array.minutes_array);
+
+        if (Preferences.getMyFlightsFirst(getContext())) {
+            mLoadingView.goneLoadingView();
+            mImageViewTeach.setVisibility(View.VISIBLE);
+            mImageViewTeach.setBackground(ContextCompat.getDrawable(getContext(), switchLocaleImage()));
+        }
         return view;
     }
 
@@ -156,7 +168,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     @Override
     public void getMyFlightsInfoSucceed(final List<FlightsListData> response) {
-
+        mLoaded = true;
         if (isAdded() && !isDetached()) {
             if (response == null) {
                 Log.e(TAG, "getMyFlightsInfoSucceed response is null");
@@ -180,6 +192,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
     @Override
     public void getMyFlightsInfoFailed(String message, boolean timeout) {
+        mLoaded = true;
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             if (timeout) {
@@ -474,34 +487,52 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         }
     }
 
-    @OnClick({R.id.textView_cancel, R.id.textView_ok, R.id.layout_selector, R.id.layout_selector_mask})
+    @OnClick({R.id.textView_cancel, R.id.textView_ok, R.id.layout_selector, R.id.layout_selector_mask, R.id.imageView_teach})
     public void onViewClicked(View view) {
-        FlightsListData data = mResponse.get(mSelectPosition);
-        switch (view.getId()) {
-            case R.id.layout_selector:
-                break;
-            case R.id.layout_selector_mask:
-                mLayoutSelectorMask.setVisibility(View.GONE);
-                break;
-            case R.id.textView_cancel:
-                mLayoutSelectorMask.setVisibility(View.GONE);
-                deleteNotification(data.getNotificationId());
-                data.setNotificationTime(null);
-                mAdapter.setData(mResponse);
-                break;
-            case R.id.textView_ok:
-                mLayoutSelectorMask.setVisibility(View.GONE);
+        if (view.getId() == R.id.imageView_teach) {
+            switch (mTeachCount) {
+                case 0:
+                    mTeachCount++;
+                    mImageViewTeach.setBackground(ContextCompat.getDrawable(getContext(), switchLocaleImage()));
+                    break;
+                case 1:
+                    mImageViewTeach.setVisibility(View.GONE);
+                    Preferences.saveMyFlightsFirst(getContext(), false);
+                    if (!mLoaded)
+                        mLoadingView.showLoadingView();
+                    break;
+            }
+        } else {
+            FlightsListData data = null;
+            if (mResponse != null && mResponse.size() > 0) {
+                data = mResponse.get(mSelectPosition);
+                switch (view.getId()) {
+                    case R.id.layout_selector:
+                        break;
+                    case R.id.layout_selector_mask:
+                        mLayoutSelectorMask.setVisibility(View.GONE);
+                        break;
+                    case R.id.textView_cancel:
+                        mLayoutSelectorMask.setVisibility(View.GONE);
+                        deleteNotification(data.getNotificationId());
+                        data.setNotificationTime(null);
+                        mAdapter.setData(mResponse);
+                        break;
+                    case R.id.textView_ok:
+                        mLayoutSelectorMask.setVisibility(View.GONE);
 
-                if (addNotification(data))
-                    mAdapter.setData(mResponse);
-                else {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(R.string.note)
-                            .setMessage(R.string.my_flights_notify_set_error)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
+                        if (addNotification(data))
+                            mAdapter.setData(mResponse);
+                        else {
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle(R.string.note)
+                                    .setMessage(R.string.my_flights_notify_set_error)
+                                    .setPositiveButton(R.string.ok, null)
+                                    .show();
+                        }
+                        break;
                 }
-                break;
+            }
         }
     }
 
@@ -543,5 +574,42 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 mMinute = String.format("%d0", newVal);
             }
         });
+    }
+
+    /**
+     * 切換語言圖片
+     *
+     * @return
+     */
+    private int switchLocaleImage() {
+        String localeCache = Preferences.getLocaleSetting(getContext());
+        int image = 0;
+        if (TextUtils.equals(localeCache, LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString())) {
+            if (mTeachCount == 0)
+                image = R.drawable.t_teaching_01;
+            if (mTeachCount == 1)
+                image = R.drawable.t_teaching_02;
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_SIMPLIFIED_CHINESE.getLocale().toString())) {
+            if (mTeachCount == 0)
+                image = R.drawable.c_teaching_01;
+            if (mTeachCount == 1)
+                image = R.drawable.c_teaching_02;
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_JAPANESE.getLocale().toString())) {
+            if (mTeachCount == 0)
+                image = R.drawable.e_teaching_01;
+            if (mTeachCount == 1)
+                image = R.drawable.e_teaching_02;
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
+            if (mTeachCount == 0)
+                image = R.drawable.e_teaching_01;
+            if (mTeachCount == 1)
+                image = R.drawable.e_teaching_02;
+        } else {
+            if (mTeachCount == 0)
+                image = R.drawable.t_teaching_01;
+            if (mTeachCount == 1)
+                image = R.drawable.t_teaching_02;
+        }
+        return image;
     }
 }

@@ -21,6 +21,7 @@ public class Preferences {
     private final static String TAG_FIRST_INIT = "first";
     private final static String TAG_SCREEN_MODE = "screen_mode";
     private final static String TAG_LANGUAGE_LIST = "language_list";
+    private final static String TAG_MY_FLIGHTS_FIRST = "my_flights_first";
 
     private static SharedPreferences preferences;
 
@@ -183,5 +184,29 @@ public class Preferences {
     public static String getLanguageList(Context context) {
         preferences = context.getSharedPreferences(TAG_LANGUAGE_LIST, 0);
         return preferences.getString(TAG_LANGUAGE_LIST, "");
+    }
+
+    /**
+     * save my flights first
+     *
+     * @param context
+     * @param first
+     */
+    public static void saveMyFlightsFirst(Context context, boolean first) {
+        preferences = context.getSharedPreferences(TAG_MY_FLIGHTS_FIRST, 0);
+        preferences.edit()
+                .putBoolean(TAG_MY_FLIGHTS_FIRST, first)
+                .apply();
+    }
+
+    /**
+     * Get my flights first
+     *
+     * @param context
+     * @return
+     */
+    public static boolean getMyFlightsFirst(Context context) {
+        preferences = context.getSharedPreferences(TAG_MY_FLIGHTS_FIRST, 0);
+        return preferences.getBoolean(TAG_MY_FLIGHTS_FIRST, true);
     }
 }
