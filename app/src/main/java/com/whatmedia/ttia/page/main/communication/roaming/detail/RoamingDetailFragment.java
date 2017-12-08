@@ -36,6 +36,8 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     ImageView mImageView;
     @BindView(R.id.text_query)
     TextView mTextQuery;
+    @BindView(R.id.imageDetailView)
+    ImageView mImageDetailView;
 
     public RoamingDetailFragment() {
         // Required empty public constructor
@@ -80,16 +82,21 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     }
 
     @Override
-    public void getRoamingDetailSucceed(final String url, final String image) {
+    public void getRoamingDetailSucceed(final String url, final String image, final String detailImage) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (url != null && image!= null) {
+            if (url != null && image != null) {
 
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
                         if (!TextUtils.isEmpty(image))
                             Util.getHttpsPicasso(getContext()).load(image).into(mImageView);
+
+                        if (!TextUtils.isEmpty(detailImage)) {
+                            mImageDetailView.setVisibility(View.VISIBLE);
+                            Util.getHttpsPicasso(getContext()).load(detailImage).into(mImageDetailView);
+                        }
 
 
                         mTextQuery.setOnClickListener(new View.OnClickListener() {

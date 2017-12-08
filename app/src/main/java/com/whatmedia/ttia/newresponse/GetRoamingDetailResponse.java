@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class GetRoamingDetailResponse {
 
+    @SerializedName("imgDetailUrl")
+    private String imgDetailUrl;
     @SerializedName("imgUrl")
     private String irHtml;
     @SerializedName("url")
@@ -31,4 +33,13 @@ public class GetRoamingDetailResponse {
     public void setIrUrl(String irUrl) {
         this.irUrl = irUrl;
     }
+
+    public String getImgDetailUrl() {
+        return imgDetailUrl;
+    }
+
+    public void setImgDetailUrl(String imgDetailUrl) {
+        this.imgDetailUrl = imgDetailUrl;
+    }
+
 }

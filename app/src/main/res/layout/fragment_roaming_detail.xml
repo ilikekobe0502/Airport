@@ -10,8 +10,18 @@
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/dp_pixel_100"
-        android:layout_marginTop="@dimen/dp_pixel_80"
+        android:layout_marginTop="@dimen/dp_pixel_30"
         android:layout_height="@dimen/dp_pixel_183" />
+
+    <ImageView
+        android:id="@+id/imageDetailView"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/imageView"
+        android:layout_marginLeft="@dimen/dp_pixel_100"
+        android:layout_marginTop="@dimen/dp_pixel_10"
+        android:layout_height="@dimen/dp_pixel_183"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/text_query"
