@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/sp_pixel_21" />
 
         <ImageView
@@ -37,11 +37,18 @@
             android:background="@drawable/right_off" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/layout_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_pixel_1"
+        android:background="@android:color/white"
+        android:layout_below="@+id/layout_subtitle"></RelativeLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_subtitle" />
+        android:layout_below="@+id/layout_line" />
     <!--<WebView-->
     <!--android:id="@+id/webView"-->
     <!--android:layout_width="match_parent"-->

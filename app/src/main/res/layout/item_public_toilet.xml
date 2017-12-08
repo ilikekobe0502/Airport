@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorTextDefault"
         android:textSize="@dimen/sp_pixel_15" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_below="@+id/textView_title"
         android:gravity="center"
         android:text="LOADING..."
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorTextDefault"
         android:textSize="@dimen/sp_pixel_16"
         android:visibility="visible" />
 
