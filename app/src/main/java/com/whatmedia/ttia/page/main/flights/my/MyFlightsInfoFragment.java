@@ -515,9 +515,9 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                         break;
                     case R.id.textView_cancel:
                         mLayoutSelectorMask.setVisibility(View.GONE);
-                        deleteNotification(data.getNotificationId());
-                        data.setNotificationTime(null);
-                        mAdapter.setData(mResponse);
+//                        deleteNotification(data.getNotificationId());
+//                        data.setNotificationTime(null);
+//                        mAdapter.setData(mResponse);
                         break;
                     case R.id.textView_ok:
                         mLayoutSelectorMask.setVisibility(View.GONE);
