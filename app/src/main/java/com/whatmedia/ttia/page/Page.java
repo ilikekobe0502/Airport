@@ -13,6 +13,7 @@ import com.whatmedia.ttia.page.main.communication.emergency.EmergencyCallFragmen
 import com.whatmedia.ttia.page.main.communication.international.InternationalCallFragment;
 import com.whatmedia.ttia.page.main.communication.roaming.RoamingServiceFragment;
 import com.whatmedia.ttia.page.main.communication.roaming.detail.RoamingDetailFragment;
+import com.whatmedia.ttia.page.main.communication.roaming.detail.webview.RoamingWebViewFragment;
 import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoFragment;
 import com.whatmedia.ttia.page.main.flights.notify.MyFlightsNotifyFragment;
@@ -123,6 +124,7 @@ public class Page {
     public static final int TAG_COMMUNICATION_EMERGENCY_CALL = 3002;
     public static final int TAG_COMMUNICATION_ROAMING_SERVICE = 3003;
     public static final int TAG_COMMUNICATION_ROAMING_DETAIL = 3004;
+    public static final int TAG_COMMUNICATION_ROAMING_WEBVIEW = 3005;
 
     public static final int TAG_ACHIEVEMENT = 4000;
     public static final int TAG_ACHIEVEMENT_DETAIL = 4001;
@@ -287,6 +289,8 @@ public class Page {
                 return new RoamingServiceFragment().newInstance();
             case TAG_COMMUNICATION_ROAMING_DETAIL:
                 return new RoamingDetailFragment().newInstance();
+            case TAG_COMMUNICATION_ROAMING_WEBVIEW:
+                return new RoamingWebViewFragment().newInstance();
             case TAG_LANGUAGE_SETTING:
                 return new LanguageSettingFragment().newInstance();
             case TAG_SOUVENIR_AREA:

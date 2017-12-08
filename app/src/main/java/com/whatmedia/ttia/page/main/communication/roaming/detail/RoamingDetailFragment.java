@@ -17,7 +17,9 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.communication.roaming.RoamingServiceContract;
+import com.whatmedia.ttia.page.main.communication.roaming.detail.webview.RoamingWebViewContract;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -93,9 +95,12 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
                         mTextQuery.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Uri uri = Uri.parse(url);
-                                Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(it);
+//                                Uri uri = Uri.parse(url);
+//                                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+//                                startActivity(it);
+                                Bundle bundle = new Bundle();
+                                bundle.putString(RoamingWebViewContract.TAG_WEBURL, url);
+                                mMainActivity.addFragment(Page.TAG_COMMUNICATION_ROAMING_WEBVIEW, bundle, true);
                             }
                         });
                     }
