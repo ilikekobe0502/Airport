@@ -109,6 +109,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_pixel_10"
+                android:layout_marginLeft="@dimen/dp_pixel_30"
+                android:layout_marginRight="@dimen/dp_pixel_30"
+                android:text="@string/currencyConversion_helper"
+                android:gravity="center"
+                android:textColor="@color/colorTextDefault"
 
                 />
         </LinearLayout>

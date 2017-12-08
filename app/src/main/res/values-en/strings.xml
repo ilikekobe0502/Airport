@@ -896,4 +896,6 @@
     <string name="timeout_message">Cannot retrived the information due to network issue</string>
 
     <string name="register_user_error">Registered user failed</string>
+
+    <string name="currencyConversion_helper">Hint:Click the flags to select currencies and fill in the the blank with a dollar amount.</string>
 </resources>

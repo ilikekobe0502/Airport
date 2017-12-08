@@ -827,4 +827,6 @@
     <string name="timeout_message">ネットワークの問題に起因した情報を取得できません。</string>
 
     <string name="register_user_error">登録ユーザーが失敗しました</string>
+
+    <string name="currencyConversion_helper">説明：国旗をタップして国変更できます。金額を入力したら、タップした国の通貨を計算します。</string>
 </resources>
