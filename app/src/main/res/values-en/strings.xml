@@ -227,6 +227,7 @@
     <string name="parking"></string>
     <string name="available">Empty spaces：</string>
     <string name="full">No vacancy</string>
+    <string name="parking_remain">Remaining Parking Spaces</string>
 
     <string name="setup_emma_title">Emma app not installed</string>
     <string name="setup_emma">Please press OK to enter the download page</string>

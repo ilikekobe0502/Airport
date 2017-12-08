@@ -249,6 +249,7 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
             TextView textViewCount = (TextView) view.findViewById(R.id.textView_count);
             TextView textViewName = (TextView) view.findViewById(R.id.textView_name);
             TextView textViewSubName = (TextView) view.findViewById(R.id.textView_sub_name);
+            TextView textViewRemain = (TextView) view.findViewById(R.id.textView_remain);
             View line = view.findViewById(R.id.line);
             RelativeLayout frame = (RelativeLayout) view.findViewById(R.id.layout_frame);
 
@@ -272,18 +273,21 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
                 textViewName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingFull));
                 textViewSubName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingFull));
                 textViewCount.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingFull));
+                textViewRemain.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingFull));
                 line.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingFull));
             } else if (available <= 30) {
                 frame.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.parking_info_04_01_01txt_1));
                 textViewName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingEnough));
                 textViewSubName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingEnough));
                 textViewCount.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingEnough));
+                textViewRemain.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingEnough));
                 line.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingEnough));
             } else {
                 frame.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.parking_info_04_01_02txt_1));
                 textViewName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingMuch));
                 textViewSubName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingMuch));
                 textViewCount.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingMuch));
+                textViewRemain.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingMuch));
                 line.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorTextParkingMuch));
             }
             return view;

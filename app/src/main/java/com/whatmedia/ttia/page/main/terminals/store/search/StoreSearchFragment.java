@@ -286,7 +286,6 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
 
     @OnClick({R.id.layout_search, R.id.textView_terminal, R.id.textView_area, R.id.textView_floor, R.id.textView_restaurant})
     public void onClick(View view) {
-        MyStoreDialog dialog = null;
         switch (view.getId()) {
             case R.id.layout_search:
                 mLoadingView.showLoadingView();
@@ -303,7 +302,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             case R.id.textView_terminal:
                 mMainActivity.getFlightsDetailInfo()
                         .setTitle(getString(R.string.restaurant_store_search_select_terminal_title))
-                        .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                        .setSingleButtonText(getString(R.string.alert_btn_cancel))
                         .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_TERMINAL, mTerminalCodeList)
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
@@ -321,7 +320,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             case R.id.textView_area:
                 mMainActivity.getFlightsDetailInfo()
                         .setTitle(getString(R.string.restaurant_store_search_select_area_title))
-                        .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                        .setSingleButtonText(getString(R.string.alert_btn_cancel))
                         .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_AREA, mAreaCodeList)
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
@@ -339,7 +338,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             case R.id.textView_floor:
                 mMainActivity.getFlightsDetailInfo()
                         .setTitle(getString(R.string.restaurant_store_search_select_floor_title))
-                        .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                        .setSingleButtonText(getString(R.string.alert_btn_cancel))
                         .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_FLOWER, mFloorCodeList)
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
@@ -358,7 +357,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 if (mFromPage == Page.TAG_STORE_OFFERS) {
                     mMainActivity.getFlightsDetailInfo()
                             .setTitle(getString(R.string.restaurant_store_search_select_kind_of_store_title))
-                            .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                            .setSingleButtonText(getString(R.string.alert_btn_cancel))
                             .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_STORE_TYPE, mStoreCodeList)
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override
@@ -375,7 +374,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 } else {
                     mMainActivity.getFlightsDetailInfo()
                             .setTitle(getString(R.string.restaurant_store_search_select_kind_of_restaurant_title))
-                            .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                            .setSingleButtonText(getString(R.string.alert_btn_cancel))
                             .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_RESTAURANT_TYPE, mRestaurantCodeList)
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override

@@ -156,7 +156,7 @@
             android:layout_width="@dimen/dp_pixel_60"
             android:layout_height="@dimen/dp_pixel_40"
             android:layout_centerInParent="true"
-            android:background="@drawable/but_bg_mdpi"
+            android:background="@drawable/frame_dialog_button_blue"
             android:layout_marginTop="@dimen/dp_pixel_10">
 
             <TextView

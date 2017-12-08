@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_bg"
+    android:background="@color/colorBackgroundHomeDeparture"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="2017/02/06"
         android:textColor="@color/colorDateDefault"
-        android:textSize="@dimen/sp_pixel_16" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <TextView
         android:id="@+id/text_title"
@@ -26,12 +26,12 @@
         android:gravity="center"
         android:text="這是測試標題"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_18" />
+        android:textSize="@dimen/sp_pixel_21" />
 
     <ImageView
         android:id="@+id/image_icon"
-        android:layout_width="@dimen/dp_pixel_223"
-        android:layout_height="@dimen/dp_pixel_145"
+        android:layout_width="@dimen/dp_pixel_250"
+        android:layout_height="@dimen/dp_pixel_163"
         android:layout_below="@+id/text_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
@@ -47,6 +47,6 @@
         android:gravity="center|left"
         android:text="這是測試標題"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_16" />
+        android:textSize="@dimen/sp_pixel_15" />
 
 </RelativeLayout>

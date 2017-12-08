@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_bg"
+    android:background="@color/colorBackgroundHomeDeparture"
     android:orientation="vertical">
 
     <ImageView
@@ -20,9 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/image_icon"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_pixel_15"
+        android:layout_marginTop="@dimen/dp_pixel_18"
         android:textColor="#C62828"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_18" />
 
     <TextView
         android:id="@+id/text_address"
@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <TextView
         android:id="@+id/text_time"
@@ -42,7 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <TextView
         android:id="@+id/text_phone"
@@ -52,7 +52,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <LinearLayout
         android:id="@+id/layout_line"
@@ -72,7 +72,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
 
 </RelativeLayout>
