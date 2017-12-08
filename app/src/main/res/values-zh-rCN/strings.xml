@@ -896,4 +896,6 @@
     <string name="timeout_message">网路异常,暂时无法取得资讯</string>
 
     <string name="register_user_error">注册使用者失败</string>
+
+    <string name="currencyConversion_helper">点选国旗可切换不同国家，并于栏位输入欲换算之数值，即可得到该币值。</string>
 </resources>

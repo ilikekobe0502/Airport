@@ -19,7 +19,7 @@
         android:layout_below="@+id/textView_title"
         android:gravity="center"
         android:text="LOADING..."
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorTextDefault"
         android:textSize="@dimen/sp_pixel_16"
         android:visibility="visible" />
 
