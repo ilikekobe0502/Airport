@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
@@ -416,7 +417,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                     final FlightsListData tag = (FlightsListData) view.getTag();
                     mMainActivity.getFlightsDetailInfo()
                             .setTitle(getString(R.string.flight_dialog_title))
-                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setRecyclerContent(MyFlightsDetailInfo.TAG_FLIGHTS_DETAIL, DialogContentData.getFlightDetail(getContext(), tag))
                             .setLeftText(getString(R.string.alert_btn_cancel))
                             .setRightText(getString(R.string.cell_btn_delete))
                             .setClickListener(new IOnItemClickListener() {
