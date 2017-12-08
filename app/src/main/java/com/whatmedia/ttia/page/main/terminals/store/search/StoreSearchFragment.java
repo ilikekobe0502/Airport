@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main.terminals.store.search;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,8 @@ import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.component.dialog.MyStoreDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.newresponse.GetRestaurantInfoListResponse;
+import com.whatmedia.ttia.newresponse.GetStoreInfoListResponse;
 import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -222,10 +225,16 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         if (isAdded() && !isDetached()) {
             mLoadingView.goneLoadingView();
             if (!TextUtils.isEmpty(response)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(StoreSearchResultContract.TAG_TITLE, TextUtils.equals(mTextViewTerminal.getText().toString(), getString(R.string.restaurant_store_search_select_terminal)) ? mTerminalCodeList.get(0).getName() : mTextViewTerminal.getText().toString());
-                bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
-                mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+                GetRestaurantInfoListResponse restaurantInfoListResponse = GetRestaurantInfoListResponse.getGson(response);
+                if (restaurantInfoListResponse.getRestaurantList() != null && restaurantInfoListResponse.getRestaurantList().size() > 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StoreSearchResultContract.TAG_TITLE, TextUtils.equals(mTextViewTerminal.getText().toString(), getString(R.string.restaurant_store_search_select_terminal)) ? mTerminalCodeList.get(0).getName() : mTextViewTerminal.getText().toString());
+                    bundle.putString(StoreSearchResultContract.TAG_RESTAURANT_RESULT, response);
+                    mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+                } else {
+                    Log.e(TAG, "getRestaurantInfoSucceed response is null");
+                    showNoDataDialog();
+                }
             } else {
                 Log.e(TAG, "getRestaurantInfoSucceed response is null");
                 showNoDataDialog();
@@ -270,11 +279,18 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     public void getStoreSuccess(String response) {
         if (isAdded() && !isDetached()) {
             if (!TextUtils.isEmpty(response)) {
-                mLoadingView.goneLoadingView();
-                Bundle bundle = new Bundle();
-                bundle.putString(StoreSearchResultContract.TAG_STORE_RESULT, response);
-                bundle.putString(StoreSearchResultContract.TAG_TITLE, TextUtils.equals(mTextViewTerminal.getText().toString(), getString(R.string.restaurant_store_search_select_terminal)) ? mTerminalCodeList.get(0).getName() : mTextViewTerminal.getText().toString());
-                mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+
+                GetStoreInfoListResponse storeInfoListResponse = GetStoreInfoListResponse.getGson(response);
+                if (storeInfoListResponse.getStoreList() != null && storeInfoListResponse.getStoreList().size() > 0) {
+                    mLoadingView.goneLoadingView();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(StoreSearchResultContract.TAG_STORE_RESULT, response);
+                    bundle.putString(StoreSearchResultContract.TAG_TITLE, TextUtils.equals(mTextViewTerminal.getText().toString(), getString(R.string.restaurant_store_search_select_terminal)) ? mTerminalCodeList.get(0).getName() : mTextViewTerminal.getText().toString());
+                    mMainActivity.addFragment(Page.TAG_STORE_SEARCH_RESULT, bundle, true);
+                } else {
+                    Log.e(TAG, "getRestaurantInfoSucceed response is null");
+                    showNoDataDialog();
+                }
             } else {
                 Log.e(TAG, "getRestaurantInfoSucceed response is null");
                 showNoDataDialog();
@@ -405,7 +421,12 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                     new AlertDialog.Builder(getContext())
                             .setTitle(R.string.note)
                             .setMessage(mFromPage == Page.TAG_STORE_OFFERS ? R.string.restaurant_store_search_not_found_store : R.string.restaurant_store_search_not_found)
-                            .setPositiveButton(R.string.ok, null)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mLoadingView.goneLoadingView();
+                                }
+                            })
                             .show();
                 }
             });

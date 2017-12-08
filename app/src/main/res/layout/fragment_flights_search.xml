@@ -55,7 +55,7 @@
         android:layout_marginLeft="@dimen/dp_pixel_16"
         android:layout_marginRight="@dimen/dp_pixel_16"
         android:gravity="center"
-        android:lineSpacingExtra="@dimen/dp_pixel_33"
+        android:lineSpacingExtra="@dimen/dp_pixel_20"
         android:text="@string/flights_search_footer_hint"
         android:textColor="@color/colorHomeLeftTitle"
         android:textSize="@dimen/sp_pixel_18" />
