@@ -228,6 +228,7 @@
     <string name="parking">車位</string>
     <string name="available">尚有</string>
     <string name="full">車位已滿</string>
+    <string name="parking_remain">剩餘車位</string>
 
     <string name="setup_emma_title">您尚未安裝內部員工通訊軟體</string>
     <string name="setup_emma">按下確定後將跳轉至「內部員工通訊軟體」下載頁面</string>

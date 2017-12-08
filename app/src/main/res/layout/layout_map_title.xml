@@ -45,10 +45,20 @@
             android:background="@color/colorTextParkingMuch" />
 
         <TextView
-            android:id="@+id/textView_count"
+            android:id="@+id/textView_remain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
             android:layout_centerHorizontal="true"
+            android:text="@string/parking_remain"
+            android:textColor="@color/colorTextParkingMuch"
+            android:textSize="@dimen/sp_pixel_12" />
+
+        <TextView
+            android:id="@+id/textView_count"
+            android:paddingTop="@dimen/dp_pixel_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/colorTextParkingMuch"
             android:textSize="@dimen/sp_pixel_30" />
