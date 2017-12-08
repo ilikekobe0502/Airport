@@ -226,6 +226,7 @@
     <string name="parking"></string>
     <string name="available">Empty spaces：</string>
     <string name="full">No vacancy</string>
+    <string name="parking_remain">駐車場満空情報</string>
 
     <string name="setup_emma_title">アプリインストールされていません</string>
     <string name="setup_emma">ダウンロードページに入るには、 「確認する」を押して下さい</string>

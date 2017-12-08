@@ -73,7 +73,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
 
         if (!isScreen34Mode) {
             holder.mLayoutFrame.setLayoutParams(mParamsFrame);
-            holder.mLayoutBackground.setLayoutParams(mParamsBackground);
+//            holder.mLayoutBackground.setLayoutParams(mParamsBackground);
         }
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
@@ -165,8 +165,6 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.layout_background)
-        ImageView mLayoutBackground;
         @BindView(R.id.layout_frame)
         RelativeLayout mLayoutFrame;
         @BindView(R.id.textView_time)
@@ -218,26 +216,26 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
+        int layoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60);
 
-
-        if (height!=-1) {
+        if (height != -1) {
             Double count = Double.valueOf(height);
             count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
-            count = count - (4 * mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_53));
+            count = count - (4 * layoutFrameWeight);
             count = count / 8;
 
             int finalSpaceHeight = count.intValue();
 
-            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
+            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameWeight);
             mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight
                     , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight);
 
-        }else {
-            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
+        } else {
+            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameWeight);
             mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_5)
                     , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_5));
         }
-        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_53));
+        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameWeight);
         mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
     }
 }
