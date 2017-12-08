@@ -114,7 +114,12 @@ public class MyFlightsDetailInfo extends RelativeLayout {
         return this;
     }
 
-    public MyFlightsDetailInfo setSigleButtonText(String text) {
+    public MyFlightsDetailInfo setTitleIconVisibility(int visibility) {
+        mImageViewClose.setVisibility(visibility);
+        return this;
+    }
+
+    public MyFlightsDetailInfo setSingleButtonText(String text) {
         mLayoutButtonCouple.setVisibility(GONE);
         mTextViewCenterButton.setVisibility(VISIBLE);
         mTextViewCenterButton.setText(text);
