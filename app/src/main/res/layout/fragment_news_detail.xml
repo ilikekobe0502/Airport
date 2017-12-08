@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_bg"
+    android:background="@color/colorBackgroundHomeDeparture"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -26,7 +26,7 @@
                 android:gravity="center_horizontal"
                 android:text="201/1/5"
                 android:textColor="@color/colorDateDefault"
-                android:textSize="@dimen/dp_pixel_13" />
+                android:textSize="@dimen/sp_pixel_15" />
 
             <TextView
                 android:id="@+id/textView_title"
@@ -36,12 +36,12 @@
                 android:gravity="center_horizontal"
                 android:text="title"
                 android:textColor="@color/colorTextDefault"
-                android:textSize="@dimen/dp_pixel_18" />
+                android:textSize="@dimen/sp_pixel_21" />
 
             <ImageView
                 android:id="@+id/imageView_picture"
                 android:layout_width="@dimen/dp_pixel_250"
-                android:layout_height="@dimen/dp_pixel_152"
+                android:layout_height="@dimen/dp_pixel_163"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/dp_pixel_20"
                 android:visibility="visible" />
@@ -53,7 +53,7 @@
                 android:gravity="center_horizontal"
                 android:text="content"
                 android:textColor="@color/colorTextDefault"
-                android:textSize="@dimen/dp_pixel_13" />
+                android:textSize="@dimen/sp_pixel_15" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

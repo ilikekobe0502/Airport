@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/all_bg"
+    android:background="@color/colorBackgroundHomeDeparture"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -21,7 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dp_pixel_15"
         android:textColor="#c62828"
-        android:textSize="@dimen/sp_pixel_15" />
+        android:textSize="@dimen/sp_pixel_18" />
 
     <TextView
         android:id="@+id/textView_location"
@@ -30,7 +30,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <TextView
         android:id="@+id/textView_time"
@@ -39,7 +39,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <TextView
         android:id="@+id/textView_phone"
@@ -48,7 +48,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dp_pixel_15"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 
     <View
         android:layout_width="match_parent"
@@ -63,5 +63,5 @@
         android:layout_marginLeft="@dimen/dp_pixel_10"
         android:layout_marginRight="@dimen/dp_pixel_10"
         android:textColor="@color/colorTextDefault"
-        android:textSize="@dimen/sp_pixel_13" />
+        android:textSize="@dimen/sp_pixel_15" />
 </LinearLayout>

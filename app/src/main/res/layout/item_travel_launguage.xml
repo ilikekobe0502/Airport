@@ -14,8 +14,9 @@
 
         <ImageView
             android:id="@+id/imageView_background"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_pixel_80"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/dp_pixel_70"
+            android:layout_height="@dimen/dp_pixel_70"
             android:src="@drawable/n05_01a" />
 
         <TextView
@@ -26,6 +27,6 @@
             android:gravity="center"
             android:text="@string/conversation_general"
             android:textColor="@color/colorTextDefault"
-            android:textSize="@dimen/sp_pixel_16" />
+            android:textSize="@dimen/sp_pixel_18" />
     </LinearLayout>
 </RelativeLayout>
