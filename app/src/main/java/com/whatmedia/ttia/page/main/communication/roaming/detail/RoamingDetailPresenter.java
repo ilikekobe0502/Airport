@@ -51,7 +51,7 @@ public class RoamingDetailPresenter implements RoamingDetailContract.Presenter {
                 GetRoamingDetailResponse getRoamingDetailResponse = GetRoamingDetailResponse.getGson(response);
 
                 if(getRoamingDetailResponse!=null && getRoamingDetailResponse.getIrHtml() !=null && getRoamingDetailResponse.getIrUrl()!=null){
-                    mView.getRoamingDetailSucceed(getRoamingDetailResponse.getIrUrl(),getRoamingDetailResponse.getIrHtml());
+                    mView.getRoamingDetailSucceed(getRoamingDetailResponse.getIrUrl(),getRoamingDetailResponse.getIrHtml(),getRoamingDetailResponse.getImgDetailUrl());
                 }else{
                     mView.getRoamingDetailFailed(mContext.getString(R.string.data_error), false);
                 }
