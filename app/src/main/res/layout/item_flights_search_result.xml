@@ -2,15 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_frame"
     android:layout_width="@dimen/dp_pixel_350"
-    android:layout_height="@dimen/dp_pixel_53"
+    android:layout_height="@dimen/dp_pixel_60"
     android:background="@drawable/flight_bg">
-
-    <ImageView
-        android:id="@+id/layout_background"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_pixel_55"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textView_time"
