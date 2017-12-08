@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_pixel_40"
         android:gravity="center"
         android:textColor="@color/colorTextStore"
-        android:textSize="@dimen/sp_pixel_15" />
+        android:textSize="@dimen/sp_pixel_21" />
 
     <View
         android:layout_width="match_parent"

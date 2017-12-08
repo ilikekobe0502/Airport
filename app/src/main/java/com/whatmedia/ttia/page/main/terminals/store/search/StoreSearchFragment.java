@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.component.dialog.MyStoreDialog;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.StoreConditionCodeData;
@@ -300,14 +301,10 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                 }
                 break;
             case R.id.textView_terminal:
-                dialog = MyStoreDialog.newInstance()
+                mMainActivity.getFlightsDetailInfo()
                         .setTitle(getString(R.string.restaurant_store_search_select_terminal_title))
-                        .setCancelClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        })
+                        .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                        .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_TERMINAL, mTerminalCodeList)
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -319,21 +316,13 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                 }
                             }
                         })
-                        .setTerminalCodeData(mTerminalCodeList);
-                if (dialog.isAdded()) {
-                    dialog.clearData().dismiss();
-                } else
-                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                        .show();
                 break;
             case R.id.textView_area:
-                dialog = MyStoreDialog.newInstance()
+                mMainActivity.getFlightsDetailInfo()
                         .setTitle(getString(R.string.restaurant_store_search_select_area_title))
-                        .setCancelClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        })
+                        .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                        .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_AREA, mAreaCodeList)
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -345,21 +334,13 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                 }
                             }
                         })
-                        .setAreaCodeData(mAreaCodeList);
-                if (dialog.isAdded()) {
-                    dialog.clearData().dismiss();
-                } else
-                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                        .show();
                 break;
             case R.id.textView_floor:
-                dialog = MyStoreDialog.newInstance()
+                mMainActivity.getFlightsDetailInfo()
                         .setTitle(getString(R.string.restaurant_store_search_select_floor_title))
-                        .setCancelClickListener(new IOnItemClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        })
+                        .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                        .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_FLOWER, mFloorCodeList)
                         .setItemClickListener(new IOnItemClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -371,22 +352,14 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                 }
                             }
                         })
-                        .setFloorCodeData(mFloorCodeList);
-                if (dialog.isAdded()) {
-                    dialog.clearData().dismiss();
-                } else
-                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                        .show();
                 break;
             case R.id.textView_restaurant:
                 if (mFromPage == Page.TAG_STORE_OFFERS) {
-                    dialog = MyStoreDialog.newInstance()
+                    mMainActivity.getFlightsDetailInfo()
                             .setTitle(getString(R.string.restaurant_store_search_select_kind_of_store_title))
-                            .setCancelClickListener(new IOnItemClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
+                            .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                            .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_STORE_TYPE, mStoreCodeList)
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -398,21 +371,12 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                     }
                                 }
                             })
-                            .setStoreCodeData(mStoreCodeList);
-                    if (dialog.isAdded()) {
-                        dialog.clearData().dismiss();
-                    } else
-                        dialog.show(getActivity().getFragmentManager(), "dialog");
+                            .show();
                 } else {
-
-                    dialog = MyStoreDialog.newInstance()
+                    mMainActivity.getFlightsDetailInfo()
                             .setTitle(getString(R.string.restaurant_store_search_select_kind_of_restaurant_title))
-                            .setCancelClickListener(new IOnItemClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            })
+                            .setSigleButtonText(getString(R.string.alert_btn_cancel))
+                            .setRecyclerContent(MyFlightsDetailInfo.TAG_SEARCH_RESTAURANT_TYPE, mRestaurantCodeList)
                             .setItemClickListener(new IOnItemClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -424,11 +388,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
                                     }
                                 }
                             })
-                            .setRestaurantCodeData(mRestaurantCodeList);
-                    if (dialog.isAdded()) {
-                        dialog.clearData().dismiss();
-                    } else
-                        dialog.show(getActivity().getFragmentManager(), "dialog");
+                            .show();
                 }
                 break;
         }

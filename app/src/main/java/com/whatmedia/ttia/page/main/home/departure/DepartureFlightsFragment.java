@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.component.dialog.MyDialog;
+import com.whatmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -200,25 +200,28 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
             case R.id.layout_frame:
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
-
                     mMainActivity.getFlightsDetailInfo()
                             .setTitle(getString(R.string.flight_dialog_title))
-                            .setRecyclerContent(DialogContentData.getFlightDetail(getContext(), tag))
+                            .setRecyclerContent(MyFlightsDetailInfo.TAG_FLIGHTS_DETAIL, DialogContentData.getFlightDetail(getContext(), tag))
                             .setClickListener(new IOnItemClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (tag != null &&
-                                            !TextUtils.isEmpty(tag.getAirlineCode()) &&
-                                            !TextUtils.isEmpty(tag.getShifts()) &&
-                                            !TextUtils.isEmpty(tag.getExpressDate()) &&
-                                            !TextUtils.isEmpty(tag.getExpressTime())) {
-                                        mLoadingView.showLoadingView();
-                                        mPresenter.saveMyFlightsAPI(tag);
-                                    } else {
-                                        Log.e(TAG, "view.getTag() content is error");
-                                        showMessage(getString(R.string.data_error));
+                                    switch (view.getId()) {
+                                        case R.id.textView_right:
+                                            if (tag != null &&
+                                                    !TextUtils.isEmpty(tag.getAirlineCode()) &&
+                                                    !TextUtils.isEmpty(tag.getShifts()) &&
+                                                    !TextUtils.isEmpty(tag.getExpressDate()) &&
+                                                    !TextUtils.isEmpty(tag.getExpressTime())) {
+                                                mLoadingView.showLoadingView();
+                                                mPresenter.saveMyFlightsAPI(tag);
+                                            } else {
+                                                Log.e(TAG, "view.getTag() content is error");
+                                                showMessage(getString(R.string.data_error));
+                                            }
+                                            mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
+                                            break;
                                     }
-                                    mMainActivity.getFlightsDetailInfo().setVisibility(View.GONE);
                                 }
                             })
                             .show();

@@ -21,7 +21,7 @@ import butterknife.OnClick;
  */
 
 public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter<MyDialogStoreSearchRecyclerViewAdapter.ViewHolder> {
-    private List<StoreConditionCodeData> mTerminalCodeList;
+    private List<StoreConditionCodeData> mItems;
     private List<StoreConditionCodeData> mAreaCodeList;
     private List<StoreConditionCodeData> mFloorCodeList;
     private List<StoreConditionCodeData> mRestaurantCodeList;
@@ -37,63 +37,65 @@ public class MyDialogStoreSearchRecyclerViewAdapter extends RecyclerView.Adapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (mTerminalCodeList != null) {
-            StoreConditionCodeData item = mTerminalCodeList.get(position);
-            if (item == null)
-                return;
-
-            holder.mTextViewItem.setText(item.getName());
-            holder.mTextViewItem.setTag(item);
-        } else if (mAreaCodeList != null) {
-            StoreConditionCodeData item = mAreaCodeList.get(position);
-            if (item == null)
-                return;
-
-            holder.mTextViewItem.setText(item.getName());
-            holder.mTextViewItem.setTag(item);
-        } else if (mFloorCodeList != null) {
-            StoreConditionCodeData item = mFloorCodeList.get(position);
-            if (item == null)
-                return;
-
-            holder.mTextViewItem.setText(item.getName());
-            holder.mTextViewItem.setTag(item);
-        } else if (mRestaurantCodeList != null) {
-            StoreConditionCodeData item = mRestaurantCodeList.get(position);
-            if (item == null)
-                return;
-
-            holder.mTextViewItem.setText(item.getName());
-            holder.mTextViewItem.setTag(item);
-        } else if (mStoreCodeList != null) {
-            StoreConditionCodeData item = mStoreCodeList.get(position);
+        if (mItems != null) {
+            StoreConditionCodeData item = mItems.get(position);
             if (item == null)
                 return;
 
             holder.mTextViewItem.setText(item.getName());
             holder.mTextViewItem.setTag(item);
         }
+//        else if (mAreaCodeList != null) {
+//            StoreConditionCodeData item = mAreaCodeList.get(position);
+//            if (item == null)
+//                return;
+//
+//            holder.mTextViewItem.setText(item.getName());
+//            holder.mTextViewItem.setTag(item);
+//        } else if (mFloorCodeList != null) {
+//            StoreConditionCodeData item = mFloorCodeList.get(position);
+//            if (item == null)
+//                return;
+//
+//            holder.mTextViewItem.setText(item.getName());
+//            holder.mTextViewItem.setTag(item);
+//        } else if (mRestaurantCodeList != null) {
+//            StoreConditionCodeData item = mRestaurantCodeList.get(position);
+//            if (item == null)
+//                return;
+//
+//            holder.mTextViewItem.setText(item.getName());
+//            holder.mTextViewItem.setTag(item);
+//        } else if (mStoreCodeList != null) {
+//            StoreConditionCodeData item = mStoreCodeList.get(position);
+//            if (item == null)
+//                return;
+//
+//            holder.mTextViewItem.setText(item.getName());
+//            holder.mTextViewItem.setTag(item);
+//        }
     }
 
     @Override
     public int getItemCount() {
-        int count = 0;
-        if (mTerminalCodeList != null)
-            count = mTerminalCodeList.size();
-        else if (mAreaCodeList != null)
-            count = mAreaCodeList.size();
-        else if (mFloorCodeList != null)
-            count = mFloorCodeList.size();
-        else if (mRestaurantCodeList != null)
-            count = mRestaurantCodeList.size();
-        else if (mStoreCodeList != null)
-            count = mStoreCodeList.size();
-        return count;
+//        int count = 0;
+//        if (mItems != null)
+//            count = mItems.size();
+//        else if (mAreaCodeList != null)
+//            count = mAreaCodeList.size();
+//        else if (mFloorCodeList != null)
+//            count = mFloorCodeList.size();
+//        else if (mRestaurantCodeList != null)
+//            count = mRestaurantCodeList.size();
+//        else if (mStoreCodeList != null)
+//            count = mStoreCodeList.size();
+//        return count;
+        return mItems != null ? mItems.size() : 0;
     }
 
 
     public void setTerminalCodeData(List<StoreConditionCodeData> list) {
-        mTerminalCodeList = list;
+        mItems = list;
         notifyDataSetChanged();
     }
 

@@ -709,11 +709,12 @@
 
     <!-- My flights notify -->
     <string name="my_flights_notify">"%1$d時間%2$d分"</string>
-    <string name="my_flights_notify_message">"%1$sを,%2$sの%4$sに%3$sの飛行中"</string>
+    <string name="my_flights_notify_message">"%1$sを,%2$s%3$sの%5$sに%4$sの飛行中"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
     <string name="my_flights_notify_delete_check_message">"「削除前に確認」をオンにしますか"</string>
     <string name="my_flights_notify_delete_button">"削除前に確認"</string>
+    <string name="my_flights_notify_set_error">"時間設定エラー"</string>
 
     <!-- Currency conversion -->
     <string name="currency_conversion_aud">"AUD"</string>
@@ -752,7 +753,7 @@
     <string name="marquee_ecpress_time">實際時間：</string>
     <string name="marquee_terminal">航廈：</string>
     <string name="marquee_gate">登機門：</string>
-    <string name="marquee_gt">報告櫃檯：</string>
+    <string name="marquee_gt">報到櫃檯：</string>
     <string name="marquee_luggage">行李轉盤：</string>
 
     <string name="store_terminal_1">T1</string>

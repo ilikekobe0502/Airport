@@ -13,75 +13,90 @@
         android:layout_below="@+id/layout_subtitle" />
 
     <RelativeLayout
-        android:id="@+id/layout_selector"
+        android:id="@+id/layout_selector_mask"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_pixel_152"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/black"
+        android:layout_height="match_parent"
+        android:clickable="true"
         android:visibility="gone">
 
         <RelativeLayout
-            android:id="@+id/layout_button"
+            android:id="@+id/layout_selector"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_pixel_40"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_pixel_10"
-            android:layout_marginTop="@dimen/dp_pixel_10">
+            android:layout_height="@dimen/dp_pixel_152"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black"
+            android:clickable="true">
 
-            <TextView
-                android:id="@+id/textView_select_title"
+            <RelativeLayout
+                android:id="@+id/layout_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_pixel_15"
-                android:layout_toStartOf="@+id/textView_cancel"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/dp_pixel_15" />
-
-            <TextView
-                android:id="@+id/textView_cancel"
-                android:layout_width="@dimen/dp_pixel_67"
-                android:layout_height="@dimen/dp_pixel_67"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dp_pixel_20"
-                android:layout_toLeftOf="@+id/textView_ok"
-                android:background="@drawable/but_bg_mdpi"
-                android:gravity="center"
-                android:text="@string/alert_btn_cancel"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_17" />
-
-            <TextView
-                android:id="@+id/textView_ok"
-                android:layout_width="@dimen/dp_pixel_67"
-                android:layout_height="@dimen/dp_pixel_67"
+                android:layout_height="@dimen/dp_pixel_40"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/but_bg_mdpi"
-                android:gravity="center"
-                android:text="@string/ok"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_17" />
+                android:layout_marginRight="@dimen/dp_pixel_10"
+                android:layout_marginTop="@dimen/dp_pixel_10">
+
+                <TextView
+                    android:id="@+id/textView_select_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_pixel_15"
+                    android:layout_toStartOf="@+id/textView_cancel"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_pixel_15" />
+
+                <TextView
+                    android:id="@+id/textView_cancel"
+                    android:layout_width="@dimen/dp_pixel_67"
+                    android:layout_height="@dimen/dp_pixel_67"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_pixel_20"
+                    android:layout_toLeftOf="@+id/textView_ok"
+                    android:background="@drawable/but_bg_mdpi"
+                    android:gravity="center"
+                    android:text="@string/alert_btn_cancel"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_pixel_17" />
+
+                <TextView
+                    android:id="@+id/textView_ok"
+                    android:layout_width="@dimen/dp_pixel_67"
+                    android:layout_height="@dimen/dp_pixel_67"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/but_bg_mdpi"
+                    android:gravity="center"
+                    android:text="@string/ok"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_pixel_17" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layout_button"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <NumberPicker
+                    android:id="@+id/number_picker_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <NumberPicker
+                    android:id="@+id/number_picker_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layout_button"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <NumberPicker
-                android:id="@+id/number_picker_left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <NumberPicker
-                android:id="@+id/number_picker_right"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView_teach"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone" />
 </RelativeLayout>

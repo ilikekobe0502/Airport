@@ -45,7 +45,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_title" />
 
+        <TextView
+            android:id="@+id/textView_center"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_pixel_37"
+            android:layout_below="@+id/recyclerView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/sp_pixel_15"
+            android:layout_marginTop="@dimen/dp_pixel_10"
+            android:background="@drawable/frame_dialog_button"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_pixel_20"
+            android:paddingRight="@dimen/dp_pixel_20"
+            android:text="@string/alert_btn_cancel"
+            android:textColor="@color/colorHomeLeftTitle"
+            android:textSize="@dimen/sp_pixel_17" />
+
         <LinearLayout
+            android:id="@+id/layout_couple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerView"

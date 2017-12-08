@@ -777,11 +777,12 @@
 
     <!-- My flights notify -->
     <string name="my_flights_notify">"%1$d小时%2$d分钟"</string>
-    <string name="my_flights_notify_message">"%1$s,%2$s班机于%3$s飞往%4$s"</string>
+    <string name="my_flights_notify_message">"%1$s,%2$s%3s班机于%4$s飞往%5$s"</string>
     <string name="my_flights_notify_on">"On"</string>
     <string name="my_flights_notify_off">"Off"</string>
     <string name="my_flights_notify_delete_check_message">"确定要删除提醒?"</string>
     <string name="my_flights_notify_delete_button">"删除提醒"</string>
+    <string name="my_flights_notify_set_error">"时间设置错误"</string>
 
     <!-- Currency conversion -->
     <string name="currency_conversion_aud">"AUD"</string>
@@ -820,7 +821,7 @@
     <string name="marquee_ecpress_time">實際時間：</string>
     <string name="marquee_terminal">航廈：</string>
     <string name="marquee_gate">登機門：</string>
-    <string name="marquee_gt">報告櫃檯：</string>
+    <string name="marquee_gt">報到櫃檯：</string>
     <string name="marquee_luggage">行李轉盤：</string>
 
     <string name="store_terminal_1">1航</string>
