@@ -6,14 +6,15 @@
 
     <RelativeLayout
         android:id="@+id/layout_frame"
-        android:layout_width="@dimen/dp_pixel_130"
-        android:layout_height="@dimen/dp_pixel_130"
+        android:layout_width="@dimen/dp_pixel_134"
+        android:layout_height="@dimen/dp_pixel_134"
         android:background="@drawable/parking_info_04_01_01txt_1">
 
         <LinearLayout
+            android:id="@+id/layout_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/line"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
 
@@ -39,7 +40,7 @@
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@+id/textView_count"
+            android:layout_below="@+id/layout_top"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/dp_pixel_30"
             android:background="@color/colorTextParkingMuch" />
@@ -50,16 +51,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/line"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:text="@string/parking_remain"
             android:textColor="@color/colorTextParkingMuch"
             android:textSize="@dimen/sp_pixel_12" />
 
         <TextView
             android:id="@+id/textView_count"
-            android:paddingTop="@dimen/dp_pixel_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/textView_remain"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/colorTextParkingMuch"
             android:textSize="@dimen/sp_pixel_30" />
     </RelativeLayout>
