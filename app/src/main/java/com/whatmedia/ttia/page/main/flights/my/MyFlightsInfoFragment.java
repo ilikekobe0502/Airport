@@ -350,7 +350,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                     Util.cancelAlertClock(getContext(), notificationId);
                     clockCacheData.remove(clock);
 
-                    Log.d("TAG", "Delete Notification id = " + notificationId);
+                    Log.d(TAG, "Delete Notification id = " + notificationId);
                     break;
                 }
             }
@@ -363,10 +363,10 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void modifyNotification(FlightsListData data) {
-        Log.d("TAG", "modifyNotification id  = " + data.getNotificationId());
+    public boolean modifyNotification(FlightsListData data) {
+        Log.d(TAG, "modifyNotification id  = " + data.getNotificationId());
         deleteNotification(data.getNotificationId());
-        addNotification(data);
+        return addNotification(data);
     }
 
     @Override
@@ -521,10 +521,16 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                         break;
                     case R.id.textView_ok:
                         mLayoutSelectorMask.setVisibility(View.GONE);
+                        boolean operateError;
+                        if (data.getNotificationId() != 0 && data.getNotificationTime() != null) {
+                            operateError = !modifyNotification(data);
+                        } else {
+                            operateError = !addNotification(data);
+                        }
 
-                        if (addNotification(data))
+                        if (!operateError) {
                             mAdapter.setData(mResponse);
-                        else {
+                        } else {
                             new AlertDialog.Builder(getContext())
                                     .setTitle(R.string.note)
                                     .setMessage(R.string.my_flights_notify_set_error)

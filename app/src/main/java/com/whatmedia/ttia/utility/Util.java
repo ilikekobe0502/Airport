@@ -4,12 +4,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -433,8 +435,12 @@ public class Util {
         Intent intent = new Intent(context, FlightClockBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, 0);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (am != null)
+        if (am != null) {
             am.cancel(pendingIntent);
+            Log.d(TAG, "cancel Alert clock");
+        } else {
+            Log.e(TAG, "am = null cancel Alert clock");
+        }
 
         Log.d(TAG, "indoor_cancel alert clock : " + id);
     }

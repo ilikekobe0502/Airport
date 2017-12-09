@@ -20,7 +20,7 @@ public interface MyFlightsInfoContract {
 
         void deleteNotification(int notificationId);
 
-        void modifyNotification(FlightsListData data);
+        boolean modifyNotification(FlightsListData data);
 
         void marginDisplayData();
     }
