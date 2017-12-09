@@ -96,6 +96,8 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
                         if (!TextUtils.isEmpty(detailImage)) {
                             mImageDetailView.setVisibility(View.VISIBLE);
                             Util.getHttpsPicasso(getContext()).load(detailImage).into(mImageDetailView);
+                        }else {
+                            mImageDetailView.setVisibility(View.INVISIBLE);
                         }
 
 
