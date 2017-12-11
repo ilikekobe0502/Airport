@@ -11,7 +11,7 @@ public interface FlightsSearchResultContract {
     String TAG_KEY_WORLD = "com.whatmedia.ttia.page.main.flights.result.key_world";
 
     interface View {
-        void saveMyFlightSucceed(String message);
+        void saveMyFlightSucceed(String message, String sentJson);
 
         void saveMyFlightFailed(String message, boolean timeout);
 

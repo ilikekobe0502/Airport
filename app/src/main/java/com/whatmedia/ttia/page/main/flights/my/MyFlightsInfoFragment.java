@@ -71,7 +71,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     private IActivityTools.IMainActivity mMainActivity;
     private MyFlightsInfoContract.Presenter mPresenter;
     private List<FlightsListData> mSelectList = new ArrayList<>();
-    private boolean mIsInsert;//是否從新增過來，更新notification 佇列
+    private String mLatestFlightsJson;//最新一筆新增航班的資料
     private List<FlightsListData> mResponse;//Server原始檔案
 
     private MyFlightsInfoRecyclerViewAdapter mAdapter;
@@ -112,8 +112,11 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
         ButterKnife.bind(this, view);
 
         if (getArguments() != null) {
-            mIsInsert = getArguments().getBoolean(MyFlightsInfoContract.TAG_INSERT);
+            mLatestFlightsJson = getArguments().getString(MyFlightsInfoContract.TAG_INSERT);
+        } else {
+            mLatestFlightsJson = "";
         }
+
         mPresenter = new MyFlightsInfoPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getMyFlightsInfoAPI();
@@ -179,7 +182,7 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
 
                 marginDisplayData();
 
-//                if (mIsInsert)
+//                if (mLatestFlightsJson)
 //                    Util.resetNotification(getContext(), response);
 
                 mMainActivity.setMarqueeMessage(Util.getMarqueeSubMessage(getContext()));
@@ -405,6 +408,20 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
             @Override
             public void run() {
                 mAdapter.setData(mResponse);
+
+                if (!TextUtils.isEmpty(mLatestFlightsJson)) {
+                    FlightsListData latestData = FlightsListData.getJson(mLatestFlightsJson);
+                    for (int i = 0; i < mResponse.size(); i++) {
+                        if (TextUtils.equals(mResponse.get(i).getAirlineCode(), latestData.getAirlineCode())
+                                && TextUtils.equals(mResponse.get(i).getShifts(), latestData.getShifts())
+                                && TextUtils.equals(mResponse.get(i).getExpressDate(), latestData.getExpressDate())
+                                && TextUtils.equals(mResponse.get(i).getExpressTime(), latestData.getExpressTime())) {
+                            showSelector(mResponse.get(i));
+                            mSelectPosition = i;
+                            break;
+                        }
+                    }
+                }
             }
         });
     }
@@ -445,18 +462,27 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 if (view.getTag() instanceof Integer) {
                     mSelectPosition = (int) view.getTag();
                     FlightsListData data = mResponse.get(mSelectPosition);
-                    mLayoutSelectorMask.setVisibility(View.VISIBLE);
-                    mTextViewSelectTitle.setText(getString(R.string.notify_alerm_selector_title,
-                            !TextUtils.isEmpty(data.getAirlineCode()) ? data.getAirlineCode() : ""
-                            , !TextUtils.isEmpty(data.getShifts()) ? data.getShifts() : ""));
-                    initLeftPicker();
-                    initRightPicker();
+                    showSelector(data);
                 } else {
                     Log.e(TAG, "recycler view.getTag is error");
                     showMessage(getString(R.string.data_error));
                 }
                 break;
         }
+    }
+
+    /**
+     * 顯示鬧鐘調整
+     *
+     * @param data
+     */
+    private void showSelector(FlightsListData data) {
+        mLayoutSelectorMask.setVisibility(View.VISIBLE);
+        mTextViewSelectTitle.setText(getString(R.string.notify_alerm_selector_title,
+                !TextUtils.isEmpty(data.getAirlineCode()) ? data.getAirlineCode() : ""
+                , !TextUtils.isEmpty(data.getShifts()) ? data.getShifts() : ""));
+        initLeftPicker();
+        initRightPicker();
     }
 
     /**

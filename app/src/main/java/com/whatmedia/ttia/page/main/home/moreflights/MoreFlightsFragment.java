@@ -222,7 +222,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
     }
 
     @Override
-    public void saveMyFlightSucceed(final String message) {
+    public void saveMyFlightSucceed(final String message, final String sentJson) {
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
@@ -231,7 +231,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
                 public void run() {
 //                    showMessage(!TextUtils.isEmpty(message) ? message : "");
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
+                    bundle.putString(MyFlightsInfoContract.TAG_INSERT, sentJson);
                     mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
                 }
             });

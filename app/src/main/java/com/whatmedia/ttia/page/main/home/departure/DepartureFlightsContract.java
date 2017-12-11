@@ -12,7 +12,7 @@ public interface DepartureFlightsContract {
 
         void getDepartureFlightFailed(String message, boolean timeout);
 
-        void saveMyFlightSucceed(String message);
+        void saveMyFlightSucceed(String message, String sentJson);
 
         void saveMyFlightFailed(String message, boolean timeout);
     }

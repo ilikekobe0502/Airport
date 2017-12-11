@@ -1,5 +1,6 @@
 package com.whatmedia.ttia.newresponse.data;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.whatmedia.ttia.response.data.ClockTimeData;
 
@@ -246,5 +247,10 @@ public class FlightsListData {
 
     public void setIsOpen(boolean open) {
         isOpen = open;
+    }
+
+    public static FlightsListData getJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, FlightsListData.class);
     }
 }

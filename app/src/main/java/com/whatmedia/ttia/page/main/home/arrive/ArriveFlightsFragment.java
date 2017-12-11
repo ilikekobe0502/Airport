@@ -159,7 +159,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     }
 
     @Override
-    public void saveMyFlightSucceed(final String message) {
+    public void saveMyFlightSucceed(final String message, final String sentJson) {
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
@@ -168,7 +168,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
                 public void run() {
                     mListener.setCurrentPosition(0);
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(MyFlightsInfoContract.TAG_INSERT, true);
+                    bundle.putString(MyFlightsInfoContract.TAG_INSERT, sentJson);
                     mMainActivity.addFragment(Page.TAG_MY_FIGHTS_INFO, bundle, true);
                 }
             });

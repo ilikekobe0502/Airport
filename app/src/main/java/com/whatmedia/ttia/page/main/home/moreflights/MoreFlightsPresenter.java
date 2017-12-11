@@ -91,8 +91,9 @@ public class MoreFlightsPresenter implements MoreFlightsContract.Presenter {
         data.setExpressTime(!TextUtils.isEmpty(flightsListData.getExpressTime()) ? flightsListData.getExpressTime() : "");
 
         response.setUploadData(data);
+        final String json = response.getJson();
 
-        mNewApiConnect.saveMyFlights(response.getJson(), new NewApiConnect.MyCallback() {
+        mNewApiConnect.saveMyFlights(json, new NewApiConnect.MyCallback() {
             @Override
             public void onFailure(Call call, IOException e, boolean timeout) {
                 mView.saveMyFlightFailed(e.toString(), timeout);
@@ -100,7 +101,7 @@ public class MoreFlightsPresenter implements MoreFlightsContract.Presenter {
 
             @Override
             public void onResponse(Call call, String response) throws IOException {
-                mView.saveMyFlightSucceed(response);
+                mView.saveMyFlightSucceed(response, json);
             }
         });
     }
