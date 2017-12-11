@@ -80,6 +80,12 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     }
 
     @Override
+    public void onPause() {
+        Util.hideSoftKeyboard(mEditTextSearch);
+        super.onPause();
+    }
+
+    @Override
     public void onDestroy() {
         mMainActivity.getMyToolbar().setOnBackClickListener(null);
         super.onDestroy();

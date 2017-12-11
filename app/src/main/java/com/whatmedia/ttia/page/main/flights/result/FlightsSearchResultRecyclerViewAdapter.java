@@ -216,26 +216,31 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
-        int layoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60);
+        int layoutFrameHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60);
 
         if (height != -1) {
+            //螢幕高 - toolbar高(dp_pixel_50) - toolbar上面的View高(dp_pixel_8) - 跑馬燈高(dp_pixel_42) - Android status bar高 x 上面layout比率6/10
+            height = (int) ((dm.heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
+                    - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_8) - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_42)
+                    - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.6);
+
             Double count = Double.valueOf(height);
             count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
-            count = count - (4 * layoutFrameWeight);
+            count = count - (4 * layoutFrameHeight);
             count = count / 8;
 
             int finalSpaceHeight = count.intValue();
 
-            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameWeight);
+            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameHeight);
             mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight
                     , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight);
 
         } else {
-            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameWeight);
+            mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameHeight);
             mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_5)
                     , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_5));
         }
-        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameWeight);
+        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutFrameHeight);
         mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
     }
 }
