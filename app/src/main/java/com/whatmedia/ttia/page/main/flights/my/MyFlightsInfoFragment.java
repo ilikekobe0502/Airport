@@ -629,9 +629,9 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
                 image = R.drawable.c_teaching_02;
         } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_JAPANESE.getLocale().toString())) {
             if (mTeachCount == 0)
-                image = R.drawable.e_teaching_01;
+                image = R.drawable.j_teaching_01;
             if (mTeachCount == 1)
-                image = R.drawable.e_teaching_02;
+                image = R.drawable.j_teaching_02;
         } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
             if (mTeachCount == 0)
                 image = R.drawable.e_teaching_01;
