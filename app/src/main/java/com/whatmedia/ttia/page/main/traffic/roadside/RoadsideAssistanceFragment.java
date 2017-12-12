@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -64,6 +66,22 @@ public class RoadsideAssistanceFragment extends BaseFragment implements Roadside
         ButterKnife.bind(this, view);
 
         mPresenter = new RoadsideAssistancePresenter(getContext(), this);
+
+        mMainActivity.getMyToolbar().clearState()
+                .setTitleText(getString(R.string.title_road_rescue))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
+                .setBackVisibility(View.VISIBLE)
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.imageView_back:
+                                mMainActivity.backPress();
+                                break;
+                        }
+                    }
+                });
+
         mLoadingView.showLoadingView();
         mPresenter.getRoadsideAssistanceAPI();
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);

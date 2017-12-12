@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -65,6 +67,25 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
         ButterKnife.bind(this, view);
 
         mPresenter = new AirportMrtPresenter(getContext(), this);
+
+        mMainActivity.getMyToolbar().clearState()
+                .setTitleText(getString(R.string.title_mrt_hsr))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
+                .setBackVisibility(View.VISIBLE)
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.imageView_back:
+                                if (mWebView.canGoBack()) {
+                                    mWebView.goBack();
+                                } else {
+                                    mMainActivity.backPress();
+                                }
+                                break;
+                        }
+                    }
+                });
 
         mLoadingView.showLoadingView();
         mPresenter.getAirportMrtAPI();

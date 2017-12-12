@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.traffic.bus;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -60,6 +62,22 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
         ButterKnife.bind(this, view);
 
         mPresenter = new AirportBusPresenter(getContext(), this);
+
+        mMainActivity.getMyToolbar().clearState()
+                .setTitleText(getString(R.string.title_airport_bus))
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
+                .setBackVisibility(View.VISIBLE)
+                .setOnBackClickListener(new MyToolbar.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.imageView_back:
+                                mMainActivity.backPress();
+                                break;
+                        }
+                    }
+                });
+
         mLoadingView.showLoadingView();
         mPresenter.getAirportBusAPI();
 
@@ -155,4 +173,5 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
             Log.d(TAG, "Fragment is not add");
         }
     }
+
 }

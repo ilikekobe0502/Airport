@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -461,99 +462,99 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
 
             } else if (fragment instanceof AirportBusFragment) {//機場巴士
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.title_airport_bus))
-                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.title_airport_bus))
+//                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
 
             } else if (fragment instanceof RoadsideAssistanceFragment) {//道路救援服務
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.title_road_rescue))
-                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.title_road_rescue))
+//                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
 
             } else if (fragment instanceof TaxiFragment) {//計程車
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.title_taxi))
-                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.title_taxi))
+//                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
 
             } else if (fragment instanceof TourBusFragment) {//巡迴巴士
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.title_tourist_bus))
-                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.title_tourist_bus))
+//                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
 
             } else if (fragment instanceof AirportMrtFragment) {//機場高鐵/捷運
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.title_mrt_hsr))
-                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.title_mrt_hsr))
+//                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
             } else if (fragment instanceof SkyTrainFragment) {//電車
-                mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.title_tram_car))
-                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
-                        .setBackVisibility(View.VISIBLE)
-                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.imageView_back:
-                                        backPress();
-                                        break;
-                                }
-                            }
-                        });
+//                mMyToolbar.clearState()
+//                        .setTitleText(getString(R.string.title_tram_car))
+//                        .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
+//                        .setBackVisibility(View.VISIBLE)
+//                        .setOnBackClickListener(new MyToolbar.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                switch (v.getId()) {
+//                                    case R.id.imageView_back:
+//                                        backPress();
+//                                        break;
+//                                }
+//                            }
+//                        });
             } else if (fragment instanceof ParkingInfoFragment) {//停車資訊
                 mMyToolbar.clearState()
                         .setTitleText(getString(R.string.title_parking_infomation))
@@ -953,7 +954,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     public void onBackPressed() {
         if (mFlightsDetailInfo != null && mFlightsDetailInfo.isShown()) {
             mFlightsDetailInfo.setVisibility(View.GONE);
-        }else {
+        } else {
             if (mLoadingView != null) {
                 if (!mLoadingView.isShown())
                     super.onBackPressed();

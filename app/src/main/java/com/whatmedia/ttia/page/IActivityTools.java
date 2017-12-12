@@ -1,5 +1,6 @@
 package com.whatmedia.ttia.page;
 
+import android.view.View;
 import android.view.ViewStub;
 
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
