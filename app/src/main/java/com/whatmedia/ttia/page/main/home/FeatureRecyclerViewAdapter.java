@@ -10,7 +10,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,12 +37,15 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
     private IOnItemClickListener mListener;
     private String mLocale;
     private boolean isScreen34Mode;
+    private RelativeLayout.LayoutParams mAllParamsFrame;
+    private RelativeLayout.LayoutParams mFrameParamsFrame;
 
     public FeatureRecyclerViewAdapter(Context context, List<HomeFeature> items) {
         mItems = items;
         mContext = context;
         mLocale = Preferences.getLocaleSetting(mContext);
         isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
+        initParams();
     }
 
     @Override
@@ -64,7 +66,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
             return;
         }
 
-        switch (mLocale){
+        switch (mLocale) {
             case "zh_TW":
             case "zh_CN":
                 holder.mTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_14));
@@ -76,10 +78,16 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
 
-        if(isScreen34Mode){
-            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth()/9,getScreenWidth()/9);
+        if (isScreen34Mode) {
+            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth() / 9, getScreenWidth() / 9);
             t.addRule(RelativeLayout.CENTER_HORIZONTAL);
             holder.mImageViewIcon.setLayoutParams(t);
+        } else {
+            holder.mLayoutAll.setLayoutParams(mAllParamsFrame);
+            holder.mLayoutFrame.setLayoutParams(mFrameParamsFrame);
+//            RelativeLayout.LayoutParams textViewParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            textViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//            holder.mTextViewTitle.setLayoutParams(textViewParams);
         }
 
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
@@ -96,15 +104,19 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         mListener = listener;
     }
 
-    public int getScreenWidth(){
+    public int getScreenWidth() {
         DisplayMetrics dm = new DisplayMetrics();
-        ((Activity)mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
-        return  dm.widthPixels ;
+        return dm.widthPixels;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_all)
+        RelativeLayout mLayoutAll;
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)
@@ -122,4 +134,33 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         }
 
     }
+
+    public void initParams() {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        //宽度 dm.widthPixels
+        //高度 dm.heightPixels
+        int itemLayoutFrameHeight;
+        int itemLayoutFrameWeight = dm.widthPixels / 4;
+
+
+        //螢幕高 - toolbar高(dp_pixel_50) - toolbar上面的View高(dp_pixel_8) - 跑馬燈高(dp_pixel_42) - Android status bar高 x 上面layout比率4.2/10
+        int height = (int) ((dm.heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
+                - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_8) - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_42)
+                - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.42);
+
+        //下方畫面高度 / 兩排item - 點
+        itemLayoutFrameHeight = height / 2 - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
+
+        mAllParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
+        mFrameParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mFrameParamsFrame.addRule(RelativeLayout.CENTER_IN_PARENT);
+//        mAllParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0
+//                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0);
+
+
+//        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemLayoutFrameHeight);
+//        mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
+    }
+
 }

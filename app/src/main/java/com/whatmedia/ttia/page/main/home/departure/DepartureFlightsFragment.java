@@ -40,7 +40,6 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private int mRetryCount = 0;
-    private int mTopFrameHeight = 0;
 
 
     public DepartureFlightsFragment() {
@@ -68,7 +67,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
         mPresenter.getDepartureFlightAPI();
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mTopFrameHeight);
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
@@ -231,14 +230,5 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                 }
         }
 
-    }
-
-    /**
-     * Set Top Frame Height
-     *
-     * @param height
-     */
-    public void setTopFrameHeight(int height) {
-        mTopFrameHeight = height;
     }
 }

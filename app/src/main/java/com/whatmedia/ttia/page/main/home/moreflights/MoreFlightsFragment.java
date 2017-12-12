@@ -120,7 +120,7 @@ public class MoreFlightsFragment extends BaseFragment implements MoreFlightsCont
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
 
-        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), -1);
+        mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
         mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setAdapter(mAdapter);

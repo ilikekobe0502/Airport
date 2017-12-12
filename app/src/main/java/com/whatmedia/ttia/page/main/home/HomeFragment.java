@@ -53,14 +53,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     private static final String TAG_URGENT = "4";
     private static final String TAG_ACHIEVEMENT = "5";
 
-    private FeatureViewPagerAdapter mFeatureAdapter = new FeatureViewPagerAdapter();
+    private FeatureViewPagerAdapter mFeatureAdapter;
     private InfoViewPagerAdapter mInfoAdapter;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private HomePresenter mPresenter;
-    private int mTopFrameHeight = 0;
+    private float mTopFrameHeight = 0;
     private ArriveFlightsFragment.IOnSetCurrentPositionListener mPositionListener = this;
+    private IOnItemClickListener mFeatureClickListener = this;
 
     @Override
     public void setCurrentPosition(int position) {
@@ -90,13 +91,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mPresenter = new HomePresenter(getContext(), this);
         mPresenter.getLanguageList();
 
+
+        mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
+        mInfoAdapter.setCurrentPositionListener(mPositionListener);
+        mViewPagerInfo.setAdapter(mInfoAdapter);
         mTabInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
         mViewPagerInfo.addOnPageChangeListener(this);
         //Init toolbar
         setDepartureToolbar();
 
+        mFeatureAdapter = new FeatureViewPagerAdapter();
+        mFeatureAdapter.setClickListener(mFeatureClickListener);
         mViewPagerFeature.setAdapter(mFeatureAdapter);
-        mFeatureAdapter.setClickListener(this);
         mTabIndicator.setupWithViewPager(mViewPagerFeature, true);
 
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(HomeContract.TAG_TYPE))) {
@@ -114,9 +120,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 mTopFrameHeight = mTabInfoInfo.getHeight();
                 Log.d("TAG", "FrameH = " + mTopFrameHeight);
 
-                mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager(), mTopFrameHeight);
-                mInfoAdapter.setCurrentPositionListener(mPositionListener);
-                mViewPagerInfo.setAdapter(mInfoAdapter);
+
+
             }
         });
     }

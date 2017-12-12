@@ -11,7 +11,7 @@
         android:id="@+id/layout_info"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6">
+        android:layout_weight="5.8">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager_info"
@@ -31,30 +31,28 @@
             app:tabIndicatorHeight="0dp" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/layout_info"
-        android:layout_weight="4"
-        android:orientation="vertical"
-        android:weightSum="12">
+        android:layout_weight="4.2"
+        android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager_feature"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="11"
-            android:paddingBottom="@dimen/dp_pixel_10" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tab_indicator" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_indicator"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_pixel_10"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/dp_pixel_3"
             app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorHeight="0dp" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
