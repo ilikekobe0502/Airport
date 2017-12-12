@@ -3,6 +3,7 @@ package com.whatmedia.ttia.page.main.home;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class FeatureViewPagerAdapter extends PagerAdapter implements IOnItemClic
 
     @Override
     public int getCount() {
-        return mItems.size() % 8;
+        return mItems.size();
     }
 
     @Override

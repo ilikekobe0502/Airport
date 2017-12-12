@@ -111,8 +111,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         mTabInfoInfo.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("TAG", "FrameH = " + mTabInfoInfo.getHeight());
                 mTopFrameHeight = mTabInfoInfo.getHeight();
+                Log.d("TAG", "FrameH = " + mTopFrameHeight);
 
                 mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager(), mTopFrameHeight);
                 mInfoAdapter.setCurrentPositionListener(mPositionListener);
@@ -172,18 +172,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                 case TAG_AIRPORT_SECRETARY://機場秘書
                     mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
-                case TAG_INDOOR_MAP://室內地圖導航
-                    try {
-                        Intent i = new Intent(getContext(), IndoorMapActivity.class);
-                        getActivity().startActivity(i);
-                    } catch (ActivityNotFoundException e) {
-                        e.printStackTrace();
-                        showMessage(getString(R.string.data_error));
-                    }
-                    break;
-                case TAG_AIRPORT_ACHIEVEMENT://機場成就
-                    mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);
-                    break;
+//                case TAG_INDOOR_MAP://室內地圖導航
+//                    try {
+//                        Intent i = new Intent(getContext(), IndoorMapActivity.class);
+//                        getActivity().startActivity(i);
+//                    } catch (ActivityNotFoundException e) {
+//                        e.printStackTrace();
+//                        showMessage(getString(R.string.data_error));
+//                    }
+//                    break;
+//                case TAG_AIRPORT_ACHIEVEMENT://機場成就
+//                    mMainActivity.addFragment(Page.TAG_ACHIEVEMENT, null, true);
+//                    break;
             }
         } else {
             Log.e(TAG, "view.getTag is not instance of HomeFeature");

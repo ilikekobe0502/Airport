@@ -17,9 +17,9 @@ public enum HomeFeature {
     TAG_STORE_OFFERS(R.string.home_store_offers_title, R.drawable.home_06),
     TAG_COMMUNICATION_SERVICE(R.string.title_communication, R.drawable.home_07),
     TAG_AIRPORT_SECRETARY(R.string.home_airport_secretary_title, R.drawable.home_09),
-    TAG_LANGUAGE_SETTING(R.string.home_language_setting_title, R.drawable.home_08),
-    TAG_INDOOR_MAP(R.string.home_indoor_map_title, R.drawable.home_10),
-    TAG_AIRPORT_ACHIEVEMENT(R.string.home_airport_achievement_title, R.drawable.home_11);
+    TAG_LANGUAGE_SETTING(R.string.home_language_setting_title, R.drawable.home_08);
+//    TAG_INDOOR_MAP(R.string.home_indoor_map_title, R.drawable.home_10),
+//    TAG_AIRPORT_ACHIEVEMENT(R.string.home_airport_achievement_title, R.drawable.home_11);
 
     private int title;
     private int icon;
@@ -72,7 +72,8 @@ public enum HomeFeature {
                 first.add(item);
         }
         list.add(first);
-        list.add(second);
+        if (second.size() > 0)
+            list.add(second);
         return list;
     }
 }
