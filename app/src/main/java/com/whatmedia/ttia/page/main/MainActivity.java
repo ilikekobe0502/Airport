@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -111,7 +112,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
     private String mMarqueeMessage;
     private boolean mPositionListening;
-
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +286,11 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     public MyFlightsDetailInfo getFlightsDetailInfo() {
         return mFlightsDetailInfo;
+    }
+
+    @Override
+    public void setWebView(WebView webView) {
+        mWebView = webView;
     }
 
 
@@ -1004,5 +1010,17 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             bundle.putString(HomeContract.TAG_TYPE, type);
         }
         addFragment(Page.TAG_HOME, bundle, false);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mWebView != null && mWebView.canGoBack()) {
+                mWebView.goBack();
+            } else {
+                return super.onKeyDown(keyCode, event);
+            }
+        }
+        return false;
     }
 }

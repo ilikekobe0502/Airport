@@ -77,7 +77,10 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.imageView_back:
-                                mMainActivity.backPress();
+                                if (mWebView.canGoBack())
+                                    mWebView.goBack();
+                                else
+                                    mMainActivity.backPress();
                                 break;
                         }
                     }
@@ -126,6 +129,18 @@ public class TaxiFragment extends BaseFragment implements TaxiContract.View {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        mMainActivity.setWebView(mWebView);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mMainActivity.setWebView(null);
+        super.onPause();
     }
 
     @Override

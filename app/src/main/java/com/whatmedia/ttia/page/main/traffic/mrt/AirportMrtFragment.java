@@ -138,6 +138,18 @@ public class AirportMrtFragment extends BaseFragment implements AirportMrtContra
     }
 
     @Override
+    public void onResume() {
+        mMainActivity.setWebView(mWebView);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mMainActivity.setWebView(null);
+        super.onPause();
+    }
+
+    @Override
     public void onDestroy() {
         mMainActivity.getMyToolbar().setOnBackClickListener(null);
         super.onDestroy();
