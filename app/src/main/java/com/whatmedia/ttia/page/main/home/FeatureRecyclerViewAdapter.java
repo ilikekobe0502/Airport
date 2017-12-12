@@ -39,6 +39,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
     private boolean isScreen34Mode;
     private RelativeLayout.LayoutParams mAllParamsFrame;
     private RelativeLayout.LayoutParams mFrameParamsFrame;
+    private RelativeLayout.LayoutParams mImageParamsFrame;
 
     public FeatureRecyclerViewAdapter(Context context, List<HomeFeature> items) {
         mItems = items;
@@ -78,17 +79,15 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
 
-        if (isScreen34Mode) {
-            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth() / 9, getScreenWidth() / 9);
-            t.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            holder.mImageViewIcon.setLayoutParams(t);
-        } else {
-            holder.mLayoutAll.setLayoutParams(mAllParamsFrame);
-            holder.mLayoutFrame.setLayoutParams(mFrameParamsFrame);
-//            RelativeLayout.LayoutParams textViewParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            textViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//            holder.mTextViewTitle.setLayoutParams(textViewParams);
-        }
+//        if (isScreen34Mode) {
+//            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth() / 9, getScreenWidth() / 9);
+//            t.addRule(RelativeLayout.CENTER_HORIZONTAL);
+//            holder.mImageViewIcon.setLayoutParams(t);
+//        } else {
+        holder.mLayoutAll.setLayoutParams(mAllParamsFrame);
+        holder.mLayoutFrame.setLayoutParams(mFrameParamsFrame);
+//        holder.mImageViewIcon.setLayoutParams(mImageParamsFrame);
+//        }
 
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
@@ -150,7 +149,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
                 - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.42);
 
         //下方畫面高度 / 兩排item - 點
-        itemLayoutFrameHeight = height / 2 - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
+        itemLayoutFrameHeight = (height - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)) / 2;
 
         mAllParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
         mFrameParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

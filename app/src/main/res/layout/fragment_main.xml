@@ -26,7 +26,7 @@
             android:layout_height="@dimen/dp_pixel_10"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_pixel_3"
+            android:layout_marginBottom="@dimen/dp_pixel_10"
             app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorHeight="0dp" />
     </RelativeLayout>
@@ -51,7 +51,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dp_pixel_3"
+            android:layout_marginBottom="@dimen/dp_pixel_10"
             app:tabBackground="@drawable/tab_selector"
             app:tabIndicatorHeight="0dp" />
     </RelativeLayout>

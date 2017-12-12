@@ -70,10 +70,10 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         if (item == null)
             return;
 
-        if (!isScreen34Mode) {
+//        if (!isScreen34Mode) {
             holder.mLayoutFrame.setLayoutParams(mParamsFrame);
 //            holder.mLayoutBackground.setLayoutParams(mParamsBackground);
-        }
+//        }
 
         holder.mTextViewTime.setText(!TextUtils.isEmpty(item.getExpressTime()) ? Util.getTransformTimeFormat(Util.TAG_FORMAT_HM, item.getExpressTime().trim()) : "");
 
@@ -215,6 +215,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
+        int itemLayoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_350);
         int itemLayoutFrameHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60);
 
 
@@ -224,15 +225,17 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
                 - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.58);
 
         Double count = Double.valueOf(height);
-        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_13);
+        //減去 點的高度
+        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
         count = count - (4 * itemLayoutFrameHeight);
         count = count / 8;
 
         int finalSpaceHeight = count.intValue();
 
-        mParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemLayoutFrameHeight);
-        mParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight
-                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), finalSpaceHeight);
+        mParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
+        mParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        mParamsFrame.setMargins(0, finalSpaceHeight
+                , 0, finalSpaceHeight);
 
 
 //        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemLayoutFrameHeight);

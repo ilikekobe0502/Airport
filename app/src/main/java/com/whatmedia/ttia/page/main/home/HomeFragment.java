@@ -59,7 +59,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private HomePresenter mPresenter;
-    private float mTopFrameHeight = 0;
     private ArriveFlightsFragment.IOnSetCurrentPositionListener mPositionListener = this;
     private IOnItemClickListener mFeatureClickListener = this;
 
@@ -114,16 +113,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     @Override
     public void onStart() {
         super.onStart();
-        mTabInfoInfo.post(new Runnable() {
-            @Override
-            public void run() {
-                mTopFrameHeight = mTabInfoInfo.getHeight();
-                Log.d("TAG", "FrameH = " + mTopFrameHeight);
-
-
-
-            }
-        });
     }
 
     @Override
