@@ -148,8 +148,8 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
                 - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_8) - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_42)
                 - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.42);
 
-        //下方畫面高度 / 兩排item - 點
-        itemLayoutFrameHeight = (height - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_20)) / 2;
+        //下方畫面高度 / 兩排item - 1.2倍點
+        itemLayoutFrameHeight = (height - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_25)) / 2;
 
         mAllParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
         mFrameParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

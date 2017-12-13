@@ -71,7 +71,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
             return;
 
 //        if (!isScreen34Mode) {
-            holder.mLayoutFrame.setLayoutParams(mParamsFrame);
+        holder.mLayoutFrame.setLayoutParams(mParamsFrame);
 //            holder.mLayoutBackground.setLayoutParams(mParamsBackground);
 //        }
 
@@ -216,7 +216,7 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
         int itemLayoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_350);
-        int itemLayoutFrameHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60);
+        int itemLayoutFrameHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_58);
 
 
         //螢幕高 - toolbar高(dp_pixel_50) - toolbar上面的View高(dp_pixel_8) - 跑馬燈高(dp_pixel_42) - Android status bar高 x 上面layout比率5.8/10
@@ -225,8 +225,8 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
                 - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.58);
 
         Double count = Double.valueOf(height);
-        //減去 點的高度
-        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_20);
+        //減去 1.5倍點的高度
+        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_30);
         count = count - (4 * itemLayoutFrameHeight);
         count = count / 8;
 
