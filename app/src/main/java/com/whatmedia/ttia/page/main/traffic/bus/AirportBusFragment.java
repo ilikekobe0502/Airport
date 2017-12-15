@@ -32,6 +32,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private AirportBusContract.Presenter mPresenter;
+    private final static String TAG_URL = "http://www.taoyuan-airport.com/chinese/Buses";
 
     public AirportBusFragment() {
         // Required empty public constructor
@@ -81,8 +82,9 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
                     }
                 });
 
-        mLoadingView.showLoadingView();
-        mPresenter.getAirportBusAPI();
+//        mLoadingView.showLoadingView();
+//        mPresenter.getAirportBusAPI();
+        mWebView.loadUrl(TAG_URL);
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
