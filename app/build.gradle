@@ -15,8 +15,8 @@ android {
         applicationId "com.whatmedia.ttia"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 47
-        versionName "1.4.7"
+        versionCode 48
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -88,7 +88,7 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        mTextViewVersion.setText(String.format("Version%1$s (build %2$d)", versionName, versionCode));
+        mTextViewVersion.setText(String.format("Version:%1$s", versionName));
     }
 
     @Override
