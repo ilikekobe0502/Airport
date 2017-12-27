@@ -53,7 +53,7 @@ public class AirportTrafficPagerAdapter extends PagerAdapter implements IOnItemC
             mListener.onClick(view);
     }
 
-    public void setClickListener(IOnItemClickListener listener) {
+    public void setClickListener(IOnItemClickListener listener, int height) {
         mListener = listener;
     }
 

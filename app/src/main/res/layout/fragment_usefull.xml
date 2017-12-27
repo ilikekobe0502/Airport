@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/all_bg"
@@ -11,17 +12,16 @@
         android:id="@+id/infoView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_188"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_05"
-        />
+        android:src="@drawable/bg_05" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager_useful"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/infoView"/>
+        android:layout_below="@id/infoView" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/info_indicator"
