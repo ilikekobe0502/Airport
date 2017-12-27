@@ -215,30 +215,40 @@ public class FlightsSearchResultRecyclerViewAdapter extends RecyclerView.Adapter
         ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         //宽度 dm.widthPixels
         //高度 dm.heightPixels
-        int itemLayoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_350);
-        int itemLayoutFrameHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_58);
-
 
         //螢幕高 - toolbar高(dp_pixel_50) - toolbar上面的View高(dp_pixel_8) - 跑馬燈高(dp_pixel_42) - Android status bar高 x 上面layout比率5.8/10
         int height = (int) ((dm.heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_50)
                 - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_8) - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_42)
                 - mContext.getResources().getDimensionPixelSize(mContext.getResources().getIdentifier("status_bar_height", "dimen", "android"))) * 0.58);
 
-        Double count = Double.valueOf(height);
-        //減去 1.5倍點的高度
-        count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_30);
-        count = count - (4 * itemLayoutFrameHeight);
-        count = count / 8;
+        if (!isScreen34Mode) {
+            int itemLayoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_350);
+            int itemLayoutFrameHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_58);
 
-        int finalSpaceHeight = count.intValue();
+            Double count = Double.valueOf(height);
+            //減去 1.5倍點的高度
+            count = count - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_30);
+            count = count - (4 * itemLayoutFrameHeight);
+            count = count / 8;
 
-        mParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
-        mParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mParamsFrame.setMargins(0, finalSpaceHeight
-                , 0, finalSpaceHeight);
+            int finalSpaceHeight = count.intValue();
+
+            mParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
+            mParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            mParamsFrame.setMargins(0, finalSpaceHeight
+                    , 0, finalSpaceHeight);
 
 
 //        mParamsBackground = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemLayoutFrameHeight);
 //        mParamsBackground.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        } else {
+            int itemMarginHeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_5);
+            int itemLayoutFrameWeight = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_350);
+            int itemLayoutFrameHeight = (height - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_30) - 4 * itemMarginHeight) / 4;
+
+            mParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
+            mParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            mParamsFrame.setMargins(0, itemMarginHeight, 0, 0);
+        }
     }
 }
