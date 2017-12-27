@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.store.result.StoreSearchResultContract;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -34,18 +36,38 @@ import butterknife.OnClick;
 
 public class StoreSearchFragment extends BaseFragment implements StoreSearchContract.View {
     private static final String TAG = StoreSearchFragment.class.getSimpleName();
+    @BindView(R.id.layout_frame)
+    RelativeLayout mLayoutFrame;
+    @BindView(R.id.layout_subtitle)
+    RelativeLayout mLayoutSubTitle;
     @BindView(R.id.textView_subtitle)
     TextView mTextViewSubtitle;
     @BindView(R.id.layout_search)
     RelativeLayout mLayoutSearch;
     @BindView(R.id.textView_terminal)
     TextView mTextViewTerminal;
+    @BindView(R.id.layout_terminal)
+    RelativeLayout mLayoutTerminal;
+    @BindView(R.id.imageView_terminal)
+    ImageView mImageViewTerminal;
     @BindView(R.id.textView_area)
     TextView mTextViewArea;
+    @BindView(R.id.layout_area)
+    RelativeLayout mLayoutArea;
+    @BindView(R.id.imageView_area)
+    ImageView mImageViewArea;
     @BindView(R.id.textView_floor)
     TextView mTextViewFloor;
+    @BindView(R.id.layout_floor)
+    RelativeLayout mLayoutFloor;
+    @BindView(R.id.imageView_floor)
+    ImageView mImageViewFloor;
     @BindView(R.id.textView_restaurant)
     TextView mTextViewRestaurant;
+    @BindView(R.id.layout_restaurant)
+    RelativeLayout mLayoutRestaurant;
+    @BindView(R.id.imageView_restaurant)
+    ImageView mImageViewRestaurant;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -63,6 +85,9 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     private StoreConditionCodeData mRestaurantCodeData;
     private StoreConditionCodeData mStoreCodeData;
     private int mFromPage = 0;
+
+    private RelativeLayout.LayoutParams mParamsFrame;
+    private boolean mIsScreen34Mode;
 
     public StoreSearchFragment() {
         // Required empty public constructor
@@ -96,6 +121,7 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
             mFromPage = getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE);
         }
         mPresenter = new StoreSearchPresenter(getContext(), this);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
         mLoadingView.showLoadingView();
         mPresenter.getTerminalCodeAPI();
 
@@ -113,6 +139,49 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     @Override
     public void onStart() {
         super.onStart();
+        if (mIsScreen34Mode) {
+            mLayoutFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    int marginHeight = getContext().getResources().getDimensionPixelSize(R.dimen.dp_pixel_15);
+                    int itemHeight = mLayoutFrame.getHeight() / 6 - (marginHeight * 2);
+                    mParamsFrame = new RelativeLayout.LayoutParams(mLayoutSubTitle.getLayoutParams().width, itemHeight);
+                    mParamsFrame.setMargins(0, marginHeight, 0, marginHeight);
+                    mLayoutSubTitle.setLayoutParams(mParamsFrame);
+
+
+                    //選擇航廈Layout
+                    mParamsFrame = getDefaultItemLayoutParams(itemHeight, marginHeight);
+                    mParamsFrame.addRule(RelativeLayout.BELOW, R.id.line);
+                    mLayoutTerminal.setLayoutParams(mParamsFrame);
+
+                    //選擇區域Layout
+                    mParamsFrame = getDefaultItemLayoutParams(itemHeight, marginHeight);
+                    mParamsFrame.addRule(RelativeLayout.BELOW, R.id.layout_terminal);
+                    mLayoutArea.setLayoutParams(mParamsFrame);
+
+                    //選擇樓層Layout
+                    mParamsFrame = getDefaultItemLayoutParams(itemHeight, marginHeight);
+                    mParamsFrame.addRule(RelativeLayout.BELOW, R.id.layout_area);
+                    mLayoutFloor.setLayoutParams(mParamsFrame);
+
+                    //選擇餐廳總類Layout
+                    mParamsFrame = getDefaultItemLayoutParams(itemHeight, marginHeight);
+                    mParamsFrame.addRule(RelativeLayout.BELOW, R.id.layout_floor);
+                    mLayoutRestaurant.setLayoutParams(mParamsFrame);
+
+                    //Icon
+                    mParamsFrame = new RelativeLayout.LayoutParams(mImageViewRestaurant.getLayoutParams());
+                    mParamsFrame.height = itemHeight;
+                    mParamsFrame.addRule(RelativeLayout.ALIGN_PARENT_END);
+
+                    mImageViewTerminal.setLayoutParams(mParamsFrame);
+                    mImageViewArea.setLayoutParams(mParamsFrame);
+                    mImageViewFloor.setLayoutParams(mParamsFrame);
+                    mImageViewRestaurant.setLayoutParams(mParamsFrame);
+                }
+            });
+        }
     }
 
     @Override
@@ -433,5 +502,21 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
         } else {
             Log.d(TAG, "Fragment is not add");
         }
+    }
+
+    /**
+     * 取得預設的Item Layout params
+     *
+     * @param itemHeight
+     * @param marginHeight
+     * @return
+     */
+    private RelativeLayout.LayoutParams getDefaultItemLayoutParams(int itemHeight, int marginHeight) {
+        mParamsFrame = new RelativeLayout.LayoutParams(mLayoutTerminal.getLayoutParams());
+        mParamsFrame.height = itemHeight;
+        mParamsFrame.setMargins(0, 0, 0, marginHeight);
+        mParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        return mParamsFrame;
     }
 }
