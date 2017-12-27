@@ -72,8 +72,8 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
         View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
         ButterKnife.bind(this, view);
 
-        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
         mPresenter = FlightsInfoPresenter.getInstance(getContext(), this);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
 
         mAdapter = new FlightsInfoRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));

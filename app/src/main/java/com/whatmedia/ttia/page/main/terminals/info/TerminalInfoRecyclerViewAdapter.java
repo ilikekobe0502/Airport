@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
@@ -31,8 +33,21 @@ public class TerminalInfoRecyclerViewAdapter extends RecyclerView.Adapter<Termin
     private Context mContext;
     private IOnItemClickListener mListener;
 
-    public TerminalInfoRecyclerViewAdapter(Context context) {
+    private LinearLayout.LayoutParams mLayoutParamsFrame;
+    private int mIconPadding = -1;
+
+    public TerminalInfoRecyclerViewAdapter(Context context, int layoutHeight) {
         mContext = context;
+
+        if (layoutHeight != -1) {
+            //扣除上方的Image之後的高度 - (Icon高度 - 字體高度) * 2行 / 4(總共4個margin高度)
+            mIconPadding = (layoutHeight -
+                    (context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_80)
+                            + context.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13))
+                            * 2) / 4;
+            mLayoutParamsFrame = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mLayoutParamsFrame.setMargins(0, mIconPadding, 0, mIconPadding);
+        }
     }
 
     @Override
@@ -57,6 +72,10 @@ public class TerminalInfoRecyclerViewAdapter extends RecyclerView.Adapter<Termin
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
         holder.mImageViewIcon.setTag(item);
+
+        if (mIconPadding != -1 && mLayoutParamsFrame != null) {
+            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
+        }
     }
 
     @Override
@@ -69,6 +88,8 @@ public class TerminalInfoRecyclerViewAdapter extends RecyclerView.Adapter<Termin
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)

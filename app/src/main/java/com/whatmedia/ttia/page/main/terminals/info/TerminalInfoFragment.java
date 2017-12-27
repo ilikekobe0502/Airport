@@ -1,14 +1,18 @@
 package com.whatmedia.ttia.page.main.terminals.info;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.TerminalInfo;
@@ -16,6 +20,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,14 +28,21 @@ import butterknife.ButterKnife;
 public class TerminalInfoFragment extends BaseFragment implements TerminalInfoContract.View, IOnItemClickListener {
     private static final String TAG = TerminalInfoFragment.class.getSimpleName();
 
+    @BindView(R.id.layout_frame)
+    LinearLayout mLayoutFrame;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.infoView)
+    ImageView mInfoView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private TerminalInfoContract.Presenter mPresenter;
 
     private TerminalInfoRecyclerViewAdapter mAdapter;
+
+    private LinearLayout.LayoutParams mImageParamsFrame;
+    private boolean mIsScreen34Mode;
 
     public TerminalInfoFragment() {
         // Required empty public constructor
@@ -61,17 +73,51 @@ public class TerminalInfoFragment extends BaseFragment implements TerminalInfoCo
         ButterKnife.bind(this, view);
 
         mPresenter = TerminalInfoPresenter.getInstance(getContext(), this);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
 
-        mAdapter = new TerminalInfoRecyclerViewAdapter(getContext());
+
+        return view;
+    }
+
+    private void setImage(int h) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        mImageParamsFrame = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, h);
+        mInfoView.setLayoutParams(mImageParamsFrame);
+
+        setImageSource();
+
+    }
+
+    private void setImageSource() {
+        mInfoView.setImageResource(R.drawable.bg_03);
+    }
+
+    private void setIcon(int height) {
+        mAdapter = new TerminalInfoRecyclerViewAdapter(getContext(), height);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
-        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        if (mIsScreen34Mode) {
+            mLayoutFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    int frameLayoutHeight = mLayoutFrame.getHeight();
+                    int mLayoutHeight = (int) (frameLayoutHeight * 0.33);
+                    setImage(mLayoutHeight);
+                    setIcon(frameLayoutHeight - mLayoutHeight);
+                }
+            });
+        } else {
+            setImageSource();
+            setIcon(-1);
+        }
     }
 
     @Override
