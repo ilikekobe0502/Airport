@@ -139,6 +139,7 @@ public class AirportTrafficFragment extends BaseFragment implements AirportTraff
                 }
             });
         } else {
+            mInfoView.setScaleType(ImageView.ScaleType.FIT_XY);
             setImageSource();
             setIcon(-1);
         }

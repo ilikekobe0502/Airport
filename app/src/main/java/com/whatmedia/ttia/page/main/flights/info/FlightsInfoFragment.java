@@ -92,6 +92,7 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
     }
 
     private void setImageSource() {
+        mInfoView.setVisibility(View.VISIBLE);
         mInfoView.setImageResource(R.drawable.bg_02);
     }
 
@@ -107,6 +108,7 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
                 }
             });
         } else {
+            mInfoView.setScaleType(ImageView.ScaleType.FIT_XY);
             setImageSource();
         }
     }

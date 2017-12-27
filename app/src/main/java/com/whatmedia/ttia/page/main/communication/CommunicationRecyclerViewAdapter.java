@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.CommunicationService;
 import com.whatmedia.ttia.enums.StoreOffers;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -31,9 +33,14 @@ public class CommunicationRecyclerViewAdapter extends RecyclerView.Adapter<Commu
     private List<CommunicationService> mItems = CommunicationService.getPage();
     private Context mContext;
     private IOnItemClickListener mListener;
+    private RelativeLayout.LayoutParams mLayoutParamsFrame;
 
-    public CommunicationRecyclerViewAdapter(Context context) {
+    public CommunicationRecyclerViewAdapter(Context context, int height) {
         mContext = context;
+
+        if (height != -1) {
+            mLayoutParamsFrame = Util.get43LayoutParams(context, height);
+        }
     }
 
     @Override
@@ -54,6 +61,10 @@ public class CommunicationRecyclerViewAdapter extends RecyclerView.Adapter<Commu
             return;
         }
 
+        if (mLayoutParamsFrame != null) {
+            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
+        }
+
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
@@ -70,6 +81,8 @@ public class CommunicationRecyclerViewAdapter extends RecyclerView.Adapter<Commu
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)

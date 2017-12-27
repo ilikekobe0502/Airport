@@ -19,6 +19,7 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.terminals.store.search.StoreSearchContract;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +37,8 @@ public class StoreOffersFragment extends BaseFragment implements StoreOffersCont
     private StoreOffersContract.Presenter mPresenter;
 
     private StoreOffersRecyclerViewAdapter mAdapter;
+
+    private boolean mIsScreen34Mode;
 
     public StoreOffersFragment() {
         // Required empty public constructor
@@ -66,7 +69,9 @@ public class StoreOffersFragment extends BaseFragment implements StoreOffersCont
         ButterKnife.bind(this, view);
 
         mPresenter = StoreOffersPresenter.getInstance(getContext(), this);
-        mInfoView.setImageResource(R.drawable.bg_06);
+
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
+
         mAdapter = new StoreOffersRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mAdapter);
@@ -77,6 +82,12 @@ public class StoreOffersFragment extends BaseFragment implements StoreOffersCont
     @Override
     public void onStart() {
         super.onStart();
+
+        if (!mIsScreen34Mode)
+            mInfoView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        mInfoView.setVisibility(View.VISIBLE);
+        mInfoView.setImageResource(R.drawable.bg_06);
     }
 
     @Override

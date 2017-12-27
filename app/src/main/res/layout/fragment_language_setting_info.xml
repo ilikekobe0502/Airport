@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/all_bg"
@@ -10,18 +11,19 @@
         android:id="@+id/infoView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_pixel_188"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/black"
+        android:scaleType="fitCenter"
         android:src="@drawable/bg_08"
-        />
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/infoView"/>
+        android:layout_below="@+id/infoView"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView_version"

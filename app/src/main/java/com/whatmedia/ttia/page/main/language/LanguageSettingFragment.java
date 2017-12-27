@@ -1,5 +1,6 @@
 package com.whatmedia.ttia.page.main.language;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,10 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
@@ -19,6 +24,7 @@ import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.main.communication.CommunicationRecyclerViewAdapter;
 import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
@@ -28,10 +34,14 @@ import butterknife.ButterKnife;
 public class LanguageSettingFragment extends BaseFragment implements LanguageSettingContract.View, IOnItemClickListener {
     private static final String TAG = LanguageSettingFragment.class.getSimpleName();
 
+    @BindView(R.id.layout_frame)
+    RelativeLayout mLayoutFrame;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.textView_version)
     TextView mTextViewVersion;
+    @BindView(R.id.infoView)
+    ImageView mInfoView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -39,6 +49,9 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
 
     private LanguageSettingRecyclerViewAdapter mAdapter;
     private LanguageSetting mSetting;
+
+    private RelativeLayout.LayoutParams mImageParamsFrame;
+    private boolean mIsScreen34Mode;
 
     public LanguageSettingFragment() {
         // Required empty public constructor
@@ -69,17 +82,51 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
         ButterKnife.bind(this, view);
 
         mPresenter = new LanguageSettingPresenter(getContext(), this);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
+        return view;
+    }
 
-        mAdapter = new LanguageSettingRecyclerViewAdapter(getContext());
+    private void setImage(int h) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        mImageParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, h);
+        mInfoView.setLayoutParams(mImageParamsFrame);
+
+        setImageSource();
+
+    }
+
+    private void setImageSource() {
+        mInfoView.setVisibility(View.VISIBLE);
+        mInfoView.setImageResource(R.drawable.bg_08);
+    }
+
+    private void setIcon(int height) {
+        mAdapter = new LanguageSettingRecyclerViewAdapter(getContext(), height);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
-        return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        if (mIsScreen34Mode) {
+            mLayoutFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    int frameLayoutHeight = mLayoutFrame.getHeight();
+                    int mLayoutHeight = (int) (frameLayoutHeight * 0.33);
+                    setImage(mLayoutHeight);
+                    setIcon(frameLayoutHeight - mLayoutHeight);
+                }
+            });
+        } else {
+            mInfoView.setScaleType(ImageView.ScaleType.FIT_XY);
+            setImageSource();
+            setIcon(-1);
+        }
+
         String versionName = "";
         int versionCode = 0;
         try {

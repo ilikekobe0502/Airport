@@ -62,14 +62,14 @@ public class TerminalInfoRecyclerViewAdapter extends RecyclerView.Adapter<Termin
             return;
         }
 
+        if (mLayoutParamsFrame != null) {
+            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
+        }
+
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
         holder.mImageViewIcon.setTag(item);
-
-        if (mLayoutParamsFrame != null) {
-            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
-        }
     }
 
     @Override

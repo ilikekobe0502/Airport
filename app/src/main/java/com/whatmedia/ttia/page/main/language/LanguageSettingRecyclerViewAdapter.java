@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
@@ -17,6 +18,7 @@ import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.utility.FontFitTextView;
 import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -31,10 +33,15 @@ public class LanguageSettingRecyclerViewAdapter extends RecyclerView.Adapter<Lan
     private Context mContext;
     private IOnItemClickListener mListener;
     private String mSelectLocale;
+    private RelativeLayout.LayoutParams mLayoutParamsFrame;
 
-    public LanguageSettingRecyclerViewAdapter(Context context) {
+    public LanguageSettingRecyclerViewAdapter(Context context, int height) {
         mContext = context;
         mSelectLocale = Preferences.getLocaleSetting(context);
+
+        if (height != -1) {
+            mLayoutParamsFrame = Util.get43LayoutParams(height, context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_95), 0);
+        }
     }
 
     @Override
@@ -55,9 +62,14 @@ public class LanguageSettingRecyclerViewAdapter extends RecyclerView.Adapter<Lan
             return;
         }
 
+        if (mLayoutParamsFrame != null) {
+            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
+            holder.mLayoutFrame.setPadding(0, 0, 0, 0);
+        }
+
         if (mSelectLocale.equals(item.getLocale().toString())) {
             holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, R.drawable.language_setting_08_no));
-            holder.mTextViewTitle.setTextColor(ContextCompat.getColor(mContext,R.color.colorTextDefault));
+            holder.mTextViewTitle.setTextColor(ContextCompat.getColor(mContext, R.color.colorTextDefault));
         } else {
             holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, R.drawable.language_setting_08_off));
             holder.mTextViewTitle.setTextColor(Color.WHITE);
@@ -83,6 +95,8 @@ public class LanguageSettingRecyclerViewAdapter extends RecyclerView.Adapter<Lan
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)

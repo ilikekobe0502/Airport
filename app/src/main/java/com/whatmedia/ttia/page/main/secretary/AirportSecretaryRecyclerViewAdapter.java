@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.AirportSecretary;
 import com.whatmedia.ttia.enums.AirportTraffic;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -31,9 +33,13 @@ public class AirportSecretaryRecyclerViewAdapter extends RecyclerView.Adapter<Ai
     private List<AirportSecretary> mItems = AirportSecretary.getPage();
     private Context mContext;
     private IOnItemClickListener mListener;
+    private RelativeLayout.LayoutParams mLayoutParamsFrame;
 
-    public AirportSecretaryRecyclerViewAdapter(Context context) {
+    public AirportSecretaryRecyclerViewAdapter(Context context, int height) {
         mContext = context;
+        if (height != -1) {
+            mLayoutParamsFrame = Util.get43LayoutParams(context, height);
+        }
     }
 
     @Override
@@ -54,6 +60,10 @@ public class AirportSecretaryRecyclerViewAdapter extends RecyclerView.Adapter<Ai
             return;
         }
 
+        if (mLayoutParamsFrame != null) {
+            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
+        }
+
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
@@ -70,6 +80,8 @@ public class AirportSecretaryRecyclerViewAdapter extends RecyclerView.Adapter<Ai
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)

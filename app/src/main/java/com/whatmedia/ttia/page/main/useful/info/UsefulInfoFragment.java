@@ -135,6 +135,7 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
                 }
             });
         } else {
+            mInfoView.setScaleType(ImageView.ScaleType.FIT_XY);
             setImageSource();
             setIcon(-1);
         }

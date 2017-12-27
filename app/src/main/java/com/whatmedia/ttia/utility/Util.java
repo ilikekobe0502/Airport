@@ -970,19 +970,23 @@ public class Util {
     /**
      * 給4:3第二頁的Icon做layout設置
      *
-     * @param context
      * @param height
+     * @param iconHeight
+     * @param textHeight
      * @return
      */
-    public static RelativeLayout.LayoutParams get43LayoutParams(Context context, int height) {
+    public static RelativeLayout.LayoutParams get43LayoutParams(int height, int iconHeight, int textHeight) {
         RelativeLayout.LayoutParams layoutParams;
         //扣除上方的Image之後的高度 - (Icon高度 - 字體高度) * 2行 / 4(總共4個margin高度)
-        int iconPadding = (height -
-                (context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_80)
-                        + context.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13))
-                        * 2) / 4;
+        int iconPadding = (height - (iconHeight + textHeight) * 2) / 4;
         layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, iconPadding, 0, iconPadding);
         return layoutParams;
+    }
+
+    public static RelativeLayout.LayoutParams get43LayoutParams(Context context, int height) {
+        int defaultHeight = context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_80);
+        int defaultTextHeight = context.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13);
+        return get43LayoutParams(height, defaultHeight, defaultTextHeight);
     }
 }

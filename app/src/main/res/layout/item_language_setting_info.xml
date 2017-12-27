@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_frame"
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/dp_pixel_16"
-    android:paddingTop="@dimen/dp_pixel_16"
-    android:layout_marginRight="@dimen/dp_pixel_16"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dp_pixel_16"
-    android:layout_height="wrap_content">
+    android:layout_marginRight="@dimen/dp_pixel_16"
+    android:paddingBottom="@dimen/dp_pixel_16"
+    android:paddingTop="@dimen/dp_pixel_16">
 
     <ImageView
         android:id="@+id/imageView_icon"
-        android:layout_centerHorizontal="true"
         android:layout_width="@dimen/dp_pixel_95"
         android:layout_height="@dimen/dp_pixel_95"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/language_setting_08_off" />
 
     <com.whatmedia.ttia.utility.FontFitTextView
@@ -23,8 +24,8 @@
         android:gravity="center"
         android:maxEms="6"
         android:maxLines="2"
-        android:textSize="@dimen/sp_pixel_15"
         android:textColor="@android:color/white"
-        app:needResize="true"
-        app:minTextSize="@dimen/sp_pixel_8"/>
+        android:textSize="@dimen/sp_pixel_15"
+        app:minTextSize="@dimen/sp_pixel_8"
+        app:needResize="true" />
 </RelativeLayout>
