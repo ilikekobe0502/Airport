@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,8 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     @BindView(R.id.imageDetailView)
     ImageView mImageDetailView;
 
+    private String mTitle;
+
     public RoamingDetailFragment() {
         // Required empty public constructor
     }
@@ -57,8 +60,11 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
 
         mPresenter = new RoamingDetailPresenter(getContext(), this);
         mLoadingView.showLoadingView();
-        mPresenter.getRoamingDetailAPI(getArguments().get(RoamingServiceContract.ARG_KEY).toString());
-        tool(getArguments().get(RoamingServiceContract.ARG_TITLE).toString());
+        if (getArguments() != null) {
+            mPresenter.getRoamingDetailAPI(getArguments().get(RoamingServiceContract.ARG_KEY).toString());
+            mTitle = !TextUtils.isEmpty(getArguments().getString(RoamingServiceContract.ARG_TITLE)) ? getArguments().getString(RoamingServiceContract.ARG_TITLE) : "";
+            tool(mTitle);
+        }
 
         return view;
     }
@@ -96,7 +102,7 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
                         if (!TextUtils.isEmpty(detailImage)) {
                             mImageDetailView.setVisibility(View.VISIBLE);
                             Util.getHttpsPicasso(getContext()).load(detailImage).into(mImageDetailView);
-                        }else {
+                        } else {
                             mImageDetailView.setVisibility(View.INVISIBLE);
                         }
 
@@ -108,8 +114,9 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
 //                                Intent it = new Intent(Intent.ACTION_VIEW, uri);
 //                                startActivity(it);
                                 Bundle bundle = new Bundle();
+                                bundle.putString(RoamingServiceContract.ARG_TITLE, mTitle);
                                 bundle.putString(RoamingWebViewContract.TAG_WEBURL, url);
-                                mMainActivity.addFragment(Page.TAG_COMMUNICATION_ROAMING_WEBVIEW, bundle, true);
+                                mMainActivity.replaceFragment(Page.TAG_COMMUNICATION_ROAMING_WEBVIEW, bundle, true);
                             }
                         });
                     }
@@ -150,6 +157,7 @@ public class RoamingDetailFragment extends BaseFragment implements RoamingDetail
     public void tool(String name) {
         mMainActivity.getMyToolbar().clearState()
                 .setTitleText(name)
+                .setToolbarBackground(ContextCompat.getDrawable(getContext(), R.drawable.toolbar_top_bg))
                 .setBackVisibility(View.VISIBLE)
                 .setOnBackClickListener(new MyToolbar.OnClickListener() {
                     @Override
