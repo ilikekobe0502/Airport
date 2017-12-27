@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.newresponse.data.TravelTypeListData;
@@ -17,6 +18,7 @@ import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.useful.language.result.TravelLanguageResultContract;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
@@ -27,6 +29,8 @@ import butterknife.ButterKnife;
 public class TravelLanguageFragment extends BaseFragment implements TravelLanguageContract.View, TravelLanguageRecyclerViewAdapter.IOnItemClickListener {
     private static final String TAG = TravelLanguageFragment.class.getSimpleName();
 
+    @BindView(R.id.layout_frame)
+    LinearLayout mLayoutFrame;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
@@ -34,7 +38,9 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
     private IActivityTools.IMainActivity mMainActivity;
     private TravelLanguageContract.Presenter mPresenter;
 
-    private TravelLanguageRecyclerViewAdapter mAdapter = new TravelLanguageRecyclerViewAdapter();
+    private TravelLanguageRecyclerViewAdapter mAdapter;
+
+    private boolean mIsScreen34Mode;
 
     public TravelLanguageFragment() {
         // Required empty public constructor
@@ -65,12 +71,10 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
         ButterKnife.bind(this, view);
 
         mPresenter = new TravelLanguagePresenter(getContext(), this);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
 
         mPresenter.getTypeListApi();
         mLoadingView.showLoadingView();
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setItemClickListener(this);
 
         return view;
     }
@@ -78,6 +82,16 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
     @Override
     public void onStart() {
         super.onStart();
+        if (mIsScreen34Mode) {
+            mLayoutFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    setData(mLayoutFrame.getHeight());
+                }
+            });
+        } else {
+            setData(-1);
+        }
     }
 
     @Override
@@ -150,5 +164,12 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
             bundle.putString(TravelLanguageResultContract.TAG_Name, data.getName());
             mMainActivity.addFragment(Page.TAG_USERFUL_LANGUAGE_RESULT, bundle, true);
         }
+    }
+
+    private void setData(int height) {
+        mAdapter = new TravelLanguageRecyclerViewAdapter(getContext(), height);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setItemClickListener(this);
     }
 }

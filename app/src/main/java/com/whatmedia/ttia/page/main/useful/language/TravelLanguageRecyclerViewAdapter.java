@@ -1,6 +1,8 @@
 package com.whatmedia.ttia.page.main.useful.language;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,6 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.newresponse.data.TravelTypeListData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +28,15 @@ public class TravelLanguageRecyclerViewAdapter extends RecyclerView.Adapter<Trav
 
     private IOnItemClickListener mListener;
     private List<TravelTypeListData> mItems;
+
+    private RelativeLayout.LayoutParams mLayoutParamsFrame;
+    private LinearLayout.LayoutParams mIconParamsFrame;
+
+    public TravelLanguageRecyclerViewAdapter(Context context, int height) {
+        if (height != -1) {
+            get43LayoutParams(context, height);
+        }
+    }
 
     interface IOnItemClickListener {
         void onClick(View view);
@@ -47,11 +57,19 @@ public class TravelLanguageRecyclerViewAdapter extends RecyclerView.Adapter<Trav
         if (item == null)
             return;
 
+        if (mLayoutParamsFrame != null) {
+            holder.mLayoutAll.setLayoutParams(mLayoutParamsFrame);
+        }
+
+        if (mIconParamsFrame != null) {
+            holder.mImageViewBackground.setLayoutParams(mIconParamsFrame);
+        }
+
         holder.mTextViewTitle.setText(item.getName());
 
         holder.mLayoutFrame.setTag(item);
 
-        switch (position){
+        switch (position) {
             case 0:
                 holder.mImageViewBackground.setImageResource(R.drawable.n05_01a);
                 break;
@@ -101,6 +119,8 @@ public class TravelLanguageRecyclerViewAdapter extends RecyclerView.Adapter<Trav
         ImageView mImageViewBackground;
         @BindView(R.id.textView_title)
         TextView mTextViewTitle;
+        @BindView(R.id.layout_all)
+        RelativeLayout mLayoutAll;
         @BindView(R.id.layout_frame)
         LinearLayout mLayoutFrame;
 
@@ -115,5 +135,16 @@ public class TravelLanguageRecyclerViewAdapter extends RecyclerView.Adapter<Trav
             if (mListener != null)
                 mListener.onClick(view);
         }
+    }
+
+    private void get43LayoutParams(Context context, int height) {
+        int frameMargin = context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_10);
+        mLayoutParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLayoutParamsFrame.setMargins(0, frameMargin, 0, 0);
+
+        //整個Frame Height - 4個 * Frame Margin 高度 / 4行 * 0.66(Icon 所佔比例)
+        int iconHeight = (int) ((height - (frameMargin * 4)) / 4 * 0.66);
+        mIconParamsFrame = new LinearLayout.LayoutParams(iconHeight, iconHeight);
+        mIconParamsFrame.gravity = Gravity.CENTER;
     }
 }
