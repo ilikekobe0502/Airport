@@ -88,8 +88,6 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         holder.mLayoutFrame.setLayoutParams(mFrameParamsFrame);
         if (mImageParamsFrame != null)
             holder.mImageViewIcon.setLayoutParams(mImageParamsFrame);
-//        holder.mImageViewIcon.setLayoutParams(mImageParamsFrame);
-//        }
 
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
@@ -156,7 +154,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         mAllParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
 
         if (mIsScreen34Mode) {
-            int imageHeight = (int) (itemLayoutFrameHeight - (mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_14) * 1.3));
+            int imageHeight = (itemLayoutFrameHeight - (mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_14) * 2));
             mImageParamsFrame = new RelativeLayout.LayoutParams(imageHeight, imageHeight);
             mImageParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
         }
