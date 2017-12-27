@@ -86,6 +86,8 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 //        } else {
         holder.mLayoutAll.setLayoutParams(mAllParamsFrame);
         holder.mLayoutFrame.setLayoutParams(mFrameParamsFrame);
+        if (mImageParamsFrame != null)
+            holder.mImageViewIcon.setLayoutParams(mImageParamsFrame);
 //        holder.mImageViewIcon.setLayoutParams(mImageParamsFrame);
 //        }
 
@@ -152,6 +154,15 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         itemLayoutFrameHeight = (height - mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_25)) / 2;
 
         mAllParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
+
+        Log.d("TAG","H = " + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60));
+        if (isScreen34Mode) {
+            int imageHeight = (int) (itemLayoutFrameHeight - (mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_14) * 1.3));
+            mImageParamsFrame = new RelativeLayout.LayoutParams(imageHeight, imageHeight);
+            mImageParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        }
+
+
         mFrameParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mFrameParamsFrame.addRule(RelativeLayout.CENTER_IN_PARENT);
 //        mAllParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0
