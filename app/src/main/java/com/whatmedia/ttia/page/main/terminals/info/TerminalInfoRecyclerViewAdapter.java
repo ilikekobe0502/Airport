@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.TerminalInfo;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -33,20 +34,13 @@ public class TerminalInfoRecyclerViewAdapter extends RecyclerView.Adapter<Termin
     private Context mContext;
     private IOnItemClickListener mListener;
 
-    private LinearLayout.LayoutParams mLayoutParamsFrame;
-    private int mIconPadding = -1;
+    private RelativeLayout.LayoutParams mLayoutParamsFrame;
 
     public TerminalInfoRecyclerViewAdapter(Context context, int layoutHeight) {
         mContext = context;
 
         if (layoutHeight != -1) {
-            //扣除上方的Image之後的高度 - (Icon高度 - 字體高度) * 2行 / 4(總共4個margin高度)
-            mIconPadding = (layoutHeight -
-                    (context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_80)
-                            + context.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13))
-                            * 2) / 4;
-            mLayoutParamsFrame = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            mLayoutParamsFrame.setMargins(0, mIconPadding, 0, mIconPadding);
+            mLayoutParamsFrame = Util.get43LayoutParams(context, layoutHeight);
         }
     }
 
@@ -73,7 +67,7 @@ public class TerminalInfoRecyclerViewAdapter extends RecyclerView.Adapter<Termin
 
         holder.mImageViewIcon.setTag(item);
 
-        if (mIconPadding != -1 && mLayoutParamsFrame != null) {
+        if (mLayoutParamsFrame != null) {
             holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
         }
     }

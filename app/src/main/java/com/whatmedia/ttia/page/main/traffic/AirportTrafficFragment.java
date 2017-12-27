@@ -44,7 +44,7 @@ public class AirportTrafficFragment extends BaseFragment implements AirportTraff
     private IActivityTools.IMainActivity mMainActivity;
     private AirportTrafficContract.Presenter mPresenter;
 
-    private AirportTrafficPagerAdapter mPageAdapter = new AirportTrafficPagerAdapter();
+    private AirportTrafficPagerAdapter mPageAdapter;
 
     private RelativeLayout.LayoutParams mImageParamsFrame;
     private boolean mIsScreen34Mode;
@@ -114,13 +114,15 @@ public class AirportTrafficFragment extends BaseFragment implements AirportTraff
     }
 
     private void setImageSource() {
+        mInfoView.setVisibility(View.VISIBLE);
         mInfoView.setImageResource(R.drawable.bg_04);
     }
 
     private void setIcon(int height) {
+        mPageAdapter = new AirportTrafficPagerAdapter(height);
         mViewPagerInfo.setAdapter(mPageAdapter);
         mInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
-        mPageAdapter.setClickListener(this, height);
+        mPageAdapter.setClickListener(this);
     }
 
     @Override

@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.AirportTraffic;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -30,14 +32,15 @@ public class AirportTrafficRecyclerViewAdapter extends RecyclerView.Adapter<Airp
     private List<AirportTraffic> mItems = AirportTraffic.getPage();
     private Context mContext;
     private IOnItemClickListener mListener;
+    private RelativeLayout.LayoutParams mLayoutParamsFrame;
 
-    public AirportTrafficRecyclerViewAdapter(Context context) {
-        mContext = context;
-    }
-
-    public AirportTrafficRecyclerViewAdapter(Context context,List<AirportTraffic> items) {
+    public AirportTrafficRecyclerViewAdapter(Context context, List<AirportTraffic> items, int mOutFrameHeight) {
         mContext = context;
         mItems = items;
+
+        if (mOutFrameHeight != -1) {
+            mLayoutParamsFrame = Util.get43LayoutParams(context, mOutFrameHeight);
+        }
     }
 
     @Override
@@ -58,6 +61,10 @@ public class AirportTrafficRecyclerViewAdapter extends RecyclerView.Adapter<Airp
             return;
         }
 
+        if (mLayoutParamsFrame != null) {
+            holder.mLayoutFrame.setLayoutParams(mLayoutParamsFrame);
+        }
+
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
         holder.mImageViewIcon.setBackground(ContextCompat.getDrawable(mContext, item.getIcon()));
 
@@ -74,6 +81,8 @@ public class AirportTrafficRecyclerViewAdapter extends RecyclerView.Adapter<Airp
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout_frame)
+        RelativeLayout mLayoutFrame;
         @BindView(R.id.imageView_icon)
         ImageView mImageViewIcon;
         @BindView(R.id.textView_title)

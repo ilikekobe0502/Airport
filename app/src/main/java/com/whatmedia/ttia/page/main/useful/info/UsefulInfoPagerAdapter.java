@@ -23,6 +23,11 @@ public class UsefulInfoPagerAdapter extends PagerAdapter implements IOnItemClick
     private UsefulInfoRecyclerViewAdapter mAdapter;
     private List<List<UsefulInfo>> mItems = UsefulInfo.getPageList();
     private IOnItemClickListener mListener;
+    private int mOutFrameHeight = -1;
+
+    public UsefulInfoPagerAdapter(int height) {
+        mOutFrameHeight = height;
+    }
 
     @Override
     public int getCount() {
@@ -39,7 +44,7 @@ public class UsefulInfoPagerAdapter extends PagerAdapter implements IOnItemClick
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_home_feature, container, false);
 
         final ViewHolder holder = new ViewHolder(view);
-        mAdapter = new UsefulInfoRecyclerViewAdapter(container.getContext(), mItems.get(position));
+        mAdapter = new UsefulInfoRecyclerViewAdapter(container.getContext(), mItems.get(position), mOutFrameHeight);
         holder.mRecyclerView.setLayoutManager(new GridLayoutManager(container.getContext(), 2));
         holder.mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);

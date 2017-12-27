@@ -1,16 +1,19 @@
 package com.whatmedia.ttia.page.main.traffic;
 
 
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.AirportTraffic;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -23,6 +26,11 @@ public class AirportTrafficPagerAdapter extends PagerAdapter implements IOnItemC
     private AirportTrafficRecyclerViewAdapter mAdapter;
     private List<List<AirportTraffic>> mItems = AirportTraffic.getPageList();
     private IOnItemClickListener mListener;
+    private int mOutFrameHeight = -1;
+
+    public AirportTrafficPagerAdapter(int height) {
+        mOutFrameHeight = height;
+    }
 
     @Override
     public int getCount() {
@@ -39,7 +47,7 @@ public class AirportTrafficPagerAdapter extends PagerAdapter implements IOnItemC
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_home_feature, container, false);
 
         final ViewHolder holder = new ViewHolder(view);
-        mAdapter = new AirportTrafficRecyclerViewAdapter(container.getContext(), mItems.get(position));
+        mAdapter = new AirportTrafficRecyclerViewAdapter(container.getContext(), mItems.get(position),mOutFrameHeight);
         holder.mRecyclerView.setLayoutManager(new GridLayoutManager(container.getContext(), 2));
         holder.mRecyclerView.setAdapter(mAdapter);
         mAdapter.setClickListener(this);
@@ -53,7 +61,7 @@ public class AirportTrafficPagerAdapter extends PagerAdapter implements IOnItemC
             mListener.onClick(view);
     }
 
-    public void setClickListener(IOnItemClickListener listener, int height) {
+    public void setClickListener(IOnItemClickListener listener) {
         mListener = listener;
     }
 

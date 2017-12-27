@@ -1,16 +1,19 @@
 package com.whatmedia.ttia.page.main.useful.info;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.UsefulInfo;
@@ -18,6 +21,8 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.page.main.traffic.AirportTrafficPagerAdapter;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +31,8 @@ import butterknife.ButterKnife;
 public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContract.View, IOnItemClickListener {
     private static final String TAG = UsefulInfoFragment.class.getSimpleName();
 
+    @BindView(R.id.layout_frame)
+    RelativeLayout mLayoutFrame;
     @BindView(R.id.viewPager_useful)
     ViewPager mViewPagerInfo;
     @BindView(R.id.info_indicator)
@@ -36,7 +43,10 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
     private IActivityTools.IMainActivity mMainActivity;
     private UsefulInfoContract.Presenter mPresenter;
 
-    private UsefulInfoPagerAdapter mPageAdapter = new UsefulInfoPagerAdapter();
+    private UsefulInfoPagerAdapter mPageAdapter;
+
+    private RelativeLayout.LayoutParams mImageParamsFrame;
+    private boolean mIsScreen34Mode;
 
     public UsefulInfoFragment() {
     }
@@ -62,10 +72,10 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
         ButterKnife.bind(this, view);
 
         mPresenter = UsefulInfoPresenter.getInstance(getContext(), this);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
 
         mViewPagerInfo.setAdapter(mPageAdapter);
-        mInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
-        mPageAdapter.setClickListener(this);
+
         mViewPagerInfo.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -74,9 +84,9 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 0){
+                if (position == 0) {
                     mInfoView.setImageResource(R.drawable.bg_05);
-                }else{
+                } else {
                     mInfoView.setImageResource(R.drawable.bg_05a);
                 }
             }
@@ -89,9 +99,45 @@ public class UsefulInfoFragment extends BaseFragment implements UsefulInfoContra
         return view;
     }
 
+    private void setImage(int h) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        mImageParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, h);
+        mInfoView.setLayoutParams(mImageParamsFrame);
+
+        setImageSource();
+
+    }
+
+    private void setImageSource() {
+        mInfoView.setVisibility(View.VISIBLE);
+        mInfoView.setImageResource(R.drawable.bg_05);
+    }
+
+    private void setIcon(int height) {
+        mPageAdapter = new UsefulInfoPagerAdapter(height);
+        mViewPagerInfo.setAdapter(mPageAdapter);
+        mInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
+        mPageAdapter.setClickListener(this);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+        if (mIsScreen34Mode) {
+            mLayoutFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    int frameLayoutHeight = mLayoutFrame.getHeight();
+                    int mLayoutHeight = (int) (frameLayoutHeight * 0.33);
+                    setImage(mLayoutHeight);
+                    setIcon(frameLayoutHeight - mLayoutHeight);
+                }
+            });
+        } else {
+            setImageSource();
+            setIcon(-1);
+        }
     }
 
     @Override

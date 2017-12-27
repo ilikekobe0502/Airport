@@ -90,6 +90,7 @@ public class TerminalInfoFragment extends BaseFragment implements TerminalInfoCo
     }
 
     private void setImageSource() {
+        mInfoView.setVisibility(View.VISIBLE);
         mInfoView.setImageResource(R.drawable.bg_03);
     }
 

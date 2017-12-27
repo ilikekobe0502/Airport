@@ -18,10 +18,13 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -962,5 +965,24 @@ public class Util {
             Log.e(TAG, "[EncryptAES] ", ex);
             return null;
         }
+    }
+
+    /**
+     * 給4:3第二頁的Icon做layout設置
+     *
+     * @param context
+     * @param height
+     * @return
+     */
+    public static RelativeLayout.LayoutParams get43LayoutParams(Context context, int height) {
+        RelativeLayout.LayoutParams layoutParams;
+        //扣除上方的Image之後的高度 - (Icon高度 - 字體高度) * 2行 / 4(總共4個margin高度)
+        int iconPadding = (height -
+                (context.getResources().getDimensionPixelSize(R.dimen.dp_pixel_80)
+                        + context.getResources().getDimensionPixelSize(R.dimen.sp_pixel_13))
+                        * 2) / 4;
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, iconPadding, 0, iconPadding);
+        return layoutParams;
     }
 }
