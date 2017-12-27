@@ -39,6 +39,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
     private TravelLanguageContract.Presenter mPresenter;
 
     private TravelLanguageRecyclerViewAdapter mAdapter;
+    private List<TravelTypeListData> mResponse;
 
     private boolean mIsScreen34Mode;
 
@@ -92,6 +93,9 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
         } else {
             setData(-1);
         }
+        
+        if (mResponse != null)
+            mAdapter.setData(mResponse);
     }
 
     @Override
@@ -127,6 +131,7 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
     public void getApiSucceed(final List<TravelTypeListData> response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
+            mResponse = response;
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
