@@ -36,7 +36,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
     private Context mContext;
     private IOnItemClickListener mListener;
     private String mLocale;
-    private boolean isScreen34Mode;
+    private boolean mIsScreen34Mode;
     private RelativeLayout.LayoutParams mAllParamsFrame;
     private RelativeLayout.LayoutParams mFrameParamsFrame;
     private RelativeLayout.LayoutParams mImageParamsFrame;
@@ -45,7 +45,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         mItems = items;
         mContext = context;
         mLocale = Preferences.getLocaleSetting(mContext);
-        isScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(mContext);
         initParams();
     }
 
@@ -79,7 +79,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 
         holder.mTextViewTitle.setText(mContext.getText(item.getTitle()));
 
-//        if (isScreen34Mode) {
+//        if (mIsScreen34Mode) {
 //            RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(getScreenWidth() / 9, getScreenWidth() / 9);
 //            t.addRule(RelativeLayout.CENTER_HORIZONTAL);
 //            holder.mImageViewIcon.setLayoutParams(t);
@@ -155,8 +155,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
 
         mAllParamsFrame = new RelativeLayout.LayoutParams(itemLayoutFrameWeight, itemLayoutFrameHeight);
 
-        Log.d("TAG","H = " + mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_60));
-        if (isScreen34Mode) {
+        if (mIsScreen34Mode) {
             int imageHeight = (int) (itemLayoutFrameHeight - (mContext.getResources().getDimensionPixelSize(R.dimen.sp_pixel_14) * 1.3));
             mImageParamsFrame = new RelativeLayout.LayoutParams(imageHeight, imageHeight);
             mImageParamsFrame.addRule(RelativeLayout.CENTER_HORIZONTAL);

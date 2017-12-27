@@ -1,15 +1,18 @@
 package com.whatmedia.ttia.page.main.flights.info;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.enums.FlightInfo;
@@ -17,6 +20,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
+import com.whatmedia.ttia.utility.Preferences;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +28,8 @@ import butterknife.ButterKnife;
 public class FlightsInfoFragment extends BaseFragment implements FlightsInfoContract.View, IOnItemClickListener {
     private static final String TAG = FlightsInfoFragment.class.getSimpleName();
 
+    @BindView(R.id.layout_frame)
+    LinearLayout mLayoutFrame;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.infoView)
@@ -34,6 +40,9 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
     private FlightsInfoContract.Presenter mPresenter;
 
     private FlightsInfoRecyclerViewAdapter mAdapter;
+
+    private LinearLayout.LayoutParams mImageParamsFrame;
+    private boolean mIsScreen34Mode;
 
     public FlightsInfoFragment() {
         // Required empty public constructor
@@ -63,8 +72,9 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
         View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
         ButterKnife.bind(this, view);
 
+        mIsScreen34Mode = Preferences.checkScreenIs34Mode(getContext());
         mPresenter = FlightsInfoPresenter.getInstance(getContext(), this);
-        mInfoView.setImageResource(R.drawable.bg_02);
+
         mAdapter = new FlightsInfoRecyclerViewAdapter(getContext());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(mAdapter);
@@ -72,9 +82,33 @@ public class FlightsInfoFragment extends BaseFragment implements FlightsInfoCont
         return view;
     }
 
+    private void setImage(int h) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        mImageParamsFrame = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, h);
+        mInfoView.setLayoutParams(mImageParamsFrame);
+
+        setImageSource();
+    }
+
+    private void setImageSource() {
+        mInfoView.setImageResource(R.drawable.bg_02);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+
+        if (mIsScreen34Mode) {
+            mLayoutFrame.post(new Runnable() {
+                @Override
+                public void run() {
+                    setImage((int) (mLayoutFrame.getHeight() * 0.33));
+                }
+            });
+        } else {
+            setImageSource();
+        }
     }
 
     @Override
