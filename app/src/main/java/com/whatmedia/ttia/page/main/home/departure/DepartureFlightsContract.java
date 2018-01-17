@@ -10,11 +10,11 @@ public interface DepartureFlightsContract {
     interface View {
         void getDepartureFlightSucceed(List<FlightsListData> list);
 
-        void getDepartureFlightFailed(String message, boolean timeout);
+        void getDepartureFlightFailed(String message, int status);
 
         void saveMyFlightSucceed(String message, String sentJson);
 
-        void saveMyFlightFailed(String message, boolean timeout);
+        void saveMyFlightFailed(String message, int status);
     }
 
     interface Presenter {

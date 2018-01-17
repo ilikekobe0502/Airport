@@ -13,11 +13,11 @@ public interface FlightsSearchResultContract {
     interface View {
         void saveMyFlightSucceed(String message, String sentJson);
 
-        void saveMyFlightFailed(String message, boolean timeout);
+        void saveMyFlightFailed(String message, int status);
 
         void getFlightSucceed(List<FlightsListData> list);
 
-        void getFlightFailed(String message, boolean timeout);
+        void getFlightFailed(String message, int status);
 
         String getKeyword();
     }

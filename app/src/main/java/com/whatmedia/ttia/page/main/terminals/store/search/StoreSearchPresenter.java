@@ -41,8 +41,8 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     public void getTerminalCodeAPI() {
         mNewApiConnect.getTerminalList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTerminalFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTerminalFailed(e.toString(), status);
             }
 
             @Override
@@ -51,7 +51,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                 if (terminalListResponse.getTerminalsList() != null)
                     mView.getTerminalSucceed(terminalListResponse.getTerminalsList());
                 else
-                    mView.getTerminalFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTerminalFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }
@@ -60,8 +60,8 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     public void getAreaCodeAPI() {
         mNewApiConnect.getAreaList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTerminalFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTerminalFailed(e.toString(), status);
             }
 
             @Override
@@ -70,7 +70,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                 if (areaListResponse.getAreaList() != null)
                     mView.getAreaSucceed(areaListResponse.getAreaList());
                 else
-                    mView.getTerminalFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTerminalFailed(mContext.getString(R.string.data_error),  NewApiConnect.TAG_DEFAULT);
             }
         });
     }
@@ -79,8 +79,8 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     public void getFloorCodeAPI() {
         mNewApiConnect.getFloorList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTerminalFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTerminalFailed(e.toString(), status);
             }
 
             @Override
@@ -89,7 +89,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                 if (floorListResponse.getFloorList() != null)
                     mView.getFloorSucceed(floorListResponse.getFloorList());
                 else
-                    mView.getTerminalFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTerminalFailed(mContext.getString(R.string.data_error),  NewApiConnect.TAG_DEFAULT);
             }
         });
     }
@@ -98,8 +98,8 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     public void getKindOfRestaurantCodeAPI() {
         mNewApiConnect.getRestaurantTypeList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTerminalFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTerminalFailed(e.toString(), status);
             }
 
             @Override
@@ -108,7 +108,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                 if (restaurantListResponse.getRestaurantList() != null)
                     mView.getKindOfRestaurantCodeSucceed(restaurantListResponse.getRestaurantList());
                 else
-                    mView.getTerminalFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTerminalFailed(mContext.getString(R.string.data_error),  NewApiConnect.TAG_DEFAULT);
             }
         });
     }
@@ -127,14 +127,14 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
         String json = upload.getJson();
         if (TextUtils.isEmpty(json)) {
-            mView.getRestaurantInfoFailed(mContext.getString(R.string.data_error), false);
+            mView.getRestaurantInfoFailed(mContext.getString(R.string.data_error),  NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getRestaurantInfoList(json, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getRestaurantInfoFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getRestaurantInfoFailed(e.toString(), status);
             }
 
             @Override
@@ -148,8 +148,8 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
     public void getStoreCodeAPI() {
         mNewApiConnect.getStoreList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTerminalFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTerminalFailed(e.toString(), status);
             }
 
             @Override
@@ -158,7 +158,7 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
                 if (getStoreListResponse.getStoreTypeList() != null)
                     mView.getStoreCodeSuccess(getStoreListResponse.getStoreTypeList());
                 else
-                    mView.getTerminalFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTerminalFailed(mContext.getString(R.string.data_error),  NewApiConnect.TAG_DEFAULT);
             }
         });
     }
@@ -177,13 +177,13 @@ public class StoreSearchPresenter implements StoreSearchContract.Presenter {
 
         String json = upload.getJson();
         if (TextUtils.isEmpty(json)) {
-            mView.getRestaurantInfoFailed(mContext.getString(R.string.data_error), false);
+            mView.getRestaurantInfoFailed(mContext.getString(R.string.data_error),  NewApiConnect.TAG_DEFAULT);
             return;
         }
         mNewApiConnect.getStoreInfoList(json, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getRestaurantInfoFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getRestaurantInfoFailed(e.toString(), status);
             }
 
             @Override

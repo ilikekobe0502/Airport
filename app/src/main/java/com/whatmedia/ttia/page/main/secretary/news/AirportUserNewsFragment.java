@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -64,7 +65,7 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
         View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter =new AirportUserNewsPresenter(getContext(), this);
+        mPresenter = new AirportUserNewsPresenter(getContext(), this);
 
         mLoadingView.showLoadingView();
         mPresenter.getUserNewsAPI();
@@ -125,25 +126,25 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
     }
 
     @Override
-    public void getUserNewsFailed(final String message, boolean timeout) {
-        mLoadingView.goneLoadingView();
+    public void getUserNewsFailed(final String message, final int status) {
         Log.e(TAG, "getEmergencyFailed error : " + message);
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-//                mMainActivity.runOnUI(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        showMessage(message);
-//                    }
-//                });
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

@@ -32,8 +32,8 @@ public class TaxiPresenter implements TaxiContract.Presenter {
     public void getTaxiAPI() {
         mNewApiConnect.getTaxiInfo(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTaxiFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTaxiFailed(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class TaxiPresenter implements TaxiContract.Presenter {
                 if (taxiInfoResponse.getTaxi() != null)
                     mView.getTaxiSucceed(taxiInfoResponse.getTaxi());
                 else
-                    mView.getTaxiFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTaxiFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
 
             }
         });

@@ -9,7 +9,7 @@ public interface TravelLanguageContract {
     interface View {
         void getApiSucceed(List<TravelTypeListData> response);
 
-        void getApiFailed(String s, boolean timeout);
+        void getApiFailed(String s, int status);
     }
 
     interface Presenter {

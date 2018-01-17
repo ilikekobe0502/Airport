@@ -177,7 +177,7 @@ public class IBeacon extends Service implements BeaconConsumer {
         mBeaconInfoData.setBeaconId(minorID);
         mNewApiConnect.uploadBeacon(mBeaconInfoData.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
+            public void onFailure(Call call, IOException e, int status) {
                 Log.e(TAG, "registerUser failure");
                 mSend = false;
                 mMap.remove(minorID);

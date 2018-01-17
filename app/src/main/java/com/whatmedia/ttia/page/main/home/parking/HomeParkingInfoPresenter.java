@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.connect.MyResponse;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.response.GetHomeParkingInfoListResponse;
 import com.whatmedia.ttia.response.data.HomeParkingFrameData;
 import com.whatmedia.ttia.response.data.HomeParkingInfoData;
@@ -25,49 +26,41 @@ import okhttp3.Call;
 public class HomeParkingInfoPresenter implements HomeParkingInfoContract.Presenter {
     private final static String TAG = HomeParkingInfoPresenter.class.getSimpleName();
 
-    private static HomeParkingInfoPresenter mHomeParkingInfoPresenter;
-    private static ApiConnect mApiConnect;
-    private static HomeParkingInfoContract.View mView;
+    private NewApiConnect mNewApiConnect;
+    private HomeParkingInfoContract.View mView;
+    private Context mContext;
 
 
-    public static HomeParkingInfoPresenter getInstance(Context context, HomeParkingInfoContract.View view) {
-        mHomeParkingInfoPresenter = new HomeParkingInfoPresenter();
-        mApiConnect = ApiConnect.getInstance(context);
+    HomeParkingInfoPresenter(Context context, HomeParkingInfoContract.View view) {
+        mContext = context;
+        mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
-        return mHomeParkingInfoPresenter;
     }
 
     @Override
     public void getParkingInfoAPI() {
-        mApiConnect.getHomeParkIngInfo(new ApiConnect.MyCallback() {
+        mNewApiConnect.getHomeParkIngInfo(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getParkingInfoFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getParkingInfoFailed(e.toString(), status);
             }
 
             @Override
-            public void onResponse(Call call, MyResponse response) throws IOException {
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    Log.d(TAG, result);
+            public void onResponse(Call call, String response) throws IOException {
+                HomeParkingFrameData frameData = GetHomeParkingInfoListResponse.newInstance(Util.xmlToSJsonString(response));
+                HomeParkingListData listData;
+                List<HomeParkingInfoData> infoData;
+                if (frameData != null) {
+                    listData = frameData.getParkingListData();
+                } else
+                    listData = new HomeParkingListData();
 
-                    HomeParkingFrameData frameData = GetHomeParkingInfoListResponse.newInstance(Util.xmlToSJsonString(result));
-                    HomeParkingListData listData;
-                    List<HomeParkingInfoData> infoData;
-                    if (frameData != null) {
-                        listData = frameData.getParkingListData();
-                    } else
-                        listData = new HomeParkingListData();
-
-                    if (listData.getPark() != null) {
-                        infoData = listData.getPark();
-                    } else {
-                        infoData = new ArrayList<HomeParkingInfoData>();
-                    }
-                    mView.getParkingInfoSucceed(infoData);
+                if (listData.getPark() != null) {
+                    infoData = listData.getPark();
                 } else {
-                    mView.getParkingInfoFailed(!TextUtils.isEmpty(response.message()) ? response.message() : "", false);
+                    infoData = new ArrayList<HomeParkingInfoData>();
                 }
+                mView.getParkingInfoSucceed(infoData);
             }
         });
     }

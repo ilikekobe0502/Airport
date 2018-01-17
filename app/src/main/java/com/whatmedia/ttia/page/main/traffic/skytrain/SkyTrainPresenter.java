@@ -32,8 +32,8 @@ public class SkyTrainPresenter implements SkyTrainContract.Presenter {
     public void getSkyTrainAPI() {
         mNewApiConnect.getTramInfo(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getSkyTrainFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getSkyTrainFailed(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class SkyTrainPresenter implements SkyTrainContract.Presenter {
                 if (tramInfoResponse.getTram() != null)
                     mView.getSkyTrainSucceed(tramInfoResponse.getTram());
                 else
-                    mView.getSkyTrainFailed(mContext.getString(R.string.data_error), false);
+                    mView.getSkyTrainFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

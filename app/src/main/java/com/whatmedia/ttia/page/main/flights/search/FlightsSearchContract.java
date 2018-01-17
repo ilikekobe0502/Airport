@@ -5,7 +5,7 @@ public interface FlightsSearchContract {
 
         void getFlightsDepartureSucceed(String response);
 
-        void getFlightsDepartureFailed(String message, boolean timeout);
+        void getFlightsDepartureFailed(String message, int status);
     }
 
     interface Presenter {

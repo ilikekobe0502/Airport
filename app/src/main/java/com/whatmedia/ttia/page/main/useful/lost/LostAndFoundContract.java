@@ -7,7 +7,7 @@ public interface LostAndFoundContract {
     interface View {
         void getLostAndFoundSucceed(BaseTrafficInfoData response);
 
-        void getLostAndFoundFailed(String message, boolean timeout);
+        void getLostAndFoundFailed(String message, int status);
     }
 
     interface Presenter {

@@ -6,7 +6,7 @@ public interface SkyTrainContract {
     interface View {
         void getSkyTrainSucceed(BaseTrafficInfoData response);
 
-        void getSkyTrainFailed(String message, boolean timeout);
+        void getSkyTrainFailed(String message, int status);
     }
 
     interface Presenter {

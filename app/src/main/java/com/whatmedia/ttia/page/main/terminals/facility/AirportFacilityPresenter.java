@@ -1,7 +1,6 @@
 package com.whatmedia.ttia.page.main.terminals.facility;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
@@ -34,8 +33,8 @@ public class AirportFacilityPresenter implements AirportFacilityContract.Present
 
         mNewApiConnect.getTerminalsFacilityList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getAirportFacilityFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getAirportFacilityFailed(e.toString(), status);
             }
 
             @Override
@@ -44,7 +43,7 @@ public class AirportFacilityPresenter implements AirportFacilityContract.Present
                 if (terminalsFacilityListResponse.getTerminalsFacilityList() != null)
                     mView.getAirportFacilitySucceed(terminalsFacilityListResponse.getTerminalsFacilityList());
                 else
-                    mView.getAirportFacilityFailed(mContext.getString(R.string.data_error), false);
+                    mView.getAirportFacilityFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

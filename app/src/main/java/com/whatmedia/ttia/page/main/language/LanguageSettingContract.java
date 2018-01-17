@@ -5,7 +5,7 @@ public interface LanguageSettingContract {
     interface View {
         void editUserLanguageSuccess();
 
-        void editUserLanguageFailed(String error, boolean timeout);
+        void editUserLanguageFailed(String error, int status);
     }
 
     interface Presenter {

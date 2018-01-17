@@ -204,6 +204,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("TAG","MAINACTIVITY ONRESUME");
     }
 
     @Override

@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -33,6 +35,8 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.loadingView)
+    ProgressBar mFragmentLoadingView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -41,10 +45,19 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private int mRetryCount = 0;
     private IOnSetCurrentPositionListener mListener;
+    private IAPIErrorListener mErrorListener;
 
 
     public interface IOnSetCurrentPositionListener {
         void setCurrentPosition(int position);
+    }
+
+    public interface IAPIErrorListener {
+        void errorStatus(int status);
+    }
+
+    public void setErrorListener(IAPIErrorListener listener) {
+        mErrorListener = listener;
     }
 
     public void setListener(IOnSetCurrentPositionListener listener) {
@@ -73,6 +86,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
         ButterKnife.bind(this, view);
 
         mPresenter = new ArriveFlightsPresenter(getContext(), this);
+        mFragmentLoadingView.setVisibility(View.VISIBLE);
         mPresenter.getArriveFlightAPI();
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
@@ -124,6 +138,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
+                    mFragmentLoadingView.setVisibility(View.GONE);
                     mAdapter.setData(list);
                 }
             });
@@ -133,7 +148,7 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     }
 
     @Override
-    public void getArriveFlightFailed(String message, boolean timeout) {
+    public void getArriveFlightFailed(String message, final int status) {
         Log.d(TAG, "getArriveFlightFailed : " + message);
         if (isAdded() && !isDetached()) {
             if (mRetryCount < 5) {
@@ -141,16 +156,8 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
                 mPresenter.getArriveFlightAPI();
             } else {
                 mRetryCount = 0;
-                if (timeout) {
-
-                } else {
-                    mMainActivity.runOnUI(new Runnable() {
-                        @Override
-                        public void run() {
-                            showMessage(getString(R.string.server_error));
-                        }
-                    });
-                }
+                if (mErrorListener != null)
+                    mErrorListener.errorStatus(status);
             }
         } else {
             Log.d(TAG, "Fragment is not add");
@@ -177,35 +184,24 @@ public class ArriveFlightsFragment extends BaseFragment implements ArriveFlights
     }
 
     @Override
-    public void saveMyFlightFailed(final String message, boolean timeout) {
+    public void saveMyFlightFailed(final String message, final int status) {
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
-                    }
-                });
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(TAG, message);
-                        showMessage(message);
-                    }
-                });
-            }
+            if (mErrorListener != null)
+                mErrorListener.errorStatus(status);
         } else {
             Log.d(TAG, "Fragment is not add");
         }
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
+                if (mFragmentLoadingView.isShown())
+                    return;
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
                     mMainActivity.getFlightsDetailInfo()

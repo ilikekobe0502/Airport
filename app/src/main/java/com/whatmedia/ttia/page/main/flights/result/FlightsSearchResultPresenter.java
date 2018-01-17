@@ -50,11 +50,15 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
 
         response.setUploadData(data);
         final String sentJson = response.getJson();
+        if (TextUtils.isEmpty(sentJson)) {
+            mView.getFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+            return;
+        }
 
         mNewApiConnect.saveMyFlights(sentJson, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.saveMyFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.saveMyFlightFailed(e.toString(), status);
             }
 
             @Override
@@ -84,14 +88,14 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
         flightsListResponse.setData(data);
         String json = flightsListResponse.getJson();
         if (TextUtils.isEmpty(json)) {
-            mView.getFlightFailed(mContext.getString(R.string.data_error), false);
+            mView.getFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getFlightsListInfo(json, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getFlightFailed(e.toString(), status);
             }
 
             @Override

@@ -8,7 +8,7 @@ import java.util.List;
 public interface SouvenirAreaContract {
     interface View {
         void querySouvenirListSuccess(List<SouvenirData> list);
-        void querySouvenirListFail(String message, boolean timeout);
+        void querySouvenirListFail(String message, int status);
     }
 
     interface Presenter {

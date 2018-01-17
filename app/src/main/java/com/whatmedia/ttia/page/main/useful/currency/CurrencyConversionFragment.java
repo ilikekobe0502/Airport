@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.enums.ExchangeRate;
 import com.whatmedia.ttia.newresponse.data.ExchangeRateQueryData;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -140,27 +141,27 @@ public class CurrencyConversionFragment extends BaseFragment implements Currency
     }
 
     @Override
-    public void getExchangeRateFailed(String result, boolean timeout) {
+    public void getExchangeRateFailed(String result, final int status) {
         mLoadingView.goneLoadingView();
         Log.e(TAG, "getExchangeRateFailed : " + (!TextUtils.isEmpty(result) ? result : ""));
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            mEditTextTargetAmount.setText("");
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        mEditTextTargetAmount.setText("");
-                        showMessage(getString(R.string.data_error));
-                    }
-                });
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

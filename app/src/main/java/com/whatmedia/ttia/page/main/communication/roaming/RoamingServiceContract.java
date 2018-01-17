@@ -13,7 +13,7 @@ public interface RoamingServiceContract {
     interface View {
         void getRoamingServiceSucceed(List<RoamingServiceData> response);
 
-        void getRoamingServiceFailed(String message, boolean timeout);
+        void getRoamingServiceFailed(String message, int status);
     }
 
     interface Presenter {

@@ -10,7 +10,7 @@ public interface StoreSearchContract {
     interface View {
         void getTerminalSucceed(List<StoreConditionCodeData> response);
 
-        void getTerminalFailed(String message, boolean timeout);
+        void getTerminalFailed(String message, int status);
 
         void getAreaSucceed(List<StoreConditionCodeData> response);
 
@@ -20,7 +20,7 @@ public interface StoreSearchContract {
 
         void getRestaurantInfoSucceed(String response);
 
-        void getRestaurantInfoFailed(String message, boolean timeout);
+        void getRestaurantInfoFailed(String message, int status);
 
         void getStoreCodeSuccess(List<StoreConditionCodeData> response);
 

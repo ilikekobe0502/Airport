@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -131,20 +132,25 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     }
 
     @Override
-    public void getFlightsDepartureFailed(String message, boolean timeout) {
+    public void getFlightsDepartureFailed(String message, final int status) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.e(TAG, "getFlightsDepartureFailed: " + message);
-                checkToNextPage();
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

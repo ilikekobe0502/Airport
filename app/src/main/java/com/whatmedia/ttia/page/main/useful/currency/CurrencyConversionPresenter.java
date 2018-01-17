@@ -37,8 +37,8 @@ public class CurrencyConversionPresenter implements CurrencyConversionContract.P
 
         mNewApiConnect.exchangeRate(response.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getExchangeRateFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getExchangeRateFailed(e.toString(), status);
             }
 
             @Override
@@ -47,7 +47,7 @@ public class CurrencyConversionPresenter implements CurrencyConversionContract.P
                 if (exchangeRateResponse != null)
                     mView.getExchangeRateSucceed(exchangeRateResponse.getAmount());
                 else
-                    mView.getExchangeRateFailed(mContext.getString(R.string.data_error), false);
+                    mView.getExchangeRateFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

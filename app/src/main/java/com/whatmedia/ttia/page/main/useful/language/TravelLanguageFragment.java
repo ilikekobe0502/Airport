@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.data.TravelTypeListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -144,17 +145,24 @@ public class TravelLanguageFragment extends BaseFragment implements TravelLangua
     }
 
     @Override
-    public void getApiFailed(String s, boolean timeout) {
-        mLoadingView.goneLoadingView();
+    public void getApiFailed(String s, final int status) {
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

@@ -30,12 +30,16 @@ import okhttp3.Response;
 
 public class NewApiConnect {
     private final static String TAG = NewApiConnect.class.getSimpleName();
-//    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
+    //    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
 //    private final static String TAG_HOST = "https://210.241.14.99/api/";
     private final static String TAG_HOST = "http://210.241.14.99/";//正式環境
     private final static MediaType TAG_JSON = MediaType.parse("application/json");
     private final static String TAG_AES_KEY = "taoyuanairporttaoyuanairporttaoy";
     private final static String TAG_AES_IV = "taoyuanairportta";
+
+    public final static int TAG_DEFAULT = 100;//預設
+    public final static int TAG_TIMEOUT = 101;//網路逾時
+    public final static int TAG_SOCKET_ERROR = 102;//淡定用來判斷無網路
 
     private static OkHttpClient mClient;
     private static NewApiConnect mApiConnect;
@@ -75,14 +79,16 @@ public class NewApiConnect {
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "[Failure]", e);
+                Log.e(TAG, "[Failure] " + e.toString(), e);
                 if (e.toString().contains("SocketTimeoutException")) {
                     Log.e(TAG, "timeout");
-                    callback.onFailure(call, e, true);
-
+                    callback.onFailure(call, e, TAG_TIMEOUT);
+                } else if (e.toString().contains("SocketException") || e.toString().contains("UnknownHostException")) {
+                    Log.e(TAG, "SocketException");
+                    callback.onFailure(call, e, TAG_SOCKET_ERROR);
                 } else {
                     Log.e(TAG, "not timeout");
-                    callback.onFailure(call, e, false);
+                    callback.onFailure(call, e, TAG_DEFAULT);
 
                 }
             }
@@ -171,11 +177,13 @@ public class NewApiConnect {
                 Log.e(TAG, "[Failure]", e);
                 if (e.toString().contains("SocketTimeoutException")) {
                     Log.e(TAG, "timeout");
-                    callback.onFailure(call, e, true);
-
+                    callback.onFailure(call, e, TAG_TIMEOUT);
+                } else if (e.toString().contains("SocketException")) {
+                    Log.e(TAG, "SocketException");
+                    callback.onFailure(call, e, TAG_SOCKET_ERROR);
                 } else {
                     Log.e(TAG, "not timeout");
-                    callback.onFailure(call, e, false);
+                    callback.onFailure(call, e, TAG_DEFAULT);
 
                 }
             }
@@ -271,7 +279,7 @@ public class NewApiConnect {
     }
 
     public interface MyCallback {
-        void onFailure(Call call, IOException e, boolean timeout);
+        void onFailure(Call call, IOException e, int status);
 
         void onResponse(Call call, String response) throws IOException;
     }
@@ -299,6 +307,7 @@ public class NewApiConnect {
         if (TAG_DEVICE_ID == null) {
             TAG_DEVICE_ID = Util.getDeviceId(context);
         }
+        Log.d("TAG", "Device ID = " + TAG_DEVICE_ID);
 
 //        if (TextUtils.isEmpty(mToken) || TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
 //            mToken = Preferences.getFCMToken(context);
@@ -834,5 +843,29 @@ public class NewApiConnect {
 
         RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
         postApi(url, body, true, callback);
+    }
+
+    /**
+     * 首頁停車資訊
+     *
+     * @param callback
+     */
+    public void getHomeParkIngInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse("http://app.taoyuan-airport.com/newttia/ap_park/park_available_reader.php")
+                .newBuilder()
+                .build();
+        getApi(url, false, callback);
+    }
+
+    /**
+     * 停車資訊
+     *
+     * @param callback
+     */
+    public void getParkIngInfo(MyCallback callback) {
+        HttpUrl url = HttpUrl.parse("http://app.taoyuan-airport.com/newttia/ap_park/park_info_reader.php")
+                .newBuilder()
+                .build();
+        getApi(url, false, callback);
     }
 }

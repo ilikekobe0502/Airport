@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.response.data.HomeParkingInfoData;
@@ -79,7 +80,7 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
         MapsInitializer.initialize(getContext());
         if (mMapView != null)
             mMapView.onCreate(savedInstanceState);
-        mPresenter = ParkingInfoPresenter.getInstance(getContext(), this);
+        mPresenter = new ParkingInfoPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getParkingDetailAPI();
         return view;
@@ -178,17 +179,25 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     }
 
     @Override
-    public void getParkingInfoFailed(final String message, boolean timeout) {
+    public void getParkingInfoFailed(final String message, final int status) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -205,20 +214,25 @@ public class ParkingInfoFragment extends BaseFragment implements ParkingInfoCont
     }
 
     @Override
-    public void getParkingDetailFailed(String message, boolean timeout) {
+    public void getParkingDetailFailed(String message, final int status) {
         showMessage(message);
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mLoadingView.goneLoadingView();
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.e(TAG, "getParkingDetailFailed() :" + message);
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

@@ -5,14 +5,11 @@ import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
-import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.newresponse.GetFlightsQueryResponse;
-import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.newresponse.data.FlightsQueryData;
 import com.whatmedia.ttia.utility.Util;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -45,14 +42,14 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
         data.setKeyWord(keyword);
         flightsListResponse.setData(data);
         if (TextUtils.isEmpty(flightsListResponse.getJson())) {
-            mView.getFlightsDepartureFailed(mContext.getString(R.string.data_error), false);
+            mView.getFlightsDepartureFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getFlightsListInfo(flightsListResponse.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getFlightsDepartureFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getFlightsDepartureFailed(e.toString(), status);
             }
 
             @Override

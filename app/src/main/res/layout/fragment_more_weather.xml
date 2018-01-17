@@ -9,7 +9,8 @@
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/layout_selector"
@@ -30,14 +31,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:text="@string/ok"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_pixel_14"
+                android:layout_centerVertical="true"
                 android:background="@drawable/frame_dialog_button_blue"
                 android:gravity="center"
-                android:padding="@dimen/dp_pixel_10"/>
+                android:padding="@dimen/dp_pixel_10"
+                android:text="@string/ok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_pixel_14" />
         </RelativeLayout>
 
         <LinearLayout

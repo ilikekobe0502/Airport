@@ -1,14 +1,11 @@
 package com.whatmedia.ttia.page.main.home;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +15,12 @@ import android.widget.RelativeLayout;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.enums.HomeFeature;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetLanguageListResponse;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.IndoorMap.IndoorMapActivity;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
@@ -33,7 +30,7 @@ import com.whatmedia.ttia.utility.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends BaseFragment implements HomeContract.View, IOnItemClickListener, ViewPager.OnPageChangeListener, ArriveFlightsFragment.IOnSetCurrentPositionListener {
+public class HomeFragment extends BaseFragment implements HomeContract.View, IOnItemClickListener, ViewPager.OnPageChangeListener, ArriveFlightsFragment.IOnSetCurrentPositionListener, ArriveFlightsFragment.IAPIErrorListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     @BindView(R.id.viewPager_info)
@@ -61,6 +58,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     private HomePresenter mPresenter;
     private ArriveFlightsFragment.IOnSetCurrentPositionListener mPositionListener = this;
     private IOnItemClickListener mFeatureClickListener = this;
+    private ArriveFlightsFragment.IAPIErrorListener mAPIErrorListener = this;
+    private boolean mNetworkError;//網路錯誤Dialog已跳出
 
     @Override
     public void setCurrentPosition(int position) {
@@ -93,6 +92,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 
         mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
         mInfoAdapter.setCurrentPositionListener(mPositionListener);
+        mInfoAdapter.setErrorListener(mAPIErrorListener);
         mViewPagerInfo.setAdapter(mInfoAdapter);
         mTabInfoIndicator.setupWithViewPager(mViewPagerInfo, true);
         mViewPagerInfo.addOnPageChangeListener(this);
@@ -113,6 +113,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNetworkError = false;
+        Log.d("TAG", "onResume");
     }
 
     @Override
@@ -215,6 +222,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     @Override
                     public void onClick(View v) {
                         mInfoAdapter.notifyDataSetChanged();
+                        mNetworkError = false;
                     }
                 });
 
@@ -237,6 +245,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     @Override
                     public void onClick(View v) {
                         mInfoAdapter.notifyDataSetChanged();
+                        mNetworkError = false;
                     }
                 });
 
@@ -259,6 +268,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
                     @Override
                     public void onClick(View v) {
                         mInfoAdapter.notifyDataSetChanged();
+                        mNetworkError = false;
                     }
                 });
 
@@ -295,6 +305,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             @Override
             public void onClick(View v) {
                 mInfoAdapter.notifyDataSetChanged();
+                mNetworkError = false;
             }
         });
 
@@ -306,22 +317,29 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     }
 
     @Override
-    public void getLanguageListFailed(String e, boolean timeout) {
-        if (!timeout) {
-            if (isAdded() && !isDetached()) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(R.string.note)
-                                .setMessage(R.string.data_not_found)
-                                .setPositiveButton(R.string.ok, null)
-                                .show();
+    public void getLanguageListFailed(String e, final int status) {
+        if (isAdded() && !isDetached()) {
+            if (mNetworkError)
+                return;
+            mNetworkError = true;
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.d(TAG, "Fragment is not add");
-            }
+                }
+            });
+        } else {
+            Log.e(TAG, "Fragment is not added");
         }
     }
 
@@ -344,5 +362,29 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         }
         mMainActivity.addFragment(page, null, true);
         getArguments().putString(HomeContract.TAG_TYPE, "");
+    }
+
+    @Override
+    public void errorStatus(final int status) {
+        Log.d("TAG", "mNetworkError = " + mNetworkError);
+        if (mNetworkError)
+            return;
+        mNetworkError = true;
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                switch (status) {
+                    case NewApiConnect.TAG_DEFAULT:
+                        showMessage(getString(R.string.server_error));
+                        break;
+                    case NewApiConnect.TAG_TIMEOUT:
+                        Util.showTimeoutDialog(getContext());
+                        break;
+                    case NewApiConnect.TAG_SOCKET_ERROR:
+                        Util.showNetworkErrorDialog(getContext());
+                        break;
+                }
+            }
+        });
     }
 }

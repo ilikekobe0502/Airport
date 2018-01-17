@@ -10,13 +10,17 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.response.data.HomeParkingInfoData;
 import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.utility.Util;
 
 import java.util.List;
 
@@ -45,6 +49,8 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     TextView mTextViewSubNameP4;
     @BindView(R.id.textView_count_P4)
     TextView mTextViewCountP4;
+    @BindView(R.id.loadingView)
+    ProgressBar mFragmentLoading;
 
 
     private IActivityTools.ILoadingView mLoadingView;
@@ -54,6 +60,7 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     private String mLocale = "";
 
     private HomeParkingInfoRecyclerViewAdapter mAdapter;
+    private ArriveFlightsFragment.IAPIErrorListener errorListener;
 
     public HomeParkingInfoFragment() {
         // Required empty public constructor
@@ -83,12 +90,13 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
         View view = inflater.inflate(R.layout.fragment_home_parking_info, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = HomeParkingInfoPresenter.getInstance(getContext(), this);
+        mPresenter = new HomeParkingInfoPresenter(getContext(), this);
+        mFragmentLoading.setVisibility(View.VISIBLE);
         mPresenter.getParkingInfoAPI();
         is34Mode = Preferences.checkScreenIs34Mode(getContext());
         mLocale = Preferences.getLocaleSetting(getContext());
 
-        if(is34Mode && mLocale.equals("en")){
+        if (is34Mode && mLocale.equals("en")) {
             mTextViewCountP1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
             mTextViewCountP2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
             mTextViewCountP3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
@@ -134,10 +142,11 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     @Override
     public void getParkingInfoSucceed(final List<HomeParkingInfoData> result) {
         if (isAdded() && !isDetached()) {
-            if (result!=null) {
+            if (result != null) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
+                        mFragmentLoading.setVisibility(View.GONE);
                         mTextViewNameP1.setText(getString(R.string.parking_info_parking_space_P1));
                         mTextViewNameP2.setText(getString(R.string.parking_info_parking_space_P2));
                         mTextViewNameP3.setText(getString(R.string.parking_info_parking_space_P4));
@@ -180,7 +189,7 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
                     }
 //                    mAdapter.setData(result);
                 });
-            }else {
+            } else {
                 Log.e(TAG, "getParkingInfoSucceed Response is null");
             }
         } else {
@@ -189,25 +198,16 @@ public class HomeParkingInfoFragment extends BaseFragment implements HomeParking
     }
 
     @Override
-    public void getParkingInfoFailed(final String message, boolean timeout) {
+    public void getParkingInfoFailed(final String message, final int status) {
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-//                mMainActivity.runOnUI(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Util.showTimeoutDialog(getContext());
-//                    }
-//                });
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        showMessage(!TextUtils.isEmpty(message) ? message : getString(R.string.server_error));
-                    }
-                });
-            }
+            if (errorListener != null)
+                errorListener.errorStatus(status);
         } else {
             Log.d(TAG, "Fragment is not add");
         }
+    }
+
+    public void setErrorListener(ArriveFlightsFragment.IAPIErrorListener errorListener) {
+        this.errorListener = errorListener;
     }
 }

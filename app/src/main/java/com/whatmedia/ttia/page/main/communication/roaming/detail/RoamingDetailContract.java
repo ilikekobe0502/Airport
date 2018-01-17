@@ -6,7 +6,7 @@ public interface RoamingDetailContract {
     interface View {
         void getRoamingDetailSucceed(String url,String image,String detailImage);
 
-        void getRoamingDetailFailed(String message, boolean timeout);
+        void getRoamingDetailFailed(String message, int status);
     }
 
     interface Presenter {

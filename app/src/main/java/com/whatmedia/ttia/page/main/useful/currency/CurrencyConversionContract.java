@@ -8,7 +8,7 @@ public interface CurrencyConversionContract {
     interface View {
         void getExchangeRateSucceed(float response);
 
-        void getExchangeRateFailed(String result, boolean timeout);
+        void getExchangeRateFailed(String result, int status);
     }
 
     interface Presenter {

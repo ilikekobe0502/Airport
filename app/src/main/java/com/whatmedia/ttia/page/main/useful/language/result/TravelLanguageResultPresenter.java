@@ -38,14 +38,14 @@ public class TravelLanguageResultPresenter implements TravelLanguageResultContra
 
         String json = travelListQueryResponse.getJson();
         if (TextUtils.isEmpty(json)) {
-            mView.getLanguageFailed(mContext.getString(R.string.data_error), false);
+            mView.getLanguageFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getTravelSessionList(json, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getLanguageFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getLanguageFailed(e.toString(), status);
             }
 
             @Override
@@ -54,7 +54,7 @@ public class TravelLanguageResultPresenter implements TravelLanguageResultContra
                 if (travelListResponse.getTravelSessionList() != null)
                     mView.getLanguageSucceed(travelListResponse.getTravelSessionList());
                 else
-                    mView.getLanguageFailed(mContext.getString(R.string.data_error), false);
+                    mView.getLanguageFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

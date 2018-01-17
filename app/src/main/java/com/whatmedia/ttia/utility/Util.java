@@ -898,6 +898,19 @@ public class Util {
     }
 
     /**
+     * Show NewWork error dialog
+     *
+     * @param context
+     */
+    public static void showNetworkErrorDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.note)
+                .setMessage(context.getString(R.string.network_message))
+                .setPositiveButton(R.string.alert_btn_ok, null)
+                .show();
+    }
+
+    /**
      * Filter symbol
      *
      * @param str

@@ -15,17 +15,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.page.main.communication.CommunicationRecyclerViewAdapter;
 import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -189,32 +189,25 @@ public class LanguageSettingFragment extends BaseFragment implements LanguageSet
     }
 
     @Override
-    public void editUserLanguageFailed(final String error, boolean timeout) {
+    public void editUserLanguageFailed(final String error, final int status) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (!timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(R.string.note)
-                                .setMessage(String.format("%1$s\n%2$s", getString(R.string.server_error), error))
-                                .setPositiveButton(R.string.ok, null)
-                                .show();
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(R.string.note)
-                                .setMessage(getString(R.string.timeout_message))
-                                .setPositiveButton(R.string.ok, null)
-                                .show();
-                    }
-                });
-            }
+                }
+            });
         }
     }
 }

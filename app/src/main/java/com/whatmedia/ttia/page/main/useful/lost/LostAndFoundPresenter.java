@@ -29,8 +29,8 @@ public class LostAndFoundPresenter implements LostAndFoundContract.Presenter {
     public void getLostAndFoundAPI() {
         mNewApiConnect.getLostAndFoundInfo(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getLostAndFoundFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getLostAndFoundFailed(e.toString(), status);
             }
 
             @Override
@@ -39,7 +39,7 @@ public class LostAndFoundPresenter implements LostAndFoundContract.Presenter {
                 if (lostAndFoundInfoResponse.getLostAndFound() != null)
                     mView.getLostAndFoundSucceed(lostAndFoundInfoResponse.getLostAndFound());
                 else
-                    mView.getLostAndFoundFailed(mContext.getString(R.string.data_error), false);
+                    mView.getLostAndFoundFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

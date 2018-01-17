@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.TerminalsFacilityData;
 import com.whatmedia.ttia.newresponse.data.TerminalsFacilityListData;
@@ -139,16 +140,24 @@ public class AirportFacilityFragment extends BaseFragment implements AirportFaci
     }
 
     @Override
-    public void getAirportFacilityFailed(String message, boolean timeout) {
+    public void getAirportFacilityFailed(String message, final int status) {
         mLoadingView.goneLoadingView();
-        if (timeout) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Util.showTimeoutDialog(getContext());
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                switch (status) {
+                    case NewApiConnect.TAG_DEFAULT:
+                        showMessage(getString(R.string.server_error));
+                        break;
+                    case NewApiConnect.TAG_TIMEOUT:
+                        Util.showTimeoutDialog(getContext());
+                        break;
+                    case NewApiConnect.TAG_SOCKET_ERROR:
+                        Util.showNetworkErrorDialog(getContext());
+                        break;
                 }
-            });
-        }
+            }
+        });
     }
 
     @OnClick({R.id.imageView_left, R.id.imageView_right})

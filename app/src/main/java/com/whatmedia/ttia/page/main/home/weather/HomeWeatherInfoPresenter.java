@@ -4,14 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
 import com.whatmedia.ttia.connect.NewApiConnect;
-import com.whatmedia.ttia.newresponse.GetWeatherQueryResponse;
-import com.whatmedia.ttia.newresponse.data.WeatherQueryData;
-
-import java.io.IOException;
-
-import okhttp3.Call;
 
 /**
  * Created by neo_mac on 2017/6/17.

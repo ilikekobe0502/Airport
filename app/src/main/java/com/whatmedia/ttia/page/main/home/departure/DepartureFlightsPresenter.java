@@ -43,14 +43,14 @@ public class DepartureFlightsPresenter implements DepartureFlightsContract.Prese
         data.setExpressDate(Util.getNowDate());
         flightsListResponse.setData(data);
         if (TextUtils.isEmpty(flightsListResponse.getJson())) {
-            mView.getDepartureFlightFailed(mContext.getString(R.string.data_error), false);
+            mView.getDepartureFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getFlightsListInfo(flightsListResponse.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getDepartureFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getDepartureFlightFailed(e.toString(), status);
             }
 
             @Override
@@ -75,11 +75,15 @@ public class DepartureFlightsPresenter implements DepartureFlightsContract.Prese
 
         response.setUploadData(data);
         final String sentJson = response.getJson();
+        if (TextUtils.isEmpty(sentJson)) {
+            mView.getDepartureFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+            return;
+        }
 
         mNewApiConnect.saveMyFlights(sentJson, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.saveMyFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.saveMyFlightFailed(e.toString(), status);
             }
 
             @Override

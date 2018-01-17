@@ -7,7 +7,7 @@ public interface EmergencyCallContract {
     interface View {
         void getEmergencyCallSucceed(onlyContentData onlyContentData);
 
-        void getEmergencyCallFailed(String message, boolean timeout);
+        void getEmergencyCallFailed(String message, int status);
     }
 
     interface Presenter {

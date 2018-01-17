@@ -30,8 +30,8 @@ public class HomePresenter implements HomeContract.Presenter {
     public void getLanguageList() {
         mNewApiConnect.getLangList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getLanguageListFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getLanguageListFailed(e.toString(), status);
             }
 
             @Override
@@ -40,7 +40,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 if (result.getData() != null)
                     mView.getLanguageListSuccess(result);
                 else
-                    onFailure(call, new IOException("Data is empty"), false);
+                    onFailure(call, new IOException("Data is empty"), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

@@ -9,7 +9,6 @@ import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetQuestionnairesListResponse;
 import com.whatmedia.ttia.newresponse.GetQuestionnairesQueryResponse;
 import com.whatmedia.ttia.newresponse.data.AnswerListData;
-import com.whatmedia.ttia.newresponse.data.QuestionnairesListData;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,8 +33,8 @@ public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
     public void getQuestionnaireAPI() {
         mNewApiConnect.getQuestionnairesList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getQuestionnaireFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getQuestionnaireFailed(e.toString(), status);
             }
 
             @Override
@@ -44,7 +43,7 @@ public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
                 if (questionnairesListResponse.getQuestionnairesList() != null)
                     mView.getQuestionnaireSucceed(questionnairesListResponse.getQuestionnairesList());
                 else
-                    mView.getQuestionnaireFailed(mContext.getString(R.string.data_error), false);
+                    mView.getQuestionnaireFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }
@@ -56,13 +55,13 @@ public class QuestionnairePresenter implements QuestionnaireContract.Presenter {
         questionnairesQueryResponse.setData(answer);
         String json = questionnairesQueryResponse.getJson();
         if (TextUtils.isEmpty(json)) {
-            mView.sendQuestionnaireFailed(mContext.getString(R.string.data_error), false);
+            mView.sendQuestionnaireFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
         mNewApiConnect.sentQuestioonaires(json, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.sendQuestionnaireFailed(e.toString(),timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.sendQuestionnaireFailed(e.toString(), status);
             }
 
             @Override

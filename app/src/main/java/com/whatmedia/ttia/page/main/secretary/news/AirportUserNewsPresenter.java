@@ -32,8 +32,8 @@ public class AirportUserNewsPresenter implements AirportUserNewsContract.Present
     public void getUserNewsAPI() {
         mApiConnect.getUserNews(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getUserNewsFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getUserNewsFailed(e.toString(), status);
             }
 
             @Override
@@ -44,7 +44,7 @@ public class AirportUserNewsPresenter implements AirportUserNewsContract.Present
                 if (getNewsResponse != null && getNewsResponse.getUserNewsDataList() != null) {
                     mView.getUserNewsSucceed(getNewsResponse.getUserNewsDataList());
                 } else {
-                    mView.getUserNewsFailed(mContext.getString(R.string.data_error), false);
+                    mView.getUserNewsFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

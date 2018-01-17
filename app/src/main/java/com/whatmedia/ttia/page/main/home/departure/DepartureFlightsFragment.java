@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 import com.whatmedia.ttia.page.BaseFragment;
@@ -20,6 +22,7 @@ import com.whatmedia.ttia.page.IActivityTools;
 import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.flights.my.MyFlightsInfoContract;
 import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultRecyclerViewAdapter;
+import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.response.data.DialogContentData;
 import com.whatmedia.ttia.utility.Util;
 
@@ -33,6 +36,8 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.loadingView)
+    ProgressBar mFragmentLoadingView;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
@@ -40,6 +45,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
     private FlightsSearchResultRecyclerViewAdapter mAdapter;
     private int mRetryCount = 0;
+    private ArriveFlightsFragment.IAPIErrorListener errorListener;
 
 
     public DepartureFlightsFragment() {
@@ -65,6 +71,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
 
         mPresenter = new DepartureFlightsPresenter(getContext(), this);
 
+        mFragmentLoadingView.setVisibility(View.VISIBLE);
         mPresenter.getDepartureFlightAPI();
 
         mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext());
@@ -115,6 +122,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
+                    mFragmentLoadingView.setVisibility(View.GONE);
                     mAdapter.setData(list);
                 }
             });
@@ -124,7 +132,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     }
 
     @Override
-    public void getDepartureFlightFailed(String message, boolean timeout) {
+    public void getDepartureFlightFailed(String message, final int status) {
         Log.d(TAG, "getArriveFlightFailed : " + message);
         if (isAdded() && !isDetached()) {
 
@@ -133,15 +141,8 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                 mPresenter.getDepartureFlightAPI();
             } else {
                 mRetryCount = 0;
-                if (timeout) {
-
-                } else {
-                    mMainActivity.runOnUI(new Runnable() {
-                        @Override
-                        public void run() {
-                            showMessage(getString(R.string.server_error));
-                        }
-                    });
+                if (errorListener != null) {
+                    errorListener.errorStatus(status);
                 }
             }
         } else {
@@ -168,25 +169,12 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     }
 
     @Override
-    public void saveMyFlightFailed(final String message, boolean timeout) {
+    public void saveMyFlightFailed(final String message, final int status) {
 
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
-                    }
-                });
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(TAG, message);
-                        showMessage(message);
-                    }
-                });
+            if (errorListener != null) {
+                errorListener.errorStatus(status);
             }
         } else {
             Log.d(TAG, "Fragment is not add");
@@ -197,6 +185,8 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
+                if (!mFragmentLoadingView.isShown())
+                    return;
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
                     mMainActivity.getFlightsDetailInfo()
@@ -230,5 +220,9 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
                 }
         }
 
+    }
+
+    public void setErrorListener(ArriveFlightsFragment.IAPIErrorListener errorListener) {
+        this.errorListener = errorListener;
     }
 }

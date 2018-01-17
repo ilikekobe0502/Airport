@@ -7,7 +7,7 @@ public interface InternationalCallContract {
     interface View {
         void getInternationalCallSucceed(onlyContentData onlyContentData);
 
-        void getInternationalCallFailed(String message, boolean timeout);
+        void getInternationalCallFailed(String message, int status);
     }
 
     interface Presenter {

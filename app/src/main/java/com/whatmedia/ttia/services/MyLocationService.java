@@ -58,7 +58,7 @@ public class MyLocationService extends Service {
 
             new NewApiConnect().sentEditLocation(json, new NewApiConnect.MyCallback() {
                 @Override
-                public void onFailure(Call call, IOException e, boolean timeout) {
+                public void onFailure(Call call, IOException e, int status) {
                     Log.e(TAG, "sentEditLocation response failure = " + e.toString());
                 }
 

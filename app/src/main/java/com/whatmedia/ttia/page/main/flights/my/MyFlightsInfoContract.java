@@ -10,11 +10,11 @@ public interface MyFlightsInfoContract {
     interface View {
         void getMyFlightsInfoSucceed(List<FlightsListData> response);
 
-        void getMyFlightsInfoFailed(String message, boolean timeout);
+        void getMyFlightsInfoFailed(String message, int status);
 
         void deleteMyFlightsInfoSucceed();
 
-        void deleteMyFlightsInfoFailed(String message, boolean timeout);
+        void deleteMyFlightsInfoFailed(String message, int status);
 
         boolean addNotification(FlightsListData data);
 

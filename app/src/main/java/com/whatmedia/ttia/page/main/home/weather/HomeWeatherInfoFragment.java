@@ -4,21 +4,22 @@ import android.content.Context;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
-import com.whatmedia.ttia.utility.Preferences;
+import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,15 +29,19 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 
     @BindView(R.id.webView)
     WebView mWebView;
+    @BindView(R.id.loadingView)
+    ProgressBar mFragmentLoading;
 
     //    private final static String mWeatherUrl = "http://210.241.14.99/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";
 //    private final static String mWeatherUrl = "http://125.227.250.187:8867/weather2/index.php?region=ASI|TW|TW018|TAOYUAN&lang=%s";//現在先塞舊的IP
     private final static String mWeatherUrl = "http://210.241.14.99/weather?deviceID=%1$s&cityId=ASI|TW|TW018|TAOYUAN&queryType=2";
-    private static String mLocale;
+//    private static String mLocale;
 
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private HomeWeatherInfoContract.Presenter mPresenter;
+    private boolean mLoadingError;//Web view loading error
+    private ArriveFlightsFragment.IAPIErrorListener mErrorListener;
 
     public HomeWeatherInfoFragment() {
         // Required empty public constructor
@@ -60,6 +65,11 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -69,7 +79,8 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
         mPresenter = new HomeWeatherInfoPresenter(getContext(), this);
 //        mLoadingView.showLoadingView();
 //        if (TextUtils.isEmpty(mLocale))
-        mLocale = Preferences.getLocaleSetting(getContext());
+        mFragmentLoading.setVisibility(View.VISIBLE);
+//        mLocale = Preferences.getLocaleSetting(getContext());
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -95,7 +106,6 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
 //                mWebView.loadUrl(String.format(mWeatherUrl, "tw"));
 //                break;
 //        }
-        mPresenter.getDeviceId();
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -106,21 +116,38 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mLoadingView.goneLoadingView();
-                mWebView.setVisibility(View.VISIBLE);
+                if (!mLoadingError) {
+                    mFragmentLoading.setVisibility(View.GONE);
+                    mWebView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.proceed();
+                mLoadingError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                mLoadingError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                mLoadingError = true;
             }
         });
         return view;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        mPresenter.getDeviceId();
+        mLoadingError = false;
     }
 
     @Override
@@ -159,5 +186,9 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
     @Override
     public void getDeviceIdFailed(String deviceId) {
 
+    }
+
+    public void setmErrorListener(ArriveFlightsFragment.IAPIErrorListener mErrorListener) {
+        this.mErrorListener = mErrorListener;
     }
 }

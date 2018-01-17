@@ -2,7 +2,6 @@ package com.whatmedia.ttia.page.main.communication.emergency;
 
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
@@ -29,8 +28,8 @@ public class EmergencyCallPresenter implements EmergencyCallContract.Presenter {
     public void getEmergencyCallAPI() {
         mApiConnect.getEmergencyCall(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getEmergencyCallFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getEmergencyCallFailed(e.toString(), status);
             }
 
             @Override
@@ -40,7 +39,7 @@ public class EmergencyCallPresenter implements EmergencyCallContract.Presenter {
                 if(getEmergenctCallResponse!=null && getEmergenctCallResponse.getOnlyContentData()!=null){
                     mView.getEmergencyCallSucceed(getEmergenctCallResponse.getOnlyContentData());
                 }else{
-                    mView.getEmergencyCallFailed(mContext.getString(R.string.data_error), false);
+                    mView.getEmergencyCallFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

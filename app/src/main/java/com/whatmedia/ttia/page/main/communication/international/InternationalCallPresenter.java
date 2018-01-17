@@ -2,16 +2,12 @@ package com.whatmedia.ttia.page.main.communication.international;
 
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetInternationCallResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 
@@ -33,8 +29,8 @@ public class InternationalCallPresenter implements InternationalCallContract.Pre
     public void getInternationalCallAPI() {
         mApiConnect.getInternationCall(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getInternationalCallFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getInternationalCallFailed(e.toString(), status);
             }
 
             @Override
@@ -44,7 +40,7 @@ public class InternationalCallPresenter implements InternationalCallContract.Pre
                 if(getInternationCallResponse!=null && getInternationCallResponse.getOnlyContentData()!=null){
                     mView.getInternationalCallSucceed(getInternationCallResponse.getOnlyContentData());
                 }else{
-                    mView.getInternationalCallFailed(mContext.getString(R.string.data_error), false);
+                    mView.getInternationalCallFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

@@ -6,7 +6,7 @@ public interface RoadsideAssistanceContract {
     interface View {
         void getRoadsideAssistanceSucceed(BaseTrafficInfoData response);
 
-        void getRoadsideAssistanceFailed(String message, boolean timeout);
+        void getRoadsideAssistanceFailed(String message, int status);
     }
 
     interface Presenter {

@@ -31,8 +31,8 @@ public class AirportEmergencyPresenter implements AirportEmergencyContract.Prese
     public void getEmergencyAPI() {
         mNewApiConnect.getUserEmergency(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getEmergencyFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getEmergencyFailed(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class AirportEmergencyPresenter implements AirportEmergencyContract.Prese
                 if(getUserNewsResponse!=null && getUserNewsResponse.getUserNewsDataList()!=null){
                     mView.getEmergencySucceed(getUserNewsResponse.getUserNewsDataList());
                 }else{
-                    mView.getEmergencyFailed(mContext.getString(R.string.data_error), false);
+                    mView.getEmergencyFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

@@ -32,8 +32,8 @@ public class TourBusPresenter implements TourBusContract.Presenter {
     public void getTourBusAPI() {
         mNewApiConnect.getShuttleInfo(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getTourBusFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTourBusFailed(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class TourBusPresenter implements TourBusContract.Presenter {
                 if (shuttleBusInfoResponse.getShuttle() != null)
                     mView.getTourBusSucceed(shuttleBusInfoResponse.getShuttle());
                 else
-                    mView.getTourBusFailed(mContext.getString(R.string.data_error), false);
+                    mView.getTourBusFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

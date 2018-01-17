@@ -8,7 +8,7 @@ public interface HomeParkingInfoContract {
     interface View {
         void getParkingInfoSucceed(List<HomeParkingInfoData> result);
 
-        void getParkingInfoFailed(String message, boolean timeout);
+        void getParkingInfoFailed(String message, int status);
     }
 
     interface Presenter {

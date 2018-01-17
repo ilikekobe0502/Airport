@@ -9,7 +9,7 @@ public interface AirportSweetNotifyContract {
     interface View {
         void getSweetNotifySucceed(List<UserNewsData> list);
 
-        void getSweetNotifyFailed(String message, boolean timeout);
+        void getSweetNotifyFailed(String message, int status);
     }
 
     interface Presenter {

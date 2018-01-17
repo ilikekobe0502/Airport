@@ -8,7 +8,7 @@ public interface AirportUserNewsContract {
     interface View {
         void getUserNewsSucceed(List<UserNewsData> list);
 
-        void getUserNewsFailed(String message, boolean timeout);
+        void getUserNewsFailed(String message, int status);
     }
 
     interface Presenter {

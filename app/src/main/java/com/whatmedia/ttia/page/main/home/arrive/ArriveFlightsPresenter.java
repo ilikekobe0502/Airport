@@ -43,14 +43,14 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
         data.setExpressDate(Util.getNowDate());
         flightsListResponse.setData(data);
         if (TextUtils.isEmpty(flightsListResponse.getJson())) {
-            mView.getArriveFlightFailed(mContext.getString(R.string.data_error), false);
+            mView.getArriveFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getFlightsListInfo(flightsListResponse.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getArriveFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getArriveFlightFailed(e.toString(), status);
             }
 
             @Override
@@ -78,8 +78,8 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
 
         mNewApiConnect.saveMyFlights(sentJson, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.saveMyFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.saveMyFlightFailed(e.toString(), status);
             }
 
             @Override

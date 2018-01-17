@@ -48,14 +48,14 @@ public class MoreFlightsPresenter implements MoreFlightsContract.Presenter {
         data.setExpressDate(mQueryDate);
         flightsListResponse.setData(data);
         if (TextUtils.isEmpty(flightsListResponse.getJson())) {
-            mView.getFlightFailed(mContext.getString(R.string.data_error), false);
+            mView.getFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         mNewApiConnect.getFlightsListInfo(flightsListResponse.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getFlightFailed(e.toString(), status);
             }
 
             @Override
@@ -92,11 +92,15 @@ public class MoreFlightsPresenter implements MoreFlightsContract.Presenter {
 
         response.setUploadData(data);
         final String json = response.getJson();
+        if (TextUtils.isEmpty(json)) {
+            mView.getFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+            return;
+        }
 
         mNewApiConnect.saveMyFlights(json, new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.saveMyFlightFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.saveMyFlightFailed(e.toString(), status);
             }
 
             @Override

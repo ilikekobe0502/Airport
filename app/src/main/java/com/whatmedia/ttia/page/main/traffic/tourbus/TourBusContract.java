@@ -6,7 +6,7 @@ public interface TourBusContract {
     interface View {
         void getTourBusSucceed(BaseTrafficInfoData response);
 
-        void getTourBusFailed(String message, boolean timeout);
+        void getTourBusFailed(String message, int status);
     }
 
     interface Presenter {

@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -33,6 +36,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     private IActivityTools.IMainActivity mMainActivity;
     private AirportBusContract.Presenter mPresenter;
     private final static String TAG_URL = "http://www.taoyuan-airport.com/chinese/Buses";
+    private boolean mLoadError;//WebView load error
 
     public AirportBusFragment() {
         // Required empty public constructor
@@ -82,7 +86,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
                     }
                 });
 
-//        mLoadingView.showLoadingView();
+        mLoadingView.showLoadingView();
 //        mPresenter.getAirportBusAPI();
         mWebView.loadUrl(TAG_URL);
 
@@ -93,7 +97,29 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mLoadingView.goneLoadingView();
+                if (!mLoadError) {
+                    mWebView.setVisibility(View.VISIBLE);
+                    mLoadingView.goneLoadingView();
+                }else {
+                    Util.showTimeoutDialog(getContext());
+                }
+                Log.d(TAG, "onPageFinished");
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                Log.e(TAG, "ERROR = " + errorResponse);
+                mLoadError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+
+                Log.e(TAG, "ERROR code = " + errorCode);
+                Log.e(TAG, "ERROR description = " + description);
+                mLoadError = true;
             }
         });
         return view;
@@ -152,6 +178,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
+                        mWebView.setVisibility(View.VISIBLE);
                         mWebView.loadData(response.getContent(), "text/html; charset=utf-8", "UTF-8");
                         mWebView.setBackgroundColor(0);
                     }
@@ -167,25 +194,26 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     }
 
     @Override
-    public void getAirportBusFailed(final String message, boolean timeout) {
+    public void getAirportBusFailed(final String message, final int status) {
         Log.d(TAG, message);
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        showMessage(message);
-                    }
-                });
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

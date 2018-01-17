@@ -9,7 +9,7 @@ public interface AirportEmergencyContract {
     interface View {
         void getEmergencySucceed(List<UserNewsData> list);
 
-        void getEmergencyFailed(String message, boolean timeout);
+        void getEmergencyFailed(String message, int status);
     }
 
     interface Presenter {

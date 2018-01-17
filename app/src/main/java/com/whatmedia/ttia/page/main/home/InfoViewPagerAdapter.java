@@ -3,29 +3,11 @@ package com.whatmedia.ttia.page.main.home;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.enums.HomeFeature;
-import com.whatmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatmedia.ttia.page.main.flights.info.FlightsInfoFragment;
-import com.whatmedia.ttia.page.main.flights.result.FlightsSearchResultFragment;
 import com.whatmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatmedia.ttia.page.main.home.departure.DepartureFlightsFragment;
 import com.whatmedia.ttia.page.main.home.parking.HomeParkingInfoFragment;
 import com.whatmedia.ttia.page.main.home.weather.HomeWeatherInfoFragment;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by neo_mac on 2017/8/3.
@@ -35,6 +17,7 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
     private final static String TAG = InfoViewPagerAdapter.class.getSimpleName();
 
     private ArriveFlightsFragment.IOnSetCurrentPositionListener mListener;
+    private ArriveFlightsFragment.IAPIErrorListener mErrorListener;
 
     public InfoViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -54,7 +37,14 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0://出發航班
-                return DepartureFlightsFragment.newInstance();
+
+                DepartureFlightsFragment departureFlightsFragment = DepartureFlightsFragment.newInstance();
+                if (mErrorListener != null) {
+                    departureFlightsFragment.setErrorListener(mErrorListener);
+                } else {
+                    departureFlightsFragment.setErrorListener(null);
+                }
+                return departureFlightsFragment;
             case 1://抵達航班
                 ArriveFlightsFragment fragment = ArriveFlightsFragment.newInstance();
                 if (mListener != null) {
@@ -62,11 +52,29 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
                 } else {
                     fragment.setListener(null);
                 }
+
+                if (mErrorListener != null) {
+                    fragment.setErrorListener(mErrorListener);
+                } else {
+                    fragment.setErrorListener(null);
+                }
                 return fragment;
             case 2://停車資訊
-                return HomeParkingInfoFragment.newInstance();
+                HomeParkingInfoFragment homeParkingInfoFragment = HomeParkingInfoFragment.newInstance();
+                if (mErrorListener != null) {
+                    homeParkingInfoFragment.setErrorListener(mErrorListener);
+                } else {
+                    homeParkingInfoFragment.setErrorListener(null);
+                }
+                return homeParkingInfoFragment;
             case 3://天氣資訊
-                return HomeWeatherInfoFragment.newInstance();
+                HomeWeatherInfoFragment homeWeatherInfoFragment = HomeWeatherInfoFragment.newInstance();
+                if (mErrorListener != null) {
+                    homeWeatherInfoFragment.setmErrorListener(mErrorListener);
+                } else {
+                    homeWeatherInfoFragment.setmErrorListener(null);
+                }
+                return homeWeatherInfoFragment;
             default:
                 return DepartureFlightsFragment.newInstance();
         }
@@ -74,6 +82,10 @@ public class InfoViewPagerAdapter extends FragmentPagerAdapter {
 
     public void setCurrentPositionListener(ArriveFlightsFragment.IOnSetCurrentPositionListener listener) {
         mListener = listener;
+    }
+
+    public void setErrorListener(ArriveFlightsFragment.IAPIErrorListener listener) {
+        mErrorListener = listener;
     }
 //
 //    @Override

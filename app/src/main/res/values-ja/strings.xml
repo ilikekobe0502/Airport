@@ -827,6 +827,7 @@
     <string name="directions_from_hint">Please enter your location</string>
     <string name="directions_to_hint">Please enter your destination</string>
     <string name="timeout_message">ネットワークの問題に起因した情報を取得できません。</string>
+    <string name="network_message">ネットワークの問題</string>
 
     <string name="register_user_error">登録ユーザーが失敗しました</string>
 

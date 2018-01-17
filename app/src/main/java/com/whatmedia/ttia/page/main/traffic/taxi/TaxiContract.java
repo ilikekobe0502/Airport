@@ -6,7 +6,7 @@ public interface TaxiContract {
     interface View {
         void getTaxiSucceed(BaseTrafficInfoData response);
 
-        void getTaxiFailed(String message, boolean timeout);
+        void getTaxiFailed(String message, int status);
     }
 
     interface Presenter {

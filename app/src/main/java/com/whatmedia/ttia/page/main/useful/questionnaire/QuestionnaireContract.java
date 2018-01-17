@@ -10,11 +10,11 @@ public interface QuestionnaireContract {
     interface View {
         void getQuestionnaireSucceed(List<QuestionnairesListData> response);
 
-        void getQuestionnaireFailed(String message, boolean timeout);
+        void getQuestionnaireFailed(String message, int status);
 
         void sendQuestionnaireSucceed();
 
-        void sendQuestionnaireFailed(String message, boolean timeout);
+        void sendQuestionnaireFailed(String message, int status);
     }
 
     interface Presenter {

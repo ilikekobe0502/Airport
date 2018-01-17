@@ -2,11 +2,8 @@ package com.whatmedia.ttia.page.main.communication.roaming.detail;
 
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetRoamingDetailResponse;
 
@@ -14,7 +11,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -41,8 +37,8 @@ public class RoamingDetailPresenter implements RoamingDetailContract.Presenter {
 
         mApiConnect.getRoamingDetail(json.toString(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getRoamingDetailFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getRoamingDetailFailed(e.toString(), status);
             }
 
             @Override
@@ -53,7 +49,7 @@ public class RoamingDetailPresenter implements RoamingDetailContract.Presenter {
                 if(getRoamingDetailResponse!=null && getRoamingDetailResponse.getIrHtml() !=null && getRoamingDetailResponse.getIrUrl()!=null){
                     mView.getRoamingDetailSucceed(getRoamingDetailResponse.getIrUrl(),getRoamingDetailResponse.getIrHtml(),getRoamingDetailResponse.getImgDetailUrl());
                 }else{
-                    mView.getRoamingDetailFailed(mContext.getString(R.string.data_error), false);
+                    mView.getRoamingDetailFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

@@ -29,8 +29,8 @@ public class SouvenirAreaPresenter implements SouvenirAreaContract.Presenter {
     public void querySouvenirList() {
         mApiConnect.getSouvenirList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.querySouvenirListFail(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.querySouvenirListFail(e.toString(), status);
             }
 
             @Override
@@ -40,7 +40,7 @@ public class SouvenirAreaPresenter implements SouvenirAreaContract.Presenter {
                 if(getSouvenirDataResponse!=null && getSouvenirDataResponse.getSouvenirDataList()!=null){
                     mView.querySouvenirListSuccess(getSouvenirDataResponse.getSouvenirDataList());
                 }else{
-                    mView.querySouvenirListFail(mContext.getString(R.string.data_error), false);
+                    mView.querySouvenirListFail(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

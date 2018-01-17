@@ -37,8 +37,8 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
     public void getMyFlightsInfoAPI() {
         mNewApiConnect.getMyFlights(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getMyFlightsInfoFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getMyFlightsInfoFailed(e.toString(), status);
             }
 
             @Override
@@ -48,7 +48,7 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
                     List<FlightsListData> data = flightsListResponse.getFlightList();
                     mView.getMyFlightsInfoSucceed(data);
                 } else {
-                    mView.getMyFlightsInfoFailed(mContext.getString(R.string.data_error), false);
+                    mView.getMyFlightsInfoFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });
@@ -73,8 +73,8 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
 
         mNewApiConnect.deleteMyFlights(uploadObject.getDeleteJson(uploadList), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.deleteMyFlightsInfoFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.deleteMyFlightsInfoFailed(e.toString(), status);
             }
 
             @Override

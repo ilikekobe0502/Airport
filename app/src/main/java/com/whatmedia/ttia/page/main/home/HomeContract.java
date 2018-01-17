@@ -12,7 +12,7 @@ public interface HomeContract {
     interface View {
         void getLanguageListSuccess(GetLanguageListResponse response);
 
-        void getLanguageListFailed(String e, boolean timeout);
+        void getLanguageListFailed(String e, int status);
 
         void goToNotificationPage(String type);
     }

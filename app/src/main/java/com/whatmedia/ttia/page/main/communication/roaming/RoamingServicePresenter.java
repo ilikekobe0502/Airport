@@ -2,11 +2,8 @@ package com.whatmedia.ttia.page.main.communication.roaming;
 
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.whatmedia.ttia.R;
-import com.whatmedia.ttia.connect.ApiConnect;
-import com.whatmedia.ttia.connect.MyResponse;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.newresponse.GetRoamingServiceResponse;
 
@@ -32,8 +29,8 @@ public class RoamingServicePresenter implements RoamingServiceContract.Presenter
     public void getRoamingServiceAPI() {
         mApiConnect.getRoamingService(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getRoamingServiceFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getRoamingServiceFailed(e.toString(), status);
             }
 
             @Override
@@ -43,7 +40,7 @@ public class RoamingServicePresenter implements RoamingServiceContract.Presenter
                 if(getRoamingServiceResponse!=null && getRoamingServiceResponse.getRoamingServiceDataList()!=null){
                     mView.getRoamingServiceSucceed(getRoamingServiceResponse.getRoamingServiceDataList());
                 }else{
-                    mView.getRoamingServiceFailed(mContext.getString(R.string.data_error), false);
+                    mView.getRoamingServiceFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

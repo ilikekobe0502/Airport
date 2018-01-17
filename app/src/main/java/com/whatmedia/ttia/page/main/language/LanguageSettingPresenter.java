@@ -40,13 +40,13 @@ public class LanguageSettingPresenter implements LanguageSettingContract.Present
         if (!TextUtils.isEmpty(Preferences.getLanguageList(mContext))) {
             languageListResponse = GetLanguageListResponse.getInstance(mContext, Preferences.getLanguageList(mContext));
         } else {
-            mView.editUserLanguageFailed(mContext.getString(R.string.data_error), false);
+            mView.editUserLanguageFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             return;
         }
 
         //根據index取得cache的語言ID
         if (languageListResponse.getData() == null || languageListResponse.getData().get(index) == null) {
-            mView.editUserLanguageFailed(mContext.getString(R.string.data_error), false);
+            mView.editUserLanguageFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             Log.e(TAG, "[editUserLanguage languageList Data is null]");
             return;
         }
@@ -56,8 +56,8 @@ public class LanguageSettingPresenter implements LanguageSettingContract.Present
         response.setData(data);
         mNewApiConnect.editUserLanguage(response.getJson(), new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.editUserLanguageFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.editUserLanguageFailed(e.toString(), status);
             }
 
             @Override

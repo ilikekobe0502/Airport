@@ -6,7 +6,7 @@ public interface AirportMrtContract {
     interface View {
         void getAirportMrtSucceed(BaseTrafficInfoData response);
 
-        void getAirportMrtFailed(String message, boolean timeout);
+        void getAirportMrtFailed(String message, int status);
     }
 
     interface Presenter {

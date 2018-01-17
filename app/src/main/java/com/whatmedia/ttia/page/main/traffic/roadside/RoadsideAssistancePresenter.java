@@ -32,8 +32,8 @@ public class RoadsideAssistancePresenter implements RoadsideAssistanceContract.P
     public void getRoadsideAssistanceAPI() {
         mNewApiConnect.getRoadsideAssistInfo(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getRoadsideAssistanceFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getRoadsideAssistanceFailed(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class RoadsideAssistancePresenter implements RoadsideAssistanceContract.P
                 if (roadsideAssistInfoResponse.getRoadsideAssist() != null)
                     mView.getRoadsideAssistanceSucceed(roadsideAssistInfoResponse.getRoadsideAssist());
                 else
-                    mView.getRoadsideAssistanceFailed(mContext.getString(R.string.data_error), false);
+                    mView.getRoadsideAssistanceFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

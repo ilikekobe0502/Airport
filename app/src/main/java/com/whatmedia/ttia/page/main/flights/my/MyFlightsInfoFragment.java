@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
@@ -195,20 +196,26 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void getMyFlightsInfoFailed(String message, boolean timeout) {
+    public void getMyFlightsInfoFailed(String message, final int status) {
         mLoaded = true;
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.e(TAG, message);
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -231,21 +238,26 @@ public class MyFlightsInfoFragment extends BaseFragment implements MyFlightsInfo
     }
 
     @Override
-    public void deleteMyFlightsInfoFailed(String message, boolean timeout) {
+    public void deleteMyFlightsInfoFailed(String message, final int status) {
         mLoadingView.goneLoadingView();
 
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.e(TAG, message);
-                showMessage(message);
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }

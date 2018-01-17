@@ -54,6 +54,7 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     private String[] mCodeArray;
     private String mDeviceId;
     private final static String mFirstCityId = "ASI|TW|TW018|TAOYUAN";
+    private boolean mLoadingError; // Web view loading error
 
     public MoreWeatherFragment() {
         // Required empty public constructor
@@ -87,7 +88,6 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
 
         mLoadingView.showLoadingView();
         settingWebView();
-        mPresenter.getDeviceId();
 
         tool();
         return view;
@@ -96,6 +96,13 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mLoadingError = false;
+        mPresenter.getDeviceId();
     }
 
     @Override
@@ -203,18 +210,28 @@ public class MoreWeatherFragment extends BaseFragment implements MoreWeatherCont
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mLoadingView.goneLoadingView();
+                if (!mLoadingError) {
+                    mLoadingView.goneLoadingView();
+                    mWebView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                mLoadingView.goneLoadingView();
+                mLoadingError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                mLoadingError = true;
             }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.proceed();
+                mLoadingError = true;
             }
         });
     }

@@ -31,8 +31,8 @@ public class TravelLanguagePresenter implements TravelLanguageContract.Presenter
     public void getTypeListApi() {
         mNewApiConnect.getTravelSessionTypeList(new NewApiConnect.MyCallback() {
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.getApiFailed(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getApiFailed(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class TravelLanguagePresenter implements TravelLanguageContract.Presenter
                 if (listData != null && listData.size() > 0)
                     mView.getApiSucceed(listData);
                 else
-                    mView.getApiFailed(mContext.getString(R.string.data_error), false);
+                    mView.getApiFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
             }
         });
     }

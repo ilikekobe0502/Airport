@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
-import com.whatmedia.ttia.component.dialog.MyStoreDialog;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetRestaurantInfoListResponse;
 import com.whatmedia.ttia.newresponse.GetStoreInfoListResponse;
@@ -227,20 +227,25 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getTerminalFailed(String message, boolean timeout) {
+    public void getTerminalFailed(String message, final int status) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.e(TAG, message);
-                showMessage(message);
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -314,20 +319,25 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     }
 
     @Override
-    public void getRestaurantInfoFailed(final String message, boolean timeout) {
+    public void getRestaurantInfoFailed(final String message, final int status) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                Log.e(TAG, "getRestaurantInfoFailed() :" + message);
-                showNoDataDialog();
-            }
+                }
+            });
         }
     }
 

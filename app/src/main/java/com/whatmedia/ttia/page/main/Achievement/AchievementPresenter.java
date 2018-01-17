@@ -30,8 +30,8 @@ public class AchievementPresenter implements AchievementContract.Presenter {
         mNewApiConnect.getAchievementList(new NewApiConnect.MyCallback() {
 
             @Override
-            public void onFailure(Call call, IOException e, boolean timeout) {
-                mView.queryAchievementListFail(e.toString(), timeout);
+            public void onFailure(Call call, IOException e, int status) {
+                mView.queryAchievementListFail(e.toString(), status);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class AchievementPresenter implements AchievementContract.Presenter {
                 if(achievementsDataResponse!=null && achievementsDataResponse.getAchievementList()!=null){
                     mView.queryAchievementListSuccess(achievementsDataResponse.getAchievementList());
                 }else{
-                    mView.queryAchievementListFail(mContext.getString(R.string.data_error) , false);
+                    mView.queryAchievementListFail(mContext.getString(R.string.data_error) , NewApiConnect.TAG_DEFAULT);
                 }
             }
         });

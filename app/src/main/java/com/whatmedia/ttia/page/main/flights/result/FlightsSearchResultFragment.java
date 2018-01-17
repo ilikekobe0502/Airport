@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyFlightsDetailInfo;
+import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
@@ -296,25 +297,25 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     }
 
     @Override
-    public void saveMyFlightFailed(final String message, boolean timeout) {
+    public void saveMyFlightFailed(final String message, final int status) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (timeout) {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Util.showTimeoutDialog(getContext());
+            mMainActivity.runOnUI(new Runnable() {
+                @Override
+                public void run() {
+                    switch (status) {
+                        case NewApiConnect.TAG_DEFAULT:
+                            showMessage(getString(R.string.server_error));
+                            break;
+                        case NewApiConnect.TAG_TIMEOUT:
+                            Util.showTimeoutDialog(getContext());
+                            break;
+                        case NewApiConnect.TAG_SOCKET_ERROR:
+                            Util.showNetworkErrorDialog(getContext());
+                            break;
                     }
-                });
-            } else {
-                mMainActivity.runOnUI(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(TAG, message);
-                        showMessage(message);
-                    }
-                });
-            }
+                }
+            });
         } else {
             Log.d(TAG, "Fragment is not add");
         }
@@ -338,32 +339,8 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                     }
                 }
             }
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.setData(mFilterData);
-                    goToCurrentPosition(mFilterData);
-                }
-            });
-        } else {
-            Log.d(TAG, "Fragment is not add");
-        }
-    }
 
-    @Override
-    public void getFlightFailed(String message, boolean timeout) {
-
-        Log.d(TAG, "getFlightFailed : " + message);
-        mLoadingView.goneLoadingView();
-        if (timeout) {
-            mMainActivity.runOnUI(new Runnable() {
-                @Override
-                public void run() {
-                    Util.showTimeoutDialog(getContext());
-                }
-            });
-        } else {
-            if (isAdded() && !isDetached()) {
+            if (mFilterData.size() == 0) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
@@ -376,9 +353,40 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                     }
                 });
             } else {
-                Log.d(TAG, "Fragment is not add");
+                mMainActivity.runOnUI(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setData(mFilterData);
+                        goToCurrentPosition(mFilterData);
+                    }
+                });
             }
+        } else {
+            Log.d(TAG, "Fragment is not add");
         }
+    }
+
+    @Override
+    public void getFlightFailed(String message, final int status) {
+
+        Log.d(TAG, "getFlightFailed : " + message);
+        mLoadingView.goneLoadingView();
+        mMainActivity.runOnUI(new Runnable() {
+            @Override
+            public void run() {
+                switch (status) {
+                    case NewApiConnect.TAG_DEFAULT:
+                        showMessage(getString(R.string.server_error));
+                        break;
+                    case NewApiConnect.TAG_TIMEOUT:
+                        Util.showTimeoutDialog(getContext());
+                        break;
+                    case NewApiConnect.TAG_SOCKET_ERROR:
+                        Util.showNetworkErrorDialog(getContext());
+                        break;
+                }
+            }
+        });
     }
 
     @Override
