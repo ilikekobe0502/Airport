@@ -41,6 +41,10 @@ public interface IActivityTools {
         MyFlightsDetailInfo getFlightsDetailInfo();
 
         void setWebView(WebView webView);
+
+        boolean getCallLanguage();
+
+        void setCallLanguage(boolean called);
     }
 
     interface IIndoorMapActivity {

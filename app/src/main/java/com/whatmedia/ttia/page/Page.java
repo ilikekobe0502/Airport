@@ -196,111 +196,111 @@ public class Page {
     private static android.support.v4.app.Fragment getFragment(int page) {
         switch (page) {
             case TAG_HOME:
-                return new HomeFragment().newInstance();
+                return  HomeFragment.newInstance();
             case TAG_FIGHTS_INFO:
-                return new FlightsInfoFragment().newInstance();
+                return  FlightsInfoFragment.newInstance();
             case TAG_FIGHTS_SEARCH:
-                return new FlightsSearchFragment().newInstance();
+                return  FlightsSearchFragment.newInstance();
             case TAG_FIGHTS_SEARCH_RESULT:
-                return new FlightsSearchResultFragment().newInstance();
+                return  FlightsSearchResultFragment.newInstance();
             case TAG_MY_FIGHTS_INFO:
-                return new MyFlightsInfoFragment().newInstance();
+                return  MyFlightsInfoFragment.newInstance();
             case TAG_TERMINAL_INFO:
-                return new TerminalInfoFragment().newInstance();
+                return  TerminalInfoFragment.newInstance();
             case TAG_PUBLIC_TOILET:
-                return new PublicToiletFragment().newInstance();
+                return  PublicToiletFragment.newInstance();
             case TAG_AIRPORT_FACILITY:
-                return new AirportFacilityFragment().newInstance();
+                return  AirportFacilityFragment.newInstance();
             case TAG_STORE_SEARCH:
-                return new StoreSearchFragment().newInstance();
+                return  StoreSearchFragment.newInstance();
             case TAG_STORE_SEARCH_RESULT:
-                return new StoreSearchResultFragment().newInstance();
+                return  StoreSearchResultFragment.newInstance();
             case TAG_STORE_SEARCH_INFO:
-                return new StoreSearchInfoFragment().newInstance();
+                return  StoreSearchInfoFragment.newInstance();
             case TAG_AIRPORT_TRAFFIC:
-                return new AirportTrafficFragment().newInstance();
+                return  AirportTrafficFragment.newInstance();
             case TAG_AIRPORT_BUS:
-                return new AirportBusFragment().newInstance();
+                return  AirportBusFragment.newInstance();
             case TAG_ROADSIDE_ASSISTANCE:
-                return new RoadsideAssistanceFragment().newInstance();
+                return  RoadsideAssistanceFragment.newInstance();
             case TAG_TAXI:
-                return new TaxiFragment().newInstance();
+                return  TaxiFragment.newInstance();
             case TAG_TOUR_BUS:
-                return new TourBusFragment().newInstance();
+                return  TourBusFragment.newInstance();
             case TAG_AIRPORT_MRT:
-                return new AirportMrtFragment().newInstance();
+                return  AirportMrtFragment.newInstance();
             case TAG_SKY_TRAIN:
-                return new SkyTrainFragment().newInstance();
+                return  SkyTrainFragment.newInstance();
             case TAG_PARK_INFO:
-                return new ParkingInfoFragment().newInstance();
+                return  ParkingInfoFragment.newInstance();
             case TAG_AIRPORT_SECRETARY:
-                return new AirportSecretaryFragment().newInstance();
+                return  AirportSecretaryFragment.newInstance();
             case TAG_HOME_DEPARTURE_FLIGHTS:
-                return new DepartureFlightsFragment().newInstance();
+                return  DepartureFlightsFragment.newInstance();
             case TAG_HOME_ARRIVE_FLIGHTS:
-                return new ArriveFlightsFragment().newInstance();
+                return  ArriveFlightsFragment.newInstance();
             case TAG_HOME_PARKING_INFO:
-                return new HomeParkingInfoFragment().newInstance();
+                return  HomeParkingInfoFragment.newInstance();
             case TAG_HOME_WEATHER_INFO:
-                return new HomeWeatherInfoFragment().newInstance();
+                return  HomeWeatherInfoFragment.newInstance();
             case TAG_HOME_MORE_FLIGHTS:
-                return new MoreFlightsFragment().newInstance();
+                return  MoreFlightsFragment.newInstance();
             case TAG_HOME_MORE_WEATHER:
-                return new MoreWeatherFragment().newInstance();
+                return  MoreWeatherFragment.newInstance();
             case TAG_AIRPORT_USER_NEWS:
-                return new AirportUserNewsFragment().newInstance();
+                return  AirportUserNewsFragment.newInstance();
             case TAG_AIRPORT_EMERGENCY:
-                return new AirportEmergencyFragment().newInstance();
+                return  AirportEmergencyFragment.newInstance();
             case TAG_AIRPORT_SWEET_NOTIFY:
-                return new AirportSweetNotifyFragment().newInstance();
+                return  AirportSweetNotifyFragment.newInstance();
             case TAG_MY_FIGHTS_NOTIFY:
-                return new MyFlightsNotifyFragment().newInstance();
+                return  MyFlightsNotifyFragment.newInstance();
             case TAG_AIRPORT_NEWS_DETAIL:
-                return new NewsDetailFragment().newInstance();
+                return  NewsDetailFragment.newInstance();
             case TAG_AIRPORT_EMERGENCY_DETAIL:
-                return new EmergencyDetailFragment().newInstance();
+                return  EmergencyDetailFragment.newInstance();
             case TAG_AIRPORT_SWEET_DETAIL:
-                return new SweetNotifyDetailFragment().newInstance();
+                return  SweetNotifyDetailFragment.newInstance();
             case TAG_AIRPORT_FACILITY_DETAIL:
-                return new FacilityDetailFragment().newInstance();
+                return  FacilityDetailFragment.newInstance();
             case TAG_USERFUL_INFO:
-                return new UsefulInfoFragment().newInstance();
+                return  UsefulInfoFragment.newInstance();
             case TAG_USERFUL_LOST:
-                return new LostAndFoundFragment().newInstance();
+                return  LostAndFoundFragment.newInstance();
             case TAG_STORE_OFFERS:
-                return new StoreOffersFragment().newInstance();
+                return  StoreOffersFragment.newInstance();
             case TAG_COMMUNICATION_SERVICE:
-                return new CommunicationFragment().newInstance();
+                return  CommunicationFragment.newInstance();
             case TAG_USERFUL_CURRENCY_CONVERSION:
-                return new CurrencyConversionFragment().newInstance();
+                return  CurrencyConversionFragment.newInstance();
             case TAG_USERFUL_QUEST:
-                return new QuestionnaireFragment().newInstance();
+                return  QuestionnaireFragment.newInstance();
             case TAG_USERFUL_TIMEZONE:
-                return new TimeZoneQueryFragment().newInstance();
+                return  TimeZoneQueryFragment.newInstance();
             case TAG_USERFUL_LANGUAGE:
-                return new TravelLanguageFragment().newInstance();
+                return  TravelLanguageFragment.newInstance();
             case TAG_USERFUL_LANGUAGE_RESULT:
-                return new TravelLanguageResultFragment().newInstance();
+                return  TravelLanguageResultFragment.newInstance();
             case TAG_COMMUNICATION_INTERNATIONAL_CALL:
-                return new InternationalCallFragment().newInstance();
+                return  InternationalCallFragment.newInstance();
             case TAG_COMMUNICATION_EMERGENCY_CALL:
-                return new EmergencyCallFragment().newInstance();
+                return  EmergencyCallFragment.newInstance();
             case TAG_COMMUNICATION_ROAMING_SERVICE:
-                return new RoamingServiceFragment().newInstance();
+                return  RoamingServiceFragment.newInstance();
             case TAG_COMMUNICATION_ROAMING_DETAIL:
-                return new RoamingDetailFragment().newInstance();
+                return  RoamingDetailFragment.newInstance();
             case TAG_COMMUNICATION_ROAMING_WEBVIEW:
-                return new RoamingWebViewFragment().newInstance();
+                return  RoamingWebViewFragment.newInstance();
             case TAG_LANGUAGE_SETTING:
-                return new LanguageSettingFragment().newInstance();
+                return  LanguageSettingFragment.newInstance();
             case TAG_SOUVENIR_AREA:
-                return new SouvenirAreaFragment().newInstance();
+                return  SouvenirAreaFragment.newInstance();
             case TAG_SOUVENIR_DETAIL:
-                return new SouvenirDetailFragment().newInstance();
+                return  SouvenirDetailFragment.newInstance();
             case TAG_ACHIEVEMENT:
-                return new AchievementFragment().newInstance();
+                return  AchievementFragment.newInstance();
             case TAG_ACHIEVEMENT_DETAIL:
-                return new AchievementDetailFragment().newInstance();
+                return  AchievementDetailFragment.newInstance();
 
         }
 

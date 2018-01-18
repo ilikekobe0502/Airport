@@ -113,6 +113,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     private String mMarqueeMessage;
     private boolean mPositionListening;
     private WebView mWebView;
+    private boolean mCalledLanguage;//Call 語言列表API
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,7 +205,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("TAG","MAINACTIVITY ONRESUME");
+        Log.d("TAG", "MAINACTIVITY ONRESUME");
     }
 
     @Override
@@ -292,6 +293,16 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     public void setWebView(WebView webView) {
         mWebView = webView;
+    }
+
+    @Override
+    public boolean getCallLanguage() {
+        return mCalledLanguage;
+    }
+
+    @Override
+    public void setCallLanguage(boolean called) {
+        mCalledLanguage = called;
     }
 
 

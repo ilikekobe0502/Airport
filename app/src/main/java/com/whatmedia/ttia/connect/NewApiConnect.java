@@ -83,7 +83,7 @@ public class NewApiConnect {
                 if (e.toString().contains("SocketTimeoutException")) {
                     Log.e(TAG, "timeout");
                     callback.onFailure(call, e, TAG_TIMEOUT);
-                } else if (e.toString().contains("SocketException") || e.toString().contains("UnknownHostException")) {
+                } else if (e.toString().contains("SocketException") || e.toString().contains("UnknownHostException") || e.toString().contains("ConnectException")) {
                     Log.e(TAG, "SocketException");
                     callback.onFailure(call, e, TAG_SOCKET_ERROR);
                 } else {
@@ -178,7 +178,7 @@ public class NewApiConnect {
                 if (e.toString().contains("SocketTimeoutException")) {
                     Log.e(TAG, "timeout");
                     callback.onFailure(call, e, TAG_TIMEOUT);
-                } else if (e.toString().contains("SocketException")) {
+                } else if (e.toString().contains("SocketException") || e.toString().contains("UnknownHostException") || e.toString().contains("ConnectException")) {
                     Log.e(TAG, "SocketException");
                     callback.onFailure(call, e, TAG_SOCKET_ERROR);
                 } else {

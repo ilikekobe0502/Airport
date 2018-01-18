@@ -87,7 +87,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
         ButterKnife.bind(this, view);
 
         mPresenter = new HomePresenter(getContext(), this);
-        mPresenter.getLanguageList();
+        if (!mMainActivity.getCallLanguage())
+            mPresenter.getLanguageList();
 
 
         mInfoAdapter = new InfoViewPagerAdapter(getChildFragmentManager());
@@ -150,28 +151,28 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
             HomeFeature feature = (HomeFeature) view.getTag();
             switch (feature) {
                 case TAG_FLIGHTS_INFO://航班資訊
-                    mMainActivity.addFragment(Page.TAG_FIGHTS_INFO, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_FIGHTS_INFO, null, true);
                     break;
                 case TAG_TERMINAL_INFO://航廈資訊
-                    mMainActivity.addFragment(Page.TAG_TERMINAL_INFO, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_TERMINAL_INFO, null, true);
                     break;
                 case TAG_AIRPORT_TRAFFIC://機場交通
-                    mMainActivity.addFragment(Page.TAG_AIRPORT_TRAFFIC, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_AIRPORT_TRAFFIC, null, true);
                     break;
                 case TAG_PRACTICAL_INFO://實用資訊
-                    mMainActivity.addFragment(Page.TAG_USERFUL_INFO, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_USERFUL_INFO, null, true);
                     break;
                 case TAG_STORE_OFFERS://商店優惠
-                    mMainActivity.addFragment(Page.TAG_STORE_OFFERS, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_STORE_OFFERS, null, true);
                     break;
                 case TAG_COMMUNICATION_SERVICE://通訊服務
-                    mMainActivity.addFragment(Page.TAG_COMMUNICATION_SERVICE, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_COMMUNICATION_SERVICE, null, true);
                     break;
                 case TAG_LANGUAGE_SETTING://語言設定
-                    mMainActivity.addFragment(Page.TAG_LANGUAGE_SETTING, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_LANGUAGE_SETTING, null, true);
                     break;
                 case TAG_AIRPORT_SECRETARY://機場秘書
-                    mMainActivity.addFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
+                    mMainActivity.replaceFragment(Page.TAG_AIRPORT_SECRETARY, null, true);
                     break;
 //                case TAG_INDOOR_MAP://室內地圖導航
 //                    try {
@@ -314,17 +315,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 
     @Override
     public void getLanguageListSuccess(GetLanguageListResponse response) {
+        mMainActivity.setCallLanguage(true);
     }
 
     @Override
     public void getLanguageListFailed(String e, final int status) {
         if (isAdded() && !isDetached()) {
-            if (mNetworkError)
-                return;
-            mNetworkError = true;
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
+                    if (mNetworkError || getFragmentManager().getBackStackEntryCount() != 0)
+                        return;
+                    mNetworkError = true;
                     switch (status) {
                         case NewApiConnect.TAG_DEFAULT:
                             showMessage(getString(R.string.server_error));
@@ -366,13 +368,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
 
     @Override
     public void errorStatus(final int status) {
-        Log.d("TAG", "mNetworkError = " + mNetworkError);
-        if (mNetworkError)
-            return;
-        mNetworkError = true;
         mMainActivity.runOnUI(new Runnable() {
             @Override
             public void run() {
+                if (mNetworkError || getFragmentManager().getBackStackEntryCount() != 0)
+                    return;
+                mNetworkError = true;
                 switch (status) {
                     case NewApiConnect.TAG_DEFAULT:
                         showMessage(getString(R.string.server_error));
