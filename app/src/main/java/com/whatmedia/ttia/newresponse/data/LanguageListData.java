@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class LanguageListData {
-    private final static int TAG_ZH_TW = 1;
-    private final static int TAG_ZH_CH = 2;
-    private final static int TAG_EN = 3;
-    private final static int TAG_JP = 4;
+    public final static int TAG_ZH_TW = 1;
+    public final static int TAG_ZH_CH = 2;
+    public final static int TAG_EN = 3;
+    public final static int TAG_JP = 4;
 
     @SerializedName("id")
     private int id;

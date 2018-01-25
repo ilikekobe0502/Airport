@@ -1,6 +1,7 @@
 package com.whatmedia.ttia.page.main.traffic.bus;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -18,9 +19,12 @@ import android.webkit.WebViewClient;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.component.MyToolbar;
 import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.enums.LanguageSetting;
 import com.whatmedia.ttia.newresponse.data.BaseTrafficInfoData;
+import com.whatmedia.ttia.newresponse.data.LanguageListData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
+import com.whatmedia.ttia.utility.Preferences;
 import com.whatmedia.ttia.utility.Util;
 
 import butterknife.BindView;
@@ -36,6 +40,8 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
     private IActivityTools.IMainActivity mMainActivity;
     private AirportBusContract.Presenter mPresenter;
     private final static String TAG_URL = "http://www.taoyuan-airport.com/chinese/Buses";
+    private final static String TAG_URL_JAPANESE = "http://www.taoyuan-airport.com/japanese/Buses";
+    private final static String TAG_URL_ENGLISH = "http://www.taoyuan-airport.com/english/Buses";
     private boolean mLoadError;//WebView load error
 
     public AirportBusFragment() {
@@ -88,7 +94,15 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
 
         mLoadingView.showLoadingView();
 //        mPresenter.getAirportBusAPI();
-        mWebView.loadUrl(TAG_URL);
+
+        String localeCache = Preferences.getLocaleSetting(getContext());
+        if (TextUtils.equals(localeCache, LanguageSetting.TAG_JAPANESE.getLocale().toString())) {
+            mWebView.loadUrl(TAG_URL_JAPANESE);
+        } else if (TextUtils.equals(localeCache, LanguageSetting.TAG_ENGLISH.getLocale().toString())) {
+            mWebView.loadUrl(TAG_URL_ENGLISH);
+        } else {
+            mWebView.loadUrl(TAG_URL);
+        }
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -100,7 +114,7 @@ public class AirportBusFragment extends BaseFragment implements AirportBusContra
                 if (!mLoadError) {
                     mWebView.setVisibility(View.VISIBLE);
                     mLoadingView.goneLoadingView();
-                }else {
+                } else {
                     Util.showTimeoutDialog(getContext());
                 }
                 Log.d(TAG, "onPageFinished");
