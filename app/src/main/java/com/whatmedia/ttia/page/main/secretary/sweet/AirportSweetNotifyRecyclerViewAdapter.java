@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.utility.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,6 +35,8 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
     private List<UserNewsData> mItems;
     private IOnItemClickListener mListener;
     private Context mContext;
+    private boolean mCheckIsShow;
+    private List<String> mDeleteList = new ArrayList<>();
 
     public AirportSweetNotifyRecyclerViewAdapter(Context context) {
         mContext = context;
@@ -45,15 +49,26 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (mItems == null) {
             Log.e(TAG, "mItem is null");
             return;
         }
-        UserNewsData item = mItems.get(position);
+        final UserNewsData item = mItems.get(position);
         if (item == null) {
             Log.e(TAG, "item is null");
             return;
+        }
+
+        if (mCheckIsShow) {
+            holder.mImageViewCheck.setVisibility(View.VISIBLE);
+            if (holder.mIsSelect){
+                holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.a09_yes));
+            }else {
+                holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.a09_no));
+            }
+        } else {
+            holder.mImageViewCheck.setVisibility(View.GONE);
         }
 
         holder.mTextViewDate.setText(!TextUtils.isEmpty(item.getPushTime()) ? Util.justShowDate(item.getPushTime()) : "");
@@ -64,6 +79,20 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
         } else {
             holder.mLayoutFrame.setBackgroundColor(Color.TRANSPARENT);
         }
+
+        holder.mImageViewCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.mIsSelect) {
+                    holder.mIsSelect = false;
+                    mDeleteList.remove(item.getId());
+                } else {
+                    holder.mIsSelect = true;
+                    mDeleteList.add(item.getId());
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         holder.mLayoutFrame.setTag(item);
     }
@@ -82,6 +111,15 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
         mListener = listener;
     }
 
+    public void setCheckShow(boolean show) {
+        mCheckIsShow = show;
+        notifyDataSetChanged();
+    }
+
+    public List<String> getDeleteList() {
+        return mDeleteList != null ? mDeleteList : new ArrayList<String>();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.layout_frame)
         LinearLayout mLayoutFrame;
@@ -89,16 +127,28 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
         TextView mTextViewDate;
         @BindView(R.id.textView_message)
         TextView mTextViewMessage;
+        @BindView(R.id.imageView_check)
+        ImageView mImageViewCheck;
+
+        private boolean mIsSelect;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
-        @OnClick(R.id.layout_frame)
+        @OnClick({R.id.layout_frame, R.id.imageView_check})
         public void onClick(View view) {
-            if (mListener != null)
-                mListener.onClick(view);
+            switch (view.getId()) {
+                case R.id.layout_frame:
+                    if (mListener != null)
+                        mListener.onClick(view);
+                    break;
+                case R.id.imageView_check:
+                    if (mListener != null)
+                        mListener.onClick(view);
+                    break;
+            }
         }
 
     }

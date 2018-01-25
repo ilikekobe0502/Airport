@@ -1,12 +1,19 @@
 package com.whatmedia.ttia.page.main.secretary.sweet;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
+import com.whatmedia.ttia.newresponse.GetBaseResponse;
+import com.whatmedia.ttia.newresponse.GetSweetDeleteResponse;
 import com.whatmedia.ttia.newresponse.GetUserSweetNotifyResponse;
+import com.whatmedia.ttia.newresponse.data.SweetDeleteData;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -41,12 +48,36 @@ public class AirportSweetNotifyPresenter implements AirportSweetNotifyContract.P
 
                 GetUserSweetNotifyResponse getUserSweetNotifyResponse = GetUserSweetNotifyResponse.getGson(response);
 
-                if(getUserSweetNotifyResponse!=null && getUserSweetNotifyResponse.getUserNewsDataList()!=null){
+                if (getUserSweetNotifyResponse != null && getUserSweetNotifyResponse.getUserNewsDataList() != null) {
                     mView.getSweetNotifySucceed(getUserSweetNotifyResponse.getUserNewsDataList());
-                }else{
+                } else {
                     mView.getSweetNotifyFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
                 }
 
+            }
+        });
+    }
+
+    @Override
+    public void deleteSweetAPI(List<String> deleteList) {
+        GetSweetDeleteResponse response = new GetSweetDeleteResponse();
+        SweetDeleteData deleteData = new SweetDeleteData();
+        deleteData.setBeaconId(deleteList);
+        response.setData(deleteData);
+        String json = response.getJson();
+        if (TextUtils.isEmpty(json)) {
+            mView.deleteSweetNotifyFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+            return;
+        }
+        mApiConnect.deleteSweetNotify(json, new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, int status) {
+                mView.deleteSweetNotifyFailed(e.toString(), status);
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                mView.deleteSweetNotifySucceed();
             }
         });
     }

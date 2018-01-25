@@ -8,22 +8,30 @@
     android:paddingLeft="@dimen/dp_pixel_8"
     android:paddingRight="@dimen/dp_pixel_8">
 
+    <ImageView
+        android:id="@+id/imageView_check"
+        android:layout_width="@dimen/dp_pixel_24"
+        android:layout_height="@dimen/dp_pixel_24"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/dp_pixel_5"
+        android:background="@drawable/a09_no" />
+
     <TextView
         android:id="@+id/textView_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="123456"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dp_pixel_8"
+        android:text="123456"
         android:textColor="@color/colorDateDefault"
         android:textSize="@dimen/sp_pixel_13" />
 
     <TextView
-        android:text="123456"
         android:id="@+id/textView_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:text="123456"
         android:textColor="@color/colorTextDefault"
         android:textSize="@dimen/sp_pixel_13" />
 </LinearLayout>

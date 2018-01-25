@@ -575,6 +575,21 @@ public class NewApiConnect {
     }
 
     /**
+     * 刪除使用者貼心提醒
+     *
+     * @param json
+     * @param callback
+     */
+    public void deleteSweetNotify(String json, MyCallback callback) {
+        HttpUrl url = HttpUrl.parse(createUrl("del_beacon"))
+                .newBuilder()
+                .build();
+
+        RequestBody body = RequestBody.create(TAG_JSON, createEncodeUploadData(json));
+        postApi(url, body, true, callback);
+    }
+
+    /**
      * 取得使用者最新消息
      *
      * @param callback

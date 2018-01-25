@@ -10,9 +10,15 @@ public interface AirportSweetNotifyContract {
         void getSweetNotifySucceed(List<UserNewsData> list);
 
         void getSweetNotifyFailed(String message, int status);
+
+        void deleteSweetNotifySucceed();
+
+        void deleteSweetNotifyFailed(String message, int status);
     }
 
     interface Presenter {
         void getSweetNotifyAPI();
+
+        void deleteSweetAPI(List<String> deleteList);
     }
 }

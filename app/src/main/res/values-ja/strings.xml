@@ -832,4 +832,5 @@
     <string name="register_user_error">登録ユーザーが失敗しました</string>
 
     <string name="currencyConversion_helper">説明：国旗をタップして国変更できます。金額を入力したら、タップした国の通貨を計算します。</string>
+    <string name="sweet_edit">編集</string>
 </resources>
