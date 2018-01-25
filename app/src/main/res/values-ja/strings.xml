@@ -668,7 +668,7 @@
     <string name="data_error">データエラー</string>
     <string name="data_not_found">情報を探します</string>
     <string name="ok">定めます</string>
-    <string name="note">思い出させます</string>
+    <string name="note">リマインド</string>
     <string name="no_search_store">店舗に沿って、結果はありません</string>
 
     <!-- Marquee -->
@@ -833,5 +833,5 @@
 
     <string name="currencyConversion_helper">説明：国旗をタップして国変更できます。金額を入力したら、タップした国の通貨を計算します。</string>
     <string name="sweet_edit">編集</string>
-    <string name="sweet_delete_content">是否刪除</string>
+    <string name="sweet_delete_content">削除前に確認?</string>
 </resources>

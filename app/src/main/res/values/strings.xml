@@ -900,5 +900,5 @@
 
     <string name="currencyConversion_helper">點選國旗可切換不同國家，並於欄位輸入欲換算之數值，即可得到該幣值。</string>
     <string name="sweet_edit">編輯</string>
-    <string name="sweet_delete_content">是否刪除</string>
+    <string name="sweet_delete_content">確定要刪除?</string>
 </resources>

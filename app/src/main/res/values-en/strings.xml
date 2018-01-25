@@ -736,7 +736,7 @@
     <string name="data_error">Data wrong</string>
     <string name="data_not_found">No information found</string>
     <string name="ok">OK</string>
-    <string name="note">remind</string>
+    <string name="note">Notification</string>
     <string name="no_search_store">Check the store</string>
 
 
@@ -902,5 +902,5 @@
 
     <string name="currencyConversion_helper">Hint:Click the flags to select currencies and fill in the the blank with a dollar amount.</string>
     <string name="sweet_edit">Edit</string>
-    <string name="sweet_delete_content">是否刪除</string>
+    <string name="sweet_delete_content">Confirm to delete?</string>
 </resources>
