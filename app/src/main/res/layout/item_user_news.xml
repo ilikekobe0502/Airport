@@ -3,7 +3,6 @@
     android:id="@+id/layout_frame"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_pixel_35"
-    android:layout_marginTop="@dimen/dp_pixel_10"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/dp_pixel_8"
     android:paddingRight="@dimen/dp_pixel_8">
@@ -14,7 +13,8 @@
         android:layout_height="@dimen/dp_pixel_24"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/dp_pixel_5"
-        android:background="@drawable/a09_no" />
+        android:background="@drawable/a09_no"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textView_date"

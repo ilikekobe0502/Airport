@@ -20,6 +20,7 @@ import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailContract;
 import com.whatmedia.ttia.utility.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,7 +63,7 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_flight_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_news, container, false);
         ButterKnife.bind(this, view);
 
         mPresenter = new AirportUserNewsPresenter(getContext(), this);
@@ -117,7 +118,13 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setData(list);
+                    UserNewsData a = new UserNewsData();
+                    List<UserNewsData> mItems = new ArrayList<>();
+                    for (int i = 0; i <= 10; i++) {
+                        a.setTitle("AA = " + i);
+                        mItems.add(a);
+                    }
+                    mAdapter.setData(mItems);
                 }
             });
         } else {

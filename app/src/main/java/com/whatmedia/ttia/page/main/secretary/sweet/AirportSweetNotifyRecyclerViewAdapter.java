@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.interfaces.IOnItemLongClickListener;
 import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.utility.Util;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by neo_mac on 2017/8/4.
@@ -34,6 +36,7 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
     private List<UserNewsData> mItems;
     private IOnItemClickListener mListener;
+    private IOnItemLongClickListener mLongListener;
     private Context mContext;
     private boolean mCheckIsShow;
     private List<String> mDeleteList = new ArrayList<>();
@@ -62,9 +65,9 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
         if (mCheckIsShow) {
             holder.mImageViewCheck.setVisibility(View.VISIBLE);
-            if (holder.mIsSelect){
+            if (holder.mIsSelect) {
                 holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.a09_yes));
-            }else {
+            } else {
                 holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.a09_no));
             }
         } else {
@@ -94,6 +97,14 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
             }
         });
 
+        holder.mLayoutFrame.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mLongListener != null)
+                    mLongListener.onLongClick(v);
+                return true;
+            }
+        });
         holder.mLayoutFrame.setTag(item);
     }
 
@@ -109,6 +120,10 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
     public void setOnclick(IOnItemClickListener listener) {
         mListener = listener;
+    }
+
+    public void setOnLongClick(IOnItemLongClickListener listener) {
+        mLongListener = listener;
     }
 
     public void setCheckShow(boolean show) {
@@ -150,6 +165,5 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
                     break;
             }
         }
-
     }
 }

@@ -17,6 +17,7 @@ import com.whatmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.utility.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

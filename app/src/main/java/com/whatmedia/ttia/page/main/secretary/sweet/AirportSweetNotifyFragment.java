@@ -1,8 +1,10 @@
 package com.whatmedia.ttia.page.main.secretary.sweet;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
 import com.whatmedia.ttia.interfaces.IOnItemClickListener;
+import com.whatmedia.ttia.interfaces.IOnItemLongClickListener;
 import com.whatmedia.ttia.newresponse.data.UserNewsData;
 import com.whatmedia.ttia.page.BaseFragment;
 import com.whatmedia.ttia.page.IActivityTools;
@@ -21,13 +24,14 @@ import com.whatmedia.ttia.page.Page;
 import com.whatmedia.ttia.page.main.secretary.detail.news.NewsDetailContract;
 import com.whatmedia.ttia.utility.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AirportSweetNotifyFragment extends BaseFragment implements AirportSweetNotifyContract.View, IOnItemClickListener {
+public class AirportSweetNotifyFragment extends BaseFragment implements AirportSweetNotifyContract.View, IOnItemClickListener, IOnItemLongClickListener {
     private static final String TAG = AirportSweetNotifyFragment.class.getSimpleName();
 
     @BindView(R.id.recyclerView)
@@ -82,6 +86,7 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
         setEditState();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter.setOnclick(this);
+        mAdapter.setOnLongClick(this);
         return view;
     }
 
@@ -257,4 +262,25 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
     }
 
 
+    @Override
+    public void onLongClick(final View view) {
+        if (view.getTag() instanceof UserNewsData) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.note)
+                    .setMessage(getContext().getString(R.string.sweet_delete_content))
+                    .setPositiveButton(R.string.alert_btn_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            List<String> list = new ArrayList<>();
+                            list.add(((UserNewsData) view.getTag()).getId());
+                            mPresenter.deleteSweetAPI(list);
+                            mLoadingView.showLoadingView();
+                        }
+                    })
+                    .setNegativeButton(R.string.alert_btn_cancel, null)
+                    .show();
+        } else {
+            showMessage(getString(R.string.data_error));
+        }
+    }
 }
