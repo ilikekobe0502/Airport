@@ -160,7 +160,7 @@ public class FeatureRecyclerViewAdapter extends RecyclerView.Adapter<FeatureRecy
         }
 
 
-        mFrameParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mFrameParamsFrame = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mFrameParamsFrame.addRule(RelativeLayout.CENTER_IN_PARENT);
 //        mAllParamsFrame.setMargins(mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0
 //                , mContext.getResources().getDimensionPixelOffset(R.dimen.dp_pixel_10), 0);
