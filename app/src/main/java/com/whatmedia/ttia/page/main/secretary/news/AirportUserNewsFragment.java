@@ -118,13 +118,7 @@ public class AirportUserNewsFragment extends BaseFragment implements AirportUser
             mMainActivity.runOnUI(new Runnable() {
                 @Override
                 public void run() {
-                    UserNewsData a = new UserNewsData();
-                    List<UserNewsData> mItems = new ArrayList<>();
-                    for (int i = 0; i <= 10; i++) {
-                        a.setTitle("AA = " + i);
-                        mItems.add(a);
-                    }
-                    mAdapter.setData(mItems);
+                    mAdapter.setData(list);
                 }
             });
         } else {
