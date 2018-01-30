@@ -248,7 +248,6 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.textView_delete:
-                mAdapter.getDeleteList();
                 if (mAdapter.getDeleteList().size() > 0) {
                     mPresenter.deleteSweetAPI(mAdapter.getDeleteList());
                     mLoadingView.showLoadingView();
