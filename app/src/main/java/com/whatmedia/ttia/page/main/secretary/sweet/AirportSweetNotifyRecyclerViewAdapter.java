@@ -25,7 +25,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 
 /**
  * Created by neo_mac on 2017/8/4.
@@ -65,7 +64,7 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
         if (mCheckIsShow) {
             holder.mImageViewCheck.setVisibility(View.VISIBLE);
-            if (holder.mIsSelect) {
+            if (item.getIsSelect()) {
                 holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.a09_yes));
             } else {
                 holder.mImageViewCheck.setBackground(ContextCompat.getDrawable(mContext, R.drawable.a09_no));
@@ -86,18 +85,18 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
         holder.mImageViewCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.mIsSelect) {
-                    holder.mIsSelect = false;
+                if (item.getIsSelect()) {
+                    item.setIsSelect(false);
                     mDeleteList.remove(item.getId());
                 } else {
-                    holder.mIsSelect = true;
+                    item.setIsSelect(true);
                     mDeleteList.add(item.getId());
                 }
                 notifyDataSetChanged();
             }
         });
 
-        holder.mLayoutFrame.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.mLayoutMessage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (mLongListener != null)
@@ -105,7 +104,7 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
                 return true;
             }
         });
-        holder.mLayoutFrame.setTag(item);
+        holder.mLayoutMessage.setTag(item);
     }
 
     @Override
@@ -115,6 +114,11 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
 
     public void setData(List<UserNewsData> data) {
         mItems = data;
+        if (!mCheckIsShow && mItems != null && mItems.size() > 0) {
+            for (UserNewsData item : mItems) {
+                item.setIsSelect(false);
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -138,6 +142,8 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.layout_frame)
         LinearLayout mLayoutFrame;
+        @BindView(R.id.layout_message)
+        LinearLayout mLayoutMessage;
         @BindView(R.id.textView_date)
         TextView mTextViewDate;
         @BindView(R.id.textView_message)
@@ -145,17 +151,15 @@ public class AirportSweetNotifyRecyclerViewAdapter extends RecyclerView.Adapter<
         @BindView(R.id.imageView_check)
         ImageView mImageViewCheck;
 
-        private boolean mIsSelect;
-
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
-        @OnClick({R.id.layout_frame, R.id.imageView_check})
+        @OnClick({R.id.layout_message, R.id.imageView_check})
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.layout_frame:
+                case R.id.layout_message:
                     if (mListener != null)
                         mListener.onClick(view);
                     break;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Taoyuan Airport</string>
+    <string name="app_name">Taoyuan International Airport</string>
 
     <!--//Alert-->
     <string name="alert_btn_cancel">取り消す</string>

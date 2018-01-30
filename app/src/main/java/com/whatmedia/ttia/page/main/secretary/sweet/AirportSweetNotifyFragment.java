@@ -210,7 +210,7 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_frame:
+            case R.id.layout_message:
                 if (v.getTag() != null && v.getTag() instanceof UserNewsData) {
                     UserNewsData userNewsData = (UserNewsData) v.getTag();
                     Bundle bundle = new Bundle();
@@ -232,6 +232,7 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
         mAdapter = null;
         mAdapter = new AirportSweetNotifyRecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setCheckShow(false);
         if (mList != null)
             mAdapter.setData(mList);
     }
@@ -247,6 +248,7 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.textView_delete:
+                mAdapter.getDeleteList();
                 if (mAdapter.getDeleteList().size() > 0) {
                     mPresenter.deleteSweetAPI(mAdapter.getDeleteList());
                     mLoadingView.showLoadingView();

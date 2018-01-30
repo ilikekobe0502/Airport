@@ -17,6 +17,8 @@ public class UserNewsData implements Serializable {
     @SerializedName("imgUrl")
     private String imgUrl;
 
+    private boolean isSelect;
+
     public String getId() {
         return id;
     }
@@ -55,5 +57,13 @@ public class UserNewsData implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public boolean getIsSelect() {
+        return isSelect;
+    }
+
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
     }
 }
