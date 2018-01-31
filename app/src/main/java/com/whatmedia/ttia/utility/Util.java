@@ -560,7 +560,7 @@ public class Util {
      * @return
      */
     public static String getDeviceId(Context context) {
-        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return "f406e3a7c6e355ab";
     }
 
     /**

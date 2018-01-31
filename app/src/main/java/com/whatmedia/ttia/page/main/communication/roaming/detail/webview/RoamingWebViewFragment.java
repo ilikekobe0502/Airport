@@ -61,6 +61,7 @@ public class RoamingWebViewFragment extends BaseFragment implements RoamingWebVi
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mLoadingView.goneLoadingView();
+                mWebView.setVisibility(View.VISIBLE);
             }
         });
 
