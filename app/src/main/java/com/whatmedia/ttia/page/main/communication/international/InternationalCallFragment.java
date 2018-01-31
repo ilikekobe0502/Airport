@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.whatmedia.ttia.R;
 import com.whatmedia.ttia.connect.NewApiConnect;
@@ -61,13 +62,14 @@ public class InternationalCallFragment extends BaseFragment implements Internati
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 //        mWebView2.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-//        mWebView.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                super.onPageFinished(view, url);
-//                mLoadingView.goneLoadingView();
-//            }
-//        });
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mLoadingView.goneLoadingView();
+                mWebView.setVisibility(View.VISIBLE);
+            }
+        });
         return view;
     }
 

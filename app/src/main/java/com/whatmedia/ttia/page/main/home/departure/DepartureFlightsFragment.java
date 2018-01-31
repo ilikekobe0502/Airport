@@ -185,7 +185,7 @@ public class DepartureFlightsFragment extends BaseFragment implements DepartureF
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_frame:
-                if (!mFragmentLoadingView.isShown())
+                if (mFragmentLoadingView.isShown())
                     return;
                 if (view.getTag() instanceof FlightsListData) {
                     final FlightsListData tag = (FlightsListData) view.getTag();
