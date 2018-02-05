@@ -56,9 +56,13 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 GetFlightsListResponse flightsListResponse = GetFlightsListResponse.getGson(response);
-                List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
+                if (flightsListResponse != null) {
+                    List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
 
-                mView.getArriveFlightSucceed(flightsListData);
+                    mView.getArriveFlightSucceed(flightsListData);
+                } else {
+                    mView.getArriveFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+                }
             }
         });
     }

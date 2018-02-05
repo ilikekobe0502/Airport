@@ -56,9 +56,13 @@ public class DepartureFlightsPresenter implements DepartureFlightsContract.Prese
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 GetFlightsListResponse flightsListResponse = GetFlightsListResponse.getGson(response);
-                List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
+                if (flightsListResponse!=null) {
+                    List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
 
-                mView.getDepartureFlightSucceed(flightsListData);
+                    mView.getDepartureFlightSucceed(flightsListData);
+                }else {
+                    mView.getDepartureFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+                }
             }
         });
     }

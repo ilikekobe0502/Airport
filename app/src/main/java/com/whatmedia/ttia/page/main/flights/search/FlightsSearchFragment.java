@@ -118,7 +118,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
     public void getFlightsDepartureSucceed(String response) {
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
-            if (!TextUtils.isEmpty(response)) {
+            if (!TextUtils.isEmpty(response) && GetFlightsListResponse.getGson(response) != null) {
                 if (GetFlightsListResponse.getGson(response).getFlightList().size() != 0) {
                     mBundle.putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, response);
                 }

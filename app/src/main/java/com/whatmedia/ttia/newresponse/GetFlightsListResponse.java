@@ -3,9 +3,11 @@ package com.whatmedia.ttia.newresponse;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
 import com.whatmedia.ttia.newresponse.data.FlightsListData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +25,12 @@ public class GetFlightsListResponse extends GetBaseResponse {
 
     public static GetFlightsListResponse getGson(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, GetFlightsListResponse.class);
+        try {
+            return gson.fromJson(json, GetFlightsListResponse.class);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getJson() {
@@ -54,7 +61,7 @@ public class GetFlightsListResponse extends GetBaseResponse {
     }
 
     public List<FlightsListData> getFlightList() {
-        return flightList;
+        return flightList != null ? flightList : new ArrayList<FlightsListData>();
     }
 
     public void setFlightList(List<FlightsListData> flightList) {

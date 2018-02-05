@@ -61,9 +61,13 @@ public class MoreFlightsPresenter implements MoreFlightsContract.Presenter {
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 GetFlightsListResponse flightsListResponse = GetFlightsListResponse.getGson(response);
-                List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
+                if (flightsListResponse != null) {
+                    List<FlightsListData> flightsListData = flightsListResponse.getFlightList();
 
-                mView.getFlightSucceed(flightsListData);
+                    mView.getFlightSucceed(flightsListData);
+                } else {
+                    mView.getFlightFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+                }
             }
         });
     }
