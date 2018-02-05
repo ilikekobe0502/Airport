@@ -65,7 +65,7 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString(RoamingServiceContract.ARG_KEY, mRoamingServiceRecyclerAdapter.getId((int) view.getTag()) + "");
-                bundle.putString(RoamingServiceContract.ARG_TITLE,mRoamingServiceRecyclerAdapter.getTitle((int) view.getTag()));
+                bundle.putString(RoamingServiceContract.ARG_TITLE, mRoamingServiceRecyclerAdapter.getTitle((int) view.getTag()));
                 mMainActivity.addFragment(Page.TAG_COMMUNICATION_ROAMING_DETAIL, bundle, true);
             }
         });
@@ -124,10 +124,12 @@ public class RoamingServiceFragment extends BaseFragment implements RoamingServi
                             showMessage(getString(R.string.server_error));
                             break;
                         case NewApiConnect.TAG_TIMEOUT:
-                            Util.showTimeoutDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showTimeoutDialog(getContext());
                             break;
                         case NewApiConnect.TAG_SOCKET_ERROR:
-                            Util.showNetworkErrorDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showNetworkErrorDialog(getContext());
                             break;
                     }
                 }

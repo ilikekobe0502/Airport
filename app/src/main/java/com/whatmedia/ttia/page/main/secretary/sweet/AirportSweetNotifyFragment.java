@@ -151,10 +151,12 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
                             showMessage(getString(R.string.server_error));
                             break;
                         case NewApiConnect.TAG_TIMEOUT:
-                            Util.showTimeoutDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showTimeoutDialog(getContext());
                             break;
                         case NewApiConnect.TAG_SOCKET_ERROR:
-                            Util.showNetworkErrorDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showNetworkErrorDialog(getContext());
                             break;
                     }
                 }
@@ -194,10 +196,12 @@ public class AirportSweetNotifyFragment extends BaseFragment implements AirportS
                             showMessage(getString(R.string.server_error));
                             break;
                         case NewApiConnect.TAG_TIMEOUT:
-                            Util.showTimeoutDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showTimeoutDialog(getContext());
                             break;
                         case NewApiConnect.TAG_SOCKET_ERROR:
-                            Util.showNetworkErrorDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showNetworkErrorDialog(getContext());
                             break;
                     }
                 }

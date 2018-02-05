@@ -47,7 +47,7 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
         View view = inflater.inflate(R.layout.fragment_emergency_call, container, false);
         ButterKnife.bind(this, view);
 
-        mPresenter = new  EmergencyCallPresenter(getContext(), this);
+        mPresenter = new EmergencyCallPresenter(getContext(), this);
         mLoadingView.showLoadingView();
         mPresenter.getEmergencyCallAPI();
 
@@ -109,10 +109,12 @@ public class EmergencyCallFragment extends BaseFragment implements EmergencyCall
                             showMessage(getString(R.string.server_error));
                             break;
                         case NewApiConnect.TAG_TIMEOUT:
-                            Util.showTimeoutDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showTimeoutDialog(getContext());
                             break;
                         case NewApiConnect.TAG_SOCKET_ERROR:
-                            Util.showNetworkErrorDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showNetworkErrorDialog(getContext());
                             break;
                     }
                 }

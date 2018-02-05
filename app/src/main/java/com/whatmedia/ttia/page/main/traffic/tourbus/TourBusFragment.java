@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,6 +39,7 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private TourBusContract.Presenter mPresenter;
+    private boolean mLoadError;//WebView load error
 
     public TourBusFragment() {
         // Required empty public constructor
@@ -124,6 +126,29 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
                 super.onPageFinished(view, url);
                 mLoadingView.goneLoadingView();
                 mWebView.setVisibility(View.VISIBLE);
+                if (!mLoadError) {
+                    mWebView.setVisibility(View.VISIBLE);
+                    mLoadingView.goneLoadingView();
+                } else {
+                    if (getContext() != null && isAdded() && !isDetached())
+                        Util.showTimeoutDialog(getContext());
+                }
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                Log.e(TAG, "ERROR = " + errorResponse);
+                mLoadError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+
+                Log.e(TAG, "ERROR code = " + errorCode);
+                Log.e(TAG, "ERROR description = " + description);
+                mLoadError = true;
             }
         });
         return view;
@@ -209,10 +234,12 @@ public class TourBusFragment extends BaseFragment implements TourBusContract.Vie
                             showMessage(getString(R.string.server_error));
                             break;
                         case NewApiConnect.TAG_TIMEOUT:
-                            Util.showTimeoutDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showTimeoutDialog(getContext());
                             break;
                         case NewApiConnect.TAG_SOCKET_ERROR:
-                            Util.showNetworkErrorDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showNetworkErrorDialog(getContext());
                             break;
                     }
                 }

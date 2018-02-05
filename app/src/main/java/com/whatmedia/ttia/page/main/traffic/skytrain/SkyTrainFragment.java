@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -38,6 +39,7 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private SkyTrainContract.Presenter mPresenter;
+    private boolean mLoadError;//WebView load error
 
     public SkyTrainFragment() {
         // Required empty public constructor
@@ -122,8 +124,30 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mLoadingView.goneLoadingView();
-                mWebView.setVisibility(View.VISIBLE);
+                if (!mLoadError) {
+                    mLoadingView.goneLoadingView();
+                    mWebView.setVisibility(View.VISIBLE);
+                } else {
+                    if (getContext() != null && isAdded() && !isDetached())
+                        Util.showTimeoutDialog(getContext());
+                }
+                Log.d(TAG, "onPageFinished");
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                Log.e(TAG, "ERROR = " + errorResponse);
+                mLoadError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+
+                Log.e(TAG, "ERROR code = " + errorCode);
+                Log.e(TAG, "ERROR description = " + description);
+                mLoadError = true;
             }
         });
         return view;
@@ -137,6 +161,7 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
     @Override
     public void onResume() {
         mMainActivity.setWebView(mWebView);
+        mLoadError = false;
         super.onResume();
     }
 
@@ -209,10 +234,12 @@ public class SkyTrainFragment extends BaseFragment implements SkyTrainContract.V
                             showMessage(getString(R.string.server_error));
                             break;
                         case NewApiConnect.TAG_TIMEOUT:
-                            Util.showTimeoutDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showTimeoutDialog(getContext());
                             break;
                         case NewApiConnect.TAG_SOCKET_ERROR:
-                            Util.showNetworkErrorDialog(getContext());
+                            if (getContext() != null && isAdded() && !isDetached())
+                                Util.showNetworkErrorDialog(getContext());
                             break;
                     }
                 }

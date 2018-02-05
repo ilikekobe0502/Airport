@@ -887,6 +887,8 @@ public class Util {
      * @param context
      */
     public static void showTimeoutDialog(Context context) {
+        if (context == null)
+            return;
         new AlertDialog.Builder(context)
                 .setTitle(R.string.note)
                 .setMessage(context.getString(R.string.timeout_message))
@@ -900,6 +902,8 @@ public class Util {
      * @param context
      */
     public static void showNetworkErrorDialog(Context context) {
+        if (context == null)
+            return;
         new AlertDialog.Builder(context)
                 .setTitle(R.string.note)
                 .setMessage(context.getString(R.string.network_message))
