@@ -83,6 +83,10 @@ public class FacilityDetailFragment extends BaseFragment implements FacilityDeta
                     try {
                         mBitmaps = getBitmap(getContext(), facilityData.getImgDetailUrl());
                         if (isAdded() && !isDetached()) {
+                            if (mBitmaps == null) {
+                                Log.e(TAG, "mBitmaps is null");
+                                return;
+                            }
                             mMainActivity.runOnUI(new Runnable() {
                                 @Override
                                 public void run() {
