@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/textView_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_pixel_40"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/colorTextStore"
         android:textSize="@dimen/sp_pixel_21" />

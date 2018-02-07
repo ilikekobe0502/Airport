@@ -433,7 +433,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                 mMyToolbar.clearState()
                         .setTitleText((fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) != 0 &&
                                 fragment.getArguments().getInt(StoreSearchContract.TAG_FROM_PAGE) == Page.TAG_STORE_OFFERS) ?
-                                getString(R.string.store_offers_info) : getString(R.string.title_restaurant))
+                                getString(R.string.restaurant_store_search_result_subtitle) : getString(R.string.title_restaurant))
                         .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {

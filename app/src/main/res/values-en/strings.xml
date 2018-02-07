@@ -127,7 +127,7 @@
     <string name="title_parking">Parking Lot</string>
     <string name="title_restroom">Restroom</string>
     <string name="title_parking_infomation">Parking</string>
-    <string name="title_road_rescue">Emergency road assistance</string>
+    <string name="title_road_rescue">Emergency Road Assistance</string>
     <string name="title_tourist_bus">Shuttle Bus</string>
     <string name="title_tram_car">Terminal Transit</string>
     <string name="title_airport_bus">City Bus</string>
@@ -670,7 +670,7 @@
     <string name="communication_time">Service hours</string>
 
     <!-- Store Offers -->
-    <string name="store_offers_info">"Store information"</string>
+    <string name="store_offers_info">"Store"</string>
 
     <!-- Airport secretary -->
     <string name="airport_secretary_news">"latest news"</string>
@@ -678,8 +678,8 @@
     <string name="airport_secretary_notify">"Intimate reminder"</string>
 
     <!-- Restaurant & Store search result-->
-    <string name="restaurant_store_search_result_subtitle">Store message</string>
-    <string name="restaurant_store_search_restaurant_result_subtitle">Restaurant message</string>
+    <string name="restaurant_store_search_result_subtitle">Shopping</string>
+    <string name="restaurant_store_search_restaurant_result_subtitle">Restaurants</string>
 
     <!-- Useful questionnaire -->
     <string name="useful_quest_title">Fill out questionnaire</string>
@@ -696,19 +696,19 @@
 
     <!-- Restaurant & Store search -->
     <string name="restaurant_search_subtitle">Search Criteria</string>
-    <string name="restaurant_store_search_subtitle">Store inquiries</string>
+    <string name="restaurant_store_search_subtitle">Search Criteria</string>f
     <string name="restaurant_store_search_select_terminal">Terminals</string>
-    <string name="restaurant_store_search_non_select_terminal">Any terminal</string>
+    <string name="restaurant_store_search_non_select_terminal">Any</string>
     <string name="restaurant_store_search_select_terminal_title">Terminals</string>
     <string name="restaurant_store_search_select_area">Area</string>
-    <string name="restaurant_store_search_non_select_area">Any zone</string>
-    <string name="restaurant_store_search_select_area_title">Please select zone</string>
+    <string name="restaurant_store_search_non_select_area">Any</string>
+    <string name="restaurant_store_search_select_area_title">Area</string>
     <string name="restaurant_store_search_select_floor">Floor</string>
-    <string name="restaurant_store_search_non_select_floor">Any floor</string>
-    <string name="restaurant_store_search_select_floor_title">Please select floor</string>
-    <string name="restaurant_store_search_non_select_kind_of_restaurant">Any restaurant type</string>
+    <string name="restaurant_store_search_non_select_floor">Any</string>
+    <string name="restaurant_store_search_select_floor_title">Floor</string>
+    <string name="restaurant_store_search_non_select_kind_of_restaurant">Any</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">Restaurant Category</string>
-    <string name="restaurant_store_search_select_kind_of_store_title">Please select the store type</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">Store Category</string>
     <string name="restaurant_store_search_non_select_kind_of_store_title">Any shop type</string>
     <string name="restaurant_store_search_not_found">No applicable restaurants</string>
     <string name="restaurant_store_search_not_found_store">No applicable shops</string>
@@ -748,16 +748,16 @@
     <string name="home_more">More</string>
     <string name="home_more_flights">More flights</string>
     <string name="home_terminal_info_title">Terminal Information</string>
-    <string name="home_store_offers_title">Store offers</string>
+    <string name="home_store_offers_title">Shopping</string>
     <string name="home_language_setting_title">About/Setting</string>
-    <string name="home_airport_secretary_title">Airport secretary</string>
+    <string name="home_airport_secretary_title">Airport Secretary</string>
     <string name="home_indoor_map_title">Interior guide</string>
     <string name="home_airport_achievement_title">Airport achievements</string>
 
     <!-- Parking info -->
-    <string name="parking_info_parking_space_much">"Plenty of parking \navailable"</string>
-    <string name="parking_info_parking_space_enough">"Parking still \navailable"</string>
-    <string name="parking_info_parking_space_full">"Parking full"</string>
+    <string name="parking_info_parking_space_much">"Available"</string>
+    <string name="parking_info_parking_space_enough">"Still Available"</string>
+    <string name="parking_info_parking_space_full">"Full"</string>
     <string name="parking_info_parking_space_number_of">"Available\n%s"</string>
     <string name="parking_info_parking_space_full_state">"Is full"</string>
     <string name="parking_info_parking_space_P1">"P1"</string>
