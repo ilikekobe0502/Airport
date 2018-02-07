@@ -187,6 +187,17 @@ public class StoreSearchFragment extends BaseFragment implements StoreSearchCont
     @Override
     public void onDestroy() {
         mMainActivity.getMyToolbar().setOnBackClickListener(null);
+        mTerminalCodeList = null;
+        mAreaCodeList = null;
+        mFloorCodeList = null;
+        mRestaurantCodeList = null;
+        mStoreCodeList = null;
+
+        mTerminalCodeData = null;
+        mAreaCodeData = null;
+        mFloorCodeData = null;
+        mRestaurantCodeData = null;
+        mStoreCodeData = null;
         super.onDestroy();
     }
 

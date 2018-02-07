@@ -695,19 +695,19 @@
     <string name="timezone_combine">+%s</string>
 
     <!-- Restaurant & Store search -->
-    <string name="restaurant_search_subtitle">Restaurant queries</string>
+    <string name="restaurant_search_subtitle">Search Criteria</string>
     <string name="restaurant_store_search_subtitle">Store inquiries</string>
-    <string name="restaurant_store_search_select_terminal">Choose the terminal</string>
+    <string name="restaurant_store_search_select_terminal">Terminals</string>
     <string name="restaurant_store_search_non_select_terminal">Any terminal</string>
-    <string name="restaurant_store_search_select_terminal_title">Please select terminal</string>
-    <string name="restaurant_store_search_select_area">Select area</string>
+    <string name="restaurant_store_search_select_terminal_title">Terminals</string>
+    <string name="restaurant_store_search_select_area">Area</string>
     <string name="restaurant_store_search_non_select_area">Any zone</string>
     <string name="restaurant_store_search_select_area_title">Please select zone</string>
-    <string name="restaurant_store_search_select_floor">Choose floor</string>
+    <string name="restaurant_store_search_select_floor">Floor</string>
     <string name="restaurant_store_search_non_select_floor">Any floor</string>
     <string name="restaurant_store_search_select_floor_title">Please select floor</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">Any restaurant type</string>
-    <string name="restaurant_store_search_select_kind_of_restaurant_title">Please select restaurant type</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">Restaurant Category</string>
     <string name="restaurant_store_search_select_kind_of_store_title">Please select the store type</string>
     <string name="restaurant_store_search_non_select_kind_of_store_title">Any shop type</string>
     <string name="restaurant_store_search_not_found">No applicable restaurants</string>
