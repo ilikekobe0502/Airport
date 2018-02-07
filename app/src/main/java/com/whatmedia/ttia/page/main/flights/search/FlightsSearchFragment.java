@@ -120,7 +120,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
         if (isAdded() && !isDetached()) {
             if (!TextUtils.isEmpty(response) && GetFlightsListResponse.getGson(response) != null) {
                 if (GetFlightsListResponse.getGson(response).getFlightList().size() != 0) {
-                    mBundle.putString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS, response);
+                    mBundle.putString(FlightsSearchResultContract.TAG_ALL_FLIGHTS, response);
                 }
             } else {
                 Log.e(TAG, "departure response is null");
@@ -175,7 +175,7 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
      */
     private void checkToNextPage() {
         if (isAdded() && !isDetached()) {
-            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))) {
+            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_ALL_FLIGHTS))) {
 
                 mMainActivity.runOnUI(new Runnable() {
                     @Override

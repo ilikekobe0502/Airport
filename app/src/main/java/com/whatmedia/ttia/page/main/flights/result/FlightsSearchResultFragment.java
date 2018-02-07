@@ -98,9 +98,9 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
         mPresenter = new FlightsSearchResultPresenter(getContext(), this);
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS))
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_ALL_FLIGHTS))
                 && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
-            mDepartureList = GetFlightsListResponse.getGson(getArguments().getString(FlightsSearchResultContract.TAG_DEPARTURE_FLIGHTS)).getFlightList();
+            mDepartureList = GetFlightsListResponse.getGson(getArguments().getString(FlightsSearchResultContract.TAG_ALL_FLIGHTS)).getFlightList();
             mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD).toLowerCase();
         } else {
             Log.e(TAG, "data error");
@@ -331,7 +331,14 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
             mFilterData.clear();
             for (FlightsListData item : list) {
                 if (item.getAirlineName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
-                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld) || item.getContactsLocationChinese().contains(mKeyWorld)) {
+                        || item.getShifts().toLowerCase().contains(mKeyWorld)
+                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld)
+                        || item.getContactsLocationChinese().contains(mKeyWorld) ||
+
+                        mKeyWorld.contains(item.getAirlineName()) || mKeyWorld.contains(item.getAirlineCode().toLowerCase())
+                        || mKeyWorld.contains(item.getShifts().toLowerCase())
+                        || mKeyWorld.contains(item.getContactsLocation().toLowerCase()) || mKeyWorld.contains(item.getContactsLocationEng().toLowerCase())
+                        || mKeyWorld.contains(item.getContactsLocationChinese())) {
                     if (mToday) {
                         if (item.getExpressDate().contains(mNowShowDate)) {
                             mFilterData.add(item);

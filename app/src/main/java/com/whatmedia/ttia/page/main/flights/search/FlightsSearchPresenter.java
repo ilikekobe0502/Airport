@@ -37,7 +37,7 @@ public class FlightsSearchPresenter implements FlightsSearchContract.Presenter {
         GetFlightsQueryResponse flightsListResponse = new GetFlightsQueryResponse();
 
 
-        data.setQueryType(FlightsQueryData.TAG_DEPARTURE_ALL);
+        data.setQueryType(FlightsQueryData.TAG_ALL);
         data.setExpressDate(Util.getNowDate());
         data.setKeyWord(keyword);
         flightsListResponse.setData(data);
