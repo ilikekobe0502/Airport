@@ -675,7 +675,7 @@
     <!-- Airport secretary -->
     <string name="airport_secretary_news">"latest news"</string>
     <string name="airport_secretary_emergency">"Emergency"</string>
-    <string name="airport_secretary_notify">"Intimate reminder"</string>
+    <string name="airport_secretary_notify">"Sweet\nReminder"</string>
 
     <!-- Restaurant & Store search result-->
     <string name="restaurant_store_search_result_subtitle">Shopping</string>
