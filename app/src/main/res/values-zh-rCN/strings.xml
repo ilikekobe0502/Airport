@@ -665,7 +665,7 @@
     <!-- communication -->
     <string name="internation_title">国际电话拨打方式</string>
     <string name="roaming_service_title">漫游行动上网</string>
-    <string name="roaming_service_des">请参考各家漫游服务，选择最适合您的资费方案：</string>
+    <string name="roaming_service_des">请参考各家漫游服务，选择最适合您的资费方案</string>
     <string name="roaming_detail_query">漫游方案查询</string>
     <string name="communication_time">服务时间</string>
 
@@ -686,7 +686,7 @@
     <string name="useful_quest_des">说明:非常不满意1分、不满意2分、普通3分、\n满意4分、非常满意5分。</string>
     <string name="useful_quest_number">问题</string>
     <string name="useful_quest_send">送出</string>
-    <string name="useful_quest_send_message">问卷结果已成功送出，感谢您的填写！</string>
+    <string name="useful_quest_send_message">问卷结果已成功送出，感谢您的建议！</string>
     <string name="useful_quest_no_finish">尚有题目未填写</string>
 
     <!-- Timezone -->

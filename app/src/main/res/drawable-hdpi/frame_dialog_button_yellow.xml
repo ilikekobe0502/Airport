@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/dp_pixel_5" />
+    <solid android:color="@color/colorDotSelect" />
+    <gradient
+        android:angle="90"
+        android:centerColor="@color/colorBtnQuestCenter"
+        android:centerX="35%"
+        android:endColor="@color/colorBtnQuestEnd"
+        android:startColor="@color/colorBtnQuestStart"
+        android:type="linear" />
+</shape>

@@ -597,7 +597,7 @@
     <!-- communication -->
     <string name="internation_title">国際電話のかけ方</string>
     <string name="roaming_service_title">ローミングによるネット接続サービス</string>
-    <string name="roaming_service_des">各社のサービス案を参考に、最適のパッケージ案をお選びください：</string>
+    <string name="roaming_service_des">各社のサービス案を参考に、最適のパッケージ案をお選びください</string>
     <string name="roaming_detail_query">ローミングサービス検索</string>
     <string name="communication_time">サービス時間</string>
 
@@ -606,19 +606,19 @@
 
     <!-- Airport secretary -->
     <string name="airport_secretary_news">"最新ニュース"</string>
-    <string name="airport_secretary_emergency">"緊急"</string>
-    <string name="airport_secretary_notify">"親密なリマインダー"</string>
+    <string name="airport_secretary_emergency">"緊急速報"</string>
+    <string name="airport_secretary_notify">"リマインダー"</string>
 
     <!-- Restaurant & Store search result-->
-    <string name="restaurant_store_search_result_subtitle">メッセージストア</string>
+    <string name="restaurant_store_search_result_subtitle">店舗情報</string>
     <string name="restaurant_store_search_restaurant_result_subtitle">レストランのメッセージ</string>
 
     <!-- Useful questionnaire -->
     <string name="useful_quest_title">アンケートに答える</string>
-    <string name="useful_quest_des">説明：非常に不満1分、非常に満足2点、3点、通常、\ nは4点に満足し、5点に満足していません。</string>
+    <string name="useful_quest_des">とても不満1点、不満2点、普通3点、満足4点、とても満足5点。</string>
     <string name="useful_quest_number">問題</string>
-    <string name="useful_quest_send">アウト</string>
-    <string name="useful_quest_send_message">アンケートの結果は、正常に送信されてきた、あなたの塗りつぶしをありがとう！</string>
+    <string name="useful_quest_send">送る</string>
+    <string name="useful_quest_send_message">成功提出！ご意見をお寄せいただきありがとうございます！</string>
     <string name="useful_quest_no_finish">タイトル未記入です</string>
 
     <!-- Timezone -->
@@ -628,19 +628,19 @@
 
     <!-- Restaurant & Store search -->
     <string name="restaurant_search_subtitle">レストラン検索</string>
-    <string name="restaurant_store_search_subtitle">店舗検索</string>
-    <string name="restaurant_store_search_select_terminal">ターミナルを選択</string>
+    <string name="restaurant_store_search_subtitle">店铺调查</string>
+    <string name="restaurant_store_search_select_terminal">ターミナルで検索</string>
     <string name="restaurant_store_search_non_select_terminal">ターミナルで区別しない</string>
     <string name="restaurant_store_search_select_terminal_title">ターミナルで検索</string>
-    <string name="restaurant_store_search_select_area">エリアを選択</string>
+    <string name="restaurant_store_search_select_area">エリアで検索</string>
     <string name="restaurant_store_search_non_select_area">エリアで区別しない</string>
     <string name="restaurant_store_search_select_area_title">エリアで検索</string>
-    <string name="restaurant_store_search_select_floor">選択階</string>
+    <string name="restaurant_store_search_select_floor">フロアで検索</string>
     <string name="restaurant_store_search_non_select_floor">フロアで区別しない</string>
     <string name="restaurant_store_search_select_floor_title">フロアで検索</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">レストランの種類で区別しない</string>
     <string name="restaurant_store_search_select_kind_of_restaurant_title">レストランの種類で検索</string>
-    <string name="restaurant_store_search_select_kind_of_store_title">店舗の種類を選択してください</string>
+    <string name="restaurant_store_search_select_kind_of_store_title">ストアの種類で検索</string>
     <string name="restaurant_store_search_non_select_kind_of_store_title">ストアの種類で区別しない</string>
     <string name="restaurant_store_search_not_found">ヒットしたレストランはありませんでした</string>
     <string name="restaurant_store_search_not_found_store">ヒットしたストアはありませんでした</string>
@@ -679,7 +679,7 @@
     <string name="home_more">もっと見る</string>
     <string name="home_more_flights">その他の便</string>
     <string name="home_terminal_info_title">ターミナル情報</string>
-    <string name="home_store_offers_title">店舗申し出</string>
+    <string name="home_store_offers_title">ショッピング</string>
     <string name="home_language_setting_title">情報/設定</string>
     <string name="home_airport_secretary_title">空港セクレタリー</string>
     <string name="home_indoor_map_title">室内ガイド</string>

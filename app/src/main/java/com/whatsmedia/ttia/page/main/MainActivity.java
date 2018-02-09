@@ -637,7 +637,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof AirportSweetNotifyFragment) {//使用者貼心提醒
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_secretary_notify))
+                        .setTitleText(getString(R.string.airport_secretary_notify_title))
                         .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {
@@ -723,7 +723,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof SweetNotifyDetailFragment) {//貼心提醒(詳細資料)
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.airport_secretary_notify))
+                        .setTitleText(getString(R.string.airport_secretary_notify_title))
                         .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {

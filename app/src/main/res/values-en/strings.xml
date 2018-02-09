@@ -241,8 +241,8 @@
     <string name="city">City</string>
 
     <!--  foreignLanguage  -->
-    <string name="zhtw">Traditional Chinese</string>
-    <string name="zhcn">Simplified Chinese</string>
+    <string name="zhtw">Traditional</string>
+    <string name="zhcn">Simplified</string>
     <string name="ja">Japanese</string>
     <string name="en">English</string>
 
@@ -665,7 +665,7 @@
     <!-- communication -->
     <string name="internation_title">International calling method</string>
     <string name="roaming_service_title">Roaming mobile Internet</string>
-    <string name="roaming_service_des">companies roaming services to select the fee plan most suitable for you:</string>
+    <string name="roaming_service_des">Please refer to the various companies roaming services to select the fee plan most suitable for you</string>
     <string name="roaming_detail_query">Roaming plan queries</string>
     <string name="communication_time">Service hours</string>
 
@@ -676,6 +676,7 @@
     <string name="airport_secretary_news">"latest news"</string>
     <string name="airport_secretary_emergency">"Emergency"</string>
     <string name="airport_secretary_notify">"Sweet\nReminder"</string>
+    <string name="airport_secretary_notify_title">"Sweet Reminder"</string>
 
     <!-- Restaurant & Store search result-->
     <string name="restaurant_store_search_result_subtitle">Store</string>
@@ -683,10 +684,10 @@
 
     <!-- Useful questionnaire -->
     <string name="useful_quest_title">Fill out questionnaire</string>
-    <string name="useful_quest_des">Description: very dissatisfied with 1 point, not satisfied with 2 points, ordinary 3 points, \ n satisfaction 4 points, very satisfied with 5 points.</string>
+    <string name="useful_quest_des">Description: Very Bad 1 Point、Bad 2 Point、Neither Bad or Good 3 Point、Good 4 Point、Very Good 5 Point.</string>
     <string name="useful_quest_number">Question</string>
     <string name="useful_quest_send">Sent out</string>
-    <string name="useful_quest_send_message">The questionnaire results have been successfully sent, thanks for your fill!</string>
+    <string name="useful_quest_send_message">Submit successful! Thanks for your feedback!</string>
     <string name="useful_quest_no_finish">Still contains uncompleted items</string>
 
     <!-- Timezone -->

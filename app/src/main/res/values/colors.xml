@@ -52,4 +52,8 @@
     <color name="colorDateDefault">#E60012</color>
     <color name="colorBlockDefault">#a6aab3</color>
 
+    <color name="colorBtnQuestStart">#f0920d</color>
+    <color name="colorBtnQuestCenter">#f0a40e</color>
+    <color name="colorBtnQuestEnd">#f1b70e</color>
+
 </resources>

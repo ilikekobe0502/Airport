@@ -663,7 +663,7 @@
     <!-- communication -->
     <string name="internation_title">國際電話撥打方式</string>
     <string name="roaming_service_title">漫遊行動上網</string>
-    <string name="roaming_service_des">請參考各家漫遊服務，選擇最適合您的資費方案：</string>
+    <string name="roaming_service_des">請參考各家漫遊服務，選擇最適合您的資費方案</string>
     <string name="roaming_detail_query">漫遊方案查詢</string>
     <string name="communication_time">服務時間</string>
 
@@ -684,7 +684,7 @@
     <string name="useful_quest_des">說明:非常不滿意1分、不滿意2分、普通3分、\n滿意4分、非常滿意5分。</string>
     <string name="useful_quest_number">問題</string>
     <string name="useful_quest_send">送出</string>
-    <string name="useful_quest_send_message">問卷結果已成功送出，感謝您的填寫！</string>
+    <string name="useful_quest_send_message">問卷結果已成功送出，感謝您的建議！</string>
     <string name="useful_quest_no_finish">尚有題目未填寫</string>
 
     <!-- Timezone -->
@@ -705,7 +705,7 @@
     <string name="restaurant_store_search_non_select_floor">不分樓層</string>
     <string name="restaurant_store_search_select_floor_title">請選擇樓層</string>
     <string name="restaurant_store_search_non_select_kind_of_restaurant">不分餐廳種類</string>
-    <string name="restaurant_store_search_select_kind_of_restaurant_title">請選擇餐廳總類</string>
+    <string name="restaurant_store_search_select_kind_of_restaurant_title">請選擇餐廳種類</string>
     <string name="restaurant_store_search_select_kind_of_store_title">請選擇商店種類</string>
     <string name="restaurant_store_search_non_select_kind_of_store_title">不分商店種類</string>
     <string name="restaurant_store_search_not_found">查無符合的餐廳</string>
