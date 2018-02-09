@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string-array name="ori_time_zone_region_array">
         <item>Africa</item>
         <item>America</item>
@@ -75,18 +74,18 @@
         <item>Anguilla</item>
         <item>Antigua</item>
         <item>Araguaina</item>
-        <item>Buenos_Aires</item>
-        <item>Catamarca</item>
-        <item>Cordoba</item>
-        <item>Jujuy</item>
-        <item>La_Rioja</item>
-        <item>Mendoza</item>
-        <item>Rio_Gallegos</item>
-        <item>Salta</item>
-        <item>San_Juan</item>
-        <item>San_Luis</item>
-        <item>Tucuman</item>
-        <item>Ushuaia</item>
+        <item>Argentina/Buenos_Aires</item>
+        <item>Argentina/Catamarca</item>
+        <item>Argentina/Cordoba</item>
+        <item>Argentina/Jujuy</item>
+        <item>Argentina/La_Rioja</item>
+        <item>Argentina/Mendoza</item>
+        <item>Argentina/Rio_Gallegos</item>
+        <item>Argentina/Salta</item>
+        <item>Argentina/San_Juan</item>
+        <item>Argentina/San_Luis</item>
+        <item>Argentina/Tucuman</item>
+        <item>Argentina/Ushuaia</item>
         <item>Aruba</item>
         <item>Asuncion</item>
         <item>Atikokan</item>
@@ -133,20 +132,20 @@
         <item>Halifax</item>
         <item>Havana</item>
         <item>Hermosillo</item>
-        <item>Indianapolis</item>
-        <item>Knox</item>
-        <item>Marengo</item>
-        <item>Petersburg</item>
-        <item>Tell_City</item>
-        <item>Vevay</item>
-        <item>Vincennes</item>
-        <item>Winamac</item>
+        <item>Indiana/Indianapolis</item>
+        <item>Indiana/Knox</item>
+        <item>Indiana/Marengo</item>
+        <item>Indiana/Petersburg</item>
+        <item>Indiana/Tell_City</item>
+        <item>Indiana/Vevay</item>
+        <item>Indiana/Vincennes</item>
+        <item>Indiana/Winamac</item>
         <item>Inuvik</item>
         <item>Iqaluit</item>
         <item>Jamaica</item>
         <item>Juneau</item>
-        <item>Louisville</item>
-        <item>Monticello</item>
+        <item>Kentucky/Louisville</item>
+        <item>Kentucky/Monticello</item>
         <item>Kralendijk</item>
         <item>La_Paz</item>
         <item>Lima</item>
@@ -175,8 +174,8 @@
         <item>Nome</item>
         <item>Noronha</item>
         <item>Beulah</item>
-        <item>Center</item>
-        <item>New_Salem</item>
+        <item>North_Dakota/Center</item>
+        <item>North_Dakota/New_Salem</item>
         <item>Ojinaga</item>
         <item>Panama</item>
         <item>Pangnirtung</item>
