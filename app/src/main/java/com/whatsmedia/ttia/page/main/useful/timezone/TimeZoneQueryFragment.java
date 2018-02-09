@@ -345,7 +345,7 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         if (mItems.length > mCountry) {
             Log.d(TAG, "switchRegion():" + "mCodeArray[mCountry]" + mItems[mCountry]);
         } else {
-            Log.e(TAG, "switchRegion():mCodeArray.length < mCountry + mItems.length < mCountry");
+            Log.d(TAG, "switchRegion():mCodeArray.length < mCountry + mItems.length < mCountry");
             mRegion = 0;
             mCountry = 1;
             switchRegion();
@@ -353,13 +353,16 @@ public class TimeZoneQueryFragment extends BaseFragment implements TimeZoneQuery
         }
         mTextCity.setText(mItems[mCountry]);
         String zoneName = mCountryName[mRegion] + "/" + mTownName[mCountry];
-        mTimeStamp = String.valueOf(TimeUnit.MILLISECONDS.toHours(TimeZone.getTimeZone(zoneName).getRawOffset()));
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(TimeZone.getTimeZone(zoneName).getRawOffset());
+        long hour = minutes / 60;
+        long halfHour = minutes % 60;
+        mTimeStamp = halfHour != 0 ? String.format("%1$d:%2$d", hour, halfHour) : String.valueOf(hour);
 
-        if(mTimeStamp.charAt(0) != '-' && mTimeStamp.charAt(0) != '+'){
-            mTimeStamp = String.format(getString(R.string.timezone_combine),mTimeStamp);
+        if (mTimeStamp.charAt(0) != '-' && mTimeStamp.charAt(0) != '+') {
+            mTimeStamp = String.format(getString(R.string.timezone_combine), mTimeStamp);
         }
 
-        Log.e("TIMEZONE", zoneName + ":" + mTimeStamp);
+        Log.d("TIMEZONE", zoneName + ":" + mTimeStamp);
 
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT" + mTimeStamp));
