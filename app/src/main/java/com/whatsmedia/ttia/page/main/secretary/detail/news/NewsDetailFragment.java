@@ -1,0 +1,130 @@
+package com.whatsmedia.ttia.page.main.secretary.detail.news;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.whatsmedia.ttia.R;
+import com.whatsmedia.ttia.component.CornorTransform;
+import com.whatsmedia.ttia.newresponse.data.UserNewsData;
+import com.whatsmedia.ttia.page.BaseFragment;
+import com.whatsmedia.ttia.page.IActivityTools;
+import com.whatsmedia.ttia.page.main.secretary.sweet.AirportSweetNotifyRecyclerViewAdapter;
+import com.whatsmedia.ttia.utility.Util;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class NewsDetailFragment extends BaseFragment implements NewsDetailContract.View {
+    private static final String TAG = NewsDetailFragment.class.getSimpleName();
+    @BindView(R.id.textView_date)
+    TextView mTextViewDate;
+    @BindView(R.id.textView_title)
+    TextView mTextViewTitle;
+    @BindView(R.id.textView_content)
+    TextView mTextViewContent;
+    @BindView(R.id.imageView_picture)
+    ImageView mImageViewPicture;
+
+    private IActivityTools.ILoadingView mLoadingView;
+    private IActivityTools.IMainActivity mMainActivity;
+    private NewsDetailContract.Presenter mPresenter;
+
+    private AirportSweetNotifyRecyclerViewAdapter mAdapter;
+
+    private int mRadius;
+
+    public NewsDetailFragment() {
+        // Required empty public constructor
+    }
+
+    // TODO: Rename and change types and number of parameters
+    public static NewsDetailFragment newInstance() {
+        NewsDetailFragment fragment = new NewsDetailFragment();
+        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_news_detail, container, false);
+        ButterKnife.bind(this, view);
+
+        mPresenter = NewsDetailPresenter.getInstance(getContext(), this);
+        mRadius = getContext().getResources().getDimensionPixelSize(R.dimen.dp_pixel_7);
+
+        if (getArguments() != null && getArguments().getSerializable(NewsDetailContract.TAG_DATA) != null) {
+            UserNewsData item = (UserNewsData) getArguments().getSerializable(NewsDetailContract.TAG_DATA);
+
+            mTextViewDate.setText(!TextUtils.isEmpty(item.getPushTime()) ? Util.justShowDate(item.getPushTime()) : "");
+            mTextViewTitle.setText(!TextUtils.isEmpty(item.getTitle()) ? item.getTitle() : "");
+            mTextViewContent.setText(!TextUtils.isEmpty(item.getContent()) ? item.getContent() : "");
+            if (!TextUtils.isEmpty(item.getImgUrl())) {
+                mImageViewPicture.setVisibility(View.VISIBLE);
+
+                Util.getHttpsPicasso(getContext())
+                        .load(item.getImgUrl())
+                        .resize(getResources().getDimensionPixelSize(R.dimen.dp_pixel_250), getResources().getDimensionPixelSize(R.dimen.dp_pixel_152))
+                        .transform(new CornorTransform(mRadius, 0))
+                        .into(mImageViewPicture);
+            } else
+                mImageViewPicture.setVisibility(View.GONE);
+        } else {
+            Log.e(TAG, "Fragment getArguments() is error");
+            showMessage(getString(R.string.data_error));
+        }
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMainActivity.getMyToolbar().setOnBackClickListener(null);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mLoadingView = (IActivityTools.ILoadingView) context;
+            mMainActivity = (IActivityTools.IMainActivity) context;
+        } catch (ClassCastException castException) {
+            Log.e(TAG, castException.toString());
+            /** The activity does not implement the listener. */
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+}

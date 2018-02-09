@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/language_setting_08_off" />
 
-    <com.whatmedia.ttia.utility.FontFitTextView
+    <com.whatsmedia.ttia.utility.FontFitTextView
         android:id="@+id/textView_title"
         android:layout_width="@dimen/dp_pixel_70"
         android:layout_height="wrap_content"

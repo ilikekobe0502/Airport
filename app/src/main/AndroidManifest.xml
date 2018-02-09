@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.whatmedia.ttia">
+    package="com.whatsmedia.ttia">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name="com.whatmedia.ttia.utility.MyApplication"
+        android:name=".utility.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -107,7 +107,7 @@
 
         <provider
             android:name=".utility.MyCustomSuggestionProvider"
-            android:authorities="com.whatmedia.ttia.utility.MyCustomSuggestionProvider"
+            android:authorities="com.whatsmedia.ttia.utility.MyCustomSuggestionProvider"
             android:exported="true"
             android:readPermission="com.whatmedia.ttia.utility.MyCustomSuggestionProvider.READ_DATABASE"
             android:writePermission="com.whatmedia.ttia.utility.MyCustomSuggestionProvider.WRITE_DATABASE" />

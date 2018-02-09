@@ -1,0 +1,50 @@
+package com.whatsmedia.ttia.page.main.traffic.taxi;
+
+import android.content.Context;
+
+import com.whatsmedia.ttia.R;
+import com.whatsmedia.ttia.connect.NewApiConnect;
+import com.whatsmedia.ttia.newresponse.GetTaxiInfoResponse;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+
+/**
+ * Created by neo_mac on 2017/6/17.
+ */
+
+public class TaxiPresenter implements TaxiContract.Presenter {
+    private final static String TAG = TaxiPresenter.class.getSimpleName();
+
+    private NewApiConnect mNewApiConnect;
+    private TaxiContract.View mView;
+    private Context mContext;
+
+
+    TaxiPresenter(Context context, TaxiContract.View view) {
+        mNewApiConnect = NewApiConnect.getInstance(context);
+        mView = view;
+        mContext = context;
+    }
+
+    @Override
+    public void getTaxiAPI() {
+        mNewApiConnect.getTaxiInfo(new NewApiConnect.MyCallback() {
+            @Override
+            public void onFailure(Call call, IOException e, int status) {
+                mView.getTaxiFailed(e.toString(), status);
+            }
+
+            @Override
+            public void onResponse(Call call, String response) throws IOException {
+                GetTaxiInfoResponse taxiInfoResponse = GetTaxiInfoResponse.getGson(response);
+                if (taxiInfoResponse.getTaxi() != null)
+                    mView.getTaxiSucceed(taxiInfoResponse.getTaxi());
+                else
+                    mView.getTaxiFailed(mContext.getString(R.string.data_error), NewApiConnect.TAG_DEFAULT);
+
+            }
+        });
+    }
+}

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.whatmedia.ttia.page.main.MainActivity">
+    tools:context="com.whatsmedia.ttia.page.main.MainActivity">
 
     <View
         android:id="@+id/view_top"
@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dp_pixel_8"
         android:background="@color/colorMainTop" />
 
-    <com.whatmedia.ttia.component.MyToolbar
+    <com.whatsmedia.ttia.component.MyToolbar
         android:id="@+id/myToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_above="@+id/myMarquee"
         android:layout_below="@+id/myToolbar" />
 
-    <com.whatmedia.ttia.component.MyMarquee
+    <com.whatsmedia.ttia.component.MyMarquee
         android:id="@+id/myMarquee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_gravity="center" />
     </FrameLayout>
 
-    <com.whatmedia.ttia.component.MyFlightsDetailInfo
+    <com.whatsmedia.ttia.component.MyFlightsDetailInfo
         android:id="@+id/flights_detail_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

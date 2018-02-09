@@ -165,7 +165,7 @@
                 android:layout_marginLeft="@dimen/dp_pixel_10"
                 android:background="@drawable/magnifier" />
 
-            <com.whatmedia.ttia.utility.FontFitTextView
+            <com.whatsmedia.ttia.utility.FontFitTextView
                 android:id="@+id/textView_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
