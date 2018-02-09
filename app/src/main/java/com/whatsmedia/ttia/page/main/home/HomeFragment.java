@@ -13,22 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.whatsmedia.ttia.R;
 import com.whatsmedia.ttia.component.MyToolbar;
 import com.whatsmedia.ttia.connect.NewApiConnect;
 import com.whatsmedia.ttia.enums.HomeFeature;
 import com.whatsmedia.ttia.interfaces.IOnItemClickListener;
 import com.whatsmedia.ttia.newresponse.GetLanguageListResponse;
+import com.whatsmedia.ttia.newresponse.GetRegisterUserResponse;
+import com.whatsmedia.ttia.newresponse.data.RegisterUserData;
 import com.whatsmedia.ttia.page.BaseFragment;
 import com.whatsmedia.ttia.page.IActivityTools;
 import com.whatsmedia.ttia.page.Page;
 import com.whatsmedia.ttia.page.main.home.arrive.ArriveFlightsFragment;
 import com.whatsmedia.ttia.page.main.home.moreflights.MoreFlightsContract;
 import com.whatsmedia.ttia.response.data.FlightsInfoData;
+import com.whatsmedia.ttia.utility.Preferences;
 import com.whatsmedia.ttia.utility.Util;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View, IOnItemClickListener, ViewPager.OnPageChangeListener, ArriveFlightsFragment.IOnSetCurrentPositionListener, ArriveFlightsFragment.IAPIErrorListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -114,8 +121,55 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     @Override
     public void onStart() {
         super.onStart();
+        first();
     }
 
+    int mApiFailureCount = 0;
+
+    /**
+     * 為了做Device id 設錯補救
+     */
+    private void first() {
+        Log.i(TAG, "first");
+        if (FirebaseInstanceId.getInstance().getToken() != null && !Preferences.getUserFirstInit(getContext())) {
+
+            Log.i(TAG, "no init");
+            if (mApiFailureCount < 5) {
+
+                RegisterUserData data = new RegisterUserData();
+                GetRegisterUserResponse response = new GetRegisterUserResponse();
+
+                if (!TextUtils.isEmpty(NewApiConnect.getDeviceID())) {
+                    data.setDeviceID(NewApiConnect.getDeviceID());
+                } else {
+                    return;
+                }
+                if (!TextUtils.isEmpty(Preferences.getFCMToken(getContext()))) {
+                    data.setPushToken(Preferences.getFCMToken(getContext()));
+                } else {
+                    return;
+                }
+                data.setLangId(1);
+
+                response.setData(data);
+                String json = response.getJson();
+                NewApiConnect.getInstance(getContext()).registerUser(json, new NewApiConnect.MyCallback() {
+                    @Override
+                    public void onFailure(Call call, IOException e, int status) {
+                        mApiFailureCount++;
+                        Log.d(TAG, "RegisterUser onFailure");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, String response) throws IOException {
+                        Preferences.saveUserFirstInit(getContext(), true);
+                        Log.d(TAG, "RegisterUser Success");
+                        mApiFailureCount = 0;
+                    }
+                });
+            }
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();

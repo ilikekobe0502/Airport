@@ -28,7 +28,7 @@ public class FCMTokenService extends FirebaseInstanceIdService {
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.d("FCM", "Token:" + token);
         Preferences.saveFCMToken(getApplicationContext(), token);
-            registerUser();
+        registerUser();
     }
 
     private int mApiFailureCount = 0;
@@ -37,6 +37,10 @@ public class FCMTokenService extends FirebaseInstanceIdService {
      * 註冊User
      */
     private void registerUser() {
+        if (Preferences.getUserFirstInit(getApplicationContext()))
+            return;
+
+        Log.d(TAG, "registerUser");
         if (mApiFailureCount < 5) {
 
             RegisterUserData data = new RegisterUserData();

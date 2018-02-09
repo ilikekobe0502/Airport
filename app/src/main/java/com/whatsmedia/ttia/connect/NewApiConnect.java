@@ -191,7 +191,7 @@ public class NewApiConnect {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.code() != 200) {
-                    onFailure(call, new IOException(response.message()));
+                    onFailure(call, new IOException("Url = " + call.request().url() + "\nError = " + response.message()));
                     return;
                 }
                 try {
