@@ -676,6 +676,7 @@
     <string name="airport_secretary_news">"最新消息"</string>
     <string name="airport_secretary_emergency">"紧急事件"</string>
     <string name="airport_secretary_notify">"贴心提醒"</string>
+    <string name="airport_secretary_notify_title">"贴心提醒"</string>
 
     <!-- Restaurant & Store search result-->
     <string name="restaurant_store_search_result_subtitle">商店讯息</string>

@@ -608,6 +608,7 @@
     <string name="airport_secretary_news">"最新ニュース"</string>
     <string name="airport_secretary_emergency">"緊急速報"</string>
     <string name="airport_secretary_notify">"リマインダー"</string>
+    <string name="airport_secretary_notify_title">"リマインダー"</string>
 
     <!-- Restaurant & Store search result-->
     <string name="restaurant_store_search_result_subtitle">店舗情報</string>
