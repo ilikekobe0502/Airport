@@ -597,7 +597,7 @@
     <!-- communication -->
     <string name="internation_title">国際電話のかけ方</string>
     <string name="roaming_service_title">ローミングによるネット接続サービス</string>
-    <string name="roaming_service_des">各社のサービス案を参考に、最適のパッケージ案をお選びください</string>
+    <string name="roaming_service_des">各社のサービス案を参考に、最適のパッケージ案をお選びください :</string>
     <string name="roaming_detail_query">ローミングサービス検索</string>
     <string name="communication_time">サービス時間</string>
 
@@ -622,7 +622,7 @@
     <string name="useful_quest_no_finish">タイトル未記入です</string>
 
     <!-- Timezone -->
-    <string name="timezone_other_area">"その他の区域"</string>
+    <string name="timezone_other_area">"その他"</string>
     <string name="timezone_other_area_dialog_title">"地域を選択してください"</string>
     <string name="timezone_combine">+%s</string>
 

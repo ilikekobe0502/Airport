@@ -691,7 +691,7 @@
     <string name="useful_quest_no_finish">Still contains uncompleted items</string>
 
     <!-- Timezone -->
-    <string name="timezone_other_area">"other areas"</string>
+    <string name="timezone_other_area">"Other"</string>
     <string name="timezone_other_area_dialog_title">"please select the region"</string>
     <string name="timezone_combine">+%s</string>
 
