@@ -26,7 +26,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:maxEms="7"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_pixel_14" />
     </RelativeLayout>

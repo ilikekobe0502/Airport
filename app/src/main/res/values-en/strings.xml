@@ -9,7 +9,7 @@
     <string name="alert_btn_add">Add</string>
     <string name="alert_leave">Leave</string>
 
-    <string name="news">Latest news</string>
+    <string name="news">Latest News</string>
     <string name="processwait">Processing, please wait ...</string>
 
     <string name="navi_btn_back">Back</string>
@@ -75,7 +75,7 @@
     <string name="cell_btn_delete">Delete</string>
     <string name="flight_dialog_title">Detail</string>
 
-    <string name="navi_title_flight_notify">Flight Notify</string>
+    <string name="navi_title_flight_notify">Flight Notification</string>
     <string name="notify_label_hint">Reminder before the flight takeoff/departure</string>
     <string name="notify_hour"> hours </string>
     <string name="notify_minute"> minutes </string>
@@ -108,10 +108,10 @@
         <item>"50 minutes"</item>
     </string-array>
 
-    <string name="title_flight">Filght Info.</string>
+    <string name="title_flight">Flight Info</string>
     <string name="title_nearby">Nearby Info.</string>
     <string name="title_traffic">Transport</string>
-    <string name="title_utility">Useful Info.</string>
+    <string name="title_utility">Useful Info</string>
     <string name="title_shopping">Shopping</string>
     <string name="title_communication">Communication</string>
     <string name="title_option">Setup</string>
@@ -673,7 +673,7 @@
     <string name="store_offers_info">"Store"</string>
 
     <!-- Airport secretary -->
-    <string name="airport_secretary_news">"latest news"</string>
+    <string name="airport_secretary_news">"Latest News"</string>
     <string name="airport_secretary_emergency">"Emergency"</string>
     <string name="airport_secretary_notify">"Sweet\nReminder"</string>
     <string name="airport_secretary_notify_title">"Sweet Reminder"</string>
@@ -729,7 +729,7 @@
     <string name="flights_search_tag_arrived_show_text">Arrive</string>
     <string name="flights_search_tag_cancelled_show_text">Cancelled</string>
     <string name="flights_search_tag_schedule_change_show_text">Schedule change</string>
-    <string name="flights_search_tag_departed_show_text">Departure</string>
+    <string name="flights_search_tag_departed_show_text">Departed</string>
 
     <!-- Comment -->
     <string name="press_again_left">And then leave the app again</string>
@@ -748,7 +748,7 @@
     <string name="home_weather_title">Weather</string>
     <string name="home_more">More</string>
     <string name="home_more_flights">More flights</string>
-    <string name="home_terminal_info_title">Terminal Information</string>
+    <string name="home_terminal_info_title">Terminal Info</string>
     <string name="home_store_offers_title">Shopping</string>
     <string name="home_language_setting_title">About/Setting</string>
     <string name="home_airport_secretary_title">Airport Secretary</string>

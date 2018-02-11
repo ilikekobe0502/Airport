@@ -22,7 +22,7 @@ import butterknife.OnClick;
 
 public class MyToolbar extends RelativeLayout {
     @BindView(R.id.textView_title)
-    TextView mTextViewTitle;
+    com.whatsmedia.ttia.utility.FontFitTextView mTextViewTitle;
     @BindView(R.id.textView_left)
     TextView mTextViewLeft;
     @BindView(R.id.textView_more)

@@ -39,7 +39,7 @@ public class MyFlightsDetailInfo extends RelativeLayout {
     @BindView(R.id.textView_left)
     TextView mTextViewLeft;
     @BindView(R.id.textView_right)
-    TextView mTextViewRight;
+    com.whatsmedia.ttia.utility.FontFitTextView mTextViewRight;
     @BindView(R.id.textView_center)
     TextView mTextViewCenterButton;
     @BindView(R.id.layout_couple)

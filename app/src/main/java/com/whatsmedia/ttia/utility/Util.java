@@ -912,6 +912,21 @@ public class Util {
     }
 
     /**
+     * Show dialog
+     *
+     * @param context
+     */
+    public static void showDialog(Context context,String message) {
+        if (context == null)
+            return;
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.note)
+                .setMessage(message)
+                .setPositiveButton(R.string.alert_btn_ok, null)
+                .show();
+    }
+
+    /**
      * Filter symbol
      *
      * @param str

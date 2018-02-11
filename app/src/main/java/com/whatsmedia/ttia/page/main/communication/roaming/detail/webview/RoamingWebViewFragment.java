@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,6 +21,7 @@ import com.whatsmedia.ttia.component.MyToolbar;
 import com.whatsmedia.ttia.page.BaseFragment;
 import com.whatsmedia.ttia.page.IActivityTools;
 import com.whatsmedia.ttia.page.main.communication.roaming.RoamingServiceContract;
+import com.whatsmedia.ttia.utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +35,8 @@ public class RoamingWebViewFragment extends BaseFragment implements RoamingWebVi
     private IActivityTools.ILoadingView mLoadingView;
     private IActivityTools.IMainActivity mMainActivity;
     private RoamingWebViewContract.Presenter mPresenter;
+    private boolean mLoadError;//WebView load error
+    private boolean mURLError;//URL error
 
     public RoamingWebViewFragment() {
         // Required empty public constructor
@@ -60,8 +65,41 @@ public class RoamingWebViewFragment extends BaseFragment implements RoamingWebVi
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                mLoadingView.goneLoadingView();
-                mWebView.setVisibility(View.VISIBLE);
+                if (!mLoadError && !mURLError) {
+                    mLoadingView.goneLoadingView();
+                    mWebView.setVisibility(View.VISIBLE);
+                } else {
+                    if (getContext() != null && isAdded() && !isDetached()) {
+                        if (mURLError) {
+                            Util.showDialog(getContext(), getString(R.string.data_error));
+                        } else {
+                            Util.showTimeoutDialog(getContext());
+                        }
+                    }
+                }
+                Log.d(TAG, "onPageFinished");
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                Log.e(TAG, "ERROR = " + errorResponse);
+                if (errorResponse.toString().contains("ERR_NAME_NOT_RESOLVED")) {
+                    mURLError = true;
+                }
+                mLoadError = true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+
+                Log.e(TAG, "ERROR code = " + errorCode);
+                Log.e(TAG, "ERROR description = " + description);
+                if (description.contains("ERR_NAME_NOT_RESOLVED")) {
+                    mURLError = true;
+                }
+                mLoadError = true;
             }
         });
 
@@ -92,6 +130,7 @@ public class RoamingWebViewFragment extends BaseFragment implements RoamingWebVi
     @Override
     public void onResume() {
         mMainActivity.setWebView(mWebView);
+        mLoadError = false;
         super.onResume();
     }
 

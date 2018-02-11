@@ -8,7 +8,7 @@
     <string name="alert_btn_add">加える</string>
     <string name="alert_leave">去る</string>
 
-    <string name="news">最新ニュース</string>
+    <string name="news">ニュース</string>
     <string name="processwait">処理、お待ちください...</string>
 
     <string name="navi_btn_back">返し</string>
@@ -74,7 +74,7 @@
     <string name="cell_btn_delete">削除</string>
     <string name="flight_dialog_title">詳細</string>
 
-    <string name="navi_title_flight_notify">Flight Notify</string>
+    <string name="navi_title_flight_notify">リマインド</string>
     <string name="notify_label_hint">フライトの離陸/出発前リマインダー</string>
     <string name="notify_hour"> 時間 </string>
     <string name="notify_minute"> 分 </string>
@@ -605,7 +605,7 @@
     <string name="store_offers_info">"店舗情報"</string>
 
     <!-- Airport secretary -->
-    <string name="airport_secretary_news">"最新ニュース"</string>
+    <string name="airport_secretary_news">"ニュース"</string>
     <string name="airport_secretary_emergency">"緊急速報"</string>
     <string name="airport_secretary_notify">"リマインダー"</string>
     <string name="airport_secretary_notify_title">"リマインダー"</string>
@@ -679,7 +679,7 @@
     <string name="home_weather_title">天気情報</string>
     <string name="home_more">もっと見る</string>
     <string name="home_more_flights">その他の便</string>
-    <string name="home_terminal_info_title">ターミナル情報</string>
+    <string name="home_terminal_info_title">ターミナルの情報</string>
     <string name="home_store_offers_title">ショッピング</string>
     <string name="home_language_setting_title">情報/設定</string>
     <string name="home_airport_secretary_title">空港セクレタリー</string>
