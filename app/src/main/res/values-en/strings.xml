@@ -165,7 +165,7 @@
     <string name="option_logout_dialog">Logout Successful</string>
 
     <string name="flight_state_arrived">Arrived</string>
-    <string name="flight_state_cancelled">Cancelled</string>
+    <string name="flight_state_cancelled">Cancel</string>
     <string name="flight_state_schedule_change">Schedule Change</string>
     <string name="flight_state_delay">Delay</string>
     <string name="flight_state_on_time">On Time</string>
