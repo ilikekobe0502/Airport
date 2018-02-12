@@ -20,13 +20,18 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.splunk.mint.Mint;
 import com.whatsmedia.ttia.R;
 import com.whatsmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatsmedia.ttia.component.MyMarquee;
 import com.whatsmedia.ttia.component.MyToolbar;
+import com.whatsmedia.ttia.connect.NewApiConnect;
 import com.whatsmedia.ttia.enums.FlightInfo;
 import com.whatsmedia.ttia.enums.HomeFeature;
+import com.whatsmedia.ttia.enums.LanguageSetting;
+import com.whatsmedia.ttia.newresponse.GetRegisterUserResponse;
+import com.whatsmedia.ttia.newresponse.data.RegisterUserData;
 import com.whatsmedia.ttia.page.BaseActivity;
 import com.whatsmedia.ttia.page.IActivityTools;
 import com.whatsmedia.ttia.page.Page;
@@ -78,13 +83,17 @@ import com.whatsmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 import com.whatsmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatsmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatsmedia.ttia.response.data.FlightsInfoData;
+import com.whatsmedia.ttia.services.FCMTokenService;
 import com.whatsmedia.ttia.services.IBeacon;
 import com.whatsmedia.ttia.services.MyLocationService;
 import com.whatsmedia.ttia.utility.Preferences;
 import com.whatsmedia.ttia.utility.Util;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
 public class MainActivity extends BaseActivity implements IActivityTools.ILoadingView, IActivityTools.IMainActivity, FragmentManager.OnBackStackChangedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -135,6 +144,19 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         Mint.logEvent(TAG_DEVICE_NAME + "(" + versionName + " ," + versionCode + ")");
 
+        if (TextUtils.isEmpty(Preferences.getDeviceID(getApplicationContext()))) {
+            mLoadingView.setVisibility(View.VISIBLE);
+            //設置Local預設語言為中文
+            Preferences.saveLocaleSetting(getApplicationContext(), LanguageSetting.TAG_TRADITIONAL_CHINESE.getLocale().toString());
+            registerUser();
+            return;
+        }
+
+        init();
+    }
+
+    private void init() {
+
         setMarqueeHomeState();
 
 
@@ -177,6 +199,58 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
 
         Intent loactionService = new Intent(this, MyLocationService.class);
         startService(loactionService);
+
+    }
+
+    private int mApiFailureCount = 0;
+    private static final int TAG_DEFAULT_LANGUAGE = 1;
+
+    /**
+     * 註冊User
+     */
+    private void registerUser() {
+        Log.d(TAG, "registerUser");
+        if (mApiFailureCount < 5) {
+
+            final RegisterUserData data = new RegisterUserData();
+            GetRegisterUserResponse response = new GetRegisterUserResponse();
+
+            data.setDeviceID(Util.getDeviceId(getApplicationContext()));
+            if (TextUtils.isEmpty(FirebaseInstanceId.getInstance().getToken())) {
+                return;
+            }
+
+            data.setPushToken(FirebaseInstanceId.getInstance().getToken());
+            data.setLangId(TAG_DEFAULT_LANGUAGE);
+
+            response.setData(data);
+            String json = response.getJson();
+            NewApiConnect.getInstance(getApplicationContext()).registerUser(json, new NewApiConnect.MyCallback() {
+                @Override
+                public void onFailure(Call call, IOException e, int status) {
+                    Log.d(TAG, "RegisterUser onFailure");
+                    mApiFailureCount++;
+                    registerUser();
+                }
+
+                @Override
+                public void onResponse(Call call, String response) throws IOException {
+                    Log.d(TAG, "RegisterUser Success");
+                    mApiFailureCount = 0;
+                    Preferences.saveDeviceID(getApplicationContext(), data.getDeviceID());
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoadingView.setVisibility(View.GONE);
+                            Intent i = getIntent();
+                            finish();
+                            startActivity(i);
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @Override
@@ -222,6 +296,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
     @Override
     protected void onPause() {
         mPositionListening = false;
+        mApiFailureCount = 0;
         super.onPause();
     }
 

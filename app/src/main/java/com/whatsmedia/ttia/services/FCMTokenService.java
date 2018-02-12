@@ -1,5 +1,6 @@
 package com.whatsmedia.ttia.services;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,7 +9,9 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.whatsmedia.ttia.connect.NewApiConnect;
 import com.whatsmedia.ttia.newresponse.GetRegisterUserResponse;
 import com.whatsmedia.ttia.newresponse.data.RegisterUserData;
+import com.whatsmedia.ttia.page.main.MainActivity;
 import com.whatsmedia.ttia.utility.Preferences;
+import com.whatsmedia.ttia.utility.Util;
 
 import java.io.IOException;
 
@@ -37,20 +40,13 @@ public class FCMTokenService extends FirebaseInstanceIdService {
      * 註冊User
      */
     private void registerUser() {
-        if (Preferences.getUserFirstInit(getApplicationContext()))
-            return;
-
         Log.d(TAG, "registerUser");
         if (mApiFailureCount < 5) {
 
-            RegisterUserData data = new RegisterUserData();
+            final RegisterUserData data = new RegisterUserData();
             GetRegisterUserResponse response = new GetRegisterUserResponse();
 
-            if (!TextUtils.isEmpty(NewApiConnect.getDeviceID())) {
-                data.setDeviceID(NewApiConnect.getDeviceID());
-            } else {
-                return;
-            }
+            data.setDeviceID(Util.getDeviceId(getApplicationContext()));
             if (!TextUtils.isEmpty(Preferences.getFCMToken(getApplicationContext()))) {
                 data.setPushToken(Preferences.getFCMToken(getApplicationContext()));
             } else {
@@ -63,14 +59,22 @@ public class FCMTokenService extends FirebaseInstanceIdService {
             NewApiConnect.getInstance(getApplicationContext()).registerUser(json, new NewApiConnect.MyCallback() {
                 @Override
                 public void onFailure(Call call, IOException e, int status) {
-                    mApiFailureCount++;
                     Log.d(TAG, "RegisterUser onFailure");
+                    mApiFailureCount++;
+                    registerUser();
                 }
 
                 @Override
                 public void onResponse(Call call, String response) throws IOException {
                     Log.d(TAG, "RegisterUser Success");
                     mApiFailureCount = 0;
+
+                    Preferences.saveDeviceID(getApplicationContext(), data.getDeviceID());
+
+                    Intent i = new Intent();
+                    i.setClass(getApplicationContext(), MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(i);
                 }
             });
         }

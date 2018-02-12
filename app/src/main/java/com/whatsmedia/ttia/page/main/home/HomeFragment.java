@@ -121,55 +121,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, IOn
     @Override
     public void onStart() {
         super.onStart();
-        first();
     }
 
-    int mApiFailureCount = 0;
-
-    /**
-     * 為了做Device id 設錯補救
-     */
-    private void first() {
-        Log.i(TAG, "first");
-        if (FirebaseInstanceId.getInstance().getToken() != null && !Preferences.getUserFirstInit(getContext())) {
-
-            Log.i(TAG, "no init");
-            if (mApiFailureCount < 5) {
-
-                RegisterUserData data = new RegisterUserData();
-                GetRegisterUserResponse response = new GetRegisterUserResponse();
-
-                if (!TextUtils.isEmpty(NewApiConnect.getDeviceID())) {
-                    data.setDeviceID(NewApiConnect.getDeviceID());
-                } else {
-                    return;
-                }
-                if (!TextUtils.isEmpty(Preferences.getFCMToken(getContext()))) {
-                    data.setPushToken(Preferences.getFCMToken(getContext()));
-                } else {
-                    return;
-                }
-                data.setLangId(1);
-
-                response.setData(data);
-                String json = response.getJson();
-                NewApiConnect.getInstance(getContext()).registerUser(json, new NewApiConnect.MyCallback() {
-                    @Override
-                    public void onFailure(Call call, IOException e, int status) {
-                        mApiFailureCount++;
-                        Log.d(TAG, "RegisterUser onFailure");
-                    }
-
-                    @Override
-                    public void onResponse(Call call, String response) throws IOException {
-                        Preferences.saveUserFirstInit(getContext(), true);
-                        Log.d(TAG, "RegisterUser Success");
-                        mApiFailureCount = 0;
-                    }
-                });
-            }
-        }
-    }
     @Override
     public void onResume() {
         super.onResume();

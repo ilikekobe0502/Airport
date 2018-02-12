@@ -9,6 +9,7 @@ import android.util.Log;
 import com.whatsmedia.ttia.newresponse.GetBaseEncodeResponse;
 import com.whatsmedia.ttia.newresponse.GetBaseResponse;
 import com.whatsmedia.ttia.newresponse.data.BaseEncodeData;
+import com.whatsmedia.ttia.utility.Preferences;
 import com.whatsmedia.ttia.utility.Util;
 
 import java.io.IOException;
@@ -304,7 +305,7 @@ public class NewApiConnect {
             mApiConnect = new NewApiConnect();
         }
 
-        if (TAG_DEVICE_ID == null) {
+        if (TextUtils.isEmpty(TAG_DEVICE_ID)) {
             TAG_DEVICE_ID = Util.getDeviceId(context);
         }
         Log.d("TAG", "Device ID = " + TAG_DEVICE_ID);

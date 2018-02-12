@@ -22,6 +22,7 @@ public class Preferences {
     private final static String TAG_SCREEN_MODE = "screen_mode";
     private final static String TAG_LANGUAGE_LIST = "language_list";
     private final static String TAG_MY_FLIGHTS_FIRST = "my_flights_first";
+    private final static String TAG_RESTORE = "restore";
 
     private static SharedPreferences preferences;
 
@@ -208,5 +209,29 @@ public class Preferences {
     public static boolean getMyFlightsFirst(Context context) {
         preferences = context.getSharedPreferences(TAG_MY_FLIGHTS_FIRST, 0);
         return preferences.getBoolean(TAG_MY_FLIGHTS_FIRST, true);
+    }
+
+    /**
+     * Restore config
+     *
+     * @param context
+     * @param deviceID
+     */
+    public static void saveDeviceID(Context context, String deviceID) {
+        preferences = context.getSharedPreferences(TAG_RESTORE, 0);
+        preferences.edit()
+                .putString(TAG_RESTORE, deviceID)
+                .apply();
+    }
+
+    /**
+     * Restore config
+     *
+     * @param context
+     * @return
+     */
+    public static String getDeviceID(Context context) {
+        preferences = context.getSharedPreferences(TAG_RESTORE, 0);
+        return preferences.getString(TAG_RESTORE, "");
     }
 }

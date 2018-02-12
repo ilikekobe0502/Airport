@@ -560,7 +560,8 @@ public class Util {
      * @return
      */
     public static String getDeviceId(Context context) {
-        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        String cacheDeviceID = Preferences.getDeviceID(context);
+        return !TextUtils.isEmpty(cacheDeviceID) ? cacheDeviceID : Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     /**
@@ -916,7 +917,7 @@ public class Util {
      *
      * @param context
      */
-    public static void showDialog(Context context,String message) {
+    public static void showDialog(Context context, String message) {
         if (context == null)
             return;
         new AlertDialog.Builder(context)
