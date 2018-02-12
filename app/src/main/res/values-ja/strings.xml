@@ -164,7 +164,7 @@
     <string name="option_logout_dialog">成功ログアウト</string>
 
     <string name="flight_state_arrived">到着しました</string>
-    <string name="flight_state_cancelled">キャンセル</string>
+    <string name="flight_state_cancelled">取り消す</string>
     <string name="flight_state_schedule_change">スケジュール変更</string>
     <string name="flight_state_delay">遅延</string>
     <string name="flight_state_on_time">オンタイム</string>
