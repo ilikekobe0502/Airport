@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.whatsmedia.ttia.R;
 import com.whatsmedia.ttia.component.CornorTransform;
 import com.whatsmedia.ttia.interfaces.IOnItemClickListener;
@@ -36,10 +37,12 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
     private IOnItemClickListener mListener;
     private int mRadius;
     private List<StoreInfoData> mStoreItems;
+    private Picasso mPicasso;
 
     public StoreSearchResultRecyclerViewAdapter(Context context) {
         mContext = context;
         mRadius = mContext.getResources().getDimensionPixelSize(R.dimen.dp_pixel_6);
+        mPicasso = Util.getHttpsPicasso(mContext);
     }
 
     @Override
@@ -62,7 +65,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             String pictureUrl;
             if (!TextUtils.isEmpty(item.getImgUrl())) {
                 pictureUrl = item.getImgUrl();
-                Util.getHttpsPicasso(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
+                mPicasso.load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else
                 pictureUrl = "";
 
@@ -81,7 +84,7 @@ public class StoreSearchResultRecyclerViewAdapter extends RecyclerView.Adapter<S
             String pictureUrl;
             if (!TextUtils.isEmpty(storeItem.getImgUrl())) {
                 pictureUrl = storeItem.getImgUrl();
-                Util.getHttpsPicasso(mContext).load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
+                mPicasso.load(pictureUrl).transform(new CornorTransform(mRadius, 0)).into(holder.mImageViewPicture);
             } else
                 pictureUrl = "";
 

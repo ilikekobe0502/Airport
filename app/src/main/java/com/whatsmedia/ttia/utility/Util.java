@@ -798,8 +798,8 @@ public class Util {
      */
     public static Picasso getHttpsPicasso(Context context) {
         Picasso.Builder picassoBuilder = new Picasso.Builder(context);
-        picassoBuilder.downloader(new OkHttp3Downloader(new HttpUtils().getTrustAllClient())).build();
-        return picassoBuilder.build();
+        Picasso picasso = picassoBuilder.downloader(new OkHttp3Downloader(new HttpUtils().getTrustAllClient())).build();
+        return picasso;
     }
 
     /**
