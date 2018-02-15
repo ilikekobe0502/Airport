@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         ttia {
-            keyAlias 'De$1gnL@b'
+            keyAlias 'ttia'
             keyPassword 'De$1gnL@b'
             storeFile file('/Users/neo_mac/WorkDir/Android/Airport/ttia.keystore')
             storePassword 'De$1gnL@b'
@@ -12,12 +12,13 @@ android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.whatmedia.ttia"
+        applicationId "com.whatsmedia.ttia"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 48
-        versionName "2.0.1"
+        versionCode 49
+        versionName "2.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
