@@ -62,7 +62,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_pixel_8"
             android:layout_toLeftOf="@+id/imageView_down"
-            android:background="@drawable/up_on" />
+            android:background="@drawable/up_on"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/imageView_down"
@@ -70,7 +71,8 @@
             android:layout_height="@dimen/dp_pixel_38"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/dow_off" />
+            android:background="@drawable/dow_off"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

@@ -446,7 +446,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
                         });
             } else if (fragment instanceof FlightsSearchResultFragment) {//航班搜尋結果
                 mMyToolbar.clearState()
-                        .setTitleText(getString(R.string.tableview_header_takeoff, Util.getNowDate(Util.TAG_FORMAT_MD)))
+                        .setTitleText(getString(R.string.navi_title_flight_search_result))
                         .setToolbarBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_top_bg))
                         .setBackVisibility(View.VISIBLE)
                         .setOnBackClickListener(new MyToolbar.OnClickListener() {

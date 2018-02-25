@@ -29,7 +29,7 @@ public class FlightsSearchResultPresenter implements FlightsSearchResultContract
 
     private String mQueryDate = Util.getNowDate();
     private String mKeyWorld;
-    private int mQueryType = FlightsQueryData.TAG_DEPARTURE_ALL;
+    private int mQueryType = FlightsQueryData.TAG_ALL;
 
 
     FlightsSearchResultPresenter(Context context, FlightsSearchResultContract.View view) {

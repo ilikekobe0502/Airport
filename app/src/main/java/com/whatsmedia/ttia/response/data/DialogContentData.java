@@ -200,6 +200,10 @@ public class DialogContentData {
         item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_gate));
         item.setContent(!TextUtils.isEmpty(data.getGate()) ? data.getGate().trim() : "");
         list.add(item);
+        item = new DialogContentData();
+        item.setTitle(context.getString(R.string.flight_takeoff_detail_dialog_checkincount));
+        item.setContent(!TextUtils.isEmpty(data.getCounter()) ? data.getCounter().trim() : "");
+        list.add(item);
         return list;
     }
 }

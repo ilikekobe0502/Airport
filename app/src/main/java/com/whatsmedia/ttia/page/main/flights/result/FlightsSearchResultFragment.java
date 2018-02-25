@@ -43,10 +43,10 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.imageView_up)
-    ImageView mImageViewUp;
-    @BindView(R.id.imageView_down)
-    ImageView mImageViewDown;
+//    @BindView(R.id.imageView_up)
+//    ImageView mImageViewUp;
+//    @BindView(R.id.imageView_down)
+//    ImageView mImageViewDown;
     @BindView(R.id.textView_last)
     TextView mTextViewLast;
     @BindView(R.id.textView_next)
@@ -70,7 +70,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private String mNowDate = Util.getNowDate();
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
-    private int mQueryType = FlightsQueryData.TAG_DEPARTURE_ALL;
+    private int mQueryType = FlightsQueryData.TAG_ALL;
     private String mKeyWorld = "";
     private boolean mToday = true;
     private LinearLayoutManager mManager;
@@ -187,18 +187,18 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imageView_up:
-                mQueryType = FlightsQueryData.TAG_DEPARTURE_ALL;
-                mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_on));
-                mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_off));
+//                mQueryType = FlightsQueryData.TAG_DEPARTURE_ALL;
+//                mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_on));
+//                mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_off));
 
                 changeState();
 
                 mPresenter.getFlightByQueryTypeAPI(mQueryType);
                 break;
             case R.id.imageView_down:
-                mQueryType = FlightsQueryData.TAG_ARRIVE_ALL;
-                mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_off));
-                mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
+//                mQueryType = FlightsQueryData.TAG_ARRIVE_ALL;
+//                mImageViewUp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.up_off));
+//                mImageViewDown.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dow_on));
 
                 changeState();
 
@@ -325,29 +325,30 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
     @Override
     public void getFlightSucceed(final List<FlightsListData> list) {
-
+Log.d("TAG","SIZE = " +list.size());
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mFilterData.clear();
-            for (FlightsListData item : list) {
-                if (item.getAirlineName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
-                        || item.getShifts().toLowerCase().contains(mKeyWorld)
-                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld)
-                        || item.getContactsLocationChinese().contains(mKeyWorld) ||
-
-                        mKeyWorld.contains(item.getAirlineName()) || mKeyWorld.contains(item.getAirlineCode().toLowerCase())
-                        || mKeyWorld.contains(item.getShifts().toLowerCase())
-                        || mKeyWorld.contains(item.getContactsLocation().toLowerCase()) || mKeyWorld.contains(item.getContactsLocationEng().toLowerCase())
-                        || mKeyWorld.contains(item.getContactsLocationChinese())) {
-                    if (mToday) {
-                        if (item.getExpressDate().contains(mNowShowDate)) {
-                            mFilterData.add(item);
-                        }
-                    } else {
-                        mFilterData.add(item);
-                    }
-                }
-            }
+            mFilterData.addAll(list);
+//            for (FlightsListData item : list) {
+//                if (item.getAirlineName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
+//                        || item.getShifts().toLowerCase().contains(mKeyWorld)
+//                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld)
+//                        || item.getContactsLocationChinese().contains(mKeyWorld) ||
+//
+//                        mKeyWorld.contains(item.getAirlineName()) || mKeyWorld.contains(item.getAirlineCode().toLowerCase())
+//                        || mKeyWorld.contains(item.getShifts().toLowerCase())
+//                        || mKeyWorld.contains(item.getContactsLocation().toLowerCase()) || mKeyWorld.contains(item.getContactsLocationEng().toLowerCase())
+//                        || mKeyWorld.contains(item.getContactsLocationChinese())) {
+//                    if (mToday) {
+//                        if (item.getExpressDate().contains(mNowShowDate)) {
+//                            mFilterData.add(item);
+//                        }
+//                    } else {
+//                        mFilterData.add(item);
+//                    }
+//                }
+//            }
 
             if (mFilterData.size() == 0) {
                 mMainActivity.runOnUI(new Runnable() {
@@ -409,10 +410,13 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
      * 更改Title bar
      */
     private void changeState() {
+
+        /*原本Title要加日期
         if (mQueryType == FlightsQueryData.TAG_DEPARTURE_ALL)
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_takeoff, mShowDate));
         else
             mMainActivity.getMyToolbar().setTitleText(getString(R.string.tableview_header_arrival, mShowDate));
+        */
         mLoadingView.showLoadingView();
     }
 
