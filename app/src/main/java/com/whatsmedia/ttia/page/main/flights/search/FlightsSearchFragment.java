@@ -166,7 +166,9 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
             mBundle.putString(FlightsSearchResultContract.TAG_KEY_WORLD, keyword);
             Util.hideSoftKeyboard(mEditTextSearch);
             mLoadingView.showLoadingView();
-            mPresenter.getFlightsInfoAPI(keyword);
+//            mPresenter.getFlightsInfoAPI(keyword);
+
+            checkToNextPage();
         }
     }
 
@@ -175,14 +177,13 @@ public class FlightsSearchFragment extends BaseFragment implements FlightsSearch
      */
     private void checkToNextPage() {
         if (isAdded() && !isDetached()) {
-            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_ALL_FLIGHTS))) {
-
+            if (TextUtils.isEmpty(mBundle.getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
                         new AlertDialog.Builder(getContext())
                                 .setTitle(R.string.note)
-                                .setMessage(R.string.flights_search_not_found_flights_message)
+                                .setMessage(R.string.data_error)
                                 .setPositiveButton(R.string.ok, null)
                                 .show();
                     }

@@ -1,7 +1,6 @@
 package com.whatsmedia.ttia.page.main.flights.result;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -13,14 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whatsmedia.ttia.R;
 import com.whatsmedia.ttia.component.MyFlightsDetailInfo;
 import com.whatsmedia.ttia.connect.NewApiConnect;
 import com.whatsmedia.ttia.interfaces.IOnItemClickListener;
-import com.whatsmedia.ttia.newresponse.GetFlightsListResponse;
 import com.whatsmedia.ttia.newresponse.data.FlightsListData;
 import com.whatsmedia.ttia.newresponse.data.FlightsQueryData;
 import com.whatsmedia.ttia.page.BaseFragment;
@@ -43,7 +40,7 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-//    @BindView(R.id.imageView_up)
+    //    @BindView(R.id.imageView_up)
 //    ImageView mImageViewUp;
 //    @BindView(R.id.imageView_down)
 //    ImageView mImageViewDown;
@@ -65,14 +62,16 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
     private String mLastShowDate = Util.getCountDate(-1);
     private String mNowShowDate = Util.getNowDate(Util.TAG_FORMAT_MD);
     private String mNextShowDate = Util.getCountDate(1);
-    private String mShowDate = mNowShowDate;
+//    private String mShowDate = mNowShowDate;
     private String mLastDate = Util.getCountDate(-1, Util.TAG_FORMAT_YMD);
     private String mNowDate = Util.getNowDate();
     private String mNextDate = Util.getCountDate(1, Util.TAG_FORMAT_YMD);
     private String mQueryDate = mNowDate;
     private int mQueryType = FlightsQueryData.TAG_ALL;
     private String mKeyWorld = "";
+    private boolean mYestoday = false;
     private boolean mToday = true;
+    private boolean mTomorrow = false;
     private LinearLayoutManager mManager;
 
 
@@ -98,49 +97,49 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
         mPresenter = new FlightsSearchResultPresenter(getContext(), this);
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_ALL_FLIGHTS))
-                && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
-            mDepartureList = GetFlightsListResponse.getGson(getArguments().getString(FlightsSearchResultContract.TAG_ALL_FLIGHTS)).getFlightList();
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD))) {
             mKeyWorld = getArguments().getString(FlightsSearchResultContract.TAG_KEY_WORLD).toLowerCase();
         } else {
             Log.e(TAG, "data error");
             showMessage(getString(R.string.data_error));
+            getActivity().onBackPressed();
         }
 
+        mPresenter.getFlightByDateAPI(mNowDate);
         mTextViewLast.setText(mLastShowDate);
         mTextViewNow.setText(mNowShowDate);
         mTextViewNext.setText(mNextShowDate);
         mFilterData.clear();
-        if (mDepartureList != null && mDepartureList.size() > 0) {
-            for (FlightsListData item : mDepartureList) {
-                if (item.getExpressDate().contains(mNowShowDate)) {
-                    mFilterData.add(item);
-                }
-            }
+//        if (mDepartureList != null && mDepartureList.size() > 0) {
+//            for (FlightsListData item : mDepartureList) {
+//                if (item.getExpressDate().contains(mNowShowDate)) {
+//                    mFilterData.add(item);
+//                }
+//            }
             mAdapter = new FlightsSearchResultRecyclerViewAdapter(getContext(), mFilterData);
             mManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(mManager);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.setClickListener(this);
-
-            goToCurrentPosition(mFilterData);
-        } else {
-            new AlertDialog.Builder(getContext())
-                    .setMessage(R.string.flights_search_not_found_flights_message)
-                    .setPositiveButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .show();
-        }
+//
+//            goToCurrentPosition(mFilterData);
+//        } else {
+//            new AlertDialog.Builder(getContext())
+//                    .setMessage(R.string.flights_search_not_found_flights_message)
+//                    .setPositiveButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    })
+//                    .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    })
+//                    .show();
+//        }
         return view;
     }
 
@@ -244,8 +243,10 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
 
                 mQueryDate = mLastDate;
-                mShowDate = mLastShowDate;
+//                mShowDate = mLastShowDate;
+                mYestoday = true;
                 mToday = false;
+                mTomorrow = false;
                 changeState();
 
                 mPresenter.getFlightByDateAPI(mQueryDate);
@@ -256,8 +257,10 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date_off));
 
                 mQueryDate = mNowDate;
-                mShowDate = mNowShowDate;
+//                mShowDate = mNowShowDate;
+                mYestoday = false;
                 mToday = true;
+                mTomorrow = false;
                 changeState();
 
                 mPresenter.getFlightByDateAPI(mQueryDate);
@@ -268,8 +271,10 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                 mTextViewNext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.date));
 
                 mQueryDate = mNextDate;
-                mShowDate = mNextShowDate;
+//                mShowDate = mNextShowDate;
+                mYestoday = false;
                 mToday = false;
+                mTomorrow = true;
                 changeState();
 
                 mPresenter.getFlightByDateAPI(mQueryDate);
@@ -325,32 +330,36 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
 
     @Override
     public void getFlightSucceed(final List<FlightsListData> list) {
-Log.d("TAG","SIZE = " +list.size());
         mLoadingView.goneLoadingView();
         if (isAdded() && !isDetached()) {
             mFilterData.clear();
-            mFilterData.addAll(list);
-//            for (FlightsListData item : list) {
-//                if (item.getAirlineName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
-//                        || item.getShifts().toLowerCase().contains(mKeyWorld)
-//                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld)
-//                        || item.getContactsLocationChinese().contains(mKeyWorld) ||
-//
-//                        mKeyWorld.contains(item.getAirlineName()) || mKeyWorld.contains(item.getAirlineCode().toLowerCase())
-//                        || mKeyWorld.contains(item.getShifts().toLowerCase())
-//                        || mKeyWorld.contains(item.getContactsLocation().toLowerCase()) || mKeyWorld.contains(item.getContactsLocationEng().toLowerCase())
-//                        || mKeyWorld.contains(item.getContactsLocationChinese())) {
-//                    if (mToday) {
-//                        if (item.getExpressDate().contains(mNowShowDate)) {
-//                            mFilterData.add(item);
-//                        }
-//                    } else {
-//                        mFilterData.add(item);
-//                    }
-//                }
-//            }
+            for (FlightsListData item : list) {
+                if (item.getAirlineName().contains(mKeyWorld) || item.getAirlineCode().toLowerCase().contains(mKeyWorld)
+                        || item.getShifts().toLowerCase().contains(mKeyWorld)
+                        || item.getContactsLocation().toLowerCase().contains(mKeyWorld) || item.getContactsLocationEng().toLowerCase().contains(mKeyWorld)
+                        || item.getContactsLocationChinese().contains(mKeyWorld) ||
 
-            if (mFilterData.size() == 0) {
+                        mKeyWorld.contains(item.getAirlineName()) || mKeyWorld.contains(item.getAirlineCode().toLowerCase())
+                        || mKeyWorld.contains(item.getShifts().toLowerCase())
+                        || mKeyWorld.contains(item.getContactsLocation().toLowerCase()) || mKeyWorld.contains(item.getContactsLocationEng().toLowerCase())
+                        || mKeyWorld.contains(item.getContactsLocationChinese())) {
+                    if (mToday) {
+                        if (item.getExpressDate().contains(mNowShowDate)) {
+                            mFilterData.add(item);
+                        }
+                    } else if (mYestoday){
+                        if (item.getExpressDate().contains(mLastShowDate)) {
+                            mFilterData.add(item);
+                        }
+                    }else if (mTomorrow){
+                        if (item.getExpressDate().contains(mNextShowDate)) {
+                            mFilterData.add(item);
+                        }
+                    }
+                }
+            }
+
+            if (mFilterData == null || mFilterData.size() == 0) {
                 mMainActivity.runOnUI(new Runnable() {
                     @Override
                     public void run() {
@@ -367,7 +376,9 @@ Log.d("TAG","SIZE = " +list.size());
                     @Override
                     public void run() {
                         mAdapter.setData(mFilterData);
-                        goToCurrentPosition(mFilterData);
+                        if (mToday) {
+                            goToCurrentPosition(mFilterData);
+                        }
                     }
                 });
             }
