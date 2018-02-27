@@ -378,6 +378,8 @@ public class FlightsSearchResultFragment extends BaseFragment implements Flights
                         mAdapter.setData(mFilterData);
                         if (mToday) {
                             goToCurrentPosition(mFilterData);
+                        }else {
+                            mManager.scrollToPositionWithOffset(0, 0);
                         }
                     }
                 });

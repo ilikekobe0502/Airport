@@ -1,6 +1,9 @@
 package com.whatsmedia.ttia.page.main.home.weather;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -123,9 +126,47 @@ public class HomeWeatherInfoFragment extends BaseFragment implements HomeWeather
             }
 
             @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.proceed();
+            public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
                 mLoadingError = true;
+                SslCertificate sslCertificate = error.getCertificate();
+
+
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("SSL 憑證錯誤");
+
+                builder.setMessage ("無法驗證伺服器SSL憑證。\n仍要繼續嗎?");
+
+                builder.setPositiveButton("繼續", new DialogInterface.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        handler.proceed();
+
+                    }
+
+                });
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        handler.cancel();
+
+                    }
+
+                });
+
+
+
+                final AlertDialog dialog = builder.create();
+
+                dialog.show();
             }
 
             @Override
