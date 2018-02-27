@@ -15,8 +15,8 @@ android {
         applicationId "com.whatsmedia.ttia"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 49
-        versionName "2.0.2"
+        versionCode 52
+        versionName "2.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
