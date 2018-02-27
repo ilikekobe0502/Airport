@@ -31,6 +31,7 @@ public class ArriveFlightsPresenter implements ArriveFlightsContract.Presenter {
     ArriveFlightsPresenter(Context context, ArriveFlightsContract.View view) {
         mNewApiConnect = NewApiConnect.getInstance(context);
         mView = view;
+        mContext = context;
     }
 
     @Override
