@@ -31,8 +31,8 @@ import okhttp3.Response;
 
 public class NewApiConnect {
     private final static String TAG = NewApiConnect.class.getSimpleName();
-    //    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
-//    private final static String TAG_HOST = "https://210.241.14.99/api/";
+//    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
+    //    private final static String TAG_HOST = "https://210.241.14.99/api/";
     private final static String TAG_HOST = "http://210.241.14.99/";//正式環境
     private final static MediaType TAG_JSON = MediaType.parse("application/json");
     private final static String TAG_AES_KEY = "taoyuanairporttaoyuanairporttaoy";
@@ -867,10 +867,10 @@ public class NewApiConnect {
      * @param callback
      */
     public void getHomeParkIngInfo(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse("http://app.taoyuan-airport.com/newttia/ap_park/park_available_reader.php")
+        HttpUrl url = HttpUrl.parse(createUrl("park_available"))
                 .newBuilder()
                 .build();
-        getApi(url, false, callback);
+        getApi(url, true, callback);
     }
 
     /**
@@ -879,9 +879,9 @@ public class NewApiConnect {
      * @param callback
      */
     public void getParkIngInfo(MyCallback callback) {
-        HttpUrl url = HttpUrl.parse("http://app.taoyuan-airport.com/newttia/ap_park/park_info_reader.php")
+        HttpUrl url = HttpUrl.parse(createUrl("park_info"))
                 .newBuilder()
                 .build();
-        getApi(url, false, callback);
+        getApi(url, true, callback);
     }
 }
