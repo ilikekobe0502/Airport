@@ -23,6 +23,7 @@ public class Preferences {
     private final static String TAG_LANGUAGE_LIST = "language_list";
     private final static String TAG_MY_FLIGHTS_FIRST = "my_flights_first";
     private final static String TAG_RESTORE = "restore";
+    private final static String TAG_FAKE_PERMISSION_LOCATION = "fake_permission_location";//給Android 6以下儲存是否開啟地點權限使用
 
     private static SharedPreferences preferences;
 
@@ -233,5 +234,26 @@ public class Preferences {
     public static String getDeviceID(Context context) {
         preferences = context.getSharedPreferences(TAG_RESTORE, 0);
         return preferences.getString(TAG_RESTORE, "");
+    }
+
+    /**
+     * 設置Android 6以下之OS是否給予Location permission之權限
+     */
+    public static void saveFakePermissionLocation(Context context, boolean agree) {
+        preferences = context.getSharedPreferences(TAG_FAKE_PERMISSION_LOCATION, 0);
+        preferences.edit()
+                .putBoolean(TAG_FAKE_PERMISSION_LOCATION, agree)
+                .apply();
+    }
+
+    /**
+     * 讀取Android 6以下之OS是否給予Location permission之權限
+     *
+     * @param context
+     * @return
+     */
+    public static boolean getFakePermissionLocation(Context context) {
+        preferences = context.getSharedPreferences(TAG_FAKE_PERMISSION_LOCATION, 0);
+        return preferences.getBoolean(TAG_FAKE_PERMISSION_LOCATION, false);
     }
 }

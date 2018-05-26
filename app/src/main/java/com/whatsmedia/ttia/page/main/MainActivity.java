@@ -83,7 +83,6 @@ import com.whatsmedia.ttia.page.main.useful.lost.LostAndFoundFragment;
 import com.whatsmedia.ttia.page.main.useful.questionnaire.QuestionnaireFragment;
 import com.whatsmedia.ttia.page.main.useful.timezone.TimeZoneQueryFragment;
 import com.whatsmedia.ttia.response.data.FlightsInfoData;
-import com.whatsmedia.ttia.services.FCMTokenService;
 import com.whatsmedia.ttia.services.IBeacon;
 import com.whatsmedia.ttia.services.MyLocationService;
 import com.whatsmedia.ttia.utility.Preferences;
@@ -152,7 +151,7 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             return;
         }
 
-        init();
+            init();
     }
 
     private void init() {
@@ -176,30 +175,20 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             }
         });
 
+        //根據不同版本使用不同check permission condition
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check?
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(getString(R.string.permission_title));
-                builder.setMessage(getString(R.string.permission_message));
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    public void onDismiss(DialogInterface dialog) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
-                        }
-                    }
-                });
-                builder.show();
+                showStatementDialog6();
+            } else {
+                startLocationServiceAndBeacon();
             }
+        } else {
+            if (Preferences.getFakePermissionLocation(this))
+                startLocationServiceAndBeacon();
+            else
+                showStatementDialog();
         }
-
-        Intent beacons = new Intent(this, IBeacon.class);
-        startService(beacons);
-
-        Intent loactionService = new Intent(this, MyLocationService.class);
-        startService(loactionService);
-
     }
 
     private int mApiFailureCount = 0;
@@ -259,19 +248,10 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("MainActivity", "coarse location permission granted");
+                    startLocationServiceAndBeacon();
                 } else {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle(getString(R.string.permission_reject_title));
-                    builder.setMessage(getString(R.string.permission_reject_message));
-                    builder.setPositiveButton(android.R.string.ok, null);
-                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                        }
-                    });
-                    builder.show();
+                    showPermissionRejectDialog();
                 }
-                return;
             }
         }
     }
@@ -1097,6 +1077,73 @@ public class MainActivity extends BaseActivity implements IActivityTools.ILoadin
             bundle.putString(HomeContract.TAG_TYPE, type);
         }
         addFragment(Page.TAG_HOME, bundle, false);
+    }
+
+    /**
+     * 向使用者顯示地點之使用權限真的權限
+     */
+    private void showStatementDialog6() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.permission_title));
+        builder.setMessage(getString(R.string.permission_message));
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            public void onDismiss(DialogInterface dialog) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                }
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * 向使用者顯示地點之使用權限聲明
+     */
+    private void showStatementDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.permission_title));
+        builder.setMessage(getString(R.string.permission_message));
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Preferences.saveFakePermissionLocation(getApplicationContext(), true);
+            }
+        }).setNegativeButton(R.string.alert_btn_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Preferences.saveFakePermissionLocation(getApplicationContext(), false);
+                showPermissionRejectDialog();
+            }
+        }).setCancelable(false);
+        builder.show();
+    }
+
+    /**
+     * 顯示拒絕權限之後的訊息
+     */
+    private void showPermissionRejectDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.permission_reject_title));
+        builder.setMessage(getString(R.string.permission_reject_message));
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * 啟動跟location有關的service
+     */
+    private void startLocationServiceAndBeacon() {
+        Intent beacons = new Intent(this, IBeacon.class);
+        startService(beacons);
+
+        Intent loactionService = new Intent(this, MyLocationService.class);
+        startService(loactionService);
     }
 
     @Override
