@@ -835,4 +835,9 @@
     <string name="currencyConversion_helper">説明：国旗をタップして国変更できます。金額を入力したら、タップした国の通貨を計算します。</string>
     <string name="sweet_edit">編集</string>
     <string name="sweet_delete_content">削除前に確認?</string>
+
+    <!-- 解 析  金  鑰 -->
+    <string name="resove_k">taoyuanairporttaoyuanairporttaoy</string>
+    <!-- 解 析  I  V -->
+    <string name="resove_i">taoyuanairportta</string>
 </resources>

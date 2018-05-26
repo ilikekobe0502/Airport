@@ -6,10 +6,10 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.whatsmedia.ttia.R;
 import com.whatsmedia.ttia.newresponse.GetBaseEncodeResponse;
 import com.whatsmedia.ttia.newresponse.GetBaseResponse;
 import com.whatsmedia.ttia.newresponse.data.BaseEncodeData;
-import com.whatsmedia.ttia.utility.Preferences;
 import com.whatsmedia.ttia.utility.Util;
 
 import java.io.IOException;
@@ -31,12 +31,12 @@ import okhttp3.Response;
 
 public class NewApiConnect {
     private final static String TAG = NewApiConnect.class.getSimpleName();
-//    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
+    //    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
     //    private final static String TAG_HOST = "https://210.241.14.99/api/";
     private final static String TAG_HOST = "http://210.241.14.99/";//正式環境
     private final static MediaType TAG_JSON = MediaType.parse("application/json");
-    private final static String TAG_AES_KEY = "taoyuanairporttaoyuanairporttaoy";
-    private final static String TAG_AES_IV = "taoyuanairportta";
+    private static String TAG_K = "";
+    private static String TAG_I = "";
 
     public final static int TAG_DEFAULT = 100;//預設
     public final static int TAG_TIMEOUT = 101;//網路逾時
@@ -106,7 +106,7 @@ public class NewApiConnect {
                     BaseEncodeData baseEncodeData = baseEncodeResponse.getGson(result);
                     if (baseEncodeData != null) {
                         try {
-                            byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
+                            byte[] decryptBytes = Util.decryptAES(TAG_I.getBytes("UTF-8"), TAG_K.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
                             if (decryptBytes != null) {
                                 String responseString = new String(decryptBytes);
                                 Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
@@ -205,7 +205,7 @@ public class NewApiConnect {
                     BaseEncodeData baseEncodeData = baseEncodeResponse.getGson(result);
                     if (baseEncodeData != null) {//如果不是Json會拋出Null有可能是Html
                         try {
-                            byte[] decryptBytes = Util.decryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
+                            byte[] decryptBytes = Util.decryptAES(TAG_I.getBytes("UTF-8"), TAG_K.getBytes("UTF-8"), Base64.decode(baseEncodeData.getEncode(), Base64.DEFAULT));
                             if (decryptBytes != null) {
                                 String responseString = new String(decryptBytes);
                                 Log.d(TAG, String.format("[%1$s] = %2$s", "Response", responseString));
@@ -269,7 +269,7 @@ public class NewApiConnect {
         GetBaseEncodeResponse baseEncodeResponse = new GetBaseEncodeResponse();
 
         try {
-            byte[] a = Util.encryptAES(TAG_AES_IV.getBytes("UTF-8"), TAG_AES_KEY.getBytes("UTF-8"), json.getBytes("UTF-8"));
+            byte[] a = Util.encryptAES(TAG_I.getBytes("UTF-8"), TAG_K.getBytes("UTF-8"), json.getBytes("UTF-8"));
 
             encodeData.setEncode(Base64.encodeToString(a, Base64.DEFAULT));
         } catch (UnsupportedEncodingException e) {
@@ -310,6 +310,8 @@ public class NewApiConnect {
         }
         Log.d("TAG", "Device ID = " + TAG_DEVICE_ID);
 
+        TAG_K = context.getString(R.string.resove_k);
+        TAG_I = context.getString(R.string.resove_i);
 //        if (TextUtils.isEmpty(mToken) || TextUtils.equals(mToken, Preferences.TAG_ERROR)) {
 //            mToken = Preferences.getFCMToken(context);
 //        }

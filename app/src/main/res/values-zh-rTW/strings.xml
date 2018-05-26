@@ -902,4 +902,9 @@
     <string name="currencyConversion_helper">點選國旗可切換不同國家，並於欄位輸入欲換算之數值，即可得到該幣值。</string>
     <string name="sweet_edit">編輯</string>
     <string name="sweet_delete_content">確定要刪除?</string>
+
+    <!-- 解 析  金  鑰 -->
+    <string name="resove_k">taoyuanairporttaoyuanairporttaoy</string>
+    <!-- 解 析  I  V -->
+    <string name="resove_i">taoyuanairportta</string>
 </resources>

@@ -904,4 +904,9 @@
     <string name="currencyConversion_helper">Hint:Click the flags to select currencies and fill in the the blank with a dollar amount.</string>
     <string name="sweet_edit">Edit</string>
     <string name="sweet_delete_content">Confirm to delete?</string>
+
+    <!-- 解 析  金  鑰 -->
+    <string name="resove_k">taoyuanairporttaoyuanairporttaoy</string>
+    <!-- 解 析  I  V -->
+    <string name="resove_i">taoyuanairportta</string>
 </resources>
