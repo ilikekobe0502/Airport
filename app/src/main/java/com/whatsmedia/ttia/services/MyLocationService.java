@@ -41,7 +41,7 @@ public class MyLocationService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
-            Log.e(TAG, "onLocationChanged: " + location);
+//            Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
 
             LocationQueryData locationQueryData = new LocationQueryData();

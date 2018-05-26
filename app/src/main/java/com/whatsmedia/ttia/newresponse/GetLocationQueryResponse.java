@@ -17,7 +17,7 @@ public class GetLocationQueryResponse {
     public String getJson() {
         Gson gson = new Gson();
         String json = data != null ? gson.toJson(data) : "";
-        Log.i(TAG, String.format("[Json] %s", json));
+//        Log.i(TAG, String.format("[Json] %s", json));
         return json;
     }
 
