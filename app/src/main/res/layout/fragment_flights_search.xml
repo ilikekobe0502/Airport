@@ -13,6 +13,8 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/input_background"
         android:hint="@string/flights_search_edit_text_hint"
+        android:inputType="textFilter"
+        android:maxLines="1"
         android:paddingLeft="@dimen/dp_pixel_10"
         android:textColor="@color/colorHomeLeftTitle"
         android:textColorHint="@color/colorHomeLeftTitle"
