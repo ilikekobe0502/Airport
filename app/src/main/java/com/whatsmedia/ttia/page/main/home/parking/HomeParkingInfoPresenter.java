@@ -51,7 +51,7 @@ public class HomeParkingInfoPresenter implements HomeParkingInfoContract.Present
                 } else
                     listData = new HomeParkingListData();
 
-                if (listData.getPark() != null) {
+                if (listData != null && listData.getPark() != null) {
                     infoData = listData.getPark();
                 } else {
                     infoData = new ArrayList<HomeParkingInfoData>();
