@@ -44,7 +44,7 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 GetFlightsListResponse flightsListResponse = GetFlightsListResponse.getGson(response);
-                if (flightsListResponse.getFlightList() != null) {
+                if (flightsListResponse != null && flightsListResponse.getFlightList() != null) {
                     List<FlightsListData> data = flightsListResponse.getFlightList();
                     mView.getMyFlightsInfoSucceed(data);
                 } else {
@@ -58,14 +58,14 @@ public class MyFlightsInfoPresenter implements MyFlightsInfoContract.Presenter {
     public void deleteMyFlightsInfoAPI(List<FlightsListData> selectList) {
         GetFlightsListResponse uploadObject = new GetFlightsListResponse();
 
-        List<HashMap<String,String>> uploadList = new ArrayList<>();
+        List<HashMap<String, String>> uploadList = new ArrayList<>();
         for (FlightsListData item : selectList) {
 
-            HashMap<String,String> map = new HashMap<>();
-            map.put("airlineCode",!TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode() : "");
-            map.put("shifts",!TextUtils.isEmpty(item.getShifts()) ? item.getShifts() : "");
-            map.put("expressDate",!TextUtils.isEmpty(item.getExpressDate()) ? item.getExpressDate() : "");
-            map.put("expressTime",!TextUtils.isEmpty(item.getExpressTime()) ? item.getExpressTime() : "");
+            HashMap<String, String> map = new HashMap<>();
+            map.put("airlineCode", !TextUtils.isEmpty(item.getAirlineCode()) ? item.getAirlineCode() : "");
+            map.put("shifts", !TextUtils.isEmpty(item.getShifts()) ? item.getShifts() : "");
+            map.put("expressDate", !TextUtils.isEmpty(item.getExpressDate()) ? item.getExpressDate() : "");
+            map.put("expressTime", !TextUtils.isEmpty(item.getExpressTime()) ? item.getExpressTime() : "");
             uploadList.add(map);
         }
 
