@@ -37,7 +37,7 @@ public class HomePresenter implements HomeContract.Presenter {
             @Override
             public void onResponse(Call call, String response) throws IOException {
                 GetLanguageListResponse result = GetLanguageListResponse.getInstance(mContext, response);
-                if (result.getData() != null)
+                if (result != null && result.getData() != null)
                     mView.getLanguageListSuccess(result);
                 else
                     onFailure(call, new IOException("Data is empty"), NewApiConnect.TAG_DEFAULT);
