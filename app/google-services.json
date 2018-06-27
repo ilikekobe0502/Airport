@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "666089207244",
+    "firebase_url": "https://ttiav2.firebaseio.com",
+    "project_id": "ttiav2",
+    "storage_bucket": "ttiav2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666089207244:android:f87820707d9680ad",
+        "android_client_info": {
+          "package_name": "com.whatsmedia.ttia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666089207244-1bh54vbbk0v9dpfbmvbvk4r1gr6mf9js.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtOvAncLx5DigERi5lmYk47sp6sQX_rps"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
