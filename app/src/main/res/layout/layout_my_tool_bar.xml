@@ -43,14 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_toEndOf="@+id/imageView_back"
         android:gravity="center"
         android:maxLines="1"
         android:text="@string/home_weather_title"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_pixel_21"
         android:textStyle="bold"
-        android:visibility="gone"
+        android:visibility="visible"
         app:needResize="true" />
 
     <RelativeLayout
