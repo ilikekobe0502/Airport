@@ -34,7 +34,7 @@ public class NewApiConnect {
     //    private final static String TAG_HOST = "https://59.127.195.228:11700/api/";//測試環境
     //    private final static String TAG_HOST = "https://210.241.14.99/api/";
 //    private final static String TAG_HOST = "http://210.241.14.99/";//正式環境
-    private final static String TAG_HOST = "https://app.taoyuan-airport.com/";//正式環境Domain
+    private final static String TAG_HOST = "http://app.taoyuan-airport.com/";//正式環境Domain
     private final static MediaType TAG_JSON = MediaType.parse("application/json");
     private static String TAG_K = "";
     private static String TAG_I = "";
