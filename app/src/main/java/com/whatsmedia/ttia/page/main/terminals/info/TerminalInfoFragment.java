@@ -162,9 +162,9 @@ public class TerminalInfoFragment extends BaseFragment implements TerminalInfoCo
                 case TAG_AIRPORT_FACILITIES://機場設施
                     page = Page.TAG_AIRPORT_FACILITY;
                     break;
-                case TAG_TOILET://公共廁所
-                    page = Page.TAG_PUBLIC_TOILET;
-                    break;
+//                case TAG_TOILET://公共廁所
+//                    page = Page.TAG_PUBLIC_TOILET;
+//                    break;
             }
 
             if (page != -1)

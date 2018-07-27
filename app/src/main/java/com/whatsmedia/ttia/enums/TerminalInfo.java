@@ -11,8 +11,8 @@ import java.util.List;
 
 public enum TerminalInfo {
     TAG_STORE(R.string.title_restaurant, R.drawable.terminal_info_03_01),
-    TAG_AIRPORT_FACILITIES(R.string.title_airport_facility, R.drawable.terminal_info_03_02),
-    TAG_TOILET(R.string.title_restroom, R.drawable.terminal_info_03_03);
+    TAG_AIRPORT_FACILITIES(R.string.title_airport_facility, R.drawable.terminal_info_03_02);
+//    TAG_TOILET(R.string.title_restroom, R.drawable.terminal_info_03_03);
 
     private int title;
     private int icon;
